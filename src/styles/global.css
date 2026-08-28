@@ -960,7 +960,7 @@ strong {
   gap: var(--space-4);
 }
 
-.footer h4 {
+.footer-heading {
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.95rem;

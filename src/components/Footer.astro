@@ -16,7 +16,7 @@ import { site } from '../data/site';
       </div>
 
       <div>
-        <h4>I nostri mieli</h4>
+        <h2 class="footer-heading">I nostri mieli</h2>
         <ul>
           {site.honeys.map((h) => (
             <li><a href={`/miele/${h.slug}/`}>{h.name}</a></li>
@@ -25,7 +25,7 @@ import { site } from '../data/site';
       </div>
 
       <div>
-        <h4>Contatti</h4>
+        <h2 class="footer-heading">Contatti</h2>
         <ul>
           <li>
             <a href={site.phoneHref}>{site.phoneDisplay}</a>
@@ -40,7 +40,7 @@ import { site } from '../data/site';
       </div>
 
       <div>
-        <h4>Sede</h4>
+        <h2 class="footer-heading">Sede</h2>
         <address>
           {site.legalName}
           <br />
