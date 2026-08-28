@@ -249,13 +249,13 @@ strong {
   align-items: center;
   gap: 0.6rem;
   min-width: 0;
+  line-height: 1;
 }
 
 .logo-mark {
   width: 38px;
   height: 38px;
   flex: none;
-  transform: translateY(-6px); /* allinea il glyph con la riga del titolo */
 }
 
 .logo-text {
