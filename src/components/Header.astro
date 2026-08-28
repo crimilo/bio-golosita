@@ -10,10 +10,10 @@ const { pathname } = Astro.props;
 const ctaHref = pathname === '/' ? '/#contatti' : '/contatti';
 ---
 
-<header class="header">
+<header class="header" id="site-header">
   <div class="header-inner">
     <Logo />
-    <nav class="nav" aria-label="Navigazione principale">
+    <nav class="nav" id="site-nav" aria-label="Navigazione principale">
       {
         nav.map((item) => (
           <a
@@ -25,9 +25,39 @@ const ctaHref = pathname === '/' ? '/#contatti' : '/contatti';
         ))
       }
     </nav>
-    <a class="btn btn-primary header-cta" href={ctaHref}>
-      <Icons name="phone" size={18} />
-      Contattaci
-    </a>
+    <div class="header-actions">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Apri menu">
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+        <span class="nav-toggle-line"></span>
+      </button>
+      <a class="btn btn-primary header-cta" href={ctaHref}>
+        <Icons name="phone" size={18} />
+        Contattaci
+      </a>
+    </div>
   </div>
 </header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = header.querySelector('.nav-toggle');
+  const nav = header.querySelector('.nav');
+
+  const setOpen = (open) => {
+    header.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
+  };
+
+  toggle.addEventListener('click', () => setOpen(!header.classList.contains('nav-open')));
+  nav.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 900) setOpen(false);
+  });
+</script>

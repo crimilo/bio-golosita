@@ -277,9 +277,47 @@ strong {
 
 .nav {
   display: none;
+}
+
+.header-actions {
+  display: flex;
   align-items: center;
-  gap: 1.6rem;
+  gap: 0.6rem;
   margin-left: auto;
+}
+
+/* hamburger (solo mobile) */
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 11px;
+  border-radius: 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  transition: background 0.15s ease;
+}
+.nav-toggle:hover {
+  background: var(--bg);
+}
+.nav-toggle-line {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ink);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-open .nav-toggle-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-open .nav-toggle-line:nth-child(2) {
+  opacity: 0;
+}
+.nav-open .nav-toggle-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .nav a {
@@ -296,15 +334,65 @@ strong {
 }
 
 .header-cta {
-  margin-left: auto;
   height: 44px;
   padding: 0 1.35em;
   font-size: 0.95rem;
 }
 
+/* dropdown mobile */
+@media (max-width: 899.98px) {
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
+    padding: 0.5rem 0 0.75rem;
+  }
+  .nav-open .nav {
+    display: flex;
+  }
+  .nav a {
+    display: block;
+    padding: 0.95rem clamp(1rem, 4vw, 2rem);
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav a:hover {
+    background: var(--bg-soft);
+    border-color: transparent;
+    color: var(--amber-strong);
+  }
+  .nav a[aria-current='page'] {
+    color: var(--amber-strong);
+  }
+  .header-cta {
+    padding: 0 1.1em;
+    font-size: 0.9rem;
+  }
+  .header-cta svg {
+    display: none;
+  }
+}
+
 @media (min-width: 900px) {
   .nav {
     display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    margin-left: auto;
+  }
+  .header-actions {
+    margin-left: 0;
+  }
+  .nav-toggle {
+    display: none;
   }
   .logo-text {
     font-size: 1.3rem;
