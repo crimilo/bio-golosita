@@ -204,7 +204,7 @@ export const site = {
     {
       slug: 'miele-di-castagno',
       name: 'Miele di Castagno',
-      image: 'barattolo_di_miele',
+      image: 'runny_hunny',
       color: '#8a4b1f',
       price: '€ 6,50 (500 g) · € 12,00/kg',
       priceFrom: 'da € 6,50',

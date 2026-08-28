@@ -118,5 +118,27 @@ export default {
         "height": 1333
       }
     }
+  },
+  "runny_hunny": {
+    "width": 1780,
+    "height": 2700,
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 607
+      },
+      "600": {
+        "width": 600,
+        "height": 910
+      },
+      "800": {
+        "width": 800,
+        "height": 1213
+      },
+      "1200": {
+        "width": 1200,
+        "height": 1820
+      }
+    }
   }
 };

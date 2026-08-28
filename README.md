@@ -81,3 +81,8 @@ chromium --headless=new --no-sandbox --hide-scrollbars --window-size=1200,630 \
   --screenshot=public/og.png file://$(pwd)/scripts/og/og.html
 # poi convertire in JPG (es. con sharp)
 ```
+
+## Crediti immagini
+
+- `public/img/runny_hunny-*` — foto stock "Runny hunny" (Wikimedia Commons, public domain,
+  https://commons.wikimedia.org/wiki/File:Runny_hunny.jpg), usata per la pagina Miele di Castagno.
