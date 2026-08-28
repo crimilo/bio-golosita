@@ -42,5 +42,5 @@ function ico(entries) {
   return Buffer.concat([header, ...dirs, ...datas]);
 }
 
-writeFileSync('public/favicon.ico', ico([[16, pngs[16]], [32, pngs[32]]]));
-console.log('OK favicon.ico');
+writeFileSync('public/favicon.ico', ico([[16, pngs[16]], [32, pngs[32]], [48, pngs[48]]]));
+console.log('OK favicon.ico (16/32/48)');
