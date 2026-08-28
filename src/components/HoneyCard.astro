@@ -19,6 +19,7 @@ const href = `/miele/${honey.slug}/`;
       loading={eager ? 'eager' : 'lazy'}
       fetchpriority={eager ? 'high' : 'auto'}
       objectPosition={honey.imgPos}
+      zoomable={false}
       class=""
     />
     <span class="honey-card-price">{honey.priceFrom}</span>
