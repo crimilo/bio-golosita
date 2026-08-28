@@ -80,7 +80,8 @@ export const site = {
       name: 'Miele di Acacia',
       image: '3_baratooli_di_miele_di_acacia_millefiori',
       color: '#f3e2a1',
-      price: 'da € 9,00/kg',
+      price: '€ 6,00 (500 g) · € 11,00/kg',
+      priceFrom: 'da € 6,00',
       title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio e Golosità',
       description:
         'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 351 537 6719.',
@@ -115,7 +116,8 @@ export const site = {
       name: 'Miele Millefiori Primaverile',
       image: 'barattoli_di_mile_millefiori',
       color: '#f6d98a',
-      price: 'da € 9,00/kg',
+      price: '€ 5,00 (500 g) · € 9,00/kg',
+      priceFrom: 'da € 5,00',
       title: 'Miele Millefiori Primaverile a Cassano d\'Adda | Bio e Golosità',
       description:
         'Miele millefiori primaverile di api proprie a Cassano d\'Adda (MI): floreale, cremoso, dal profumo di frutteto in fiore. Ordinalo su WhatsApp o al telefono.',
@@ -150,7 +152,8 @@ export const site = {
       name: 'Miele Millefiori Estivo',
       image: 'barattolo_di_miele',
       color: '#e8b45a',
-      price: 'da € 9,00/kg',
+      price: '€ 5,00 (500 g) · € 9,00/kg',
+      priceFrom: 'da € 5,00',
       title: 'Miele Millefiori Estivo a Cassano d\'Adda | Bio e Golosità',
       description:
         'Miele millefiori estivo di api proprie a Cassano d\'Adda (MI): più intenso e corposo, con note di tiglio e fiori di campo. Ordinalo oggi: consegna in zona.',
@@ -185,7 +188,8 @@ export const site = {
       name: 'Miele di Castagno',
       image: 'barattolo_di_miele',
       color: '#8a4b1f',
-      price: 'da € 11,00/kg',
+      price: '€ 6,50 (500 g) · € 12,00/kg',
+      priceFrom: 'da € 6,50',
       title: 'Miele di Castagno a Cassano d\'Adda (MI) | Bio e Golosità',
       description:
         'Miele di castagno di api proprie a Cassano d\'Adda (MI): scuro, intenso, leggermente amaro. Perfetto con formaggi stagionati. Ordina al telefono.',

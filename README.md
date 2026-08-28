@@ -44,7 +44,7 @@ scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, O
 ## TODO prima del lancio (dati segnaposto in `src/data/site.js`)
 
 - [x] **Numero di telefono**: aggiornato a +39 351 537 6719 (CTA "Chiama ora", WhatsApp e schema)
-- [ ] **Prezzi mieli**: verificare `da € 9,00/kg` / `da € 11,00/kg` (usati anche nello schema Product)
+- [x] **Prezzi mieli**: aggiornati — acacia 6,00 (500g) / 11,00 (kg), millefiori 5,00 / 9,00, castagno 6,50 / 12,00 (anche nello schema Product)
 - [ ] **Orari**: verificare `Lun–Sab 9:00–19:00`
 - [ ] **Recensioni**: sostituire quelle segnaposto con le recensioni reali della scheda
       Google Business Profile appena attiva; solo allora aggiungere lo schema

@@ -2,8 +2,10 @@
 import { site } from '../data/site.js';
 import manifest from '../data/img-manifest.js';
 
-export const priceNum = (priceStr) =>
-  Number.parseFloat(priceStr.replace(/[^\d,]/g, '').replace(',', '.')) || 9;
+export const priceNum = (priceStr) => {
+  const m = priceStr.match(/\d+[.,]\d+/);
+  return m ? Number.parseFloat(m[0].replace(',', '.')) : 9;
+};
 
 // URL della variante più grande esistente di un'immagine prodotto
 const imgUrl = (base) => {
