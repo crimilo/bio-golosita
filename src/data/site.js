@@ -34,7 +34,7 @@ export const site = {
 
   // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
   bulkNote:
-    'Per ordini superiori a 10 kg preparo secchi da 10 kg a un prezzo leggermente scontato, personalizzato su misura: contattami per il preventivo.',
+    'Per ordini superiori a 10 kg prepariamo secchi da 10 kg a un prezzo leggermente scontato, personalizzato su misura: contattaci per il preventivo.',
 
   // Zone servite — citate in modo naturale, senza keyword stuffing
   areaServed: [
@@ -226,7 +226,7 @@ export const site = {
         },
         {
           q: 'Fate consegne anche a Treviglio e Gorgonzola?',
-          a: 'Sì, consegno in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda e dintorni. Scrivimi su WhatsApp per gli orari.',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda e dintorni. Scrivici su WhatsApp per gli orari.',
         },
       ],
     },
