@@ -104,6 +104,20 @@ const local = "Cassano d'Adda (MI)";
         <p>{honey.intro}</p>
         <h3>A cosa serve e come usarlo</h3>
         <p>{honey.uses}</p>
+        <h3>Proprietà e benefici del {honey.name.toLowerCase()}</h3>
+        <ul>
+          {honey.benefits.map((b) => (
+            <li>
+              <Icons name="check" size={18} />
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="disclaimer">
+          Il miele è un alimento naturale: le proprietà descritte sono quelle
+          tradizionalmente riconosciute al miele e alla sua fioritura. In caso
+          di dubbi o patologie consulta il tuo medico.
+        </p>
         <h3>Caratteristiche principali</h3>
         <ul class="chips" style="border-radius:0;background:none;padding:0;">
           {honey.characteristics.map((c) => (

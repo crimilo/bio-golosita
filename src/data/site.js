@@ -96,6 +96,12 @@ export const site = {
       ],
       uses:
         'Il miele di acacia è ideale per la colazione: non altera il sapore di tisane, latte e caffè e resta fluido anche in inverno. Ottimo anche per dolcificare yogurt e frutta fresca, oppure spalmato su pane e fette biscottate.',
+      benefits: [
+        'Delicato e dolce: non copre i sapori, perfetto per tisane, latte e caffè',
+        'A base di fruttosio: resta liquido a lungo e viene digerito facilmente da molti',
+        'Energia a rapido assorbimento, ideale prima di una passeggiata o dello sport',
+        'Gusto delicato, apprezzato anche da chi di solito non ama il miele',
+      ],
       faq: [
         {
           q: 'Il miele di acacia cristallizza?',
@@ -132,6 +138,12 @@ export const site = {
       ],
       uses:
         'Perfetto spalmato su pane caldo e fette biscottate, ma anche per dolcificare il latte dei bambini e preparare dolci semplici. Il suo profumo floreale esalta anche formaggi freschi e ricotta.',
+      benefits: [
+        'Raccoglie il polline delle prime fioriture: un concentrato di aromi di primavera',
+        'Emolliente per la gola, da gustare da solo o nel latte caldo della sera',
+        'Fonte di energia naturale, dolce ma mai stucchevole',
+        'Versatile: va bene a colazione, in cucina e sui formaggi freschi',
+      ],
       faq: [
         {
           q: 'Che differenza c\'è tra millefiori primaverile ed estivo?',
@@ -168,6 +180,12 @@ export const site = {
       ],
       uses:
         'Ottimo per la colazione ma anche in cucina: glassa carni e verdure, dolcifica le tisane della sera e si sposa benissimo con formaggi stagionati. È il miele preferito da chi ama i sapori decisi.',
+      benefits: [
+        'Più ricco di minerali rispetto ai mieli primaverili, grazie alle fioriture estive',
+        'Le note di tiglio sono tradizionalmente associate a un momento di relax',
+        'Corposo e aromatico: bastano piccole quantità per dare carattere a un piatto',
+        'Perfetto con formaggi stagionati e con i dolci della tradizione',
+      ],
       faq: [
         {
           q: 'Perché il millefiori estivo è più scuro?',
@@ -204,6 +222,12 @@ export const site = {
       ],
       uses:
         'Il miele di castagno esalta formaggi stagionati e erborinati, accompagna arrosti e carni rosse, polenta e insalate con noci. In pasticceria è perfetto per panpepato, biscotti speziati e dolci autunnali.',
+      benefits: [
+        'Tra i mieli più ricchi di sali minerali, in particolare ferro e potassio',
+        'Tradizionalmente usato per la gola e le vie respiratorie',
+        'Sapore intenso e persistente: una piccola quantità dà carattere a molti piatti',
+        'Lento a cristallizzare, si conserva bene anche a lungo',
+      ],
       faq: [
         {
           q: 'Il miele di castagno è amaro?',
