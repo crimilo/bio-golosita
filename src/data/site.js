@@ -156,7 +156,7 @@ export const site = {
         },
         {
           q: 'Da dove vengono le api?',
-          a: 'Gli apiari sono situati tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
+          a: 'I miei apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
         },
       ],
     },
@@ -240,7 +240,7 @@ export const site = {
         },
         {
           q: 'Dove trovo i castagni nella zona di Cassano d\'Adda?',
-          a: 'Le api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda e delle colline tra Bergamo e Cremona, a poca distanza dai nostri apiari.',
+          a: 'Le mie api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda e delle colline tra Bergamo e Cremona, a poca distanza dai miei apiari.',
         },
       ],
     },
