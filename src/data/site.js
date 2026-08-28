@@ -28,8 +28,8 @@ export const site = {
   // >>> TODO: verificare con il titolare <<<
   hours: 'Lun–Sab 9:00–19:00 · Dom su appuntamento',
 
-  founded: 2021, // 5 anni di esperienza
-  experienceYears: 5,
+  founded: 2021, // 5+ anni di esperienza
+  experienceYears: '5+',
   priceRange: '€€',
 
   // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
