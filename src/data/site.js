@@ -78,7 +78,7 @@ export const site = {
     {
       slug: 'miele-di-acacia',
       name: 'Miele di Acacia',
-      image: 'acacia_honey',
+      image: 'miele_di_acacia',
       color: '#f3e2a1',
       price: '€ 6,00 (500 g) · € 11,00/kg',
       priceFrom: 'da € 6,00',
@@ -205,7 +205,7 @@ export const site = {
     {
       slug: 'miele-di-castagno',
       name: 'Miele di Castagno',
-      image: 'castagno_honey',
+      image: 'miele_di_castagno',
       color: '#8a4b1f',
       price: '€ 6,50 (500 g) · € 12,00/kg',
       priceFrom: 'da € 6,50',

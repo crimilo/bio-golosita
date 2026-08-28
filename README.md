@@ -84,9 +84,7 @@ chromium --headless=new --no-sandbox --hide-scrollbars --window-size=1200,630 \
 
 ## Crediti immagini
 
-- `public/img/acacia_honey-*` — "Acacia Honey and Blossom Honey" (Wikimedia Commons,
-  CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Honey_1.jpg), usata per la pagina Miele di Acacia.
-- `public/img/castagno_honey-*` — "Dipper stick and honey in a jar" (Wikimedia Commons,
-  CC BY 2.0, https://commons.wikimedia.org/wiki/File:Dipper_stick_and_honey_in_a_jar.jpg),
-  usata per la pagina Miele di Castagno.
-- Foto dei barattoli e dell'apiario: materiale originale del titolare.
+- `miele_di_acacia.jpg` e `miele_di_castagno.jpg` — foto originali del titolare
+  (miele di acacia e miele di castagno), ottimizzate in `public/img/miele_di_acacia-*`
+  e `public/img/miele_di_castagno-*`.
+- Altre foto di barattoli e apiario: materiale originale del titolare.
