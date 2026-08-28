@@ -119,25 +119,47 @@
       }
     }
   },
-  "runny_hunny": {
-    "width": 1780,
-    "height": 2700,
+  "acacia_honey": {
+    "width": 1920,
+    "height": 1440,
     "variants": {
       "400": {
         "width": 400,
-        "height": 607
+        "height": 300
       },
       "600": {
         "width": 600,
-        "height": 910
+        "height": 450
       },
       "800": {
         "width": 800,
-        "height": 1213
+        "height": 600
       },
       "1200": {
         "width": 1200,
-        "height": 1820
+        "height": 900
+      }
+    }
+  },
+  "castagno_honey": {
+    "width": 1280,
+    "height": 960,
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "800": {
+        "width": 800,
+        "height": 600
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
       }
     }
   }

@@ -7,9 +7,10 @@ const [url, base, ...wArgs] = process.argv.slice(2);
 const widths = wArgs.map(Number);
 mkdirSync('public/img', { recursive: true });
 
-const res = await fetch(url);
-if (!res.ok) throw new Error(`download failed ${res.status}`);
-const src = Buffer.from(await res.arrayBuffer());
+// Supporta sia URL remoti che file locali
+const src = url.startsWith('http')
+  ? Buffer.from(await (await fetch(url)).arrayBuffer())
+  : readFileSync(url);
 const tmp = `/tmp/${base}-src${/jpe?g/i.test(url) ? '.jpg' : '.png'}`;
 writeFileSync(tmp, src);
 

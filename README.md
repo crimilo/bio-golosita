@@ -84,5 +84,9 @@ chromium --headless=new --no-sandbox --hide-scrollbars --window-size=1200,630 \
 
 ## Crediti immagini
 
-- `public/img/runny_hunny-*` — foto stock "Runny hunny" (Wikimedia Commons, public domain,
-  https://commons.wikimedia.org/wiki/File:Runny_hunny.jpg), usata per la pagina Miele di Castagno.
+- `public/img/acacia_honey-*` — "Acacia Honey and Blossom Honey" (Wikimedia Commons,
+  CC BY-SA 4.0, https://commons.wikimedia.org/wiki/File:Honey_1.jpg), usata per la pagina Miele di Acacia.
+- `public/img/castagno_honey-*` — "Dipper stick and honey in a jar" (Wikimedia Commons,
+  CC BY 2.0, https://commons.wikimedia.org/wiki/File:Dipper_stick_and_honey_in_a_jar.jpg),
+  usata per la pagina Miele di Castagno.
+- Foto dei barattoli e dell'apiario: materiale originale del titolare.
