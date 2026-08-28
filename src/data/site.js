@@ -176,7 +176,7 @@ export const site = {
         },
         {
           q: 'Fate consegne anche a Treviglio e Gorgonzola?',
-          a: 'Sì, consegnamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda e dintorni. Scrivici su WhatsApp per gli orari.',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda e dintorni. Scrivici su WhatsApp per gli orari.',
         },
       ],
     },

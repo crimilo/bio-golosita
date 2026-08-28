@@ -1,8 +1,16 @@
 // Generatori di JSON-LD validi per Google.
 import { site } from '../data/site.js';
+import manifest from '../data/img-manifest.js';
 
 export const priceNum = (priceStr) =>
   Number.parseFloat(priceStr.replace(/[^\d,]/g, '').replace(',', '.')) || 9;
+
+// URL della variante più grande esistente di un'immagine prodotto
+const imgUrl = (base) => {
+  const entry = manifest[base];
+  const largest = Math.max(...Object.keys(entry.variants).map(Number));
+  return `${site.domain}/img/${base}-${largest}.avif`;
+};
 
 export function localBusiness() {
   return {
@@ -52,7 +60,7 @@ export function product(honey, pathname) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: `${honey.name} — Bio e Golosità`,
-    image: [`${site.domain}/img/${honey.image}-800.avif`],
+    image: [imgUrl(honey.image)],
     description: honey.intro.slice(0, 200),
     brand: { '@type': 'Brand', name: site.name },
     manufacturer: { '@type': 'Organization', name: site.legalName },

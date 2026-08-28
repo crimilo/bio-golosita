@@ -18,7 +18,7 @@ const ctaHref = pathname === '/' ? '/#contatti' : '/contatti';
         nav.map((item) => (
           <a
             href={item.href}
-            aria-current={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href.split('#')[0])) ? 'page' : undefined}
+            aria-current={item.href === pathname ? 'page' : undefined}
           >
             {item.label}
           </a>
