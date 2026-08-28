@@ -1029,6 +1029,12 @@ strong {
   align-items: start;
 }
 
+@media (min-width: 900px) {
+  .product-grid {
+    grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+  }
+}
+
 .product-media {
   border-radius: var(--radius);
   overflow: hidden;
