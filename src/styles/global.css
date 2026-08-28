@@ -934,6 +934,7 @@ strong {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 0.7rem 0.9rem;
+  margin-top: var(--space-3);
 }
 .bulk-note svg {
   color: var(--amber-strong);
