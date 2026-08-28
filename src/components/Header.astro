@@ -1,7 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import Icons from './Icons.astro';
-import { site, nav } from '../data/site';
+import { nav } from '../data/site';
 
 interface Props {
   pathname: string;
@@ -32,7 +31,6 @@ const ctaHref = pathname === '/' ? '/#contatti' : '/contatti';
         <span class="nav-toggle-line"></span>
       </button>
       <a class="btn btn-primary header-cta" href={ctaHref}>
-        <Icons name="phone" size={18} />
         Contattaci
       </a>
     </div>

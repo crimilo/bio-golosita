@@ -376,9 +376,6 @@ strong {
     padding: 0 1.1em;
     font-size: 0.9rem;
   }
-  .header-cta svg {
-    display: none;
-  }
 }
 
 @media (min-width: 900px) {
