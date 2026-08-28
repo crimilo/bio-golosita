@@ -13,6 +13,7 @@ interface Props {
   zoomable?: boolean;
   width?: number; // override larghezza intrinseca
   height?: number; // override altezza intrinseca
+  objectPosition?: string; // es. 'center 85%' per foto verticali
 }
 
 const {
@@ -24,6 +25,7 @@ const {
   zoomable = true,
   width,
   height,
+  objectPosition,
 } = Astro.props;
 
 const entry = manifest[base];
@@ -55,5 +57,6 @@ const cls = `${Astro.props.class ?? ''} ${zoomable ? 'lightbox-target' : ''}`.tr
     fetchpriority={fetchpriority}
     class={cls}
     data-full={`/img/${base}-${largest}.avif`}
+    style={objectPosition ? `object-position: ${objectPosition}` : undefined}
   />
 </picture>

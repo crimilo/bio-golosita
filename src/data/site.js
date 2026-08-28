@@ -121,6 +121,7 @@ export const site = {
       slug: 'miele-millefiori-primaverile',
       name: 'Miele Millefiori Primaverile',
       image: 'barattoli_di_mile_millefiori',
+      imgPos: 'center 70%',
       color: '#f6d98a',
       price: '€ 5,00 (500 g) · € 9,00/kg',
       priceFrom: 'da € 5,00',
