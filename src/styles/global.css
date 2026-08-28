@@ -389,7 +389,7 @@ strong {
     margin-left: auto;
   }
   .header-actions {
-    margin-left: 0;
+    margin-left: 1.5rem;
   }
   .nav-toggle {
     display: none;
