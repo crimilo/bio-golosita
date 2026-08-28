@@ -145,6 +145,10 @@ strong {
   margin-bottom: var(--space-4);
 }
 
+.section-head h2 {
+  margin-bottom: 0.8rem;
+}
+
 .eyebrow {
   font-family: var(--font-hand);
   font-size: 1.45rem;
@@ -272,6 +276,7 @@ strong {
   display: none;
   align-items: center;
   gap: 1.6rem;
+  margin-left: auto;
 }
 
 .nav a {
@@ -537,6 +542,10 @@ strong {
   gap: 0.75rem;
   margin-top: var(--space-2);
 }
+
+.split-text h2 {
+  margin-bottom: 0.8rem;
+}
 .split-text li {
   display: flex;
   gap: 0.6rem;
@@ -760,6 +769,7 @@ strong {
   box-shadow: var(--shadow-sm);
   display: grid;
   gap: var(--space-3);
+  align-content: start;
 }
 
 .contact-row {
@@ -789,6 +799,7 @@ strong {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  align-items: center;
 }
 
 .contact-map-note {
@@ -1068,4 +1079,21 @@ strong {
 }
 .gap-2 {
   gap: var(--space-2);
+}
+
+/* ---------- mobile refinements ---------- */
+@media (max-width: 560px) {
+  .btn-lg {
+    padding: 0.8em 1.2em;
+    font-size: 0.95rem;
+  }
+
+  .contact-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-cta .btn {
+    width: 100%;
+  }
 }
