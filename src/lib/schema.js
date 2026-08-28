@@ -62,7 +62,7 @@ export function product(honey, pathname) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: `${honey.name} — Bio e Golosità`,
+    name: `${honey.name} — Bio & Golosità`,
     image: [imgUrl(honey.image)],
     description: honey.intro.slice(0, 200),
     brand: { '@type': 'Brand', name: site.name },

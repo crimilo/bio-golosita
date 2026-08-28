@@ -1,6 +1,6 @@
-# Bio e Golosità — Sito web
+# Bio & Golosità — Sito web
 
-Sito dell'azienda apistica **Bio e Golosità di Antoci Raffaele** — miele di api
+Sito dell'azienda apistica **Bio & Golosità di Antoci Raffaele** — miele di api
 proprie a Cassano d'Adda (MI), provincia di Milano.
 
 Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Pages**.

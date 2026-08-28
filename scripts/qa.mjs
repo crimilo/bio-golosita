@@ -15,8 +15,10 @@ const pages = [
 let bad = 0;
 for (const p of pages) {
   const h = readFileSync(p, 'utf8');
-  const title = h.match(/<title>(.*?)<\/title>/)?.[1]?.replace(/&#39;/g, "'") ?? '';
-  const desc = h.match(/name="description" content="([^"]*)"/)?.[1] ?? '';
+  const unescape = (s) =>
+    s.replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+  const title = unescape(h.match(/<title>(.*?)<\/title>/)?.[1] ?? '');
+  const desc = unescape(h.match(/name="description" content="([^"]*)"/)?.[1] ?? '');
   console.log(`\n${p}`);
   console.log(`  title (${title.length}): ${title}`);
   console.log(`  desc  (${desc.length}): ${desc.slice(0, 90)}...`);
