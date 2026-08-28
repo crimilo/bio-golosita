@@ -91,16 +91,6 @@ export default {
       }
     }
   },
-  "barattolo_di_miele": {
-    "width": 522,
-    "height": 1160,
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 889
-      }
-    }
-  },
   "raffaele_che_mostra_larnia_in_mano": {
     "width": 1500,
     "height": 2000,
@@ -134,6 +124,20 @@ export default {
     }
   },
   "miele_di_castagno": {
+    "width": 688,
+    "height": 516,
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      }
+    }
+  },
+  "miele_millefiori_estivo": {
     "width": 688,
     "height": 516,
     "variants": {

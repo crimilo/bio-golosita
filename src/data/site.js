@@ -183,7 +183,7 @@ export const site = {
     {
       slug: 'miele-millefiori-estivo',
       name: 'Miele Millefiori Estivo',
-      image: 'barattolo_di_miele',
+      image: 'miele_millefiori_estivo',
       color: '#e8b45a',
       price: '€ 5,00 (500 g) · € 9,00/kg',
       priceFrom: 'da € 5,00',
