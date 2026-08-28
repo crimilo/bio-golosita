@@ -13,9 +13,16 @@
   const closeBtn = lb.querySelector('.lightbox-close');
 
   const open = (img) => {
+    lbImg.removeAttribute('width');
+    lbImg.removeAttribute('height');
+    lbImg.style.maxWidth = '';
     lbImg.src = img.dataset.full || img.currentSrc || img.src;
     lbImg.alt = img.alt || '';
     lbImg.classList.remove('zoomed');
+    // non ingrandire mai oltre la risoluzione reale dell'immagine
+    lbImg.onload = () => {
+      if (lbImg.naturalWidth > 0) lbImg.style.maxWidth = `${lbImg.naturalWidth}px`;
+    };
     lb.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
