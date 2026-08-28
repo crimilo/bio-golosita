@@ -396,6 +396,27 @@ strong {
   }
 }
 
+/* schermi molto piccoli (< 380px): header compatto, niente sovrapposizioni */
+@media (max-width: 380px) {
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+  .logo-text {
+    font-size: 1rem;
+  }
+  .logo-text small {
+    display: none;
+  }
+  .header-cta {
+    padding: 0 0.85em;
+    font-size: 0.85rem;
+  }
+  .header-actions {
+    gap: 0.4rem;
+  }
+}
+
 /* ---------- hero ---------- */
 .hero {
   padding-top: calc(var(--header-h) + var(--space-5));
