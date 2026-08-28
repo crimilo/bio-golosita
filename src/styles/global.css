@@ -1222,6 +1222,28 @@ strong {
   padding-left: 0.9rem;
 }
 
+.prose .specs {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+.prose .specs li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.prose .specs strong {
+  color: var(--ink);
+  min-width: 140px;
+  flex: none;
+}
+
 /* ---------- utility ---------- */
 .mt-2 {
   margin-top: var(--space-2);

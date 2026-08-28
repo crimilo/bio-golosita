@@ -86,7 +86,7 @@ export const site = {
       description:
         'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 351 537 6719.',
       intro:
-        'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nei boschi e nelle campagne della Martesana e della Gera d\'Adda, dove la robinia fiorisce tra maggio e giugno.',
+        'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nei boschi e nelle campagne della Martesana e della Gera d\'Adda, dove la robinia fiorisce tra fine maggio e giugno. Essendo ricco di fruttosio, ha un indice glicemico più basso rispetto allo zucchero da cucina: si scioglie in bocca e non copre mai gli altri sapori.',
       harvest: 'Raccolto tra maggio e giugno',
       characteristics: [
         'Colore: giallo paglierino, quasi trasparente',
@@ -101,6 +101,14 @@ export const site = {
         'A base di fruttosio: resta liquido a lungo e viene digerito facilmente da molti',
         'Energia a rapido assorbimento, ideale prima di una passeggiata o dello sport',
         'Gusto delicato, apprezzato anche da chi di solito non ama il miele',
+      ],
+      specs: [
+        { label: 'Colore', value: 'giallo paglierino, quasi trasparente' },
+        { label: 'Profumo e sapore', value: 'delicato e floreale, dolce ma non stucchevole' },
+        { label: 'Cristallizzazione', value: 'praticamente mai, grazie al fruttosio' },
+        { label: 'Raccolto', value: 'fine maggio – giugno' },
+        { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
+        { label: 'Abbinamenti', value: 'tisane, latte, yogurt, frutta fresca' },
       ],
       faq: [
         {
@@ -129,7 +137,7 @@ export const site = {
       description:
         'Miele millefiori primaverile di api proprie a Cassano d\'Adda (MI): floreale, cremoso, dal profumo di frutteto in fiore. Ordinalo su WhatsApp o al telefono.',
       intro:
-        'Il millefiori primaverile raccoglie i nettari dei primi fiori dell\'anno: pesco, ciliegio, susino e i fiori di campo che sbocciano lungo l\'Adda e nei frutteti della Martesana. È un miele floreale e avvolgente, dal profumo intenso di primavera.',
+        'Il millefiori primaverile raccoglie i nettari dei primi fiori dell\'anno: pesco, ciliegio, susino e i fiori di campo che sbocciano lungo l\'Adda e nei frutteti della Martesana. È un miele floreale e avvolgente, dal profumo intenso di primavera. È il più "di stagione" che produco: cambia leggermente ogni anno, perché racconta il clima e le fioriture di quella primavera.',
       harvest: 'Raccolto tra aprile e maggio',
       characteristics: [
         'Colore: ambra chiaro, dorato',
@@ -144,6 +152,14 @@ export const site = {
         'Emolliente per la gola, da gustare da solo o nel latte caldo della sera',
         'Fonte di energia naturale, dolce ma mai stucchevole',
         'Versatile: va bene a colazione, in cucina e sui formaggi freschi',
+      ],
+      specs: [
+        { label: 'Colore', value: 'ambra chiaro, dorato' },
+        { label: 'Profumo e sapore', value: 'floreale, con note di frutteto' },
+        { label: 'Cristallizzazione', value: 'fina e naturale, dopo qualche mese' },
+        { label: 'Raccolto', value: 'aprile – maggio' },
+        { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
+        { label: 'Abbinamenti', value: 'pane caldo, latte, ricotta e formaggi freschi' },
       ],
       faq: [
         {
@@ -171,7 +187,7 @@ export const site = {
       description:
         'Miele millefiori estivo di api proprie a Cassano d\'Adda (MI): più intenso e corposo, con note di tiglio e fiori di campo. Ordinalo oggi: consegna in zona.',
       intro:
-        'Il millefiori estivo è il miele delle grandi fioriture: tiglio, phacelia, trifoglio e i fiori spontanei delle golene dell\'Adda. Più scuro e intenso del primaverile, ha un carattere deciso che piace a chi cerca un miele "con corpo".',
+        'Il millefiori estivo è il miele delle grandi fioriture: tiglio, phacelia, trifoglio e i fiori spontanei delle golene dell\'Adda. Più scuro e più ricco di minerali del primaverile — le fioriture estive sono più concentrate — ha un carattere deciso che piace a chi cerca un miele "con corpo".',
       harvest: 'Raccolto tra giugno e luglio',
       characteristics: [
         'Colore: ambra dorato, più carico in autunno',
@@ -186,6 +202,14 @@ export const site = {
         'Le note di tiglio sono tradizionalmente associate a un momento di relax',
         'Corposo e aromatico: bastano piccole quantità per dare carattere a un piatto',
         'Perfetto con formaggi stagionati e con i dolci della tradizione',
+      ],
+      specs: [
+        { label: 'Colore', value: 'ambra dorato, più carico' },
+        { label: 'Profumo e sapore', value: 'corposo, con note di tiglio e caramello' },
+        { label: 'Cristallizzazione', value: 'lenta e grossolana' },
+        { label: 'Raccolto', value: 'giugno – luglio' },
+        { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
+        { label: 'Abbinamenti', value: 'colazione, glassature di carne, formaggi stagionati' },
       ],
       faq: [
         {
@@ -213,7 +237,7 @@ export const site = {
       description:
         'Miele di castagno di api proprie a Cassano d\'Adda (MI): scuro, intenso, leggermente amaro. Perfetto con formaggi stagionati. Ordina al telefono.',
       intro:
-        'Il miele di castagno è il più caratteristico dei nostri mieli: scuro, intenso e leggermente amarognolo, con un profumo forte e persistente. È il compagno ideale dei formaggi stagionati e dei piatti robusti della nostra tradizione.',
+        'Il miele di castagno è il più caratteristico dei nostri mieli: scuro, intenso e leggermente amarognolo, con un profumo forte e persistente. È tra i mieli più ricchi di sali minerali — in particolare ferro e potassio — ed è il compagno ideale dei formaggi stagionati e dei piatti robusti della nostra tradizione.',
       harvest: 'Raccolto tra giugno e luglio',
       characteristics: [
         'Colore: ambra scuro, quasi bruno',
@@ -228,6 +252,14 @@ export const site = {
         'Tradizionalmente usato per la gola e le vie respiratorie',
         'Sapore intenso e persistente: una piccola quantità dà carattere a molti piatti',
         'Lento a cristallizzare, si conserva bene anche a lungo',
+      ],
+      specs: [
+        { label: 'Colore', value: 'ambra scuro, quasi bruno' },
+        { label: 'Profumo e sapore', value: 'intenso, legnoso, con retrogusto amarognolo' },
+        { label: 'Cristallizzazione', value: 'molto lenta' },
+        { label: 'Raccolto', value: 'giugno – luglio' },
+        { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
+        { label: 'Abbinamenti', value: 'formaggi stagionati, carni rosse, polenta, dolci speziati' },
       ],
       faq: [
         {

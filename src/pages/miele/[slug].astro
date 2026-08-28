@@ -114,15 +114,13 @@ const local = "Cassano d'Adda (MI)";
             </li>
           ))}
         </ul>
-        <p class="disclaimer">
-          Il miele è un alimento: le proprietà descritte sono quelle
-          tradizionalmente riconosciute e non sostituiscono il parere del
-          medico.
-        </p>
-        <h3>Caratteristiche principali</h3>
-        <ul class="chips" style="border-radius:0;background:none;padding:0;">
-          {honey.characteristics.map((c) => (
-            <li style="background: var(--surface);">{c}</li>
+        <h3>Scheda tecnica</h3>
+        <ul class="specs">
+          {honey.specs.map((s) => (
+            <li>
+              <strong>{s.label}:</strong>
+              <span>{s.value}</span>
+            </li>
           ))}
         </ul>
       </div>
