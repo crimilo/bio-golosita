@@ -44,7 +44,8 @@ import { site } from '../data/site';
         </div>
         <p class="contact-map-note">
           <Icons name="info" size={18} />
-          Siamo in attesa della scheda Google Maps: presto potrai trovarci anche lì.
+          Stai cercando di raggiungerci? Usa la mappa qui sotto o il pulsante
+          "Apri in Google Maps".
         </p>
       </div>
 
@@ -70,6 +71,31 @@ import { site } from '../data/site';
           Rispondiamo di persona: niente call center. Se non rispondiamo subito,
           siamo in apiario: lasciaci un messaggio e ti richiamiamo appena possibile.
         </p>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <iframe
+        src="https://maps.google.com/maps?q=Via+Salvo+D%27Acquisto+9,+20062+Cassano+d%27Adda+(MI)&z=15&hl=it&output=embed"
+        height="340"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mappa: Bio e Golosità, Via Salvo D'Acquisto 9, Cassano d'Adda (MI)"
+        allowfullscreen
+      ></iframe>
+      <div class="map-actions">
+        <p>
+          {site.address.street}, {site.address.zip} {site.address.city} ({site.address.province})
+        </p>
+        <a
+          class="btn btn-ghost"
+          href="https://www.google.com/maps/search/?api=1&query=Via+Salvo+D%27Acquisto+9,+20062+Cassano+d%27Adda+(MI)"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icons name="pin" size={18} />
+          Apri in Google Maps
+        </a>
       </div>
     </div>
   </div>

@@ -24,6 +24,7 @@ export function localBusiness() {
     description:
       'Apicoltore a Cassano d\'Adda (Milano): miele di acacia, millefiori primaverile, millefiori estivo e castagno, prodotto con api proprie e non filtrato.',
     url: `${site.domain}/`,
+    hasMap: 'https://www.google.com/maps/search/?api=1&query=Via+Salvo+D%27Acquisto+9,+20062+Cassano+d%27Adda+(MI)',
     telephone: site.phoneDisplay,
     image: `${site.domain}/og.jpg`,
     logo: `${site.domain}/favicon.svg`,
