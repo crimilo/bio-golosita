@@ -1,0 +1,45 @@
+---
+// Lightbox globale: tap per zoom full-screen, tap per de-zoom.
+---
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima immagine">
+  <img src="" alt="" />
+  <button class="lightbox-close" type="button" aria-label="Chiudi">✕</button>
+  <p class="lightbox-hint">Tocca l'immagine per ingrandire · tocca di nuovo per ridurre</p>
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  const closeBtn = lb.querySelector('.lightbox-close');
+
+  const open = (img) => {
+    lbImg.src = img.dataset.full || img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    lbImg.classList.remove('zoomed');
+    lb.setAttribute('open', '');
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    lb.removeAttribute('open');
+    lbImg.classList.remove('zoomed');
+    document.body.style.overflow = '';
+  };
+
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('.lightbox-target');
+    if (t && t.tagName === 'IMG') {
+      e.preventDefault();
+      open(t);
+    } else if (e.target === lb || e.target === closeBtn) {
+      close();
+    }
+  });
+
+  lbImg.addEventListener('click', () => {
+    lbImg.classList.toggle('zoomed');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.hasAttribute('open')) close();
+  });
+</script>

@@ -1,0 +1,63 @@
+---
+import Logo from './Logo.astro';
+import Icons from './Icons.astro';
+import { site } from '../data/site';
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <Logo />
+        <p class="mt-2" style="max-width: 30rem;">
+          {site.tagline}. {site.legalName}: miele di api proprie, non filtrato,
+          raccolto nelle campagne della Martesana e della Gera d'Adda.
+        </p>
+      </div>
+
+      <div>
+        <h4>I nostri mieli</h4>
+        <ul>
+          {site.honeys.map((h) => (
+            <li><a href={`/miele/${h.slug}/`}>{h.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>
+            <a href={site.phoneHref}>{site.phoneDisplay}</a>
+          </li>
+          <li>
+            <a href={site.whatsapp} rel="noopener" target="_blank">WhatsApp</a>
+          </li>
+          <li>
+            <a href="/contatti/">Pagina contatti</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Sede</h4>
+        <address>
+          {site.legalName}
+          <br />
+          {site.address.street}
+          <br />
+          {site.address.zip} {site.address.city} ({site.address.province})
+          <br />
+          {site.address.region}, {site.address.country}
+        </address>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {new Date().getFullYear()} Bio e Golosità · Antoci Raffaele · Tutti i diritti riservati</span>
+      <span>
+        Miele prodotto e confezionato con api proprie · {site.experienceYears} anni di esperienza
+      </span>
+    </div>
+  </div>
+</footer>

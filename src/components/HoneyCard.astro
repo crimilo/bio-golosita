@@ -1,0 +1,33 @@
+---
+import Picture from './Picture.astro';
+import Icons from './Icons.astro';
+
+interface Props {
+  honey: any;
+  eager?: boolean;
+}
+const { honey, eager = false } = Astro.props;
+const href = `/miele/${honey.slug}/`;
+---
+
+<a class="honey-card" href={href}>
+  <div class="honey-card-media">
+    <Picture
+      base={honey.image}
+      alt={`${honey.name} — Bio e Golosità, Cassano d'Adda`}
+      sizes="(min-width: 900px) 30vw, 100vw"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      class=""
+    />
+    <span class="honey-card-price">{honey.price}</span>
+  </div>
+  <div class="honey-card-body">
+    <h3>{honey.name}</h3>
+    <p>{honey.characteristics[1]}</p>
+    <span class="card-link">
+      Scopri il miele
+      <Icons name="arrow" size={18} />
+    </span>
+  </div>
+</a>

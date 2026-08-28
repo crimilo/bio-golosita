@@ -1,0 +1,59 @@
+---
+// Responsive <picture> con AVIF + WebP, dimensioni esplicite (anti-CLS),
+// lazy load opzionale e zoom lightbox su tap.
+import manifest from '../data/img-manifest.js';
+
+interface Props {
+  base: string; // nome base del file (senza estensione)
+  alt: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  zoomable?: boolean;
+  width?: number; // override larghezza intrinseca
+  height?: number; // override altezza intrinseca
+}
+
+const {
+  base,
+  alt,
+  sizes = '100vw',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  zoomable = true,
+  width,
+  height,
+} = Astro.props;
+
+const entry = manifest[base];
+const variants = Object.keys(entry.variants)
+  .map(Number)
+  .sort((a, b) => a - b);
+
+const mkSrcset = (ext) =>
+  variants.map((w) => `/img/${base}-${w}.${ext} ${w}w`).join(', ');
+
+const largest = variants[variants.length - 1];
+const imgW = width ?? entry.variants[largest].width;
+const imgH = height ?? entry.variants[largest].height;
+const cls = `${Astro.props.class ?? ''} ${zoomable ? 'lightbox-target' : ''}`.trim();
+---
+
+<picture>
+  <source type="image/avif" srcset={mkSrcset('avif')} sizes={sizes} />
+  <source type="image/webp" srcset={mkSrcset('webp')} sizes={sizes} />
+  <img
+    src={`/img/${base}-${largest}.webp`}
+    srcset={mkSrcset('webp')}
+    sizes={sizes}
+    width={imgW}
+    height={imgH}
+    alt={alt}
+    loading={loading}
+    decoding="async"
+    fetchpriority={fetchpriority}
+    class={cls}
+    data-full={`/img/${base}-${largest}.avif`}
+  />
+</picture>

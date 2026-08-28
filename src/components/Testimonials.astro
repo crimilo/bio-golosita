@@ -1,0 +1,31 @@
+---
+import Icons from './Icons.astro';
+import { site } from '../data/site';
+---
+
+<section class="section section--soft" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="section-head center" style="margin-inline:auto;">
+      <span class="eyebrow">la parola ai clienti</span>
+      <h2 id="reviews-title">Cosa dicono di noi</h2>
+    </div>
+    <div class="reviews-grid">
+      {
+        site.reviews.map((r) => (
+          <figure class="review">
+            <div class="review-stars" role="img" aria-label="5 stelle su 5">
+              {[0, 1, 2, 3, 4].map(() => <Icons name="star" size={18} />)}
+            </div>
+            <blockquote>
+              <p>“{r.text}”</p>
+            </blockquote>
+            <figcaption>
+              <span class="review-author">{r.name}</span>
+              <span class="review-town">· {r.town}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

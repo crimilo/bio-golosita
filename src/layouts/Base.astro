@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsApp from '../components/WhatsApp.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { site } from '../data/site';
+import fontCss from '../assets/fonts.css?raw';
+
+interface Props {
+  title: string;
+  description: string;
+  pathname?: string;
+  ogImage?: string;
+  type?: string;
+  jsonLd?: any[];
+  preloadHero?: boolean;
+}
+
+const {
+  title,
+  description,
+  pathname = '/',
+  ogImage = '/og.jpg',
+  type = 'website',
+  jsonLd = [],
+  preloadHero = false,
+} = Astro.props;
+
+const canonical = `${site.domain}${pathname}`;
+const ogUrl = `${site.domain}${pathname}`;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta name="theme-color" content="#9a6200" />
+    <meta name="robots" content="index, follow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content={type} />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:image" content={`${site.domain}${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${site.domain}${ogImage}`} />
+
+    <!-- fonts: inline @font-face (subset latin + latin-ext, display swap) -->
+    <style>{fontCss}</style>
+
+    {
+      preloadHero && (
+        <>
+          <link
+            rel="preload"
+            as="image"
+            href="/img/3_baratooli_di_miele_di_acacia_millefiori-1200.avif"
+            fetchpriority="high"
+          />
+        </>
+      )
+    }
+    <link
+      rel="preload"
+      href="/fonts/fraunces-700-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/inter-400-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/caveat-500-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    {
+      jsonLd.map((obj) => (
+        <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+      ))
+    }
+  </head>
+
+  <body>
+    <Header pathname={pathname} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <WhatsApp />
+    <Lightbox />
+  </body>
+</html>

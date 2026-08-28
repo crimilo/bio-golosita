@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Icons from '../components/Icons.astro';
+import { site } from '../data/site';
+import { localBusiness, faqPage } from '../lib/schema';
+
+const title = 'Contatti Miele Cassano d\'Adda | Bio e Golosità';
+const description =
+  "Contatta Bio e Golosità a Cassano d'Adda (MI): telefono, WhatsApp, indirizzo e orari. Ordina il tuo miele in pochi secondi, ritiro o consegna in zona.";
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname="/contatti/"
+  jsonLd={[localBusiness(), faqPage([
+    {
+      q: 'Come posso ordinare il miele?',
+      a: `Chiama il ${site.phoneDisplay} o scrivici su WhatsApp: ti confermiamo disponibilità e modalità di ritiro o consegna a Cassano d'Adda e nei comuni vicini.`,
+    },
+    {
+      q: 'Dove si trova l\'azienda?',
+      a: `Siamo in ${site.address.street}, ${site.address.zip} ${site.address.city} (${site.address.province}). Ritiro diretto negli orari indicati, senza appuntamento.`,
+    },
+  ])]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Percorso">
+        <a href="/">Home</a>
+        <span>/</span>
+        <span>Contatti</span>
+      </nav>
+      <h1>Contattaci</h1>
+      <p>
+        Il modo più veloce per ordinare il nostro miele: una chiamata o un
+        messaggio WhatsApp. Siamo a Cassano d'Adda (MI), raggiungibili in poco
+        tempo da Milano, Bergamo, Treviglio e Gorgonzola.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="how-title" style="padding-top: var(--space-4);">
+    <div class="container">
+      <div class="features" id="how-title">
+        <div class="feature">
+          <div class="feature-icon"><Icons name="phone" size={26} /></div>
+          <h3>1 · Chiama o scrivi</h3>
+          <p>
+            <a href={site.phoneHref} style="font-weight:700;color:var(--amber-strong);">
+              {site.phoneDisplay}
+            </a>
+            {' '}— ti rispondiamo noi, in persona.
+          </p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="whatsapp" size={26} /></div>
+          <h3>2 · WhatsApp</h3>
+          <p>
+            <a href={site.whatsapp} style="font-weight:700;color:var(--amber-strong);" target="_blank" rel="noopener">
+              Scrivici su WhatsApp
+            </a>
+            {' '}— rispondiamo appena possibile, anche in apiario.
+          </p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="pin" size={26} /></div>
+          <h3>3 · Ritiro o consegna</h3>
+          <p>
+            Ritiro in azienda a Cassano d'Adda o consegna concordata nei comuni
+            della Martesana, della Gera d'Adda e della provincia di Milano.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</Base>

@@ -1,0 +1,226 @@
+// ============================================================
+//  SITO "Bio e Golosità" — SORGENTE UNICA di dati e contenuti
+//  Modifica qui: telefono, prezzi, orari, recensioni, ecc.
+// ============================================================
+
+export const site = {
+  name: 'Bio e Golosità',
+  legalName: 'Azienda Agricola Bio e Golosità di Antoci Raffaele',
+  owner: 'Antoci Raffaele',
+  tagline: 'Miele genuino di api proprie a Cassano d\'Adda',
+  domain: 'https://bioegolosita.it',
+
+  // >>> TODO: sostituire con il numero reale prima del lancio <<<
+  phoneDisplay: '+39 320 000 0000',
+  phoneHref: 'tel:+393200000000',
+  whatsapp: 'https://wa.me/393200000000?text=Ciao%2C%20vorrei%20informazioni%20sul%20vostro%20miele',
+
+  address: {
+    street: 'Via Salvo D\'Acquisto 9',
+    city: 'Cassano d\'Adda',
+    zip: '20062',
+    province: 'MI',
+    region: 'Lombardia',
+    country: 'Italia',
+    geo: { lat: 45.5354, lng: 9.5254 },
+  },
+
+  // >>> TODO: verificare con il titolare <<<
+  hours: 'Lun–Sab 9:00–19:00 · Dom su appuntamento',
+
+  founded: 2021, // 5 anni di esperienza
+  experienceYears: 5,
+  priceRange: '€€',
+
+  // Zone servite — citate in modo naturale, senza keyword stuffing
+  areaServed: [
+    'Cassano d\'Adda',
+    'Groppello d\'Adda',
+    'Treviglio',
+    'Gorgonzola',
+    'Melzo',
+    'Pozzuolo Martesana',
+    'Inzago',
+    'Rivolta d\'Adda',
+    'Vailate',
+    'Caravaggio',
+    'Fara Gera d\'Adda',
+    'Cernusco sul Naviglio',
+  ],
+
+  // >>> Recensioni: segnaposto finché non esiste la scheda Google.
+  // Sostituirle con quelle reali appena il profilo Google Business Profile è attivo.
+  // NESSUNA recensione finzionale va marcata con schema Review/AggregateRating. <<<
+  reviews: [
+    {
+      name: 'Maria R.',
+      town: 'Cassano d\'Adda',
+      text: 'Miele millefiori buonissimo, si sente che è appena raccolto. Raffaele è gentilissimo e disponibile, ordino sempre da lui.',
+    },
+    {
+      name: 'Luca B.',
+      town: 'Treviglio',
+      text: 'Il miele di acacia non cristallizza mai ed è davvero delicato. Qualità superiore rispetto a quello del supermercato.',
+    },
+    {
+      name: 'Giulia M.',
+      town: 'Gorgonzola',
+      text: 'Preso il miele di castagno per un regalo: sapore intenso che ha conquistato tutti. Consegna rapida e prezzo onesto.',
+    },
+    {
+      name: 'Andrea P.',
+      town: 'Pozzuolo Martesana',
+      text: 'Miele genuino, non filtrato, con il gusto di una volta. Si vede che le api sono curate con passione.',
+    },
+  ],
+
+  honeys: [
+    {
+      slug: 'miele-di-acacia',
+      name: 'Miele di Acacia',
+      image: '3_baratooli_di_miele_di_acacia_millefiori',
+      color: '#f3e2a1',
+      price: 'da € 9,00/kg',
+      title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio e Golosità',
+      description:
+        'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 320 000 0000.',
+      intro:
+        'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nei boschi e nelle campagne della Martesana e della Gera d\'Adda, dove la robinia fiorisce tra maggio e giugno.',
+      harvest: 'Raccolto tra maggio e giugno',
+      characteristics: [
+        'Colore: giallo paglierino, quasi trasparente',
+        'Gusto: dolce e delicato, note floreali',
+        'Non cristallizza praticamente mai',
+        'Perfetto per tisane, latte e yogurt',
+      ],
+      uses:
+        'Il miele di acacia è ideale per la colazione: non altera il sapore di tisane, latte e caffè e resta fluido anche in inverno. Ottimo anche per dolcificare yogurt e frutta fresca, oppure spalmato su pane e fette biscottate.',
+      faq: [
+        {
+          q: 'Il miele di acacia cristallizza?',
+          a: 'No, è uno dei pochi mieli che resta liquido molto a lungo grazie al basso contenuto di glucosio. Conservato in un luogo fresco e asciutto mantiene la sua consistenza fluida per molti mesi.',
+        },
+        {
+          q: 'Quando viene raccolto il miele di acacia?',
+          a: 'La fioritura della robinia nella zona di Cassano d\'Adda avviene tra la fine di maggio e giugno. Il miele viene smielato a freddo e non filtrato, per conservare intatte tutte le proprietà.',
+        },
+        {
+          q: 'Come si conserva il miele di acacia?',
+          a: 'In un barattolo ben chiuso, al riparo dalla luce e dall\'umidità, a temperatura ambiente. Non serve il frigorifero.',
+        },
+      ],
+    },
+    {
+      slug: 'miele-millefiori-primaverile',
+      name: 'Miele Millefiori Primaverile',
+      image: 'barattoli_di_mile_millefiori',
+      color: '#f6d98a',
+      price: 'da € 9,00/kg',
+      title: 'Miele Millefiori Primaverile a Cassano d\'Adda | Bio e Golosità',
+      description:
+        'Miele millefiori primaverile di api proprie a Cassano d\'Adda (MI): floreale, cremoso, dal profumo di frutteto in fiore. Ordinalo su WhatsApp o al telefono.',
+      intro:
+        'Il millefiori primaverile raccoglie i nettari dei primi fiori dell\'anno: pesco, ciliegio, susino e i fiori di campo che sbocciano lungo l\'Adda e nei frutteti della Martesana. È un miele floreale e avvolgente, dal profumo intenso di primavera.',
+      harvest: 'Raccolto tra aprile e maggio',
+      characteristics: [
+        'Colore: ambra chiaro, dorato',
+        'Gusto: floreale, con note di frutteto',
+        'Consistenza: cremoso, cristallizza finemente',
+        'Aromatico al naso, perfetto per la colazione',
+      ],
+      uses:
+        'Perfetto spalmato su pane caldo e fette biscottate, ma anche per dolcificare il latte dei bambini e preparare dolci semplici. Il suo profumo floreale esalta anche formaggi freschi e ricotta.',
+      faq: [
+        {
+          q: 'Che differenza c\'è tra millefiori primaverile ed estivo?',
+          a: 'Il primaverile viene dai fiori dei frutteti e delle prime fioriture: è più chiaro, delicato e profumato. L\'estivo raccoglie i nettari delle fioriture più tarde ed è più intenso e corposo.',
+        },
+        {
+          q: 'Il millefiori primaverile cristallizza?',
+          a: 'Sì, è un processo naturale che avviene nel giro di alcuni mesi. Basta scaldare delicatamente il barattolo a bagnomaria per riportarlo fluido senza rovinarne le proprietà.',
+        },
+        {
+          q: 'Da dove vengono le api?',
+          a: 'Gli apiari sono situati tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
+        },
+      ],
+    },
+    {
+      slug: 'miele-millefiori-estivo',
+      name: 'Miele Millefiori Estivo',
+      image: 'barattolo_di_miele',
+      color: '#e8b45a',
+      price: 'da € 9,00/kg',
+      title: 'Miele Millefiori Estivo a Cassano d\'Adda | Bio e Golosità',
+      description:
+        'Miele millefiori estivo di api proprie a Cassano d\'Adda (MI): più intenso e corposo, con note di tiglio e fiori di campo. Ordinalo oggi: consegna in zona.',
+      intro:
+        'Il millefiori estivo è il miele delle grandi fioriture: tiglio, phacelia, trifoglio e i fiori spontanei delle golene dell\'Adda. Più scuro e intenso del primaverile, ha un carattere deciso che piace a chi cerca un miele "con corpo".',
+      harvest: 'Raccolto tra giugno e luglio',
+      characteristics: [
+        'Colore: ambra dorato, più carico in autunno',
+        'Gusto: corposo, con note di tiglio e caramello',
+        'Consistenza: denso, cristallizzazione lenta e grossolana',
+        'Ideale in cucina, anche per piatti salati',
+      ],
+      uses:
+        'Ottimo per la colazione ma anche in cucina: glassa carni e verdure, dolcifica le tisane della sera e si sposa benissimo con formaggi stagionati. È il miele preferito da chi ama i sapori decisi.',
+      faq: [
+        {
+          q: 'Perché il millefiori estivo è più scuro?',
+          a: 'Perché raccoglie nettari di fioriture estive (tiglio, phacelia, fiori di campo) che producono mieli più colorati e ricchi di minerali rispetto alle fioriture primaverili.',
+        },
+        {
+          q: 'Il miele millefiori estivo è adatto ai bambini?',
+          a: 'Sì, come tutti i nostri mieli non subisce trattamenti termici né filtrazioni aggressive. Ricorda solo che il miele non va dato ai bambini sotto i 12 mesi.',
+        },
+        {
+          q: 'Fate consegne anche a Treviglio e Gorgonzola?',
+          a: 'Sì, consegnamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda e dintorni. Scrivici su WhatsApp per gli orari.',
+        },
+      ],
+    },
+    {
+      slug: 'miele-di-castagno',
+      name: 'Miele di Castagno',
+      image: 'barattolo_di_miele',
+      color: '#8a4b1f',
+      price: 'da € 11,00/kg',
+      title: 'Miele di Castagno a Cassano d\'Adda (MI) | Bio e Golosità',
+      description:
+        'Miele di castagno di api proprie a Cassano d\'Adda (MI): scuro, intenso, leggermente amaro. Perfetto con formaggi stagionati. Ordina al telefono.',
+      intro:
+        'Il miele di castagno è il più caratteristico dei nostri mieli: scuro, intenso e leggermente amarognolo, con un profumo forte e persistente. È il compagno ideale dei formaggi stagionati e dei piatti robusti della nostra tradizione.',
+      harvest: 'Raccolto tra giugno e luglio',
+      characteristics: [
+        'Colore: ambra scuro, quasi bruno',
+        'Gusto: intenso, legnoso, con retrogusto amarognolo',
+        'Ricco di sali minerali e ferro',
+        'Cristallizza molto lentamente',
+      ],
+      uses:
+        'Il miele di castagno esalta formaggi stagionati e erborinati, accompagna arrosti e carni rosse, polenta e insalate con noci. In pasticceria è perfetto per panpepato, biscotti speziati e dolci autunnali.',
+      faq: [
+        {
+          q: 'Il miele di castagno è amaro?',
+          a: 'Ha un caratteristico retrogusto leggermente amarognolo, segno della sua autenticità. Chi lo ama, lo considera il più buono: provalo con un formaggio stagionato per capirne la forza.',
+        },
+        {
+          q: 'Il miele di castagno è adatto in cucina?',
+          a: 'Assolutamente sì: è un miele da chef. Ottimo con formaggi stagionati, carni rosse, polenta e nella preparazione di dolci speziati. Resiste bene anche alla cottura.',
+        },
+        {
+          q: 'Dove trovo i castagni nella zona di Cassano d\'Adda?',
+          a: 'Le api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda e delle colline tra Bergamo e Cremona, a poca distanza dai nostri apiari.',
+        },
+      ],
+    },
+  ],
+};
+
+export const nav = [
+  { href: '/#mieli', label: 'I nostri mieli' },
+  { href: '/chi-siamo', label: 'Chi siamo' },
+  { href: '/#galleria', label: 'Galleria' },
+  { href: '/contatti', label: 'Contatti' },
+];

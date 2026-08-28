@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import HoneyCard from '../../components/HoneyCard.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import Icons from '../../components/Icons.astro';
+import { site } from '../../data/site';
+import { product, faqPage, breadcrumbs, localBusiness } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return site.honeys.map((h) => ({
+    params: { slug: h.slug },
+    props: { honey: h },
+  }));
+}
+
+const { honey } = Astro.props;
+const pathname = `/miele/${honey.slug}/`;
+
+const local = "Cassano d'Adda (MI)";
+---
+
+<Base
+  title={honey.title}
+  description={honey.description}
+  pathname={pathname}
+  type="product"
+  jsonLd={[
+    localBusiness(),
+    product(honey, pathname),
+    faqPage(honey.faq),
+    breadcrumbs([
+      { name: 'Home', path: '/' },
+      { name: 'I nostri mieli', path: '/#mieli' },
+      { name: honey.name, path: pathname },
+    ]),
+  ]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Percorso">
+        <a href="/">Home</a>
+        <span>/</span>
+        <a href="/#mieli">I nostri mieli</a>
+        <span>/</span>
+        <span>{honey.name}</span>
+      </nav>
+      <h1>{honey.name}</h1>
+      <p>
+        {honey.name} di api proprie a {local}, in provincia di Milano: non
+        filtrato, smielato a freddo e raccolto nelle campagne della Martesana e
+        della Gera d'Adda. {honey.harvest}.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: var(--space-3);">
+    <div class="container product-grid">
+      <div class="product-media">
+        <Picture
+          base={honey.image}
+          alt={`${honey.name} — Bio e Golosità, Cassano d'Adda (MI)`}
+          sizes="(min-width: 900px) 46vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div>
+        <p class="product-price">{honey.price}</p>
+        <p class="mt-2">
+          {honey.harvest}. Prodotto da Raffaele Antoci con api proprie, in
+          vendita diretta a Cassano d'Adda con consegna nei comuni vicini.
+        </p>
+
+        <ul class="chips">
+          {honey.characteristics.map((c) => <li>{c}</li>)}
+        </ul>
+
+        <div class="contact-cta mt-3">
+          <a class="btn btn-primary btn-lg" href={site.phoneHref}>
+            <Icons name="phone" size={20} />
+            Chiama ora
+          </a>
+          <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
+            <Icons name="whatsapp" size={20} />
+            Ordina su WhatsApp
+          </a>
+        </div>
+
+        <p class="mt-3" style="font-size:0.9rem;">
+          Ritiro in azienda: {site.address.street}, {site.address.zip}{' '}
+          {site.address.city} ({site.address.province}). Consegna concordata in
+          zona.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="desc-title">
+    <div class="container">
+      <div class="prose">
+        <span class="eyebrow">il prodotto</span>
+        <h2 id="desc-title">Il {honey.name.toLowerCase()} di Bio e Golosità</h2>
+        <p>{honey.intro}</p>
+        <h3>A cosa serve e come usarlo</h3>
+        <p>{honey.uses}</p>
+        <h3>Caratteristiche principali</h3>
+        <ul class="chips" style="border-radius:0;background:none;padding:0;">
+          {honey.characteristics.map((c) => (
+            <li style="background: var(--surface);">{c}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">domande su questo miele</span>
+        <h2 id="faq-title">Domande frequenti</h2>
+      </div>
+      <div class="faq">
+        {
+          honey.faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="other-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">scopri anche</span>
+        <h2 id="other-title">Gli altri mieli di Bio e Golosità</h2>
+      </div>
+      <div class="honey-grid">
+        {
+          site.honeys
+            .filter((h) => h.slug !== honey.slug)
+            .map((h) => <HoneyCard honey={h} />)
+        }
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</Base>

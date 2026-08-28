@@ -1,9 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import cloudflare from '@astrojs/cloudflare';
-
-// https://astro.build/config
+// Sito statico puro: il deploy avviene su Cloudflare Pages via `wrangler pages deploy dist`.
 export default defineConfig({
-  adapter: cloudflare()
+  build: {
+    // CSS inline nell'HTML: niente richieste render-blocking
+    inlineStylesheets: 'always',
+  },
 });

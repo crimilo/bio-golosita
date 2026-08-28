@@ -1,11 +1,259 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Base from '../layouts/Base.astro';
+import Picture from '../components/Picture.astro';
+import HoneyCard from '../components/HoneyCard.astro';
+import Gallery from '../components/Gallery.astro';
+import Testimonials from '../components/Testimonials.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Icons from '../components/Icons.astro';
+import { site } from '../data/site';
+import { localBusiness, faqPage } from '../lib/schema';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = "Miele a Cassano d'Adda (MI) | Bio e Golosità";
+const description =
+  "Miele di api proprie a Cassano d'Adda (MI): acacia, millefiori e castagno, non filtrato. Ritiro e consegna in zona. Chiama per ordinare.";
+
+const homeFaq = [
+  {
+    q: 'Dove posso comprare il vostro miele?',
+    a: 'Puoi ritirare il miele direttamente in azienda a Cassano d\'Adda, in Via Salvo D\'Acquisto 9, negli orari indicati. Oppure puoi chiamarci o scriverci su WhatsApp per concordare una consegna nella tua zona.',
+  },
+  {
+    q: 'Il miele cristallizza: è normale?',
+    a: 'Sì, è assolutamente naturale: la cristallizzazione è un processo spontaneo del miele puro e non filtrato. Per riportarlo fluido basta scaldare il barattolo a bagnomaria a bassa temperatura.',
+  },
+  {
+    q: 'Fate consegne?',
+    a: 'Sì, consegniamo a Cassano d\'Adda, Groppello d\'Adda e nei comuni vicini come Treviglio, Gorgonzola, Melzo, Pozzuolo Martesana, Inzago, Rivolta d\'Adda, Vailate e Caravaggio. Scrivici su WhatsApp e concordiamo il ritiro.',
+  },
+  {
+    q: 'Da dove viene il vostro miele?',
+    a: 'Il miele viene dai nostri apiari, gestiti da Raffaele Antoci con api proprie, tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana. È un miele locale, raccolto e smielato a pochi chilometri da casa tua.',
+  },
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<Base
+  title={title}
+  description={description}
+  pathname="/"
+  preloadHero={true}
+  jsonLd={[localBusiness(), faqPage(homeFaq)]}
+>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">api proprie · dal 2021</span>
+        <h1>
+          Miele genuino a Cassano d'Adda, in provincia di Milano
+        </h1>
+        <p class="hero-sub">
+          Acacia, millefiori primaverile, millefiori estivo e castagno: miele di
+          api proprie, non filtrato, raccolto nelle campagne della Martesana e
+          della Gera d'Adda. Direttamente dall'apicoltore, senza intermediari.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#mieli">
+            Scopri i nostri mieli
+            <Icons name="arrow" size={20} />
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#contatti">
+            <Icons name="phone" size={20} />
+            Contattaci
+          </a>
+        </div>
+        <ul class="trust">
+          <li><Icons name="check" size={18} /> Api proprie</li>
+          <li><Icons name="check" size={18} /> Miele non filtrato</li>
+          <li><Icons name="check" size={18} /> {site.experienceYears} anni di esperienza</li>
+          <li><Icons name="check" size={18} /> Consegna in zona</li>
+        </ul>
+      </div>
+      <div class="hero-media">
+        <Picture
+          base="3_baratooli_di_miele_di_acacia_millefiori"
+          alt="Barattoli di miele di acacia e millefiori di Bio e Golosità a Cassano d'Adda"
+          sizes="(min-width: 900px) 42vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <span class="hero-badge">dal 2021 · api proprie</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MIELI ================= -->
+  <section class="section section--soft" id="mieli" aria-labelledby="mieli-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">direttamente dall'apiario</span>
+        <h2 id="mieli-title">I nostri mieli</h2>
+        <p>
+          Quattro mieli di stagione, raccolti e smielati da Raffaele nei suoi
+          apiari tra Cassano d'Adda, la Gera d'Adda e la Martesana.
+        </p>
+      </div>
+      <div class="honey-grid">
+        {
+          site.honeys.map((h, i) => (
+            <HoneyCard honey={h} eager={i === 0} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PERCHÉ NOI ================= -->
+  <section class="section" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">perché scegliere il nostro miele</span>
+        <h2 id="why-title">Miele vero, fatto come una volta</h2>
+        <p>
+          Niente miscele anonime: ogni barattolo racconta le fioriture della
+          nostra zona.
+        </p>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><Icons name="home" size={26} /></div>
+          <h3>Api proprie</h3>
+          <p>Gestiamo i nostri apiari in prima persona: sai sempre da dove arriva il tuo miele.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="package" size={26} /></div>
+          <h3>Non filtrato</h3>
+          <p>Smielato a freddo e non filtrato, conserva polline, enzimi e profumi originali.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="leaf" size={26} /></div>
+          <h3>Raccolto in zona</h3>
+          <p>Fioriture di Martesana e Gera d'Adda: un miele locale, a chilometro zero.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="shield" size={26} /></div>
+          <h3>{site.experienceYears} anni di esperienza</h3>
+          <p>Dal 2021 Raffaele cura le api con passione e metodi rispettosi dell'ambiente.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="sparkle" size={26} /></div>
+          <h3>Prezzo onesto</h3>
+          <p>Vendita diretta dall'apicoltore: qualità alta al prezzo giusto, senza intermediari.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="clock" size={26} /></div>
+          <h3>Ritiro e consegna rapidi</h3>
+          <p>Ritiro in azienda a Cassano d'Adda o consegna concordata nei comuni vicini.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHI SIAMO (E-E-A-T) ================= -->
+  <section class="section section--soft" aria-labelledby="about-title">
+    <div class="container split">
+      <div class="split-media">
+        <Picture
+          base="raffaele_che_mostra_larnia_in_mano"
+          alt="Raffaele Antoci, apicoltore di Bio e Golosità, mostra un favo a Cassano d'Adda"
+          sizes="(min-width: 900px) 45vw, 100vw"
+          loading="lazy"
+        />
+      </div>
+      <div class="split-text">
+        <span class="eyebrow">il nostro apicoltore</span>
+        <h2>Raffaele Antoci, apicoltore per passione</h2>
+        <p>
+          Da <strong>5 anni</strong> Raffaele si prende cura delle sue api a
+          Cassano d'Adda e nelle campagne tra la Gera d'Adda e la Martesana. Ogni
+          barattolo di Bio e Golosità è il risultato di un lavoro paziente, fatto
+          di controlli in apiario, fioriture seguite settimana per settimana e
+          smielatura a freddo.
+        </p>
+        <ul>
+          <li><Icons name="check" size={20} /> Apiari gestiti direttamente, senza intermediari</li>
+          <li><Icons name="check" size={20} /> Miele locale della provincia di Milano e dintorni</li>
+          <li><Icons name="check" size={20} /> Lavorazione artigianale, a piccoli lotti</li>
+          <li><Icons name="check" size={20} /> Attenzione alla salute delle api e dell'ambiente</li>
+        </ul>
+        <a class="btn btn-primary mt-3" href="/chi-siamo/">
+          Conosci Raffaele
+          <Icons name="arrow" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GALLERIA ================= -->
+  <Gallery />
+
+  <!-- ================= ZONE ================= -->
+  <section class="section section--soft" aria-labelledby="zone-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">dove siamo e dove consegniamo</span>
+        <h2 id="zone-title">Cassano d'Adda, al centro tra Milano, Bergamo, Cremona e Lodi</h2>
+        <p>
+          La nostra azienda è in Via Salvo D'Acquisto 9 a Cassano d'Adda, al
+          confine tra le province di Milano, Bergamo, Cremona e Lodi. Vendita
+          diretta a chi passa, consegne concordate nella Martesana, nella Gera
+          d'Adda e in tutta la provincia di Milano.
+        </p>
+      </div>
+      <ul class="chips" style="justify-content:center;">
+        {site.areaServed.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= RECENSIONI ================= -->
+  <Testimonials />
+
+  <!-- ================= CTA BAND ================= -->
+  <section class="section" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta-band">
+        <span class="eyebrow" style="color:#ffe9bf;">il miele è pronto</span>
+        <h2 id="cta-title">Hai voglia di miele vero? Chiama ora</h2>
+        <p>
+          Una telefonata di trenta secondi e il tuo miele di Cassano d'Adda è
+          prenotato. Se preferisci, scrivici su WhatsApp.
+        </p>
+        <div class="contact-cta" style="justify-content:center;">
+          <a class="btn btn-light btn-lg" href={site.phoneHref}>
+            <Icons name="phone" size={20} />
+            Chiama ora
+          </a>
+          <a class="btn btn-ghost btn-lg" style="border-color:#ffe9bf;color:#ffe9bf;" href={site.whatsapp} target="_blank" rel="noopener">
+            <Icons name="whatsapp" size={20} />
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">domande frequenti</span>
+        <h2 id="faq-title">Tutto quello che vuoi sapere</h2>
+      </div>
+      <div class="faq">
+        {
+          homeFaq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTATTI ================= -->
+  <ContactSection />
+</Base>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: 'Fraunces';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('file:///home/cristian/Development/bio-golosita/public/fonts/fraunces-700-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('file:///home/cristian/Development/bio-golosita/public/fonts/inter-400-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('file:///home/cristian/Development/bio-golosita/public/fonts/inter-700-latin.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Caveat';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('file:///home/cristian/Development/bio-golosita/public/fonts/caveat-500-latin.woff2') format('woff2');
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #fffbf2;
+    color: #33240f;
+    overflow: hidden;
+  }
+  .og {
+    width: 1200px;
+    height: 630px;
+    display: flex;
+    background: #fffbf2;
+    border: 10px solid #fffbf2;
+  }
+  .left {
+    flex: 1.15;
+    padding: 46px 44px 36px 46px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { width: 60px; height: 60px; }
+  .brand-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 31px;
+    line-height: 1;
+    color: #33240f;
+  }
+  .brand-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    color: #9a6200;
+    line-height: 1;
+    margin-top: 4px;
+  }
+  .eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    color: #9a6200;
+    margin-top: 8px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    color: #33240f;
+    margin-top: 6px;
+  }
+  h1 .mi { color: #9a6200; }
+  .sub {
+    font-size: 19px;
+    font-weight: 700;
+    color: #6b5638;
+    margin-top: 12px;
+    letter-spacing: 0.01em;
+  }
+  .honeys {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .honey {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    border: 1px solid #eadfc9;
+    border-radius: 999px;
+    padding: 7px 14px 7px 9px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #33240f;
+    box-shadow: 0 2px 10px rgba(51,36,15,0.07);
+  }
+  .dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(51,36,15,0.15);
+  }
+  .foot {
+    font-size: 15px;
+    font-weight: 700;
+    color: #6b5638;
+    margin-top: 18px;
+  }
+  .foot .tel { color: #9a6200; }
+  .right {
+    flex: 1;
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    margin: 10px 10px 10px 0;
+  }
+  .right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(200deg, rgba(51,36,15,0) 55%, rgba(51,36,15,0.35));
+  }
+  .badge {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    background: rgba(255,251,242,0.96);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-family: 'Caveat', cursive;
+    font-size: 21px;
+    color: #9a6200;
+    box-shadow: 0 4px 16px rgba(51,36,15,0.2);
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+  <div class="og">
+    <div class="left">
+      <div>
+        <div class="brand">
+          <img src="file:///home/cristian/Development/bio-golosita/public/logo.svg" alt="">
+          <div>
+            <div class="brand-name">Bio e Golosità</div>
+            <div class="brand-sub">miele di api proprie · dal 2021</div>
+          </div>
+        </div>
+        <div class="eyebrow">apicoltore a Cassano d'Adda</div>
+        <h1>Miele genuino<br><span class="mi">a Cassano d'Adda</span></h1>
+        <div class="sub">provincia di Milano · Martesana · Gera d'Adda</div>
+        <div class="honeys">
+          <div class="honey"><span class="dot" style="background:#f3e2a1;"></span>Acacia</div>
+          <div class="honey"><span class="dot" style="background:#f6d98a;"></span>Millefiori</div>
+          <div class="honey"><span class="dot" style="background:#e8b45a;"></span>Castagno</div>
+        </div>
+      </div>
+      <div class="foot">
+        Antoci Raffaele · Via Salvo D'Acquisto 9, Cassano d'Adda (MI)<br>
+        <span class="tel">+39 320 000 0000</span> · bioegolosita.it
+      </div>
+    </div>
+    <div class="right">
+      <img src="file:///home/cristian/Development/bio-golosita/public/img/3_baratooli_di_miele_di_acacia_millefiori-1200.webp" alt="">
+      <div class="badge">miele non filtrato · 100% api nostre</div>
+    </div>
+  </div>
+</body>
+</html>

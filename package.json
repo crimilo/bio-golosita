@@ -1,7 +1,7 @@
 {
 	"name": "bio-golosita",
 	"type": "module",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"engines": {
 		"node": ">=22.12.0"
 	},
@@ -10,19 +10,16 @@
 		"build": "astro build",
 		"preview": "astro build && astro preview",
 		"astro": "astro",
-		"generate-types": "wrangler types",
-		"deploy": "astro build && wrangler deploy",
-		"cf-typegen": "wrangler types"
+		"assets": "node scripts/fetch-fonts.mjs && node scripts/process-images.mjs && node scripts/posters.mjs && node scripts/favicons.mjs",
+		"deploy": "astro build && wrangler pages deploy dist --project-name bio-golosita"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^14.2.5",
 		"astro": "^7.2.9"
+	},
+	"devDependencies": {
+		"wrangler": "^4.127.1"
 	},
 	"allowScripts": {
 		"esbuild": true
-	},
-	"devDependencies": {
-		"@types/node": "^26.4.0",
-		"wrangler": "^4.127.1"
 	}
 }

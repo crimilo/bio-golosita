@@ -1,0 +1,95 @@
+// Generatori di JSON-LD validi per Google.
+import { site } from '../data/site.js';
+
+export const priceNum = (priceStr) =>
+  Number.parseFloat(priceStr.replace(/[^\d,]/g, '').replace(',', '.')) || 9;
+
+export function localBusiness() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    '@id': `${site.domain}/#azienda`,
+    name: site.name,
+    legalName: site.legalName,
+    description:
+      'Apicoltore a Cassano d\'Adda (Milano): miele di acacia, millefiori primaverile, millefiori estivo e castagno, prodotto con api proprie e non filtrato.',
+    url: `${site.domain}/`,
+    telephone: site.phoneDisplay,
+    image: `${site.domain}/og.jpg`,
+    logo: `${site.domain}/favicon.svg`,
+    priceRange: site.priceRange,
+    foundingDate: String(site.founded),
+    founder: { '@type': 'Person', name: site.owner },
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: site.address.street,
+      addressLocality: site.address.city,
+      postalCode: site.address.zip,
+      addressRegion: site.address.province,
+      addressCountry: 'IT',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: site.address.geo.lat,
+      longitude: site.address.geo.lng,
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '09:00',
+        closes: '19:00',
+      },
+    ],
+    areaServed: site.areaServed.map((name) => ({ '@type': 'City', name })),
+    knowsAbout: ['Miele', 'Apicoltura', 'Miele di acacia', 'Miele millefiori', 'Miele di castagno'],
+  };
+}
+
+export function product(honey, pathname) {
+  const url = `${site.domain}${pathname}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `${honey.name} — Bio e Golosità`,
+    image: [`${site.domain}/img/${honey.image}-800.avif`],
+    description: honey.intro.slice(0, 200),
+    brand: { '@type': 'Brand', name: site.name },
+    manufacturer: { '@type': 'Organization', name: site.legalName },
+    offers: {
+      '@type': 'Offer',
+      url,
+      priceCurrency: 'EUR',
+      price: priceNum(honey.price),
+      priceValidUntil: '2027-12-31',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: { '@type': 'Organization', name: site.legalName },
+    },
+  };
+}
+
+export function faqPage(faqs) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+}
+
+export function breadcrumbs(items) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: `${site.domain}${it.path}`,
+    })),
+  };
+}

@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import Picture from '../components/Picture.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Icons from '../components/Icons.astro';
+import { site } from '../data/site';
+import { localBusiness } from '../lib/schema';
+
+const title = "Apicoltore a Cassano d'Adda (MI) | Bio e Golosità";
+const description =
+  "Antoci Raffaele, apicoltore a Cassano d'Adda (MI) con 5 anni di esperienza: api proprie, miele non filtrato. Scopri la storia di Bio e Golosità.";
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname="/chi-siamo/"
+  jsonLd={[localBusiness()]}
+>
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Percorso">
+        <a href="/">Home</a>
+        <span>/</span>
+        <span>Chi siamo</span>
+      </nav>
+      <h1>Bio e Golosità: l'apicoltura di Raffaele Antoci</h1>
+      <p>
+        Un'azienda apistica a Cassano d'Adda (MI), al confine tra le province di
+        Milano, Bergamo, Cremona e Lodi, nata nel 2021 dalla passione per le api
+        e per un miele vero, non filtrato, di produzione propria.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: var(--space-3);">
+    <div class="container split">
+      <div class="split-text">
+        <span class="eyebrow">la nostra storia</span>
+        <h2>Dal 2021, un'ape alla volta</h2>
+        <p>
+          Tutto è iniziato nel <strong>2021</strong>, quando Raffaele ha messo in
+          piedi i primi apiari tra Cassano d'Adda e la Gera d'Adda. Quello che
+          doveva essere un piccolo esperimento è diventato in cinque anni una
+          vera azienda apistica, con apiari curati nelle campagne della Martesana,
+          dove le fioriture di robinia, tiglio, castagno e fiori di campo
+          seguono il ritmo delle stagioni.
+        </p>
+        <p>
+          Oggi Bio e Golosità produce e vende <strong>quattro mieli</strong> —
+          acacia, millefiori primaverile, millefiori estivo e castagno — raccolti
+          con <strong>api proprie</strong>, smielati a freddo e mai filtrati. Ogni
+          barattolo è il racconto di un territorio: quello tra l'Adda e la
+          Martesana, a pochi minuti da Milano, Bergamo, Treviglio e Gorgonzola.
+        </p>
+        <ul>
+          <li><Icons name="check" size={20} /> Fondata nel 2021 · {site.experienceYears} anni di esperienza</li>
+          <li><Icons name="check" size={20} /> Api proprie, gestite direttamente in apiario</li>
+          <li><Icons name="check" size={20} /> Smielatura a freddo e miele non filtrato</li>
+          <li><Icons name="check" size={20} /> Vendita diretta: tu conosci chi produce</li>
+        </ul>
+      </div>
+      <div class="split-media">
+        <Picture
+          base="raffaele_che_mostra_larnia_in_mano"
+          alt="Raffaele Antoci mostra un favo pieno di miele nel suo apiario a Cassano d'Adda"
+          sizes="(min-width: 900px) 45vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="method-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">il nostro metodo</span>
+        <h2 id="method-title">Come nasce il nostro miele</h2>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><Icons name="leaf" size={26} /></div>
+          <h3>Apiari in zona</h3>
+          <p>Apiari tra Cassano d'Adda, la Gera d'Adda e la Martesana, lontani da fonti di inquinamento.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="home" size={26} /></div>
+          <h3>Cura costante</h3>
+          <p>Controlli regolari, rispetto dei tempi delle api e delle fioriture, interventi minimi.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="package" size={26} /></div>
+          <h3>Smielatura a freddo</h3>
+          <p>Il miele viene estratto a bassa temperatura e non filtrato: restano intatti profumi e proprietà.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icons name="sparkle" size={26} /></div>
+          <h3>Piccoli lotti</h3>
+          <p>Produzione artigianale: ogni barattolo è numerato e racconta la sua stagione di fioritura.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta-band">
+        <span class="eyebrow" style="color:#ffe9bf;">prova il nostro miele</span>
+        <h2 id="cta-title">Vieni a trovarci a Cassano d'Adda</h2>
+        <p>
+          {site.address.street} — {site.address.zip} {site.address.city} ({site.address.province}).
+          Chiama prima di passare: ti prepariamo i barattoli.
+        </p>
+        <div class="contact-cta" style="justify-content:center;">
+          <a class="btn btn-light btn-lg" href={site.phoneHref}>
+            <Icons name="phone" size={20} />
+            Chiama ora
+          </a>
+          <a class="btn btn-primary btn-lg" href="/#mieli">
+            Vedi i nostri mieli
+            <Icons name="arrow" size={20} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</Base>
