@@ -14,63 +14,46 @@ import { site } from '../data/site';
       </p>
     </div>
 
-    <div class="contact-grid">
-      <div class="contact-card">
-        <div class="contact-row">
-          <Icons name="pin" size={22} />
-          <div>
-            <h3>Dove siamo</h3>
-            <p>
-              {site.address.street} — {site.address.zip} {site.address.city} ({site.address.province})
-            </p>
-          </div>
+    <div class="contact-card contact-card--wide">
+      <a class="contact-row contact-row--link" href={site.phoneHref}>
+        <Icons name="phone" size={22} />
+        <div>
+          <h3>Telefono</h3>
+          <p>{site.phoneDisplay}</p>
         </div>
-        <div class="contact-row">
-          <Icons name="clock" size={22} />
-          <div>
-            <h3>Orari</h3>
-            <p>{site.hours}</p>
-          </div>
+      </a>
+      <a class="contact-row contact-row--link" href={site.whatsapp} target="_blank" rel="noopener">
+        <Icons name="whatsapp" size={22} />
+        <div>
+          <h3>WhatsApp</h3>
+          <p>Scrivici: ti rispondo appena possibile</p>
         </div>
-        <div class="contact-row">
-          <Icons name="info" size={22} />
-          <div>
-            <h3>Ritiro e consegna</h3>
-            <p>
-              Ritiro in azienda senza appuntamento negli orari indicati.
-              Consegna concordata a Cassano d'Adda e nei comuni vicini.
-            </p>
-          </div>
+      </a>
+      <div class="contact-row">
+        <Icons name="pin" size={22} />
+        <div>
+          <h3>Dove siamo</h3>
+          <p>
+            {site.address.street} — {site.address.zip} {site.address.city} ({site.address.province})
+          </p>
         </div>
-        <p class="contact-map-note">
-          <Icons name="info" size={18} />
-          Stai cercando di raggiungerci? Usa la mappa qui sotto o il pulsante
-          "Apri in Google Maps".
-        </p>
       </div>
-
-      <div class="contact-card">
-        <div class="contact-row">
-          <Icons name="phone" size={22} />
-          <div>
-            <h3>Telefono</h3>
-            <a href={site.phoneHref}>{site.phoneDisplay}</a>
-          </div>
+      <div class="contact-row">
+        <Icons name="clock" size={22} />
+        <div>
+          <h3>Orari</h3>
+          <p>{site.hours}</p>
         </div>
-        <div class="contact-cta">
-          <a class="btn btn-primary btn-lg" href={site.phoneHref}>
-            <Icons name="phone" size={20} />
-            Chiama ora
-          </a>
-          <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
-            <Icons name="whatsapp" size={20} />
-            WhatsApp
-          </a>
+      </div>
+      <div class="contact-row">
+        <Icons name="info" size={22} />
+        <div>
+          <h3>Ritiro e consegna</h3>
+          <p>
+            Ritiro in azienda negli orari indicati, consegna concordata a
+            Cassano d'Adda e nei comuni vicini.
+          </p>
         </div>
-        <p style="font-size:0.95rem;">
-          Rispondo di persona: niente call center. Se non rispondo subito,
-          sono in apiario: lasciami un messaggio e ti richiamo appena possibile.
-        </p>
       </div>
     </div>
 
