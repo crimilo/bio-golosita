@@ -924,6 +924,23 @@ strong {
   flex: none;
 }
 
+.bulk-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+}
+.bulk-note svg {
+  color: var(--amber-strong);
+  flex: none;
+  margin-top: 0.2rem;
+}
+
 .map-card {
   margin-top: var(--space-3);
   border: 1px solid var(--line);

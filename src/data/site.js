@@ -32,6 +32,10 @@ export const site = {
   experienceYears: 5,
   priceRange: '€€',
 
+  // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
+  bulkNote:
+    'Per ordini superiori a 10 kg preparo secchi da 10 kg a un prezzo leggermente scontato, personalizzato su misura: contattami per il preventivo.',
+
   // Zone servite — citate in modo naturale, senza keyword stuffing
   areaServed: [
     'Cassano d\'Adda',
