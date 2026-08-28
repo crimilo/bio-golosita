@@ -9,11 +9,15 @@ import Icons from '../components/Icons.astro';
 import { site } from '../data/site';
 import { localBusiness, faqPage } from '../lib/schema';
 
-const title = "Miele a Cassano d'Adda e provincia di Milano | Bio & Golosità";
+const title = "Miele 100% italiano a Cassano d'Adda (MI) | Bio & Golosità";
 const description =
-  "Miele di api proprie a Cassano d'Adda (MI): acacia, millefiori e castagno, non filtrato. Ritiro e consegna in zona. Chiama per ordinare.";
+  "Miele artigianale 100% italiano a Cassano d'Adda (MI): acacia, millefiori e castagno, non filtrato. Ritiro e consegna in zona. Chiama per ordinare.";
 
 const homeFaq = [
+  {
+    q: 'Il vostro miele è 100% italiano?',
+    a: 'Sì: tutto il nostro miele è 100% italiano e artigianale. Le api sono nostre e gli apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana: un miele di produzione propria, raccolto e smielato a pochi chilometri da casa tua.',
+  },
   {
     q: 'Dove posso comprare il vostro miele?',
     a: 'Puoi ritirare il miele direttamente in azienda a Cassano d\'Adda, in Via Salvo D\'Acquisto 9, negli orari indicati. Oppure puoi chiamarci o scriverci su WhatsApp per concordare una consegna nella tua zona.',
@@ -49,10 +53,11 @@ const homeFaq = [
           Miele genuino a Cassano d'Adda e in tutta la provincia di Milano
         </h1>
         <p class="hero-sub">
-          Acacia, millefiori primaverile, millefiori estivo e castagno: miele di
-          api proprie, non filtrato, raccolto tra la Martesana e la Gera d'Adda.
-          Vendita e consegna a Cassano d'Adda, Treviglio, Gorgonzola, Melzo,
-          Pozzuolo Martesana, Inzago e in tutta la provincia di Milano.
+          Acacia, millefiori primaverile, millefiori estivo e castagno: miele
+          artigianale 100% italiano, di api proprie, non filtrato, raccolto tra
+          la Martesana e la Gera d'Adda. Vendita e consegna a Cassano d'Adda,
+          Treviglio, Gorgonzola, Melzo, Pozzuolo Martesana, Inzago e in tutta la
+          provincia di Milano.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary btn-lg" href="#mieli">
@@ -65,6 +70,7 @@ const homeFaq = [
           </a>
         </div>
         <ul class="trust">
+          <li><Icons name="check" size={18} /> 100% Made in Italy</li>
           <li><Icons name="check" size={18} /> Api proprie</li>
           <li><Icons name="check" size={18} /> Miele non filtrato</li>
           <li><Icons name="check" size={18} /> {site.experienceYears} anni di esperienza</li>
@@ -79,7 +85,7 @@ const homeFaq = [
           loading="eager"
           fetchpriority="high"
         />
-        <span class="hero-badge">dal 2021 · api proprie</span>
+        <span class="hero-badge">100% Made in Italy · api proprie</span>
       </div>
     </div>
   </section>
@@ -129,8 +135,8 @@ const homeFaq = [
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="leaf" size={26} /></div>
-          <h3>Raccolto in zona</h3>
-          <p>Fioriture di Martesana e Gera d'Adda: un miele locale, a chilometro zero.</p>
+          <h3>100% Made in Italy</h3>
+          <p>Miele artigianale italiano, di api proprie, raccolto tra la Martesana e la Gera d'Adda.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="shield" size={26} /></div>
