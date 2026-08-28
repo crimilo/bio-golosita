@@ -1161,7 +1161,7 @@ strong {
 .product-grid {
   display: grid;
   gap: var(--space-4);
-  align-items: start;
+  align-items: center;
 }
 
 @media (min-width: 900px) {
