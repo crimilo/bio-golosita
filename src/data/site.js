@@ -10,10 +10,10 @@ export const site = {
   tagline: 'Miele genuino di api proprie a Cassano d\'Adda',
   domain: 'https://bioegolosita.it',
 
-  // >>> TODO: sostituire con il numero reale prima del lancio <<<
-  phoneDisplay: '+39 320 000 0000',
-  phoneHref: 'tel:+393200000000',
-  whatsapp: 'https://wa.me/393200000000?text=Ciao%2C%20vorrei%20informazioni%20sul%20vostro%20miele',
+  // Numero di telefono reale
+  phoneDisplay: '+39 351 537 6719',
+  phoneHref: 'tel:+393515376719',
+  whatsapp: 'https://wa.me/393515376719?text=Ciao%2C%20vorrei%20informazioni%20sul%20vostro%20miele',
 
   address: {
     street: 'Via Salvo D\'Acquisto 9',
@@ -83,7 +83,7 @@ export const site = {
       price: 'da € 9,00/kg',
       title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio e Golosità',
       description:
-        'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 320 000 0000.',
+        'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 351 537 6719.',
       intro:
         'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nei boschi e nelle campagne della Martesana e della Gera d\'Adda, dove la robinia fiorisce tra maggio e giugno.',
       harvest: 'Raccolto tra maggio e giugno',
