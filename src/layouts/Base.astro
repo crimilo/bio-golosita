@@ -63,8 +63,8 @@ const ogUrl = `${site.domain}${pathname}`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${site.domain}${ogImage}`} />
 
-    <!-- fonts: inline @font-face (subset latin + latin-ext, display swap) -->
-    <style>{fontCss}</style>
+    <!-- fonts: inline @font-face (subset latin, senza unicode-range: bug WebKit su iOS Safari lascia il testo in fallback) -->
+    <style is:inline set:html={fontCss}></style>
 
     {
       preloadHero && (

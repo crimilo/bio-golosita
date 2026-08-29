@@ -60,7 +60,7 @@ scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, O
   `FAQPage`, `BreadcrumbList`
 - `sitemap.xml` + `robots.txt` (allow all)
 - Immagini AVIF/WebP con `width`/`height`, lazy load (LCP escluso), font WOFF2
-  subsettati (latin + latin-ext) con `font-display: swap`
+  subsettati (latin, senza `unicode-range`: bug WebKit su iOS Safari) con `font-display: swap`
 
 ## QA
 
