@@ -21,6 +21,7 @@ export function localBusiness() {
     '@id': `${site.domain}/#azienda`,
     name: site.name,
     legalName: site.legalName,
+    vatID: site.vatId,
     description:
       'Apicoltore a Cassano d\'Adda (Milano): miele 100% italiano e artigianale di acacia, millefiori primaverile, millefiori estivo e castagno, prodotto con api proprie e non filtrato.',
     url: `${site.domain}/`,
@@ -53,7 +54,20 @@ export function localBusiness() {
       },
     ],
     areaServed: site.areaServed.map((name) => ({ '@type': 'City', name })),
-    knowsAbout: ['Miele', 'Apicoltura', 'Miele di acacia', 'Miele millefiori', 'Miele di castagno'],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Mieli Bio & Golosità',
+      itemListElement: site.honeys.map((h) => ({
+        '@type': 'Offer',
+        priceCurrency: 'EUR',
+        price: priceNum(h.price),
+        itemOffered: {
+          '@type': 'Product',
+          name: h.name,
+          image: imgUrl(h.cardImage ?? h.image),
+        },
+      })),
+    },
   };
 }
 
@@ -63,7 +77,7 @@ export function product(honey, pathname) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: `${honey.name} — Bio & Golosità`,
-    image: [imgUrl(honey.image)],
+    image: [imgUrl(honey.cardImage ?? honey.image)],
     description: honey.intro.slice(0, 200),
     brand: { '@type': 'Brand', name: site.name },
     manufacturer: { '@type': 'Organization', name: site.legalName },

@@ -24,39 +24,60 @@ const description =
         <span>/</span>
         <span>Chi siamo</span>
       </nav>
-      <h1>Bio & Golosità: l'apicoltura di Raffaele Antoci</h1>
-      <p>
-        Sono Raffaele Antoci, apicoltore a Cassano d'Adda (MI), al confine tra le
-        province di Milano, Bergamo, Cremona e Lodi. Nel 2021 ho creato questa
-        azienda dalla passione per le api e per un miele vero, non filtrato, di
-        produzione propria.
-      </p>
+      <div class="split">
+        <div class="split-text">
+          <h1>Bio & Golosità: l'apicoltura di Raffaele Antoci</h1>
+          <p>
+            Sono Raffaele Antoci, apicoltore a Cassano d'Adda (MI), al confine
+            tra le province di Milano, Bergamo, Cremona e Lodi. Nel 2021 ho
+            creato questa azienda dalla passione per le api e per un miele
+            vero, non filtrato, di produzione propria.
+          </p>
+        </div>
+        <div class="split-media">
+          <Picture
+            base="raffaele"
+            alt="Raffaele Antoci, apicoltore di Bio & Golosità a Cassano d'Adda"
+            sizes="(min-width: 900px) 45vw, 100vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="section" style="padding-top: var(--space-3);">
-    <div class="container split">
+    <div class="container split split--reverse">
       <div class="split-text">
         <span class="eyebrow">la mia storia</span>
         <h2>Dal 2021, un'ape alla volta</h2>
         <p>
-          Tutto è iniziato nel <strong>2021</strong>, quando ho messo in piedi i
-          primi apiari tra Cassano d'Adda e la Gera d'Adda. Quello che doveva
-          essere un piccolo esperimento è diventato in cinque anni una vera
-          azienda apistica, con apiari curati nelle campagne della Martesana,
-          dove le fioriture di robinia, tiglio, castagno e fiori di campo
-          seguono il ritmo delle stagioni.
+          La prima volta che ho aperto un'arnia non sapevo quasi nulla di api.
+          Ricordo il rumore — un brusio che ti entra nelle ossa — e l'odore
+          caldo di cera e propoli. Quel giorno, nel <strong>2021</strong>, tra
+          le campagne di Cassano d'Adda e la Gera d'Adda, ho capito che non
+          sarebbe stato un hobby: sarebbe diventato il mio mestiere.
+        </p>
+        <p>
+          Da un piccolo esperimento con poche arnie è nata una vera azienda
+          apistica, attiva da oltre cinque anni, con apiari curati nelle
+          campagne della Martesana, dove le fioriture di robinia, tiglio,
+          castagno e fiori di campo seguono il ritmo delle stagioni. Ogni
+          primavera aspetto la robinia come si aspetta una festa: è il momento
+          in cui l'acacia si fa dolcissima e quasi trasparente.
         </p>
         <p>
           Oggi produco e vendo <strong>quattro mieli</strong> — acacia,
           millefiori primaverile, millefiori estivo e castagno — tutti{' '}
           <strong>100% italiani e artigianali</strong>, raccolti con{' '}
-          <strong>api proprie</strong>, smielati a freddo e mai filtrati. È un
-          lavoro fatto di pazienza: controllo gli apiari settimana dopo
-          settimana, seguo le fioriture e smielo con calma, a piccoli lotti.
-          Ogni barattolo che esce dal mio laboratorio ha il sapore di questo
+          <strong>api proprie</strong>, smielati a freddo e mai filtrati.
+          Controllo gli apiari settimana dopo settimana e smielo a piccoli
+          lotti, senza fretta. Ogni barattolo porta il sapore di questo
           territorio, a pochi minuti da Treviglio e Gorgonzola, a breve
-          distanza da Milano e Bergamo.
+          distanza da Milano e Bergamo: quando lo assaggi, senti la
+          differenza, il gusto di un lavoro fatto con calma e con le mani
+          nella cera.
         </p>
         <ul>
           <li><Icons name="check" size={20} /> Azienda fondata nel 2021 · {site.experienceYears} anni di esperienza</li>
@@ -70,8 +91,7 @@ const description =
           base="raffaele_che_mostra_larnia_in_mano"
           alt="Raffaele Antoci mostra un favo pieno di miele nel suo apiario a Cassano d'Adda"
           sizes="(min-width: 900px) 45vw, 100vw"
-          loading="eager"
-          fetchpriority="high"
+          loading="lazy"
         />
       </div>
     </div>

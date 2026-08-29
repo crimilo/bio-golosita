@@ -675,6 +675,21 @@ strong {
   .split {
     grid-template-columns: 1fr 1fr;
   }
+  /* split alternato: immagine a sinistra, testo a destra */
+  .split--reverse .split-text {
+    order: 2;
+  }
+  .split--reverse .split-media {
+    order: 1;
+  }
+}
+
+/* Foto di presentazione nell'hero: più piccola e leggera,
+   per non gareggiare con la foto grande della sezione storia */
+.page-hero .split-media {
+  max-width: 22rem;
+  margin-inline: auto;
+  box-shadow: 0 10px 30px rgba(51, 36, 15, 0.12);
 }
 
 /* ---------- gallery ---------- */

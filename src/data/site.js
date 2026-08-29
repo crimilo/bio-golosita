@@ -7,6 +7,9 @@ export const site = {
   name: 'Bio & Golosità',
   legalName: 'Azienda Agricola Bio & Golosità di Antoci Raffaele',
   owner: 'Antoci Raffaele',
+  // Dati fiscali
+  vatId: '12606370968',
+  rea: '2744949',
   tagline: 'Miele genuino di api proprie a Cassano d\'Adda',
   domain: 'https://bioegolosita.it',
 
@@ -133,6 +136,7 @@ export const site = {
       slug: 'miele-millefiori-primaverile',
       name: 'Miele Millefiori Primaverile',
       image: 'barattoli_di_mile_millefiori',
+      cardImage: 'barattoli_di_mile_millefiori_card',
       imgPos: 'center 70%',
       color: '#f6d98a',
       price: '€ 5,00 (500 g) · € 9,00/kg',
@@ -287,5 +291,4 @@ export const nav = [
   { href: '/#mieli', label: 'I nostri mieli' },
   { href: '/chi-siamo', label: 'Chi siamo' },
   { href: '/#galleria', label: 'Galleria' },
-  { href: '/contatti', label: 'Contatti' },
 ];
