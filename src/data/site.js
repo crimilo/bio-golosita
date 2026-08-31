@@ -148,7 +148,7 @@ export const site = {
     {
       slug: 'miele-millefiori-primaverile',
       name: 'Miele Millefiori Primaverile',
-      image: 'miele_millefiori_estivo',
+      image: 'miele_millefiori_primaverile',
       cardImage: 'miele_millefiori_card',
       imgPos: 'center 70%',
       color: '#f6d98a',
@@ -204,7 +204,7 @@ export const site = {
     {
       slug: 'miele-millefiori-estivo-al-tiglio-e-more',
       name: 'Miele Millefiori Estivo al Tiglio e More',
-      image: 'miele_millefiori_estivo',
+      image: 'miele_millefiori_estivo_more',
       color: '#e8b45a',
       price: '€ 5,00 (500 g) · € 9,00/kg',
       priceFrom: 'da € 5,00',

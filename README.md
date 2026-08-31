@@ -85,10 +85,18 @@ chromium --headless=new --no-sandbox --hide-scrollbars --window-size=1200,630 \
 
 ## Crediti immagini
 
-- `miele_acacia.jpg`, `miele_castagno.jpg` e `miele_millefiori.jpg` — foto
-  originali del titolare (miele di acacia, castagno e millefiori estivo),
-  ottimizzate in `public/img/miele_di_acacia-*`, `public/img/miele_di_castagno-*`
-  e `public/img/miele_millefiori_estivo-*`.
-- `foto_dei_3_mieli_acacia_millefiori_e_castagno.jpg` — foto di gruppo (hero
-  home), ottimizzata in `public/img/3_baratooli_di_miele_di_acacia_millefiori-*`.
+Le foto in `public/img/` e i poster in `public/video/` hanno **nomi file
+versionati con content-hash** (`<base>-<width>-<hash>.avif|webp`, poster:
+`<nome>-<hash>.<ext>`): quando una foto cambia cambia l'hash, quindi l'URL è
+nuovo e non c'è mai cache stantia (CDN/browser) dopo il deploy. I sorgenti in
+root vengono processati da `scripts/process-images.mjs` e `scripts/posters.mjs`.
+
+- `miele_acacia.jpg`, `miele_castagno.jpg`, `miele_millefiori_tiglio_e_alianto.jpg`
+  e `miele_millefiori_tiglio_e_more.jpg` — foto originali del titolare
+  (acacia, castagno, tiglio e ailanto, tiglio e more), ottimizzate in
+  `public/img/miele_di_acacia-*`, `public/img/miele_di_castagno-*`,
+  `public/img/miele_millefiori_estivo_ailanto-*` e
+  `public/img/miele_millefiori_estivo_more-*`.
+- `hero-bg.jpg` — foto di gruppo (hero home), ottimizzata in
+  `public/img/hero_bg-*`.
 - Altre foto di barattoli e apiario: materiale originale del titolare.

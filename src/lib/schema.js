@@ -11,7 +11,8 @@ export const priceNum = (priceStr) => {
 const imgUrl = (base) => {
   const entry = manifest[base];
   const largest = Math.max(...Object.keys(entry.variants).map(Number));
-  return `${site.domain}/img/${base}-${largest}.avif`;
+  const suffix = entry.hash ? `-${entry.hash}` : '';
+  return `${site.domain}/img/${base}-${largest}${suffix}.avif`;
 };
 
 // Tipo schema.org per ogni zona servita: comuni -> City, territori -> AdministrativeArea, parchi -> Park

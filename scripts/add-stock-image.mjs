@@ -1,7 +1,9 @@
-// Scarica un'immagine da Wikimedia Commons e genera le varianti AVIF/WebP.
+// Scarica un'immagine da Wikimedia Commons e genera le varianti AVIF/WebP
+// con nomi versionati (content-hash), come process-images.mjs.
 // Uso: node scripts/add-stock-image.mjs <url> <baseName> [widths...]
 import sharp from 'sharp';
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 
 const [url, base, ...wArgs] = process.argv.slice(2);
 const widths = wArgs.map(Number);
@@ -11,19 +13,25 @@ mkdirSync('public/img', { recursive: true });
 const src = url.startsWith('http')
   ? Buffer.from(await (await fetch(url)).arrayBuffer())
   : readFileSync(url);
+const hash = createHash('sha1').update(src).digest('hex').slice(0, 8);
 const tmp = `/tmp/${base}-src${/jpe?g/i.test(url) ? '.jpg' : '.png'}`;
 writeFileSync(tmp, src);
 
 const meta = await sharp(tmp).metadata();
-const entry = { width: meta.width, height: meta.height, variants: {} };
+const entry = { width: meta.width, height: meta.height, hash, variants: {} };
 for (const w of widths) {
   if (w > meta.width) continue;
-  const out = `public/img/${base}-${w}`;
+  const out = `public/img/${base}-${w}-${hash}`;
   await sharp(tmp).resize({ width: w, withoutEnlargement: true }).webp({ quality: 74 }).toFile(`${out}.webp`);
   await sharp(tmp).resize({ width: w, withoutEnlargement: true }).avif({ quality: 44 }).toFile(`${out}.avif`);
   const m = await sharp(`${out}.webp`).metadata();
   entry.variants[w] = { width: m.width, height: m.height };
   console.log('OK', base, w, m.width + 'x' + m.height);
+  // rimuove eventuali varianti obsolete senza hash
+  for (const ext of ['webp', 'avif']) {
+    const old = `public/img/${base}-${w}.${ext}`;
+    if (existsSync(old)) rmSync(old);
+  }
 }
 
 // aggiorna i manifest

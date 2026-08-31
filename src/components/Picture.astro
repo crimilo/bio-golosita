@@ -33,8 +33,11 @@ const variants = Object.keys(entry.variants)
   .map(Number)
   .sort((a, b) => a - b);
 
+// suffix content-hash: cambia al cambiare della foto -> URL nuovo -> niente cache stantia
+const suffix = entry.hash ? `-${entry.hash}` : '';
+
 const mkSrcset = (ext) =>
-  variants.map((w) => `/img/${base}-${w}.${ext} ${w}w`).join(', ');
+  variants.map((w) => `/img/${base}-${w}${suffix}.${ext} ${w}w`).join(', ');
 
 const largest = variants[variants.length - 1];
 const imgW = width ?? entry.variants[largest].width;
@@ -46,7 +49,7 @@ const cls = `${Astro.props.class ?? ''} ${zoomable ? 'lightbox-target' : ''}`.tr
   <source type="image/avif" srcset={mkSrcset('avif')} sizes={sizes} />
   <source type="image/webp" srcset={mkSrcset('webp')} sizes={sizes} />
   <img
-    src={`/img/${base}-${largest}.webp`}
+    src={`/img/${base}-${largest}${suffix}.webp`}
     srcset={mkSrcset('webp')}
     sizes={sizes}
     width={imgW}
@@ -56,7 +59,7 @@ const cls = `${Astro.props.class ?? ''} ${zoomable ? 'lightbox-target' : ''}`.tr
     decoding="async"
     fetchpriority={fetchpriority}
     class={cls}
-    data-full={`/img/${base}-${largest}.avif`}
+    data-full={`/img/${base}-${largest}${suffix}.avif`}
     style={objectPosition ? `object-position: ${objectPosition}` : undefined}
   />
 </picture>
