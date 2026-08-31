@@ -11,7 +11,7 @@ import { localBusiness, faqPage } from '../lib/schema';
 
 const title = "Miele 100% italiano a Cassano d'Adda (MI) | Bio & Golosità";
 const description =
-  "Miele artigianale 100% italiano a Cassano d'Adda (MI): acacia, millefiori e castagno, non filtrato. Ritiro e consegna in zona. Chiama per ordinare.";
+  "Miele artigianale 100% italiano a Cassano d'Adda (MI): acacia, millefiori e castagno, non pastorizzato. Ritiro e consegna in zona. Chiama per ordinare.";
 
 const homeFaq = [
   {
@@ -20,23 +20,23 @@ const homeFaq = [
   },
   {
     q: 'Il vostro miele è 100% italiano?',
-    a: 'Sì: tutto il nostro miele è 100% italiano e artigianale. Le api sono nostre e gli apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana: un miele di produzione propria, raccolto e smielato a pochi chilometri da casa tua.',
+    a: 'Sì: tutto il nostro miele è 100% italiano e artigianale. Le api sono nostre e gli apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Nord Milano e la Val Brembana: un miele di produzione propria, raccolto e smielato a pochi chilometri da casa tua.',
   },
   {
     q: 'Dove posso comprare il vostro miele?',
-    a: 'Puoi ritirare il miele direttamente in azienda a Cassano d\'Adda, in Via Salvo D\'Acquisto 9, negli orari indicati. Oppure puoi chiamarci o scriverci su WhatsApp per concordare una consegna nella tua zona.',
+    a: 'Puoi ritirare il miele direttamente in azienda a Cassano d\'Adda, in Via Salvo D\'Acquisto 9, su appuntamento: chiama o scrivi su WhatsApp prima di passare, così ti aspettiamo. Oppure possiamo concordare una consegna nella tua zona.',
   },
   {
     q: 'Il miele cristallizza: è normale?',
-    a: 'Sì, è assolutamente naturale: la cristallizzazione è un processo spontaneo del miele puro e non filtrato. Per riportarlo fluido basta scaldare il barattolo a bagnomaria a bassa temperatura.',
+    a: 'Sì, è assolutamente naturale: la cristallizzazione è un processo spontaneo del miele puro e non pastorizzato. Per riportarlo fluido basta scaldare il barattolo a bagnomaria a bassa temperatura.',
   },
   {
     q: 'Fate consegne?',
-    a: 'Sì, consegniamo a Cassano d\'Adda, Groppello d\'Adda e nei comuni vicini come Treviglio, Gorgonzola, Melzo, Pozzuolo Martesana, Inzago, Rivolta d\'Adda, Vailate e Caravaggio. Scrivici su WhatsApp e concordiamo il ritiro.',
+    a: 'Sì, consegniamo a Cassano d\'Adda, Groppello d\'Adda, in tutta la Gera d\'Adda e nei comuni vicini come Treviglio, Gorgonzola, Melzo, Pozzuolo Martesana, Inzago, Rivolta d\'Adda, Vailate e Caravaggio. Scrivici su WhatsApp e concordiamo il ritiro.',
   },
   {
     q: 'Da dove viene il vostro miele?',
-    a: 'Il miele viene dai miei apiari, che gestisco io con api proprie, tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana. È un miele locale, raccolto e smielato a pochi chilometri da casa tua.',
+    a: 'Il miele viene dai miei apiari, che gestisco io con api proprie, tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Nord Milano e la Val Brembana. È un miele locale, raccolto e smielato a pochi chilometri da casa tua.',
   },
 ];
 ---
@@ -52,15 +52,16 @@ const homeFaq = [
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <span class="eyebrow">api proprie · dal 2021</span>
+        <span class="eyebrow">api proprie · dal 2020</span>
         <h1>
           Miele genuino a Cassano d'Adda e in tutta la provincia di Milano
         </h1>
         <p class="hero-sub">
-          Acacia, millefiori primaverile, millefiori estivo e castagno: miele
-          artigianale 100% italiano, di api proprie, non filtrato, raccolto tra
+          Acacia, millefiori primaverile, millefiori estivo, millefiori al
+          tiglio e ailanto e castagno: miele
+          artigianale 100% italiano, di api proprie, non pastorizzato, raccolto tra
           la Martesana e la Gera d'Adda. Vendita e consegna a Cassano d'Adda,
-          Treviglio, Gorgonzola e in tutta la provincia di Milano.
+          nella Gera d'Adda, a Treviglio, Gorgonzola e in tutta la provincia di Milano.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary btn-lg" href="#mieli">
@@ -75,7 +76,7 @@ const homeFaq = [
         <ul class="trust">
           <li><Icons name="check" size={18} /> 100% Made in Italy</li>
           <li><Icons name="check" size={18} /> Api proprie</li>
-          <li><Icons name="check" size={18} /> Miele non filtrato</li>
+          <li><Icons name="check" size={18} /> Miele non pastorizzato</li>
           <li><Icons name="check" size={18} /> {site.experienceYears} anni di esperienza</li>
           <li><Icons name="check" size={18} /> Consegna in zona</li>
         </ul>
@@ -100,8 +101,9 @@ const homeFaq = [
         <span class="eyebrow">direttamente dall'apiario</span>
         <h2 id="mieli-title">I nostri mieli</h2>
         <p>
-          Quattro mieli di stagione, raccolti e smielati da me nei miei
-          apiari tra Cassano d'Adda, la Gera d'Adda e la Martesana.
+          Cinque mieli di stagione, raccolti e smielati da me nei miei
+          apiari tra Cassano d'Adda, la Gera d'Adda, la Martesana, il Parco
+          Nord Milano e la Val Brembana.
         </p>
       </div>
       <div class="honey-grid">
@@ -133,8 +135,8 @@ const homeFaq = [
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="package" size={26} /></div>
-          <h3>Non filtrato</h3>
-          <p>Smielato a freddo e non filtrato, conserva polline, enzimi e profumi originali.</p>
+          <h3>Non pastorizzato</h3>
+          <p>Smielato a freddo e non pastorizzato, conserva polline, enzimi e profumi originali.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="leaf" size={26} /></div>
@@ -144,7 +146,7 @@ const homeFaq = [
         <div class="feature">
           <div class="feature-icon"><Icons name="shield" size={26} /></div>
           <h3>{site.experienceYears} anni di esperienza</h3>
-          <p>Dal 2021 curo le api con passione e metodi rispettosi dell'ambiente.</p>
+          <p>Dal 2020 curo le api con passione e metodi rispettosi dell'ambiente.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="sparkle" size={26} /></div>
@@ -154,7 +156,7 @@ const homeFaq = [
         <div class="feature">
           <div class="feature-icon"><Icons name="clock" size={26} /></div>
           <h3>Ritiro e consegna rapidi</h3>
-          <p>Ritiro in azienda a Cassano d'Adda o consegna concordata in tutta la zona tra Milano, Bergamo e Cremona.</p>
+          <p>Ritiro in azienda su appuntamento a Cassano d'Adda o consegna concordata in tutta la zona tra Milano, Bergamo e Cremona.</p>
         </div>
       </div>
     </div>
@@ -175,7 +177,7 @@ const homeFaq = [
         <span class="eyebrow">il tuo apicoltore</span>
         <h2>Mi chiamo Raffaele e le api sono la mia passione</h2>
         <p>
-          Da <strong>oltre 5 anni</strong> mi prendo cura delle mie api a Cassano
+          Da <strong>oltre 6 anni</strong> mi prendo cura delle mie api a Cassano
           d'Adda e nelle campagne tra la Gera d'Adda e la Martesana. Ogni
           barattolo di Bio & Golosità è il risultato del mio lavoro paziente,
           fatto di controlli in apiario, fioriture seguite settimana per

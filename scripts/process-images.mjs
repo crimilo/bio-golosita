@@ -9,8 +9,13 @@ mkdirSync(OUT, { recursive: true });
 
 // source -> widths to generate
 const WIDTHS = {
-  '3_baratooli_di_miele_di_acacia_millefiori.jpg': [1600, 1200, 800, 640, 480],
+  'foto_dei_3_mieli_acacia_millefiori_e_castagno.jpg': { base: '3_baratooli_di_miele_di_acacia_millefiori', widths: [1600, 1200, 800, 640, 480] },
+  'miele_acacia.jpg': { base: 'miele_di_acacia', widths: [400, 300] },
+  'miele_castagno.jpg': { base: 'miele_di_castagno', widths: [600, 400] },
+  'miele_millefiori.jpg': { base: 'miele_millefiori_estivo', widths: [600, 400] },
+  'miele_millefiori.jpg': { base: 'miele_millefiori_estivo_ailanto', widths: [600, 400], tone: { saturation: 1.08, brightness: 1.02 } },
   'raffaele_che_mostra_larnia_in_mano.jpg': [1000, 600, 400],
+  'raffaele_con_suo_padre.jpg': [600, 400],
   'raffaele.png': [800, 480, 300],
 };
 
@@ -28,12 +33,14 @@ const manifest = JSON.parse(
 );
 
 // crop 4:3 con gravità verticale (posY in frazione, default 0.5)
-async function writeVariants(src, base, widths) {
+async function writeVariants(src, base, widths, tone) {
   const meta = await sharp(src).metadata();
   const entry = { width: meta.width, height: meta.height, variants: {} };
   for (const w of widths) {
     if (w > meta.width) continue;
-    const resized = sharp(src).resize({ width: w, withoutEnlargement: true });
+    let resized = sharp(src);
+    if (tone) resized = resized.modulate(tone);
+    resized = resized.resize({ width: w, withoutEnlargement: true });
     const webp = `public/img/${base}-${w}.webp`;
     const avif = `public/img/${base}-${w}.avif`;
     if (!existsSync(webp)) await resized.clone().webp({ quality: 74 }).toFile(webp);
@@ -47,8 +54,10 @@ async function writeVariants(src, base, widths) {
 
 const srcs = Object.keys(WIDTHS).filter((f) => existsSync(f));
 for (const f of srcs) {
-  const base = basename(f, extname(f));
-  manifest[base] = await writeVariants(f, base, WIDTHS[f]);
+  const cfg = WIDTHS[f];
+  const base = Array.isArray(cfg) ? basename(f, extname(f)) : cfg.base;
+  const widths = Array.isArray(cfg) ? cfg : cfg.widths;
+  manifest[base] = await writeVariants(f, base, widths, Array.isArray(cfg) ? undefined : cfg.tone);
 }
 
 // crop 4:3 dedicato alle card (e box 4:3 delle pagine prodotto)

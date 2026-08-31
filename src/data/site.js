@@ -29,10 +29,10 @@ export const site = {
   },
 
   // >>> TODO: verificare con il titolare <<<
-  hours: 'Lun–Sab 9:00–19:00 · Dom su appuntamento',
+  hours: 'Su appuntamento · chiama o scrivi prima di passare',
 
-  founded: 2021, // 5+ anni di esperienza
-  experienceYears: '5+',
+  founded: 2020, // 6+ anni di esperienza
+  experienceYears: '6+',
   priceRange: '€€',
 
   // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
@@ -42,6 +42,7 @@ export const site = {
   // Zone servite — citate in modo naturale, senza keyword stuffing
   areaServed: [
     'Cassano d\'Adda',
+    'Gera d\'Adda',
     'Groppello d\'Adda',
     'Treviglio',
     'Gorgonzola',
@@ -77,7 +78,7 @@ export const site = {
     {
       name: 'Andrea P.',
       town: 'Pozzuolo Martesana',
-      text: 'Miele genuino, non filtrato, con il gusto di una volta. Si vede che le api sono curate con passione.',
+      text: 'Miele genuino, non pastorizzato, con il gusto di una volta. Si vede che le api sono curate con passione.',
     },
   ],
 
@@ -124,11 +125,15 @@ export const site = {
         },
         {
           q: 'Quando viene raccolto il miele di acacia?',
-          a: 'La fioritura della robinia nella zona di Cassano d\'Adda avviene tra la fine di maggio e giugno. Il miele viene smielato a freddo e non filtrato, per conservare intatte tutte le proprietà.',
+          a: 'La fioritura della robinia nella zona di Cassano d\'Adda avviene tra la fine di maggio e giugno. Il miele viene smielato a freddo e non pastorizzato, per conservare intatte tutte le proprietà.',
         },
         {
           q: 'Come si conserva il miele di acacia?',
           a: 'In un barattolo ben chiuso, al riparo dalla luce e dall\'umidità, a temperatura ambiente. Non serve il frigorifero.',
+        },
+        {
+          q: 'Fate consegne nella mia zona?',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, la Gera d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. Per ordinare basta chiamarci o scrivere un messaggio su WhatsApp.',
         },
       ],
     },
@@ -180,7 +185,11 @@ export const site = {
         },
         {
           q: 'Da dove vengono le api?',
-          a: 'I miei apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda e le campagne della Martesana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
+          a: 'I miei apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Nord Milano e la Val Brembana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
+        },
+        {
+          q: 'Fate consegne nella mia zona?',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, la Gera d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. Per ordinare basta chiamarci o scrivere un messaggio su WhatsApp.',
         },
       ],
     },
@@ -193,13 +202,13 @@ export const site = {
       priceFrom: 'da € 5,00',
       title: 'Miele Millefiori Estivo a Cassano d\'Adda | Bio & Golosità',
       description:
-        'Miele millefiori estivo di api proprie a Cassano d\'Adda (MI): più intenso e corposo, con note di tiglio e fiori di campo. Ordinalo oggi: consegna in zona.',
+        'Miele millefiori estivo di api proprie a Cassano d\'Adda (MI): più intenso e corposo, con note di tiglio e more selvatiche. Ordinalo oggi: consegna in zona.',
       intro:
-        'Il millefiori estivo è il miele delle grandi fioriture: tiglio, phacelia, trifoglio e i fiori spontanei delle golene dell\'Adda. Più scuro e più ricco di minerali del primaverile — le fioriture estive sono più concentrate — ha un carattere deciso che piace a chi cerca un miele "con corpo".',
+        'Il millefiori estivo è il miele delle grandi fioriture: tiglio, more selvatiche, phacelia e i fiori spontanei delle golene dell\'Adda. Più scuro e più ricco di minerali del primaverile — le fioriture estive sono più concentrate — ha un carattere deciso che piace a chi cerca un miele "con corpo".',
       harvest: 'Raccolto tra giugno e luglio',
       characteristics: [
         'Colore: ambra dorato, più carico in autunno',
-        'Gusto: corposo, con note di tiglio e caramello',
+        'Gusto: corposo, con note di tiglio e more selvatiche',
         'Consistenza: denso, cristallizzazione lenta e grossolana',
         'Ideale in cucina, anche per piatti salati',
       ],
@@ -213,7 +222,7 @@ export const site = {
       ],
       specs: [
         { label: 'Colore', value: 'ambra dorato, più carico' },
-        { label: 'Profumo e sapore', value: 'corposo, con note di tiglio e caramello' },
+        { label: 'Profumo e sapore', value: 'corposo, con note di tiglio e more selvatiche' },
         { label: 'Cristallizzazione', value: 'lenta e grossolana' },
         { label: 'Raccolto', value: 'giugno – luglio' },
         { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
@@ -229,8 +238,62 @@ export const site = {
           a: 'Sì, come tutti i nostri mieli non subisce trattamenti termici né filtrazioni aggressive. Ricorda solo che il miele non va dato ai bambini sotto i 12 mesi.',
         },
         {
-          q: 'Fate consegne anche a Treviglio e Gorgonzola?',
-          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda e dintorni. Scrivici su WhatsApp per gli orari.',
+          q: 'Fate consegne nella mia zona?',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, la Gera d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. Per ordinare basta chiamarci o scrivere un messaggio su WhatsApp.',
+        },
+      ],
+    },
+    {
+      slug: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
+      name: 'Miele Millefiori Estivo al Tiglio e Ailanto',
+      image: 'miele_millefiori_estivo_ailanto',
+      color: '#d9a83f',
+      price: '€ 5,00 (500 g) · € 9,00/kg',
+      priceFrom: 'da € 5,00',
+      title: 'Miele al Tiglio e Ailanto a Cassano d\'Adda | Bio & Golosità',
+      description:
+        'Miele millefiori estivo con alta percentuale di tiglio e ailanto (la pianta del paradiso): il suo nettare ha un retrogusto di pesca. Di api proprie a Cassano d\'Adda (MI).',
+      intro:
+        'Un millefiori estivo speciale, con un\'alta percentuale di tiglio e ailanto — l\'albero detto anche "pianta del paradiso". Il nettare dei suoi fiori regala al miele un retrogusto delicato di pesca, che si unisce alle note fresche del tiglio. Le nostre api lo raccolgono tra le grandi fioriture estive dei nostri apiari, nelle campagne della Martesana, della Gera d\'Adda, al Parco Nord Milano e in Val Brembana.',
+      harvest: 'Raccolto tra giugno e luglio',
+      characteristics: [
+        'Colore: ambra dorato, più chiaro del millefiori estivo',
+        'Gusto: dolce, con note di tiglio e retrogusto di pesca',
+        'Profumo: intenso e floreale, tipico dell\'ailanto',
+        'Consistenza: denso, cristallizzazione lenta',
+      ],
+      uses:
+        'Perfetto per la colazione e per dolcificare tisane e latte: le note di tiglio lo rendono ideale per la sera. Si sposa bene con formaggi freschi, yogurt e frutta, e in cucina con piatti delicati.',
+      benefits: [
+        'Alta percentuale di tiglio, tradizionalmente associato a relax e benessere',
+        'Il retrogusto di pesca dell\'ailanto lo rende un miele unico e riconoscibile',
+        'Dolce e aromatico: piace anche a chi preferisce sapori non troppo intensi',
+        'Prodotto con api proprie, smielato a freddo e non pastorizzato',
+      ],
+      specs: [
+        { label: 'Colore', value: 'ambra dorato, più chiaro dell\'estivo' },
+        { label: 'Profumo e sapore', value: 'floreale, note di tiglio e retrogusto di pesca' },
+        { label: 'Cristallizzazione', value: 'lenta e fine' },
+        { label: 'Raccolto', value: 'giugno – luglio' },
+        { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
+        { label: 'Abbinamenti', value: 'colazione, tisane, formaggi freschi, frutta' },
+      ],
+      faq: [
+        {
+          q: 'Cos\'è l\'ailanto e perché si chiama pianta del paradiso?',
+          a: 'L\'ailanto (Ailanthus altissima) è un albero conosciuto anche come "pianta del paradiso" o "albero del paradiso". I suoi fiori producono un nettare abbondante e profumato, che al miele regala un caratteristico retrogusto di pesca.',
+        },
+        {
+          q: 'Che differenza c\'è con il millefiori estivo?',
+          a: 'È sempre un millefiori estivo, ma con una percentuale più alta di tiglio e ailanto: più dolce e aromatico, con il retrogusto di pesca che lo rende facilmente riconoscibile.',
+        },
+        {
+          q: 'Quando viene raccolto?',
+          a: 'Come il millefiori estivo, viene raccolto tra giugno e luglio, quando tiglio e ailanto sono in piena fioritura. È smielato a freddo e non pastorizzato, come tutti i nostri mieli.',
+        },
+        {
+          q: 'Fate consegne nella mia zona?',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, la Gera d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. Per ordinare basta chiamarci o scrivere un messaggio su WhatsApp.',
         },
       ],
     },
@@ -280,7 +343,11 @@ export const site = {
         },
         {
           q: 'Dove trovo i castagni nella zona di Cassano d\'Adda?',
-          a: 'Le mie api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda e delle colline tra Bergamo e Cremona, a poca distanza dai miei apiari.',
+          a: 'Le mie api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda, nelle colline tra Bergamo e Cremona e nella Val Brembana, a poca distanza dai miei apiari.',
+        },
+        {
+          q: 'Fate consegne nella mia zona?',
+          a: 'Sì, consegniamo in tutta la zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, la Gera d\'Adda, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. Per ordinare basta chiamarci o scrivere un messaggio su WhatsApp.',
         },
       ],
     },

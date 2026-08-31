@@ -9,10 +9,11 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Pages**.
 
 | URL | Contenuto |
 | --- | --- |
-| `/` | Home hub: hero, 4 mieli, chi siamo, galleria foto/video, zone, recensioni, FAQ, contatti |
+| `/` | Home hub: hero, 5 mieli, chi siamo, galleria foto/video, zone, recensioni, FAQ, contatti |
 | `/miele/miele-di-acacia/` | Landing SEO Miele di Acacia |
 | `/miele/miele-millefiori-primaverile/` | Landing SEO Miele Millefiori Primaverile |
 | `/miele/miele-millefiori-estivo/` | Landing SEO Miele Millefiori Estivo |
+| `/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/` | Landing SEO Miele Millefiori Estivo al Tiglio e Ailanto |
 | `/miele/miele-di-castagno/` | Landing SEO Miele di Castagno |
 | `/chi-siamo/` | E-E-A-T: storia, metodo, apicoltore |
 | `/contatti/` | Contatti e come ordinare |
@@ -84,7 +85,10 @@ chromium --headless=new --no-sandbox --hide-scrollbars --window-size=1200,630 \
 
 ## Crediti immagini
 
-- `miele_di_acacia.jpg` e `miele_di_castagno.jpg` — foto originali del titolare
-  (miele di acacia e miele di castagno), ottimizzate in `public/img/miele_di_acacia-*`
-  e `public/img/miele_di_castagno-*`.
+- `miele_acacia.jpg`, `miele_castagno.jpg` e `miele_millefiori.jpg` — foto
+  originali del titolare (miele di acacia, castagno e millefiori estivo),
+  ottimizzate in `public/img/miele_di_acacia-*`, `public/img/miele_di_castagno-*`
+  e `public/img/miele_millefiori_estivo-*`.
+- `foto_dei_3_mieli_acacia_millefiori_e_castagno.jpg` — foto di gruppo (hero
+  home), ottimizzata in `public/img/3_baratooli_di_miele_di_acacia_millefiori-*`.
 - Altre foto di barattoli e apiario: materiale originale del titolare.

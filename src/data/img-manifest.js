@@ -1,27 +1,27 @@
 export default {
   "3_baratooli_di_miele_di_acacia_millefiori": {
-    "width": 2048,
-    "height": 1152,
+    "width": 1600,
+    "height": 1200,
     "variants": {
       "480": {
         "width": 480,
-        "height": 270
+        "height": 360
       },
       "640": {
         "width": 640,
-        "height": 360
+        "height": 480
       },
       "800": {
         "width": 800,
-        "height": 450
+        "height": 600
       },
       "1200": {
         "width": 1200,
-        "height": 675
+        "height": 900
       },
       "1600": {
         "width": 1600,
-        "height": 900
+        "height": 1200
       }
     }
   },
@@ -114,44 +114,44 @@ export default {
     }
   },
   "miele_di_acacia": {
-    "width": 461,
-    "height": 346,
+    "width": 1200,
+    "height": 1600,
     "variants": {
       "300": {
         "width": 300,
-        "height": 225
+        "height": 400
       },
       "400": {
         "width": 400,
-        "height": 300
+        "height": 533
       }
     }
   },
   "miele_di_castagno": {
-    "width": 688,
-    "height": 516,
+    "width": 1200,
+    "height": 1600,
     "variants": {
       "400": {
         "width": 400,
-        "height": 300
+        "height": 533
       },
       "600": {
         "width": 600,
-        "height": 450
+        "height": 800
       }
     }
   },
   "miele_millefiori_estivo": {
-    "width": 688,
-    "height": 516,
+    "width": 1200,
+    "height": 1600,
     "variants": {
       "400": {
         "width": 400,
-        "height": 300
+        "height": 533
       },
       "600": {
         "width": 600,
-        "height": 450
+        "height": 800
       }
     }
   },
@@ -188,6 +188,34 @@ export default {
       "800": {
         "width": 800,
         "height": 600
+      }
+    }
+  },
+  "raffaele_con_suo_padre": {
+    "width": 640,
+    "height": 640,
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 400
+      },
+      "600": {
+        "width": 600,
+        "height": 600
+      }
+    }
+  },
+  "miele_millefiori_estivo_ailanto": {
+    "width": 1200,
+    "height": 1600,
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 533
+      },
+      "600": {
+        "width": 600,
+        "height": 800
       }
     }
   }

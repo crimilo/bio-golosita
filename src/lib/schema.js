@@ -23,7 +23,7 @@ export function localBusiness() {
     legalName: site.legalName,
     vatID: site.vatId,
     description:
-      'Apicoltore a Cassano d\'Adda (Milano): miele 100% italiano e artigianale di acacia, millefiori primaverile, millefiori estivo e castagno, prodotto con api proprie e non filtrato.',
+      'Apicoltore a Cassano d\'Adda (Milano): miele 100% italiano e artigianale di acacia, millefiori primaverile, millefiori estivo, millefiori al tiglio e ailanto e castagno, prodotto con api proprie e non pastorizzato.',
     url: `${site.domain}/`,
     hasMap: 'https://www.google.com/maps/search/?api=1&query=Via+Salvo+D%27Acquisto+9,+20062+Cassano+d%27Adda+(MI)',
     telephone: site.phoneDisplay,
