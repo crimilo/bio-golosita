@@ -3,7 +3,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { site } from '../src/data/site.js';
 
-const pages = ['index.html', 'chi-siamo/index.html', 'contatti/index.html', '404.html', 'miele/miele-di-acacia/index.html', 'miele/miele-millefiori-primaverile/index.html', 'miele/miele-millefiori-estivo/index.html', 'miele/miele-di-castagno/index.html'];
+const pages = ['index.html', 'chi-siamo/index.html', 'contatti/index.html', '404.html', 'miele/miele-di-acacia/index.html', 'miele/miele-millefiori-primaverile/index.html', 'miele/miele-millefiori-estivo-al-tiglio-e-more/index.html', 'miele/miele-millefiori-estivo-al-tiglio-e-ailanto/index.html', 'miele/miele-di-castagno/index.html'];
 
 let issues = 0;
 const fail = (p, msg) => { console.log(`  ✗ ${p}: ${msg}`); issues++; };
@@ -66,7 +66,7 @@ for (const rel of pages) {
 
 // sitemap copre tutte le pagine
 const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
-for (const u of ['/', '/miele/miele-di-acacia/', '/miele/miele-millefiori-primaverile/', '/miele/miele-millefiori-estivo/', '/miele/miele-di-castagno/', '/chi-siamo/', '/contatti/']) {
+for (const u of ['/', '/miele/miele-di-acacia/', '/miele/miele-millefiori-primaverile/', '/miele/miele-millefiori-estivo-al-tiglio-e-more/', '/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/', '/miele/miele-di-castagno/', '/chi-siamo/', '/contatti/']) {
   if (!sitemap.includes(`<loc>https://bioegolosita.it${u}</loc>`)) fail('sitemap', `manca ${u}`);
 }
 console.log('✓ sitemap copre tutte le pagine');

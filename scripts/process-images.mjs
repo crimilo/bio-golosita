@@ -11,9 +11,9 @@ mkdirSync(OUT, { recursive: true });
 const WIDTHS = {
   'foto_dei_3_mieli_acacia_millefiori_e_castagno.jpg': { base: '3_baratooli_di_miele_di_acacia_millefiori', widths: [1600, 1200, 800, 640, 480] },
   'miele_acacia.jpg': { base: 'miele_di_acacia', widths: [400, 300] },
-  'miele_castagno.jpg': { base: 'miele_di_castagno', widths: [600, 400] },
+  'miele_castagno_nuovo.jpg': { base: 'miele_di_castagno', widths: [600, 400] },
   'miele_millefiori.jpg': { base: 'miele_millefiori_estivo', widths: [600, 400] },
-  'miele_millefiori.jpg': { base: 'miele_millefiori_estivo_ailanto', widths: [600, 400], tone: { saturation: 1.08, brightness: 1.02 } },
+  'miele_millefiori_tiglio_e_more.jpg': { base: 'miele_millefiori_estivo_ailanto', widths: [600, 400] },
   'raffaele_che_mostra_larnia_in_mano.jpg': [1000, 600, 400],
   'raffaele_con_suo_padre.jpg': [600, 400],
   'raffaele.png': [800, 480, 300],
@@ -21,7 +21,7 @@ const WIDTHS = {
 
 // crop portrait/landscape sources -> `${base}_card` variants (4:3, posY gravity)
 const CROPS = {
-  'barattoli_di_mile_millefiori.jpg': { widths: [800, 480, 300], posY: 0.7 },
+  'miele_millefiori.jpg': { widths: [800, 480, 300], posY: 0.7 },
 };
 
 // Parti dal manifest esistente: le voci di sorgenti non più presenti in root

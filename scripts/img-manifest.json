@@ -81,20 +81,6 @@
       }
     }
   },
-  "barattoli_di_mile_millefiori": {
-    "width": 1040,
-    "height": 2320,
-    "variants": {
-      "480": {
-        "width": 480,
-        "height": 1071
-      },
-      "800": {
-        "width": 800,
-        "height": 1785
-      }
-    }
-  },
   "raffaele_che_mostra_larnia_in_mano": {
     "width": 1500,
     "height": 2000,
@@ -128,8 +114,8 @@
     }
   },
   "miele_di_castagno": {
-    "width": 1200,
-    "height": 1600,
+    "width": 896,
+    "height": 1195,
     "variants": {
       "400": {
         "width": 400,
@@ -173,24 +159,6 @@
       }
     }
   },
-  "barattoli_di_mile_millefiori_card": {
-    "width": 1040,
-    "height": 2320,
-    "variants": {
-      "300": {
-        "width": 300,
-        "height": 225
-      },
-      "480": {
-        "width": 480,
-        "height": 360
-      },
-      "800": {
-        "width": 800,
-        "height": 600
-      }
-    }
-  },
   "raffaele_con_suo_padre": {
     "width": 640,
     "height": 640,
@@ -206,8 +174,8 @@
     }
   },
   "miele_millefiori_estivo_ailanto": {
-    "width": 1200,
-    "height": 1600,
+    "width": 896,
+    "height": 1195,
     "variants": {
       "400": {
         "width": 400,
@@ -216,6 +184,24 @@
       "600": {
         "width": 600,
         "height": 800
+      }
+    }
+  },
+  "miele_millefiori_card": {
+    "width": 1200,
+    "height": 1600,
+    "variants": {
+      "300": {
+        "width": 300,
+        "height": 225
+      },
+      "480": {
+        "width": 480,
+        "height": 360
+      },
+      "800": {
+        "width": 800,
+        "height": 600
       }
     }
   }
