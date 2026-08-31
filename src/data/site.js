@@ -35,6 +35,11 @@ export const site = {
   experienceYears: '6+',
   priceRange: '€€',
 
+  // >>> Profili social / Google Business Profile: aggiungere URL reali quando
+  // la scheda Google è attiva (es. 'https://g.page/r/XXXXXXXX/bio-golosita').
+  // Gli URL finiscono in sameAs del JSON-LD LocalBusiness. <<<
+  sameAs: [],
+
   // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
   bulkNote:
     'Per ordini superiori a 10 kg prepariamo secchi da 10 kg a un prezzo leggermente scontato, personalizzato su misura: contattaci per il preventivo.',

@@ -14,6 +14,19 @@ const imgUrl = (base) => {
   return `${site.domain}/img/${base}-${largest}.avif`;
 };
 
+// Tipo schema.org per ogni zona servita: comuni -> City, territori -> AdministrativeArea, parchi -> Park
+const areaServedType = (name) => {
+  if (name === 'Parco Nord Milano') return 'Park';
+  if (name === 'Gera d\'Adda') return 'AdministrativeArea';
+  return 'City';
+};
+
+// Descrizione del business generata dai prodotti reali (sempre allineata)
+const businessDescription = () =>
+  `Apicoltore a Cassano d'Adda (Milano): miele 100% italiano e artigianale di api proprie — ${site.honeys
+    .map((h) => h.name.toLowerCase().replace(/^(miele\s+)?(di\s+)?/, ''))
+    .join(', ')} — non pastorizzato e smielato a freddo.`;
+
 export function localBusiness() {
   return {
     '@context': 'https://schema.org',
@@ -22,9 +35,9 @@ export function localBusiness() {
     name: site.name,
     legalName: site.legalName,
     vatID: site.vatId,
-    description:
-      'Apicoltore a Cassano d\'Adda (Milano): miele 100% italiano e artigianale di acacia, millefiori primaverile, millefiori estivo, millefiori al tiglio e ailanto e castagno, prodotto con api proprie e non pastorizzato.',
+    description: businessDescription(),
     url: `${site.domain}/`,
+    ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
     hasMap: 'https://www.google.com/maps/search/?api=1&query=Via+Salvo+D%27Acquisto+9,+20062+Cassano+d%27Adda+(MI)',
     telephone: site.phoneDisplay,
     image: `${site.domain}/og.jpg`,
@@ -53,7 +66,7 @@ export function localBusiness() {
         closes: '19:00',
       },
     ],
-    areaServed: site.areaServed.map((name) => ({ '@type': 'City', name })),
+    areaServed: site.areaServed.map((name) => ({ '@type': areaServedType(name), name })),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Mieli Bio & Golosità',
