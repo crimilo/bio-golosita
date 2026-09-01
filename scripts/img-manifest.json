@@ -232,5 +232,24 @@
         "height": 800
       }
     }
+  },
+  "raffaele_sorridente_con_le_sue_api": {
+    "width": 1200,
+    "height": 1600,
+    "hash": "eb5fae94",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 533
+      },
+      "600": {
+        "width": 600,
+        "height": 800
+      },
+      "1000": {
+        "width": 1000,
+        "height": 1333
+      }
+    }
   }
 }

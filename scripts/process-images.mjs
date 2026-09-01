@@ -26,7 +26,7 @@ const WIDTHS = {
     { base: 'miele_millefiori_estivo_ailanto', widths: [600, 400] },
   ],
   'miele_millefiori_tiglio_e_more.jpg': [{ base: 'miele_millefiori_estivo_more', widths: [600, 400] }],
-  'raffaele_che_mostra_larnia_in_mano.jpg': [1000, 600, 400],
+  'raffaele-sorridente-con-le-sue-api.jpg': [{ base: 'raffaele_sorridente_con_le_sue_api', widths: [1000, 600, 400] }],
   'raffaele_con_suo_padre.jpg': [600, 400],
   'raffaele.png': [800, 480, 300],
 };
