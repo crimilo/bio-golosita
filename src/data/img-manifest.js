@@ -232,5 +232,24 @@ export default {
         "height": 1333
       }
     }
+  },
+  "raffaele": {
+    "width": 915,
+    "height": 803,
+    "hash": "4cde22ce",
+    "variants": {
+      "300": {
+        "width": 300,
+        "height": 263
+      },
+      "480": {
+        "width": 480,
+        "height": 421
+      },
+      "800": {
+        "width": 800,
+        "height": 702
+      }
+    }
   }
 };
