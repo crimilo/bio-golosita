@@ -21,16 +21,25 @@
     lbImg.classList.remove('zoomed');
     // non ingrandire mai oltre la risoluzione reale dell'immagine
     lbImg.onload = () => {
-      if (lbImg.naturalWidth > 0) lbImg.style.maxWidth = `${lbImg.naturalWidth}px`;
+      // mai oltre la risoluzione reale, MA mai oltre il contenitore (100%)
+      // né il cap 1200px: il padding del lightbox resta così simmetrico
+      // (niente vw: su desktop vw include lo scrollbar e sbilancia i bordi)
+      if (lbImg.naturalWidth > 0)
+        lbImg.style.maxWidth = `min(${lbImg.naturalWidth}px, 100%, 1200px)`;
     };
     lb.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
+    // nasconde anche lo scrollbar del viewport (html): senza, l'immagine
+    // centrata risulta con meno padding a destra che a sinistra
+    document.documentElement.style.overflow = 'hidden';
     closeBtn.focus();
   };
   const close = () => {
     lb.removeAttribute('open');
     lbImg.classList.remove('zoomed');
+    lbImg.style.transformOrigin = '';
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   };
 
   document.addEventListener('click', (e) => {
@@ -43,8 +52,18 @@
     }
   });
 
-  lbImg.addEventListener('click', () => {
-    lbImg.classList.toggle('zoomed');
+  lbImg.addEventListener('click', (e) => {
+    if (lbImg.classList.contains('zoomed')) {
+      // secondo tocco: riduci
+      lbImg.classList.remove('zoomed');
+      return;
+    }
+    // primo tocco: ingrandisci a partire dal punto toccato, non dal centro
+    const rect = lbImg.getBoundingClientRect();
+    const x = rect.width > 0 ? ((e.clientX - rect.left) / rect.width) * 100 : 50;
+    const y = rect.height > 0 ? ((e.clientY - rect.top) / rect.height) * 100 : 50;
+    lbImg.style.transformOrigin = `${x}% ${y}%`;
+    lbImg.classList.add('zoomed');
   });
 
   document.addEventListener('keydown', (e) => {

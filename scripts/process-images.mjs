@@ -28,7 +28,6 @@ const WIDTHS = {
   'miele_millefiori_tiglio_e_more.jpg': [{ base: 'miele_millefiori_estivo_more', widths: [600, 400] }],
   'raffaele-sorridente-con-le-sue-api.jpg': [{ base: 'raffaele_sorridente_con_le_sue_api', widths: [1000, 600, 400] }],
   'raffaele_con_suo_padre.jpg': [600, 400],
-  'raffaele.png': [800, 480, 300],
 };
 
 // crop 4:3 dedicato alle card (e box 4:3 delle pagine prodotto)
