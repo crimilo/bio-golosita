@@ -1254,6 +1254,19 @@ strong {
   max-width: 42rem;
 }
 
+/* Pagina miele: su mobile la foto segue subito il titolo. Il paragrafo
+   introduttivo viene nascosto (duplica la descrizione qui sotto) così
+   l'ordine diventa: titolo → foto → prezzo+CTA → descrizione.
+   Su desktop resta visibile sopra la griglia, com'era. */
+@media (max-width: 899px) {
+  .page-hero--product p {
+    display: none;
+  }
+  .page-hero--product {
+    padding-bottom: var(--space-1);
+  }
+}
+
 /* ---------- product detail ---------- */
 .product-grid {
   display: grid;
