@@ -57,7 +57,6 @@ export const site = {
   // Zone servite — citate in modo naturale, senza keyword stuffing
   areaServed: [
     'Cassano d\'Adda',
-    'Gera d\'Adda',
     'Groppello d\'Adda',
     'Trezzo sull\'Adda',
     'Vaprio d\'Adda',
@@ -151,7 +150,7 @@ export const site = {
         },
         {
           q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, la Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
+          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
         },
       ],
     },
@@ -207,7 +206,7 @@ export const site = {
         },
         {
           q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, la Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
+          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
         },
       ],
     },
@@ -261,7 +260,7 @@ export const site = {
         },
         {
           q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, la Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
+          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
         },
       ],
     },
@@ -315,7 +314,7 @@ export const site = {
         },
         {
           q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, la Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
+          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
         },
       ],
     },
@@ -369,7 +368,7 @@ export const site = {
         },
         {
           q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, la Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
+          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
         },
       ],
     },

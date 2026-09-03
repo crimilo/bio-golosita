@@ -15,10 +15,9 @@ const imgUrl = (base) => {
   return `${site.domain}/img/${base}-${largest}${suffix}.avif`;
 };
 
-// Tipo schema.org per ogni zona servita: comuni -> City, territori -> AdministrativeArea, parchi -> Park
+// Tipo schema.org per ogni zona servita: comuni -> City, parchi -> Park
 const areaServedType = (name) => {
   if (name === 'Parco Nord Milano') return 'Park';
-  if (name === 'Gera d\'Adda') return 'AdministrativeArea';
   return 'City';
 };
 
