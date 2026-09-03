@@ -3,6 +3,10 @@
 //  Modifica qui: telefono, prezzi, orari, recensioni, ecc.
 // ============================================================
 
+// Profili social reali dell'azienda
+const facebookUrl = 'https://www.facebook.com/profile.php?id=100087140305651';
+const tiktokUrl = 'https://www.tiktok.com/@bio.golosita';
+
 export const site = {
   name: 'Bio & Golosità',
   legalName: 'Azienda Agricola Bio & Golosità di Antoci Raffaele',
@@ -35,10 +39,16 @@ export const site = {
   experienceYears: '6+',
   priceRange: '€€',
 
-  // >>> Profili social / Google Business Profile: aggiungere URL reali quando
-  // la scheda Google è attiva (es. 'https://g.page/r/XXXXXXXX/bio-golosita').
-  // Gli URL finiscono in sameAs del JSON-LD LocalBusiness. <<<
-  sameAs: [],
+  // Profili social: usati in footer, nella sezione contatti e in sameAs del JSON-LD
+  socials: [
+    { name: 'Facebook', url: facebookUrl, handle: 'Bio & Golosità' },
+    { name: 'TikTok', url: tiktokUrl, handle: '@bio.golosita' },
+  ],
+
+  // >>> Aggiungere qui l'URL della scheda Google Business Profile quando è attiva
+  // (es. 'https://g.page/r/XXXXXXXX/bio-golosita'): finisce in sameAs del JSON-LD
+  // LocalBusiness insieme ai profili social. <<<
+  sameAs: [facebookUrl, tiktokUrl],
 
   // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
   bulkNote:

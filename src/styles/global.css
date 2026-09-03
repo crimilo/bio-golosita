@@ -1129,6 +1129,30 @@ strong {
   }
 }
 
+/* social buttons in footer */
+.footer ul.footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: var(--space-3);
+}
+.footer ul.footer-socials a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #f6e9d4;
+  background: rgba(246, 233, 212, 0.08);
+  border: 1px solid rgba(246, 233, 212, 0.22);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.footer ul.footer-socials a:hover {
+  color: #f2c14e;
+  background: rgba(246, 233, 212, 0.16);
+  border-color: #f2c14e;
+}
+
 /* ---------- WhatsApp float ---------- */
 .wa-float {
   position: fixed;

@@ -13,6 +13,15 @@ import { site } from '../data/site';
           {site.tagline}. {site.legalName}: miele di api proprie, non pastorizzato,
           raccolto nelle campagne della Martesana e della Gera d'Adda.
         </p>
+        <ul class="footer-socials" aria-label="Seguici sui social">
+          {site.socials.map((s) => (
+            <li>
+              <a href={s.url} target="_blank" rel="noopener" aria-label={`Seguici su ${s.name}`} title={`Seguici su ${s.name}`}>
+                <Icons name={s.name.toLowerCase()} size={18} />
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div>

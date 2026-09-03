@@ -29,6 +29,15 @@ import { site } from '../data/site';
           <p>Scrivici: ti rispondiamo appena possibile</p>
         </div>
       </a>
+      {site.socials.map((s) => (
+        <a class="contact-row contact-row--link" href={s.url} target="_blank" rel="noopener">
+          <Icons name={s.name.toLowerCase()} size={22} />
+          <div>
+            <h3>{s.name}</h3>
+            <p>{s.handle}</p>
+          </div>
+        </a>
+      ))}
       <div class="contact-row">
         <Icons name="pin" size={22} />
         <div>
