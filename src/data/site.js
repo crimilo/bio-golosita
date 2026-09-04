@@ -379,4 +379,5 @@ export const nav = [
   { href: '/#mieli', label: 'I nostri mieli' },
   { href: '/chi-siamo', label: 'Chi siamo' },
   { href: '/#galleria', label: 'Galleria' },
+  { href: '/contatti', label: 'Contatti' },
 ];

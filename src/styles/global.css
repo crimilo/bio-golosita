@@ -340,6 +340,14 @@ strong {
   font-size: 0.95rem;
 }
 
+/* icona telefono nel CTA: mostrata solo quando l'header ha spazio (≥ 480px),
+   sotto questa larghezza il bottone è a fianco del logo e risulterebbe affollato */
+@media (max-width: 479.98px) {
+  .header-cta svg {
+    display: none;
+  }
+}
+
 /* dropdown mobile */
 @media (max-width: 899.98px) {
   .nav {

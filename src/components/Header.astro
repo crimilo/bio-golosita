@@ -1,12 +1,12 @@
 ---
 import Logo from './Logo.astro';
-import { nav } from '../data/site';
+import Icons from './Icons.astro';
+import { nav, site } from '../data/site';
 
 interface Props {
   pathname: string;
 }
 const { pathname } = Astro.props;
-const ctaHref = pathname === '/' ? '/#contatti' : '/contatti';
 ---
 
 <header class="header" id="site-header">
@@ -25,8 +25,9 @@ const ctaHref = pathname === '/' ? '/#contatti' : '/contatti';
       }
     </nav>
     <div class="header-actions">
-      <a class="btn btn-primary header-cta" href={ctaHref}>
-        Contattaci
+      <a class="btn btn-primary header-cta" href={site.phoneHref}>
+        <Icons name="phone" size={18} />
+        Chiama ora
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Apri menu">
         <span class="nav-toggle-line"></span>
