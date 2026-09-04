@@ -1,6 +1,3 @@
----
-
----
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima immagine">
   <img src="" alt="" width="1200" height="900" />
   <button class="lightbox-close" type="button" aria-label="Chiudi">✕</button>
@@ -19,15 +16,12 @@
     lbImg.src = img.dataset.full || img.currentSrc || img.src;
     lbImg.alt = img.alt || '';
     lbImg.classList.remove('zoomed');
-
     lbImg.onload = () => {
-
       if (lbImg.naturalWidth > 0)
         lbImg.style.maxWidth = `min(${lbImg.naturalWidth}px, 100%, 1200px)`;
     };
     lb.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
-
     document.documentElement.style.overflow = 'hidden';
     closeBtn.focus();
   };
@@ -51,11 +45,9 @@
 
   lbImg.addEventListener('click', (e) => {
     if (lbImg.classList.contains('zoomed')) {
-
       lbImg.classList.remove('zoomed');
       return;
     }
-
     const rect = lbImg.getBoundingClientRect();
     const x = rect.width > 0 ? ((e.clientX - rect.left) / rect.width) * 100 : 50;
     const y = rect.height > 0 ? ((e.clientY - rect.top) / rect.height) * 100 : 50;
