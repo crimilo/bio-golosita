@@ -52,8 +52,8 @@ scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, O
       `Review`/`AggregateRating` (per ora volutamente assente, come da requisito)
 - [ ] **Partita IVA / REA**: aggiungerli nel footer quando disponibili
 - [ ] **Dominio**: aggiungere `bioegolosita.it` come custom domain su Cloudflare Pages
-- [x] **Google Maps**: scheda attiva — embed della mappa, CTA ("Apri la scheda su
-      Google Maps", "Indicazioni stradali", "Vedi su Google Maps") e `hasMap`/`sameAs`
+- [x] **Google Maps**: scheda attiva — embed della mappa e CTA ("Apri su
+      Google Maps", "Vedi su Google Maps") e `hasMap`/`sameAs`
       del JSON-LD puntano alla scheda Google Business Profile
 
 ## SEO
