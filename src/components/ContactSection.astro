@@ -1,8 +1,6 @@
 ---
 import Icons from './Icons.astro';
 import { site } from '../data/site';
-
-const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site.address.geo.lat},${site.address.geo.lng}`;
 ---
 
 <section class="section" id="contatti" aria-labelledby="contatti-title">
@@ -87,10 +85,6 @@ const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${site
         <a class="btn btn-primary" href={site.googleMapsUrl} target="_blank" rel="noopener">
           <Icons name="pin" size={18} />
           Apri la scheda su Google Maps
-        </a>
-        <a class="btn btn-ghost" href={directionsUrl} target="_blank" rel="noopener">
-          <Icons name="arrow" size={18} />
-          Indicazioni stradali
         </a>
       </div>
     </div>
