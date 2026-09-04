@@ -68,13 +68,11 @@ export function localBusiness() {
       name: 'Mieli Bio & Golosità',
       itemListElement: site.honeys.map((h) => ({
         '@type': 'Offer',
+        name: h.name,
+        image: imgUrl(h.cardImage ?? h.image),
+        url: `${site.domain}/miele/${h.slug}/`,
         priceCurrency: 'EUR',
         price: priceNum(h.price),
-        itemOffered: {
-          '@type': 'Product',
-          name: h.name,
-          image: imgUrl(h.cardImage ?? h.image),
-        },
       })),
     },
   };
