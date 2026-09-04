@@ -1,15 +1,6 @@
-// ============================================================
-//  SITO "Bio & Golosità" — SORGENTE UNICA di dati e contenuti
-//  Modifica qui: telefono, prezzi, orari, recensioni, ecc.
-// ============================================================
-
-// Profili social reali dell'azienda
 const facebookUrl = 'https://www.facebook.com/profile.php?id=100087140305651';
 const tiktokUrl = 'https://www.tiktok.com/@bio.golosita';
 
-// Scheda Google Business Profile su Google Maps (attiva).
-// googleMapsUrl = pagina della scheda (CTA, hasMap e sameAs del JSON-LD);
-// googleMapsEmbedUrl = embed della mappa centrato sulla scheda.
 const googleMapsUrl =
   'https://www.google.com/maps/place/Apicoltura+e+Vendita+Miele+Bio+%26+Golosit%C3%A0+Cassano+d%E2%80%99Adda/@45.5355768,9.5244833,17z/data=!3m1!4b1!4m6!3m5!1s0x47814b2f5343dc1d:0x479af6135571444d!8m2!3d45.5355768!4d9.5244833!16s%2Fg%2F11nvts1zyj';
 const googleMapsEmbedUrl =
@@ -19,13 +10,12 @@ export const site = {
   name: 'Bio & Golosità',
   legalName: 'Azienda Agricola Bio & Golosità di Antoci Raffaele',
   owner: 'Antoci Raffaele',
-  // Dati fiscali
+
   vatId: '12606370968',
   rea: '2744949',
   tagline: 'Miele genuino di api proprie a Cassano d\'Adda',
   domain: 'https://bioegolosita.it',
 
-  // Numero di telefono reale
   phoneDisplay: '+39 351 537 6719',
   phoneHref: 'tel:+393515376719',
   whatsapp: 'https://wa.me/393515376719?text=Ciao%2C%20vorrei%20informazioni%20sul%20vostro%20miele',
@@ -37,36 +27,29 @@ export const site = {
     province: 'MI',
     region: 'Lombardia',
     country: 'Italia',
-    // Coordinate uguali al pin della scheda Google Maps (attiva)
+
     geo: { lat: 45.5355768, lng: 9.5244833 },
   },
 
-  // >>> TODO: verificare con il titolare <<<
   hours: 'Su appuntamento · chiama o scrivi prima di passare',
 
-  founded: 2020, // 6+ anni di esperienza
+  founded: 2020,
   experienceYears: '6+',
   priceRange: '€€',
 
-  // Profili social: usati in footer, nella sezione contatti e in sameAs del JSON-LD
   socials: [
     { name: 'Facebook', url: facebookUrl, handle: 'Bio & Golosità' },
     { name: 'TikTok', url: tiktokUrl, handle: '@bio.golosita' },
   ],
 
-  // La scheda Google (googleMapsUrl) è in sameAs del JSON-LD LocalBusiness:
-  // Google la riconosce come lo stesso profilo dell'azienda.
   sameAs: [facebookUrl, tiktokUrl, googleMapsUrl],
 
-  // Scheda Google Business Profile su Google Maps (attiva): embed e CTA
   googleMapsUrl,
   googleMapsEmbedUrl,
 
-  // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
   bulkNote:
     'Per ordini superiori a 10 kg prepariamo secchi da 10 kg a un prezzo leggermente scontato, personalizzato su misura: contattaci per il preventivo.',
 
-  // Zone servite — citate in modo naturale, senza keyword stuffing
   areaServed: [
     'Cassano d\'Adda',
     'Groppello d\'Adda',
@@ -85,9 +68,6 @@ export const site = {
     'Parco Nord Milano',
   ],
 
-  // >>> Recensioni: segnaposto — la scheda Google è attiva ma le recensioni
-  // reali non sono ancora state raccolte e pubblicate qui.
-  // NESSUNA recensione finzionale va marcata con schema Review/AggregateRating. <<<
   reviews: [
     {
       name: 'Maria R.',

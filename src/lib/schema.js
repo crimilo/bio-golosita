@@ -1,4 +1,3 @@
-// Generatori di JSON-LD validi per Google.
 import { site } from '../data/site.js';
 import manifest from '../data/img-manifest.js';
 
@@ -7,7 +6,6 @@ export const priceNum = (priceStr) => {
   return m ? Number.parseFloat(m[0].replace(',', '.')) : 9;
 };
 
-// URL della variante più grande esistente di un'immagine prodotto
 const imgUrl = (base) => {
   const entry = manifest[base];
   const largest = Math.max(...Object.keys(entry.variants).map(Number));
@@ -15,13 +13,11 @@ const imgUrl = (base) => {
   return `${site.domain}/img/${base}-${largest}${suffix}.avif`;
 };
 
-// Tipo schema.org per ogni zona servita: comuni -> City, parchi -> Park
 const areaServedType = (name) => {
   if (name === 'Parco Nord Milano') return 'Park';
   return 'City';
 };
 
-// Descrizione del business generata dai prodotti reali (sempre allineata)
 const businessDescription = () =>
   `Apicoltore a Cassano d'Adda (Milano): miele 100% italiano e artigianale di api proprie — ${site.honeys
     .map((h) => h.name.toLowerCase().replace(/^(miele\s+)?(di\s+)?/, ''))

@@ -1,19 +1,18 @@
 ---
-// Responsive <picture> con AVIF + WebP, dimensioni esplicite (anti-CLS),
-// lazy load opzionale e zoom lightbox su tap.
+
 import manifest from '../data/img-manifest.js';
 
 interface Props {
-  base: string; // nome base del file (senza estensione)
+  base: string;
   alt: string;
   sizes?: string;
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'low' | 'auto';
   class?: string;
   zoomable?: boolean;
-  width?: number; // override larghezza intrinseca
-  height?: number; // override altezza intrinseca
-  objectPosition?: string; // es. 'center 85%' per foto verticali
+  width?: number;
+  height?: number;
+  objectPosition?: string;
 }
 
 const {
@@ -33,7 +32,6 @@ const variants = Object.keys(entry.variants)
   .map(Number)
   .sort((a, b) => a - b);
 
-// suffix content-hash: cambia al cambiare della foto -> URL nuovo -> niente cache stantia
 const suffix = entry.hash ? `-${entry.hash}` : '';
 
 const mkSrcset = (ext) =>

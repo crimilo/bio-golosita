@@ -1,5 +1,3 @@
-// Ritaglia una foto verticale nella banda 4:3 con piu' pixel "miele".
-// Uso: node scripts/crop-best-band.mjs <input> <output>
 import sharp from 'sharp';
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -33,7 +31,7 @@ for (let top = 0; top <= H - boxH; top += 60) {
   const score = honey / total;
   if (score > best.score) best = { top, score };
 }
-// campiona anche gli step intermedi per precisione
+
 for (let top = Math.max(0, best.top - 60); top <= Math.min(H - boxH, best.top + 60); top += 15) {
   const { data, info } = await sharp(input)
     .extract({ left: 0, top, width: W, height: boxH })

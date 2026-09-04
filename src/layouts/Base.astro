@@ -33,7 +33,6 @@ const {
 const canonical = `${site.domain}${pathname}`;
 const ogUrl = `${site.domain}${pathname}`;
 
-// hero home: nome file con content-hash (cache-busting)
 const heroBase = 'hero_bg';
 const heroSuffix = manifest[heroBase]?.hash ? `-${manifest[heroBase].hash}` : '';
 ---
@@ -53,7 +52,6 @@ const heroSuffix = manifest[heroBase]?.hash ? `-${manifest[heroBase].hash}` : ''
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Open Graph / social -->
     <meta property="og:type" content={type} />
     <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content={site.name} />
@@ -68,7 +66,6 @@ const heroSuffix = manifest[heroBase]?.hash ? `-${manifest[heroBase].hash}` : ''
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${site.domain}${ogImage}`} />
 
-    <!-- fonts: inline @font-face (subset latin, senza unicode-range: bug WebKit su iOS Safari lascia il testo in fallback) -->
     <style is:inline set:html={fontCss}></style>
 
     {

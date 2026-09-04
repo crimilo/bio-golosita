@@ -1,5 +1,5 @@
 ---
-// Lightbox globale: tap per zoom full-screen, tap per de-zoom.
+
 ---
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima immagine">
   <img src="" alt="" width="1200" height="900" />
@@ -19,18 +19,15 @@
     lbImg.src = img.dataset.full || img.currentSrc || img.src;
     lbImg.alt = img.alt || '';
     lbImg.classList.remove('zoomed');
-    // non ingrandire mai oltre la risoluzione reale dell'immagine
+
     lbImg.onload = () => {
-      // mai oltre la risoluzione reale, MA mai oltre il contenitore (100%)
-      // né il cap 1200px: il padding del lightbox resta così simmetrico
-      // (niente vw: su desktop vw include lo scrollbar e sbilancia i bordi)
+
       if (lbImg.naturalWidth > 0)
         lbImg.style.maxWidth = `min(${lbImg.naturalWidth}px, 100%, 1200px)`;
     };
     lb.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
-    // nasconde anche lo scrollbar del viewport (html): senza, l'immagine
-    // centrata risulta con meno padding a destra che a sinistra
+
     document.documentElement.style.overflow = 'hidden';
     closeBtn.focus();
   };
@@ -54,11 +51,11 @@
 
   lbImg.addEventListener('click', (e) => {
     if (lbImg.classList.contains('zoomed')) {
-      // secondo tocco: riduci
+
       lbImg.classList.remove('zoomed');
       return;
     }
-    // primo tocco: ingrandisci a partire dal punto toccato, non dal centro
+
     const rect = lbImg.getBoundingClientRect();
     const x = rect.width > 0 ? ((e.clientX - rect.left) / rect.width) * 100 : 50;
     const y = rect.height > 0 ? ((e.clientY - rect.top) / rect.height) * 100 : 50;

@@ -1,6 +1,3 @@
-// Convert video poster jpgs to webp/avif at display size,
-// with content-hashed filenames (cache-busting).
-// Se il .jpg sorgente non c'è più, salta (i file già generati restano validi).
 import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { readFileSync, existsSync, rmSync } from 'node:fs';

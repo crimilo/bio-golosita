@@ -1,4 +1,3 @@
-// QA browser: overflow, header CTA, whatsapp float, lightbox zoom, video play.
 import { chromium } from 'playwright-core';
 
 const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
@@ -33,7 +32,6 @@ for (const vp of [
   const waPos = await wa.boundingBox();
   check(`[${vp.name}] WhatsApp in basso a destra`, waPos && waPos.x > vp.w - 100 && waPos.y > vp.h - 100);
 
-  // lightbox: tap su immagine → open; tap → zoom; close
   const heroImg = await page.locator('.hero-media img').first();
   await heroImg.click();
   const lb = await page.locator('#lightbox');
@@ -44,7 +42,6 @@ for (const vp of [
   await page.locator('.lightbox-close').click();
   check(`[${vp.name}] lightbox si chiude`, (await lb.getAttribute('open')) === null);
 
-  // video gallery: play al click
   await page.locator('[data-video] .video-play').first().click();
   const playing = await page.locator('[data-video]').first().getAttribute('data-playing');
   check(`[${vp.name}] video parte al click`, playing !== null);

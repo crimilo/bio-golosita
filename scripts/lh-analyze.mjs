@@ -1,4 +1,3 @@
-// Analizza un report Lighthouse JSON.
 import { readFileSync } from 'node:fs';
 const r = JSON.parse(readFileSync(process.argv[2], 'utf8'));
 const audits = r.audits;

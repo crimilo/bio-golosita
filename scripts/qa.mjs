@@ -1,4 +1,3 @@
-// QA: verifica titoli<=65, desc<=155, JSON-LD parsabile, pagine accessibili.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -39,14 +38,12 @@ for (const p of pages) {
   if (!h.includes('<script type="application/ld+json">')) { console.log('  ✗ nessun JSON-LD'); bad++; }
 }
 
-// robots.txt e sitemap
 const robots = readFileSync('dist/robots.txt', 'utf8');
 console.log('\nrobots.txt:', robots.includes('Allow: /') ? 'OK' : '✗');
 const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
 const urls = (sitemap.match(/<loc>/g) || []).length;
 console.log(`sitemap: ${urls} URL`);
 
-// og.jpg presente?
 try { statSync('dist/og.jpg'); console.log('og.jpg: OK'); } catch { console.log('og.jpg: MANCANTE'); bad++; }
 
 console.log(bad === 0 ? '\nQA: TUTTO OK' : `\nQA: ${bad} PROBLEMI`);

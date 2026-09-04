@@ -1,8 +1,5 @@
 {
-	// Sito statico puro: niente adapter @astrojs/cloudflare.
-	// `wrangler deploy` pubblica dist/ come Worker static-assets;
-	// la presenza di questo file impedisce all'auto-config di
-	// iniettare `astro add cloudflare` durante il build.
+
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "bio-golosita",
 	"compatibility_date": "2026-08-28",

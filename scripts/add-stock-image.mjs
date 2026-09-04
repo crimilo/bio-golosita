@@ -1,6 +1,3 @@
-// Scarica un'immagine da Wikimedia Commons e genera le varianti AVIF/WebP
-// con nomi versionati (content-hash), come process-images.mjs.
-// Uso: node scripts/add-stock-image.mjs <url> <baseName> [widths...]
 import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
@@ -9,7 +6,6 @@ const [url, base, ...wArgs] = process.argv.slice(2);
 const widths = wArgs.map(Number);
 mkdirSync('public/img', { recursive: true });
 
-// Supporta sia URL remoti che file locali
 const src = url.startsWith('http')
   ? Buffer.from(await (await fetch(url)).arrayBuffer())
   : readFileSync(url);
@@ -27,14 +23,13 @@ for (const w of widths) {
   const m = await sharp(`${out}.webp`).metadata();
   entry.variants[w] = { width: m.width, height: m.height };
   console.log('OK', base, w, m.width + 'x' + m.height);
-  // rimuove eventuali varianti obsolete senza hash
+
   for (const ext of ['webp', 'avif']) {
     const old = `public/img/${base}-${w}.${ext}`;
     if (existsSync(old)) rmSync(old);
   }
 }
 
-// aggiorna i manifest
 const manifestPath = 'scripts/img-manifest.json';
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 manifest[base] = entry;

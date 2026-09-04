@@ -1,4 +1,3 @@
-// Audit completo dist/: SEO, E-E-A-T, headings, alt, link, NAP, JSON-LD.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { site } from '../src/data/site.js';
@@ -25,7 +24,6 @@ for (const rel of pages) {
   if (!h.includes('name="robots"')) fail(rel, 'manca meta robots');
   if (rel !== '404.html' && !h.includes('content="index, follow"')) fail(rel, 'robots non index');
 
-  // headings: un solo h1 e niente livelli saltati
   const heads = [...h.matchAll(/<h([1-6])[^>]*>([\s\S]*?)<\/h\1>/g)].map((m) => Number(m[1]));
   const h1s = heads.filter((x) => x === 1).length;
   if (h1s !== 1) fail(rel, `${h1s} h1`);
@@ -35,14 +33,12 @@ for (const rel of pages) {
     prev = lv;
   }
 
-  // immagini: alt e width/height
   const imgs = [...h.matchAll(/<img[^>]*>/g)].map((m) => m[0]);
   for (const img of imgs) {
     if (!/alt="/.test(img)) fail(rel, 'img senza alt');
     if (!/width="/.test(img) || !/height="/.test(img)) fail(rel, 'img senza width/height');
   }
 
-  // link interni esistono
   const links = [...h.matchAll(/href="\/([^"#]*?)(?:#|")/g)].map((m) => '/' + m[1]).filter((u) => !u.includes('.avif') && !u.includes('.webp'));
   for (const u of [...new Set(links)]) {
     const target = join('dist', u);
@@ -51,11 +47,9 @@ for (const rel of pages) {
     } catch { fail(rel, `link rotto: ${u}`); }
   }
 
-  // NAP consistente
   if (!h.includes(site.phoneDisplay.replace(/ /g, '')) && !h.includes(site.phoneDisplay)) fail(rel, 'telefono NAP mancante');
   if (!h.includes('Via Salvo D')) fail(rel, 'indirizzo NAP mancante');
 
-  // JSON-LD validi
   const lds = [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
   for (const m of lds) {
     try { JSON.parse(unescape(m[1])); } catch { fail(rel, 'JSON-LD non valido'); }
@@ -64,7 +58,6 @@ for (const rel of pages) {
   console.log(`✓ ${rel} — title ${title.length}, desc ${desc.length}, h1 ok, ${lds.length} JSON-LD, ${imgs.length} img`);
 }
 
-// sitemap copre tutte le pagine
 const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
 for (const u of ['/', '/miele/miele-di-acacia/', '/miele/miele-millefiori-primaverile/', '/miele/miele-millefiori-estivo-al-tiglio-e-more/', '/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/', '/miele/miele-di-castagno/', '/chi-siamo/', '/contatti/']) {
   if (!sitemap.includes(`<loc>https://bioegolosita.it${u}</loc>`)) fail('sitemap', `manca ${u}`);

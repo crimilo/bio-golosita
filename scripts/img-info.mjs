@@ -1,4 +1,3 @@
-// Quick metadata dump for all jpg/mp4 in repo root.
 import sharp from 'sharp';
 import { readdirSync } from 'node:fs';
 

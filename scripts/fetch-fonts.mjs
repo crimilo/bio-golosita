@@ -1,12 +1,3 @@
-// Fetch static WOFF2 font files (latin subset) from jsDelivr and generate
-// src/assets/fonts.css (inlined from Base.astro) WITHOUT unicode-range.
-//
-// Perché senza unicode-range: WebKit/iOS Safari ha bug aperti nella selezione
-// dei font con unicode-range (bugs.webkit.org 262828, 244762, 241831...) che
-// su mobile lasciano il testo in fallback. Il testo del sito (italiano) è
-// interamente coperto dal subset latin (U+0000-00FF + punteggiatura), quindi
-// un solo @font-face per peso, senza unicode-range, copre tutto e salta la
-// logica buggata di Safari. In più dimezza i byte scaricati.
 import { mkdirSync, writeFileSync, existsSync, readdirSync, unlinkSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -53,10 +44,6 @@ for (const f of FONTS) {
 writeFileSync(CSS_DEST, css.join('\n') + '\n');
 console.log(`${CSS_DEST} written`);
 
-// Pulizia DOPO i download riusciti: rimuove i file del vecchio schema (subset
-// latin-ext, fonts.css duplicato) e qualsiasi woff2 non più previsto da FONTS,
-// così un errore di rete a metà script non lascia il sito senza font. I file
-// in più non devono finire pubblicati su Cloudflare Pages (cache immutabile).
 const validNames = new Set(
   FONTS.flatMap((f) => f.weights.map((w) => `${f.family}-${w}-latin.woff2`)),
 );

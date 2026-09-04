@@ -1,4 +1,3 @@
-// Cerca immagini su Wikimedia Commons e mostra metadati utili (url, licenza, descrizione).
 const query = process.argv[2] || 'dark honey';
 const url =
   'https://commons.wikimedia.org/w/api.php?action=query&generator=search' +

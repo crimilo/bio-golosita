@@ -1,29 +1,22 @@
-/* ============================================================
-   Bio & Golosità — design system
-   Font: Fraunces (titoli) · Inter (testo) · Caveat (accenti)
-   ============================================================ */
-
 :root {
-  /* palette */
+
   --bg: #fffbf2;
   --bg-soft: #faf0dd;
   --surface: #ffffff;
-  --ink: #33240f;        /* testo principale — contrasto ~12:1 su --bg */
-  --ink-soft: #6b5638;   /* testo secondario — contrasto ~6.7:1 su --bg */
-  --amber: #c77f00;      /* accento decorativo */
-  --amber-strong: #9a6200; /* CTA su sfondo chiaro — testo bianco 5.1:1 */
-  --amber-deep: #7f5100; /* hover CTA */
-  --green: #3e6b3f;      /* accento "bio" */
+  --ink: #33240f;
+  --ink-soft: #6b5638;
+  --amber: #c77f00;
+  --amber-strong: #9a6200;
+  --amber-deep: #7f5100;
+  --green: #3e6b3f;
   --line: #eadfc9;
   --white: #fff;
   --wa: #25d366;
 
-  /* typography */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-hand: 'Caveat', cursive;
 
-  /* layout */
   --container: 1120px;
   --header-h: 68px;
   --radius: 18px;
@@ -39,7 +32,6 @@
   --space-6: 6rem;
 }
 
-/* ---------- reset ---------- */
 *,
 *::before,
 *::after {
@@ -124,7 +116,6 @@ strong {
   border-radius: 4px;
 }
 
-/* ---------- layout helpers ---------- */
 .container {
   width: 100%;
   max-width: var(--container);
@@ -167,7 +158,6 @@ strong {
   margin-inline: auto;
 }
 
-/* ---------- buttons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -222,7 +212,6 @@ strong {
   font-size: 1.05rem;
 }
 
-/* ---------- header ---------- */
 .header {
   position: fixed;
   inset: 0 0 auto 0;
@@ -287,7 +276,6 @@ strong {
   margin-left: auto;
 }
 
-/* hamburger (solo mobile) */
 .nav-toggle {
   display: inline-flex;
   flex-direction: column;
@@ -340,15 +328,12 @@ strong {
   font-size: 0.95rem;
 }
 
-/* icona telefono nel CTA: mostrata solo quando l'header ha spazio (≥ 480px),
-   sotto questa larghezza il bottone è a fianco del logo e risulterebbe affollato */
 @media (max-width: 479.98px) {
   .header-cta svg {
     display: none;
   }
 }
 
-/* dropdown mobile */
 @media (max-width: 899.98px) {
   .nav {
     position: absolute;
@@ -387,7 +372,6 @@ strong {
   }
 }
 
-/* schermi piccoli (< 380px): logo e testo leggermente ridotti, niente sovrapposizioni */
 @media (max-width: 380px) {
   .header-inner {
     gap: 0.75rem;
@@ -427,7 +411,6 @@ strong {
   }
 }
 
-/* ---------- hero ---------- */
 .hero {
   padding-top: calc(var(--header-h) + var(--space-5));
   padding-bottom: var(--space-5);
@@ -521,7 +504,6 @@ strong {
   }
 }
 
-/* ---------- honey cards ---------- */
 .honey-grid {
   display: grid;
   gap: var(--space-3);
@@ -607,7 +589,6 @@ strong {
   transform: translateX(4px);
 }
 
-/* ---------- features / why us ---------- */
 .features {
   display: grid;
   gap: var(--space-3);
@@ -640,7 +621,6 @@ strong {
   font-size: 0.95rem;
 }
 
-/* ---------- split / story ---------- */
 .split {
   display: grid;
   gap: var(--space-4);
@@ -744,7 +724,7 @@ strong {
   .split {
     grid-template-columns: 1fr 1fr;
   }
-  /* split alternato: immagine a sinistra, testo a destra */
+
   .split--reverse .split-text {
     order: 2;
   }
@@ -753,15 +733,12 @@ strong {
   }
 }
 
-/* Foto di presentazione nell'hero: più piccola e leggera,
-   per non gareggiare con la foto grande della sezione storia */
 .page-hero .split-media {
   max-width: 22rem;
   margin-inline: auto;
   box-shadow: 0 10px 30px rgba(51, 36, 15, 0.12);
 }
 
-/* ---------- gallery ---------- */
 .gallery-grid {
   display: grid;
   gap: var(--space-3);
@@ -845,7 +822,6 @@ strong {
   display: none;
 }
 
-/* ---------- testimonials ---------- */
 .reviews-grid {
   display: grid;
   gap: var(--space-3);
@@ -884,7 +860,6 @@ strong {
   color: var(--amber-strong);
 }
 
-/* ---------- FAQ ---------- */
 .faq {
   max-width: 720px;
   margin-inline: auto;
@@ -930,7 +905,6 @@ strong {
   font-size: 0.97rem;
 }
 
-/* ---------- CTA band ---------- */
 .cta-band {
   background: linear-gradient(135deg, var(--amber-strong), var(--amber-deep));
   border-radius: var(--radius);
@@ -953,7 +927,6 @@ strong {
   opacity: 0.95;
 }
 
-/* ---------- contact ---------- */
 .contact-card {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1072,7 +1045,6 @@ strong {
   padding: var(--space-2) var(--space-3);
 }
 
-/* ---------- footer ---------- */
 .footer {
   background: var(--ink);
   color: #f6e9d4;
@@ -1138,7 +1110,6 @@ strong {
   }
 }
 
-/* social buttons in footer */
 .footer ul.footer-socials {
   display: flex;
   flex-wrap: wrap;
@@ -1162,7 +1133,6 @@ strong {
   border-color: #f2c14e;
 }
 
-/* ---------- WhatsApp float ---------- */
 .wa-float {
   position: fixed;
   right: 18px;
@@ -1206,7 +1176,6 @@ strong {
   }
 }
 
-/* ---------- lightbox ---------- */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -1262,7 +1231,6 @@ strong {
   font-size: 0.82rem;
 }
 
-/* ---------- breadcrumbs ---------- */
 .breadcrumbs {
   display: flex;
   flex-wrap: wrap;
@@ -1278,7 +1246,6 @@ strong {
   color: var(--amber-strong);
 }
 
-/* ---------- page hero (inner pages) ---------- */
 .page-hero {
   padding-top: calc(var(--header-h) + var(--space-4));
   padding-bottom: var(--space-3);
@@ -1290,10 +1257,6 @@ strong {
   max-width: 42rem;
 }
 
-/* Pagina miele: su mobile la foto segue subito il titolo. Il paragrafo
-   introduttivo viene nascosto (duplica la descrizione qui sotto) così
-   l'ordine diventa: titolo → foto → prezzo+CTA → descrizione.
-   Su desktop resta visibile sopra la griglia, com'era. */
 @media (max-width: 899px) {
   .page-hero--product p {
     display: none;
@@ -1303,7 +1266,6 @@ strong {
   }
 }
 
-/* ---------- product detail ---------- */
 .product-grid {
   display: grid;
   gap: var(--space-4);
@@ -1408,7 +1370,6 @@ strong {
   flex: none;
 }
 
-/* ---------- utility ---------- */
 .mt-2 {
   margin-top: var(--space-2);
 }
@@ -1422,7 +1383,6 @@ strong {
   gap: var(--space-2);
 }
 
-/* ---------- mobile refinements ---------- */
 @media (max-width: 560px) {
   .btn-lg {
     padding: 0.9em 1.5em;

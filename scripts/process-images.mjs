@@ -1,10 +1,3 @@
-// Optimize root photos -> AVIF + WebP at target widths into public/img/
-// and write a manifest (JSON + JS) with final dims for HTML width/height attributes.
-//
-// Nomi file versionati con content-hash: ogni variante si chiama
-//   public/img/<base>-<width>-<hash>.<ext>
-// dove <hash> deriva dai byte della foto sorgente. Quando una foto cambia,
-// cambia l'hash e quindi l'URL: niente cache stantia (CDN/browser) dopo il deploy.
 import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync, readFileSync, existsSync, rmSync, renameSync, readdirSync } from 'node:fs';
@@ -16,7 +9,6 @@ mkdirSync(OUT, { recursive: true });
 const hashOf = (buf) => createHash('sha1').update(buf).digest('hex').slice(0, 8);
 const hashOfFile = (p) => hashOf(readFileSync(p));
 
-// source -> una o più basi da generare (una sorgente può alimentare più card)
 const WIDTHS = {
   'hero-bg.jpg': [{ base: 'hero_bg', widths: [1600, 1200, 800, 640, 480] }],
   'miele_acacia.jpg': [{ base: 'miele_di_acacia', widths: [400, 300] }],
@@ -31,28 +23,22 @@ const WIDTHS = {
   'raffaele.png': [800, 480, 300],
 };
 
-// crop 4:3 dedicato alle card (e box 4:3 delle pagine prodotto)
 const CROPS = {
   'miele_millefiori_tiglio_e_alianto.jpg': { base: 'miele_millefiori_card', widths: [800, 480, 300], posY: 0.7 },
 };
 
-// normalizza la config di una sorgente in [{base, widths}, ...]
 const normalize = (f, cfg) => {
   if (Array.isArray(cfg) && typeof cfg[0] === 'number') return [{ base: basename(f, extname(f)), widths: cfg }];
   if (Array.isArray(cfg)) return cfg;
   return [cfg];
 };
 
-// Parti dal manifest esistente: le voci di sorgenti non più presenti in root
-// vengono conservate (le varianti in public/img restano in uso dal sito).
 const manifest = JSON.parse(
   existsSync('scripts/img-manifest.json')
     ? readFileSync('scripts/img-manifest.json', 'utf8')
     : '{}'
 );
 
-// rimuove le varianti della stessa base non più referenziate:
-// nomi senza hash e varianti con hash diversi da quello corrente (keepHash)
 function cleanupOld(base, widths, keepHash) {
   let files = [];
   try { files = readdirSync(OUT); } catch { return; }
@@ -95,7 +81,6 @@ for (const f of srcs) {
   }
 }
 
-// crop 4:3 dedicato alle card (e box 4:3 delle pagine prodotto)
 for (const [f, cfg] of Object.entries(CROPS)) {
   if (!existsSync(f)) continue;
   const hash = hashOfFile(f);
@@ -104,7 +89,7 @@ for (const [f, cfg] of Object.entries(CROPS)) {
   const entry = { width: meta.width, height: meta.height, hash, variants: {} };
   for (const w of cfg.widths) {
     if (w > meta.width) continue;
-    // ritaglio 4:3 con gravità verticale posY
+
     let cropW, cropH, left, top;
     if (meta.width / meta.height > 4 / 3) {
       cropH = meta.height;
@@ -132,9 +117,6 @@ for (const [f, cfg] of Object.entries(CROPS)) {
   manifest[base] = entry;
 }
 
-// Voci conservate dal manifest precedente senza sorgente in root (es. api,
-// apiario, arnie): assegna un hash dai byte del file esistente e rinomina
-// le varianti al nuovo schema versionato.
 for (const [base, entry] of Object.entries(manifest)) {
   if (entry.hash) continue;
   const largest = Math.max(...Object.keys(entry.variants).map(Number));

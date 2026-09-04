@@ -1,5 +1,3 @@
-// Piccolo server statico con gzip/brotli per test Lighthouse locali.
-// Uso: node scripts/serve-gzip.mjs <port> <dir>
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { join, normalize, extname } from 'node:path';
