@@ -7,6 +7,14 @@
 const facebookUrl = 'https://www.facebook.com/profile.php?id=100087140305651';
 const tiktokUrl = 'https://www.tiktok.com/@bio.golosita';
 
+// Scheda Google Business Profile su Google Maps (attiva).
+// googleMapsUrl = pagina della scheda (CTA, hasMap e sameAs del JSON-LD);
+// googleMapsEmbedUrl = embed della mappa centrato sulla scheda.
+const googleMapsUrl =
+  'https://www.google.com/maps/place/Apicoltura+e+Vendita+Miele+Bio+%26+Golosit%C3%A0+Cassano+d%E2%80%99Adda/@45.5355768,9.5244833,17z/data=!3m1!4b1!4m6!3m5!1s0x47814b2f5343dc1d:0x479af6135571444d!8m2!3d45.5355768!4d9.5244833!16s%2Fg%2F11nvts1zyj';
+const googleMapsEmbedUrl =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1958.53!2d9.5244833!3d45.5355768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47814b2f5343dc1d:0x479af6135571444d!2sApicoltura+e+Vendita+Miele+Bio+%26+Golosit%C3%A0+Cassano+d%E2%80%99Adda!5e0!3m2!1sit!2sit!4v1725012345678';
+
 export const site = {
   name: 'Bio & Golosità',
   legalName: 'Azienda Agricola Bio & Golosità di Antoci Raffaele',
@@ -29,7 +37,8 @@ export const site = {
     province: 'MI',
     region: 'Lombardia',
     country: 'Italia',
-    geo: { lat: 45.5354, lng: 9.5254 },
+    // Coordinate uguali al pin della scheda Google Maps (attiva)
+    geo: { lat: 45.5355768, lng: 9.5244833 },
   },
 
   // >>> TODO: verificare con il titolare <<<
@@ -45,10 +54,13 @@ export const site = {
     { name: 'TikTok', url: tiktokUrl, handle: '@bio.golosita' },
   ],
 
-  // >>> Aggiungere qui l'URL della scheda Google Business Profile quando è attiva
-  // (es. 'https://g.page/r/XXXXXXXX/bio-golosita'): finisce in sameAs del JSON-LD
-  // LocalBusiness insieme ai profili social. <<<
-  sameAs: [facebookUrl, tiktokUrl],
+  // La scheda Google (googleMapsUrl) è in sameAs del JSON-LD LocalBusiness:
+  // Google la riconosce come lo stesso profilo dell'azienda.
+  sameAs: [facebookUrl, tiktokUrl, googleMapsUrl],
+
+  // Scheda Google Business Profile su Google Maps (attiva): embed e CTA
+  googleMapsUrl,
+  googleMapsEmbedUrl,
 
   // Ordini all'ingrosso: secchi da 10 kg con prezzo personalizzato
   bulkNote:
@@ -73,8 +85,8 @@ export const site = {
     'Parco Nord Milano',
   ],
 
-  // >>> Recensioni: segnaposto finché non esiste la scheda Google.
-  // Sostituirle con quelle reali appena il profilo Google Business Profile è attivo.
+  // >>> Recensioni: segnaposto — la scheda Google è attiva ma le recensioni
+  // reali non sono ancora state raccolte e pubblicate qui.
   // NESSUNA recensione finzionale va marcata con schema Review/AggregateRating. <<<
   reviews: [
     {

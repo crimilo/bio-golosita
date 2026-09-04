@@ -38,7 +38,7 @@ export function localBusiness() {
     description: businessDescription(),
     url: `${site.domain}/`,
     ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
-    hasMap: 'https://www.google.com/maps/search/?api=1&query=Via+Salvo+D%27Acquisto+9,+20062+Cassano+d%27Adda+(MI)',
+    hasMap: site.googleMapsUrl,
     telephone: site.phoneDisplay,
     image: `${site.domain}/og.jpg`,
     logo: `${site.domain}/favicon.svg`,
