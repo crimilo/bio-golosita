@@ -153,24 +153,6 @@ export const site = {
       date: '2026-09-05',
       text: 'Un miele semplicemente straordinario! 🍯❤️ Qualità, genuinità e un sapore davvero unico.',
     },
-    {
-      name: 'C G',
-      stars: 5,
-      date: '2026-09-08',
-      text: 'Miele buonissimo, servizio impeccabile, privato diversi tipi di miele e tutti eccezionali',
-    },
-    {
-      name: 'Irina Carp',
-      stars: 5,
-      date: '2026-09-04',
-      text: 'Molto contenta della produzione e del servizio. Ottimo miele e sempre puntuali.',
-    },
-    {
-      name: 'D S',
-      stars: 5,
-      date: '2026-09-08',
-      text: 'Consigliatissimo, miele buono direttamente a casa',
-    },
   ],
 
   /**

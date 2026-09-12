@@ -47,7 +47,7 @@ export const prezzoNota =
 export const polline = {
   path: '/polline-d-api/',
   name: "Polline d'api",
-  h1: "Polline d'api del nostro apiario",
+  h1: "Polline d'api italiano di produzione propria",
   title: "Polline d'Api Italiano a Cassano d'Adda | Bio & Golosità",
   description:
     "Polline d'api raccolto nei nostri apiari tra Cassano d'Adda, Martesana e Gera d'Adda. Origine, conservazione e freschezza. Chiama il 351 537 6719.",
