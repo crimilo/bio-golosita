@@ -1,0 +1,69 @@
+---
+import ProseFigure from './ProseFigure.astro';
+import type { Block } from '../lib/types';
+
+interface Props {
+  blocks: Block[];
+}
+
+const { blocks } = Astro.props;
+---
+
+{
+  blocks.map((b) => {
+    if ('h2' in b) return <h2 id={b.id}>{b.h2}</h2>;
+    if ('h3' in b) return <h3>{b.h3}</h3>;
+    if ('p' in b) return <p set:html={b.p} />;
+    if ('note' in b) return <p class="disclaimer" set:html={b.note} />;
+    if ('ul' in b) {
+      return (
+        <ul>
+          {b.ul.map((li) => (
+            // il testo va in uno <span>: dentro .prose i li sono flex, e il testo
+            // "sciolto" gonfia la larghezza minima mandando in overflow la griglia
+            <li>
+              <span set:html={li} />
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    if ('img' in b) {
+      return (
+        <ProseFigure
+          base={b.img.base}
+          alt={b.img.alt}
+          caption={b.img.caption}
+          sizes="(min-width: 900px) 46rem, 100vw"
+        />
+      );
+    }
+    if ('row' in b) {
+      // Testo e foto sulla stessa riga: da desktop la foto sta a fianco del
+      // testo, sotto i 900px va sotto (vedi `.prose-row` in global.css).
+      return (
+        <div class="prose-row">
+          <div class="prose-row-text">
+            <Astro.self blocks={b.row.text} />
+          </div>
+          <ProseFigure
+            base={b.row.img.base}
+            alt={b.row.img.alt}
+            caption={b.row.img.caption}
+            sizes="(min-width: 900px) 19rem, 100vw"
+          />
+        </div>
+      );
+    }
+    if ('cta' in b) {
+      return (
+        <p class="mt-2">
+          <a class="btn btn-primary" href={b.cta.href}>
+            {b.cta.label}
+          </a>
+        </p>
+      );
+    }
+    return null;
+  })
+}

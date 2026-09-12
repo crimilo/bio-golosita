@@ -7,6 +7,15 @@ interface Props {
   pathname: string;
 }
 const { pathname } = Astro.props;
+
+/**
+ * La voce attiva è quella della sezione in cui ti trovi, non solo la pagina
+ * esatta: su /miele/miele-di-acacia/ resta acceso "Mieli", su /guide/<slug>/
+ * resta acceso "Guide". La home non è una voce del menu, quindi lì nessuna
+ * voce è accesa.
+ */
+const isCurrent = (href: string) =>
+  href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href);
 ---
 
 <header class="header" id="site-header">
@@ -17,7 +26,7 @@ const { pathname } = Astro.props;
         nav.map((item) => (
           <a
             href={item.href}
-            aria-current={item.href === pathname ? 'page' : undefined}
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
           >
             {item.label}
           </a>
@@ -25,9 +34,14 @@ const { pathname } = Astro.props;
       }
     </nav>
     <div class="header-actions">
-      <a class="btn btn-primary header-cta" href={site.phoneHref}>
+      <a class="btn btn-primary header-cta" href={site.phoneHref} aria-label="Chiama ora">
         <Icons name="phone" size={18} />
-        Chiama ora
+        {/*
+          Sotto i 480px resta solo l'icona (la label viene nascosta via CSS):
+          il testo andava a capo su due righe e sembrava rotto. L'aria-label
+          tiene comunque il nome accessibile del link.
+        */}
+        <span class="header-cta-label">Chiama ora</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Apri menu">
         <span class="nav-toggle-line"></span>

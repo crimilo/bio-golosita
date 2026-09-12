@@ -1,0 +1,3 @@
+# Dominio canonico: niente www. Il redirect http -> https è gestito da
+# Cloudflare (SSL/TLS > Always Use HTTPS).
+https://www.bioegolosita.it/* https://bioegolosita.it/:splat 301

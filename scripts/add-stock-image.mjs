@@ -18,13 +18,13 @@ const entry = { width: meta.width, height: meta.height, hash, variants: {} };
 for (const w of widths) {
   if (w > meta.width) continue;
   const out = `public/img/${base}-${w}-${hash}`;
-  await sharp(tmp).resize({ width: w, withoutEnlargement: true }).webp({ quality: 74 }).toFile(`${out}.webp`);
   await sharp(tmp).resize({ width: w, withoutEnlargement: true }).avif({ quality: 44 }).toFile(`${out}.avif`);
-  const m = await sharp(`${out}.webp`).metadata();
+  await sharp(tmp).resize({ width: w, withoutEnlargement: true }).avif({ quality: 44 }).toFile(`${out}.avif`);
+  const m = await sharp(`${out}.avif`).metadata();
   entry.variants[w] = { width: m.width, height: m.height };
   console.log('OK', base, w, m.width + 'x' + m.height);
 
-  for (const ext of ['webp', 'avif']) {
+  for (const ext of ['avif']) {
     const old = `public/img/${base}-${w}.${ext}`;
     if (existsSync(old)) rmSync(old);
   }

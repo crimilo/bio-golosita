@@ -1,0 +1,350 @@
+---
+/**
+ * /nuclei-api/ — pagina prodotto con la **stessa struttura dei singoli mieli**
+ * (`src/pages/miele/[slug].astro`): hero solo testo, blocco prodotto con foto e
+ * prezzo, sezione "il prodotto" con la scheda tecnica, sezione tracciabilità,
+ * gallery, FAQ, "gli altri prodotti" e contatti.
+ *
+ * La foto principale è `sciame_4` (sciame raccolto su un ramo): è il soggetto
+ * che si riconosce subito per un nucleo, meglio di un'arnia piena di api.
+ */
+import Emoji from '../../components/Emoji.astro';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Picture from '../../components/Picture.astro';
+import ProseBlocks from '../../components/ProseBlocks.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+import ProductCards from '../../components/ProductCards.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import Icons from '../../components/Icons.astro';
+import { site } from '../../data/site';
+import {
+  nuclei,
+  polline,
+  apiRegine,
+  availabilityFallback,
+  prezzoSuRichiesta,
+  prezzoNota,
+  repartoImages,
+} from '../../data/bee-products';
+import { priceFrom } from '../../lib/price';
+import { product, faqPage, localBusiness } from '../../lib/schema';
+
+const pathname = nuclei.path;
+const crumbs = [{ name: nuclei.name, path: pathname }];
+
+/** Le voci senza valore non vengono pubblicate: meglio poche righe vere. */
+const specs = nuclei.specs
+  .filter((s) => s.value)
+  .map((s) => ({ label: s.label, value: s.value as string }));
+specs.push({ label: 'Prezzo', value: nuclei.prezzo ?? prezzoSuRichiesta });
+
+/** Introduzione della hero: la stessa forma dei mieli (prodotto + dove nasce). */
+const heroIntro =
+  "Nuclei d'api della nostra produzione: famiglie già avviate su telai, con una regina feconda che sta deponendo, allevate negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda.";
+
+/**
+ * Tracciabilità: come nei mieli, quello che solo un produttore può documentare.
+ * Tutte le voci vengono dai dati della pagina (scheda tecnica e testo qui sotto).
+ */
+const traceability = [
+  {
+    label: 'Apiario di provenienza',
+    value:
+      "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana e la Gera d'Adda",
+  },
+  {
+    label: 'Regina',
+    value: 'Feconda, della nostra selezione, già in deposizione',
+  },
+  {
+    label: 'Composizione',
+    value: 'Telai con covata in tutti gli stadi e api di tutte le età',
+  },
+  {
+    label: 'Periodo di preparazione',
+    value: 'Dai primi di aprile in poi, secondo l\'andamento della stagione',
+  },
+  {
+    label: 'Ritiro',
+    value: "In sede a Cassano d'Adda, su appuntamento",
+  },
+];
+
+/** Caratteristiche nel blocco prodotto: i titoli delle card, come le chips dei mieli. */
+const chips = nuclei.cards.map((c) => c.title);
+
+/**
+ * Le sezioni dentro "il prodotto": `h3` invece di `h2`, perché ora stanno
+ * dentro la sezione di descrizione, come nei singoli mieli.
+ */
+const blocks = [
+  { h3: 'Cosa comprende un nostro nucleo' },
+  {
+    p: "Un nucleo è una famiglia vera, in miniatura: telai con covata in tutti gli stadi, api di tutte le età e una <strong>regina feconda</strong> che sta già deponendo. È la differenza più importante rispetto a uno sciame: il nucleo è già avviato e continua a crescere da solo dal giorno in cui lo sistemi nell'arnia.",
+  },
+  {
+    ul: [
+      'Regina feconda, nata e accoppiata nel nostro allevamento.',
+      'Telai con covata in tutti gli stadi e telai con scorte, per non lasciare la famiglia senza riserve.',
+      'Abituato al clima e alle fioriture di qui: resta una famiglia della zona.',
+    ],
+  },
+  {
+    img: {
+      base: 'api_che_producono',
+      alt: 'Api sui telai di un favo',
+      caption: 'Covata in tutti gli stadi: è il segno che la famiglia sta lavorando',
+    },
+  },
+  { h3: "Nucleo, sciame o pacco d'api?" },
+  {
+    p: "Se cerchi \"sciami d'api in vendita\", il prodotto che ti serve è quasi sempre un nucleo: \"sciame\" è il termine più cercato, ma indica un fenomeno naturale, non qualcosa di pronto da mettere in arnia. Il <strong>pacco d'api</strong> è la terza opzione: solo api con una regina nuova, senza telai, da avviare da zero. Ne parliamo per esteso nella guida <a href=\"/guide/nucleo-sciame-pacco-dapi-differenze/\">nucleo, sciame e pacco d'api: le differenze</a>.",
+  },
+  {
+    ul: [
+      '<strong>Nucleo</strong> → famiglia avviata su telai: la scelta consigliata per chi parte.',
+      "<strong>Pacco d'api</strong> → solo api, su telai nudi: costa meno, richiede più esperienza.",
+      '<strong>Sciame</strong> → un momento della vita delle api, non un prodotto.',
+    ],
+  },
+  { h3: 'Razza e provenienza' },
+  {
+    p: "I nuclei nascono negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda, con una regina della nostra selezione. Se ti serve una razza precisa, dillo quando prenoti: certi abbinamenti si preparano in anticipo.",
+  },
+  {
+    h3: 'Disponibilità e prenotazione',
+  },
+  {
+    p: 'Si preparano nei mesi in cui le famiglie si sviluppano: in genere sono pronti <strong>dai primi di aprile in poi</strong>, poi dipende dall\'andamento della stagione. Per questo non pubblichiamo un listino con date fisse.',
+  },
+  {
+    ul: [
+      '<strong>Ci dici cosa ti serve:</strong> quanti nuclei, in che periodo, dove sono gli alveari.',
+      '<strong>Ti confermiamo disponibilità e prezzo</strong> per la stagione in corso.',
+      '<strong>Fissiamo ritiro o consegna</strong> e ti spieghiamo come trasportare il nucleo.',
+    ],
+  },
+  { h3: 'Trasporto: le regole che salvano la famiglia' },
+  {
+    p: "Il nucleo viaggia chiuso, con la porticina bloccata, e va aperto solo nella posizione definitiva. Tragitto breve, all'ombra, senza sballottamenti: calore e urti sono i due nemici principali. All'arrivo apri la porticina in serata e lascia stare la famiglia qualche giorno.",
+  },
+  {
+    note: "Ricorda che le api tornano sempre nel punto in cui ricordano di abitare: se devi spostare un alveare, fallo seguendo le regole giuste (o chiedici come fare).",
+  },
+];
+
+/**
+ * Gallery: la foto principale (`sciame_4`) e quella della tracciabilità non si
+ * ripetono nella griglia.
+ */
+const gallery = nuclei.gallery.filter(
+  (p) => p.base !== 'sciame_4' && p.base !== 'raffaele_che_mostra_larnia_in_mano'
+);
+
+/**
+ * "Gli altri prodotti": la stessa idea delle card "Gli altri mieli".
+ */
+const otherProducts = [
+  {
+    href: '/miele/',
+    ...repartoImages.miele,
+    title: 'I nostri mieli',
+    text: 'Acacia, millefiori e castagno: mieli non pastorizzati, raccolti e smielati a freddo. In stagione prepariamo anche il miele in favo.',
+    price: priceFrom(site.honeys.flatMap((h) => h.priceFormats)),
+  },
+  {
+    href: '/api-regine/',
+    ...repartoImages.apiRegine,
+    title: 'Api regine',
+    text: 'Regine feconde dalla nostra selezione, per rinnovare un alveare o avviarne uno nuovo.',
+    price: apiRegine.prezzo ?? prezzoSuRichiesta,
+  },
+  {
+    href: '/polline-d-api/',
+    ...repartoImages.polline,
+    title: "Polline d'api",
+    text: "Raccolto dalle nostre api tra la Martesana e la Gera d'Adda: fresco o essiccato, con le indicazioni per conservarlo.",
+    price: polline.prezzo ?? prezzoSuRichiesta,
+  },
+];
+---
+
+<Base
+  title={nuclei.title}
+  description={nuclei.description}
+  pathname={pathname}
+  type="product"
+  crumbs={crumbs}
+  jsonLd={[
+    localBusiness(),
+    product({ ...nuclei, image: 'sciame_4' }, pathname, { category: "Nuclei d'api" }),
+    faqPage(nuclei.faq),
+  ]}
+>
+  <PageHero h1={nuclei.h1} intro={heroIntro} crumbs={crumbs} variant="product" />
+
+  <section class="section" style="padding-top: var(--space-3);">
+    <div class="container product-grid">
+      <div class="product-media">
+        <Picture
+          base="sciame_4"
+          alt="Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda"
+          sizes="(min-width: 900px) 520px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div>
+        <p class="product-price">
+          {
+            // prezzo non pubblicato nei dati: niente numeri inventati
+            <span class="price-main">{nuclei.prezzo ?? prezzoSuRichiesta}</span>
+          }
+        </p>
+        {!nuclei.prezzo && <p class="price-note">{prezzoNota}</p>}
+
+        <p class="bulk-note">
+          <Icons name="info" size={18} />
+          {nuclei.disponibilita ?? availabilityFallback}
+        </p>
+        <ul class="chips">
+          {chips.map((c) => <li>{c}</li>)}
+        </ul>
+
+        <div class="contact-cta mt-3">
+          <a class="btn btn-primary btn-lg" href={site.phoneHref}>
+            <Icons name="phone" size={20} />
+            Chiama ora
+          </a>
+          <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
+            <Icons name="whatsapp" size={20} />
+            Scrivi su WhatsApp
+          </a>
+        </div>
+
+        <p class="mt-3" style="font-size:0.9rem;">
+          Ritiro in sede su appuntamento: {site.address.street},{' '}
+          {site.address.zip} {site.address.city} ({site.address.province}) —
+          chiama prima di passare. Per il trasporto a casa tua parliamone:
+          dipende dalla zona e dal periodo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="desc-title">
+    <div class="container">
+      <div class="prose">
+        <span class="eyebrow">il prodotto<Emoji name="honeybee" /></span>
+        <h2 id="desc-title">Il nucleo d'api di Bio & Golosità</h2>
+        <p>{nuclei.intro}</p>
+        <ProseBlocks {blocks} />
+        <h3>Scheda tecnica</h3>
+        <ul class="specs">
+          {
+            specs.map((s) => (
+              <li>
+                <strong>{s.label}:</strong>
+                <span>{s.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="trace-title">
+    <div class="container split split--photos">
+      <div class="split-text">
+        <span class="eyebrow">tracciabilità</span>
+        <h2 id="trace-title">Da dove arriva questo nucleo</h2>
+        <p>
+          Ogni nucleo nasce da telai di una famiglia nostra, in un apiario e in
+          un periodo precisi: informazioni che solo un allevatore può dare.
+        </p>
+        <ul class="specs">
+          {
+            traceability.map((t) => (
+              <li>
+                <strong>{t.label}:</strong>
+                <span>{t.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3" style="font-size:0.92rem;">
+          Vuoi vedere come lavoriamo? Nella pagina <a href="/chi-siamo/">chi siamo</a>{' '}
+          c'è la storia dell'azienda, e nella guida{' '}
+          <a href="/guide/nucleo-sciame-pacco-dapi-differenze/">nucleo, sciame e pacco d'api: le differenze</a>{' '}
+          spieghiamo cosa cambia rispetto a uno sciame.
+        </p>
+      </div>
+      <figure class="split-media">
+        <Picture
+          base="raffaele_che_mostra_larnia_in_mano"
+          alt="Raffaele Antoci che controlla un telaio delle sue arnie"
+          sizes="(min-width: 900px) 45vw, 100vw"
+          loading="lazy"
+        />
+        <figcaption>Il controllo dei telai prima della consegna</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <PhotoGallery
+    id="foto"
+    photos={gallery}
+    videos={[
+      {
+        src: '/video/api-che-si-creano-spazio.mp4',
+        poster: '/video/api-che-si-creano-spazio-poster-4d6062c5.avif',
+        label: 'Le api che si sono create lo spazio da sole',
+        cls: 'video-item--tall',
+      },
+    ]}
+    eyebrow="foto"
+    title="I nostri nuclei e gli apiari"
+    intro="Le foto dei nostri nuclei e dei nostri apiari, a Cassano d'Adda."
+  />
+
+  <section class="section section--soft" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">domande sui nuclei</span>
+        <h2 id="faq-title">Domande frequenti</h2>
+      </div>
+      <div class="faq">
+        {
+          nuclei.faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="other-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">scopri anche</span>
+        <h2 id="other-title">Gli altri prodotti di Bio & Golosità</h2>
+        <p>
+          Oltre ai nuclei vendiamo mieli, polline e api regine. Prima di
+          comprare, due letture utili: la guida{' '}
+          <a href="/guide/nucleo-sciame-pacco-dapi-differenze/">nucleo, sciame e pacco d'api: le differenze</a>{' '}
+          e la guida{' '}
+          <a href="/guide/come-introdurre-una-nuova-ape-regina/">come introdurre una nuova ape regina</a>.
+        </p>
+      </div>
+      <ProductCards cards={otherProducts} />
+    </div>
+  </section>
+
+  <ContactSection />
+</Base>

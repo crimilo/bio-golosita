@@ -1,44 +1,36 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { site } from '../data/site';
-import { localBusiness, faqPage } from '../lib/schema';
+import { localBusiness } from '../lib/schema';
 
 const title = 'Contatti Miele Cassano d\'Adda | Bio & Golosità';
 const description =
   "Contatta Bio & Golosità a Cassano d'Adda (MI): telefono, WhatsApp, indirizzo e orari. Ordina il tuo miele in pochi secondi, ritiro o consegna in zona.";
+const crumbs = [{ name: 'Contatti', path: '/contatti/' }];
+const heroImg = 'apiario';
+
+// Nessun `FAQPage` qui: le domande su come ordinare e dove siamo non sono
+// visibili in pagina (il blocco contatti dà le stesse informazioni in altra
+// forma) e Google chiede che il contenuto delle FAQ si veda. Il `FAQPage` resta
+// nelle pagine che lo rendono davvero: mieli, prodotti dell'alveare, guide.
 ---
 
 <Base
   title={title}
   description={description}
   pathname="/contatti/"
-  jsonLd={[localBusiness(), faqPage([
-    {
-      q: 'Come posso ordinare il miele?',
-      a: `Chiama il ${site.phoneDisplay} o scrivici su WhatsApp: ti confermiamo disponibilità e modalità di consegna. Consegna a domicilio a Cassano d'Adda e in tutta la zona tra Milano, Bergamo e Cremona: spesso è gratuita, ma dipende dall'ordine e da dove mi trovo quando mi chiami — chiama e ti confermo subito. In alternativa puoi ritirare in sede su appuntamento.`,
-    },
-    {
-      q: 'Dove si trova l\'azienda?',
-      a: `Siamo in ${site.address.street}, ${site.address.zip} ${site.address.city} (${site.address.province}). Ritiro diretto in azienda su appuntamento: chiama o scrivici prima di passare, spesso siamo in apiario.`,
-    },
-  ])]}
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  jsonLd={[localBusiness()]}
 >
-  <section class="page-hero">
-    <div class="container">
-      <nav class="breadcrumbs" aria-label="Percorso">
-        <a href="/">Home</a>
-        <span>/</span>
-        <span>Contatti</span>
-      </nav>
-      <h1>Contattaci</h1>
-      <p>
-        Il modo più veloce per ordinare il nostro miele: una chiamata o un
-        messaggio WhatsApp. Siamo a Cassano d'Adda (MI), raggiungibili in poco
-        tempo da Milano, Bergamo, Treviglio e Gorgonzola.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    h1="Contattaci"
+    crumbs={crumbs}
+    bg={{ base: heroImg, position: '50% 50%', positionMobile: '50% 45%' }}
+    intro="Il modo più veloce per ordinare il nostro miele: una chiamata o un messaggio WhatsApp. Siamo a Cassano d'Adda (MI), raggiungibili in poco tempo da Milano, Bergamo, Treviglio e Gorgonzola."
+  />
 
   <ContactSection />
 </Base>

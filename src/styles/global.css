@@ -66,6 +66,26 @@ a {
   text-decoration: none;
 }
 
+/* Link dentro il testo (paragrafi, elenchi, celle di tabella, didascalie):
+   devono riconoscersi a colpo d'occhio. Senza questa regola un `a` in un
+   paragrafo ereditava colore e nessuna sottolineatura, cioè sembrava testo
+   normale. Restano fuori i link che hanno già uno stile proprio: bottoni, card,
+   righe dei contatti, link dei video. Vale solo dentro <main>: header, footer e
+   menu hanno i loro stili. */
+main :where(p, li, td, th, figcaption, blockquote)
+  a:not(.btn):not(.card):not(.contact-row):not(.video-link) {
+  color: var(--amber-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+main :where(p, li, td, th, figcaption, blockquote)
+  a:not(.btn):not(.card):not(.contact-row):not(.video-link):hover {
+  color: var(--amber-deep);
+  text-decoration-thickness: 2px;
+}
+
 button {
   font: inherit;
   border: 0;
@@ -139,6 +159,22 @@ strong {
 
 .section-head h2 {
   margin-bottom: 0.8rem;
+}
+
+/* Emoji SVG (Twemoji) in fondo ai titoli di sezione: la dimensione segue il
+   testo (1.15em) e l'allineamento ottico tiene il disegno sulla riga. */
+.emoji {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  vertical-align: -0.12em;
+  margin-left: 0.3rem;
+  flex-shrink: 0;
+}
+.emoji > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .eyebrow {
@@ -325,12 +361,8 @@ strong {
   height: 44px;
   padding: 0 1.35em;
   font-size: 0.95rem;
-}
-
-@media (max-width: 479.98px) {
-  .header-cta svg {
-    display: none;
-  }
+  /* la CTA dell'header non va mai a capo */
+  white-space: nowrap;
 }
 
 @media (max-width: 899.98px) {
@@ -362,12 +394,33 @@ strong {
     border-color: transparent;
     color: var(--amber-strong);
   }
+  /* Stessa logica dei desktop, con l'effetto hover della versione mobile
+     (fondo tenue). Il `border-color: transparent` non è un dettaglio: da
+     mobile la riga del menu ha il bordo inferiore come separatore, e l'hover
+     lo rende trasparente — senza questa riga la voce attiva sarebbe *quasi*
+     come l'hover, con un separatore in più. */
   .nav a[aria-current='page'] {
+    background: var(--bg-soft);
+    border-color: transparent;
     color: var(--amber-strong);
   }
   .header-cta {
     padding: 0 1.1em;
     font-size: 0.9rem;
+  }
+}
+
+/* Sotto i 480px solo l'icona: "Chiama ora" su due righe sembrava rotto, e
+   così l'area di tocco resta piena (bottone quadrato 44px). Sta DOPO il blocco
+   a 899.98px, che sennò le riporta il padding laterale addosso all'icona. */
+@media (max-width: 479.98px) {
+  .header-cta {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  .header-cta-label {
+    display: none;
   }
 }
 
@@ -393,14 +446,29 @@ strong {
 }
 
 @media (min-width: 900px) {
+  /* Su desktop la CTA telefonica non serve (nessun vivavoce sul computer):
+     il numero resta nel footer e nel blocco contatti di ogni pagina. Con la
+     CTA e l'hamburger nascosti, anche il contenitore sparisce: altrimenti
+     lascia un margine vuoto dopo il menu. */
+  .header-cta,
+  .header-actions {
+    display: none;
+  }
+  /* Senza la CTA, il menu non ha più niente alla sua destra: `margin-left: auto`
+     lo tiene a filo del bordo destro del contenuto, con lo stesso margine che ha
+     il logo a sinistra. */
   .nav {
     display: flex;
     align-items: center;
     gap: 1.6rem;
     margin-left: auto;
   }
-  .header-actions {
-    margin-left: 1.5rem;
+  /* La voce della sezione in cui ti trovi resta accesa come al passaggio del
+     mouse: da desktop è lo stesso effetto di .nav a:hover (colore ambra +
+     sottolineatura), così si capisce subito dove sei. */
+  .nav a[aria-current='page'] {
+    color: var(--amber-strong);
+    border-color: var(--amber);
   }
   .nav-toggle {
     display: none;
@@ -411,18 +479,10 @@ strong {
 }
 
 .hero {
-  padding-top: calc(var(--header-h) + var(--space-5));
-  padding-bottom: var(--space-5);
+  padding-top: calc(var(--header-h) + var(--space-4));
+  padding-bottom: var(--space-4);
   overflow: hidden;
   position: relative;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='98' viewBox='0 0 84 98'%3E%3Cpath d='M42 25L62.8 37V61L42 73L21.2 61V37Z' fill='none' stroke='%23c77f00' stroke-width='1.3' stroke-opacity='0.08'/%3E%3C/svg%3E");
-  background-size: 84px 98px;
-}
-
-.hero-grid {
-  display: grid;
-  gap: var(--space-4);
-  align-items: center;
 }
 
 .hero h1 {
@@ -463,43 +523,14 @@ strong {
   flex: none;
 }
 
-.hero-media {
-  position: relative;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  cursor: zoom-in;
-  aspect-ratio: 4 / 3;
-  background: var(--bg-soft);
-}
-.hero-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: var(--bg);
-  border-radius: 999px;
-  padding: 0.5rem 0.9rem;
-  font-family: var(--font-hand);
-  font-size: 1.15rem;
-  color: var(--amber-deep);
-  box-shadow: var(--shadow-sm);
-  white-space: nowrap;
+.hero-text {
+  max-width: 40rem;
 }
 
 @media (min-width: 900px) {
   .hero {
-    padding-top: calc(var(--header-h) + var(--space-6));
-    padding-bottom: var(--space-6);
-  }
-  .hero-grid {
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: var(--space-5);
+    padding-top: calc(var(--header-h) + var(--space-4));
+    padding-bottom: var(--space-4);
   }
 }
 
@@ -543,10 +574,13 @@ strong {
   transform: scale(1.05);
 }
 
-.honey-card-price {
+.price-badge {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
+  /* se il prezzo è lungo va a capo invece di straripare dalla foto
+     (il riquadro della foto ha overflow: hidden) */
+  max-width: calc(100% - 1.5rem);
   background: rgba(255, 251, 242, 0.95);
   backdrop-filter: blur(4px);
   border-radius: 999px;
@@ -631,6 +665,13 @@ strong {
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   cursor: zoom-in;
+}
+/* Nella hero la foto di Raffaele resta più stretta del testo: è un ritratto,
+   non un'immagine a piena colonna (come nel disegno originale della pagina). */
+.page-hero .split-media {
+  max-width: 22rem;
+  margin-inline: auto;
+  box-shadow: 0 10px 30px rgba(51, 36, 15, 0.12);
 }
 .split-media img {
   width: 100%;
@@ -732,16 +773,23 @@ strong {
   }
 }
 
-.page-hero .split-media {
-  max-width: 22rem;
-  margin-inline: auto;
-  box-shadow: 0 10px 30px rgba(51, 36, 15, 0.12);
-}
-
 .gallery-grid {
   display: grid;
   gap: var(--space-3);
   grid-template-columns: repeat(2, 1fr);
+}
+
+/* Galleria a 3 colonne: la usa la sequenza del miele in favo, fatta di
+   fotogrammi verticali che a 2 colonne verrebbero alti quanto lo schermo. Su
+   schermi stretti torna a 2 colonne, come le altre gallerie. */
+.gallery-grid--three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 700px) {
+  .gallery-grid--three {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .g-item {
@@ -769,6 +817,11 @@ strong {
 }
 .g-item--wide {
   aspect-ratio: 4 / 3;
+}
+/* Fotogrammi verticali 9/16 (le foto ricavate dal video): stesso aspetto della
+   sorgente, così `object-fit: cover` non ritaglia niente. */
+.g-item--portrait {
+  aspect-ratio: 9 / 16;
 }
 
 .video-item {
@@ -842,6 +895,22 @@ strong {
   display: flex;
   gap: 2px;
   color: var(--amber);
+}
+
+/* Autore su una riga, fonte + data sotto: senza questo gli span inline
+   si incollano ("Valerio PellizzariRecensione Googlesettembre 2026"). */
+.review figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: auto;
+}
+
+.review-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem;
 }
 
 .review p {
@@ -1202,6 +1271,25 @@ strong {
   transform: scale(1.8);
 }
 
+/* Slide video: stesso ingombro della foto, ma con i controlli nativi */
+.lightbox-video {
+  max-width: min(100%, 1200px);
+  max-height: 88vh;
+  border-radius: 8px;
+  background: #000;
+}
+
+/* `hidden` deve vincere sui display di questi elementi */
+.lightbox img[hidden],
+.lightbox video[hidden] {
+  display: none;
+}
+
+/* "Tocca l'immagine per ingrandire" non vale per un video */
+.lightbox.has-video .lightbox-hint-zoom {
+  display: none;
+}
+
 .lightbox-close {
   position: absolute;
   top: 14px;
@@ -1218,6 +1306,48 @@ strong {
 }
 .lightbox-close:hover {
   background: rgba(255, 251, 242, 0.3);
+}
+
+/* Frecce per sfogliare la galleria quando l'immagine è a tutto schermo.
+   Nascoste con l'attributo [hidden] quando la galleria ha una sola foto. */
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 251, 242, 0.15);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.lightbox-nav[hidden] {
+  display: none;
+}
+.lightbox-nav:hover {
+  background: rgba(255, 251, 242, 0.32);
+}
+.lightbox-prev {
+  left: 14px;
+}
+.lightbox-next {
+  right: 14px;
+}
+
+@media (max-width: 560px) {
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 251, 242, 0.22);
+  }
+  .lightbox-prev {
+    left: 6px;
+  }
+  .lightbox-next {
+    right: 6px;
+  }
 }
 
 .lightbox-hint {
@@ -1251,11 +1381,24 @@ strong {
 }
 .page-hero h1 {
   margin-bottom: 0.6rem;
+  /* stessa larghezza di colonna del paragrafo: il testo resta nella zona
+     protetta dall'overlay (come nella home, che usa .hero-text) */
+  max-width: 42rem;
 }
 .page-hero p {
   max-width: 42rem;
 }
+/* CTA della hero: dentro la hero, allineate al titolo. Il margine le stacca dal
+   testo senza appiccicarle, e il bordo resta a filo del testo (nessun rientro). */
+.page-hero .contact-cta {
+  margin-top: var(--space-3);
+}
 
+/* Da mobile la hero dei prodotti resta all'osso: titolo, poi subito la foto e il
+   prezzo. Il paragrafo introduttivo è di 38-65 parole (6-11 righe) e mostrarlo
+   spinge il prezzo sotto la piega a 360/375px; da desktop resta invariato.
+   Nota: il testo NON viene tolto dal DOM (nascosto col CSS, uguale per tutti),
+   quindi resta nel documento servito e indicizzabile: non è cloaking. */
 @media (max-width: 899px) {
   .page-hero--product p {
     display: none;
@@ -1298,6 +1441,22 @@ strong {
   color: var(--amber-deep);
 }
 
+/* Prezzo ben visibile: il formato d'ingresso in grande col suo formato in
+   piccolo (come il "300,00 € (10,00 € al pezzo)" dei box prodotto), gli altri
+   formati di vendita in una riga più piccola sotto. */
+.product-price .price-main {
+  font-size: 1.15em;
+}
+
+.product-price .price-more {
+  display: block;
+  margin-top: 0.1rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -1313,12 +1472,24 @@ strong {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--ink);
+  /* La goccia di miele che apre ogni caratteristica resta allineata al testo
+     anche quando la voce va a capo. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .prose {
   display: grid;
   gap: var(--space-3);
   max-width: 46rem;
+}
+
+/* /miele/ — sezione "come lavoriamo": non è una colonna di lettura, sta a
+   piena larghezza come le altre sezioni della pagina (il `.prose` di base è
+   largo 46rem e resta appoggiato a sinistra nel container). */
+.prose--wide {
+  max-width: none;
 }
 
 .prose ul {
@@ -1388,6 +1559,18 @@ strong {
     font-size: 0.95rem;
   }
 
+  /* Su mobile le etichette lunghe possono superare la larghezza del bottone:
+     qui vanno a capo invece di uscire dal riquadro (era il caso di
+     "Come funziona la consegna e le zone servite" a 360px). La CTA
+     dell'header è esclusa: lì il testo resta su una riga (sotto i 480px
+     c'è solo l'icona, sopra c'è spazio). Il `:not()` serve perché questa
+     regola viene dopo `.header-cta` e altrimenti la sovrascriverebbe. */
+  .btn:not(.header-cta) {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+  }
+
   .contact-cta {
     flex-direction: column;
     align-items: stretch;
@@ -1395,5 +1578,549 @@ strong {
 
   .contact-cta .btn {
     width: 100%;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Blocchi aggiunti per le nuove pagine: hub mieli, guide, prodotti, consegne
+   --------------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Card informative (polline, regine, nuclei, zone di consegna, guide) */
+.cards {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+a.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card h3 {
+  font-size: 1.15rem;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.card .chips {
+  margin: 0;
+}
+
+/* prezzo dentro un box: "300,00 € (10,00 € al pezzo)" — totale in evidenza,
+   divisione più piccola (il prezzo delle card sta invece in .price-badge) */
+.price-unit {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-left: 0.15em;
+}
+
+.card-link {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--amber-strong);
+}
+
+.card--media {
+  padding: 0;
+  overflow: hidden;
+}
+
+.card--media h3,
+.card--media p,
+.card--media .card-link {
+  padding-inline: var(--space-3);
+}
+
+.card--media .card-link {
+  padding-bottom: var(--space-3);
+}
+
+.card-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-soft);
+  /* riferimento per l'etichetta prezzo sovrapposta alla foto */
+  position: relative;
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+a.card--media:hover .card-media img {
+  transform: scale(1.05);
+}
+
+/* Tabella prezzi (hub /miele/) */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  min-width: 560px;
+}
+
+.price-table th,
+.price-table td {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.price-table thead th {
+  background: var(--bg-soft);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+.price-table tbody tr:last-child th,
+.price-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Sotto i 640px la tabella si impila in schede: niente scroll orizzontale
+   (era l'unica area del sito che ne aveva bisogno). I `data-label` delle celle
+   diventano l'etichetta di ogni riga. */
+@media (max-width: 640px) {
+  .table-wrap {
+    overflow-x: visible;
+    border: 0;
+    background: none;
+  }
+
+  .price-table {
+    min-width: 0;
+    font-size: 0.95rem;
+  }
+
+  .price-table thead {
+    display: none;
+  }
+
+  .price-table,
+  .price-table tbody,
+  .price-table tr,
+  .price-table th,
+  .price-table td {
+    display: block;
+    width: auto;
+  }
+
+  .price-table tr {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.35rem 0.9rem 0.6rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .price-table th[scope='row'] {
+    padding: 0.6rem 0 0.4rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.05rem;
+  }
+
+  .price-table td {
+    border-bottom: 0;
+    padding: 0.2rem 0;
+  }
+
+  .price-table td::before {
+    content: attr(data-label) ': ';
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+}
+
+.price-table tbody th {
+  font-weight: 600;
+}
+
+.price-table td:first-of-type {
+  white-space: nowrap;
+  font-weight: 700;
+  color: var(--amber-deep);
+}
+
+/* Figure e didascalie nel testo delle guide */
+/* Video verticale dentro una colonna di testo (scheda del miele in favo): la
+   larghezza contenuta gli fa tenere l'aspetto 9/16 di `.video-item--tall`,
+   altrimenti `object-fit: cover` ritaglierebbe il fotogramma. */
+.prose-video {
+  max-width: 16rem;
+  margin-inline: auto;
+}
+
+/* Riga testo + foto (blocco `row`): da desktop la foto sta A FIANCO del testo,
+   sotto i 900px va sotto, come tutte le altre foto del prose. Le due colonne
+   stanno dentro la colonna di lettura del prose (46rem), quindi il testo resta
+   della larghezza giusta senza diventare una riga lunga a tutta pagina. */
+.prose-row {
+  display: grid;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .prose-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+    gap: var(--space-4);
+  }
+
+  /* In una sezione a piena larghezza (`.prose--wide`, /miele/) le due colonne si
+     dividono lo spazio e la foto cambia lato: prima riga a destra, seconda a
+     sinistra, e così via. Dentro il `.prose` gli unici <div> sono le righe,
+     quindi `nth-of-type(even)` è la seconda riga. */
+  .prose--wide .prose-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .prose--wide .prose-row:nth-of-type(even) .prose-row-text {
+    order: 2;
+  }
+}
+
+/* Stesso ritmo verticale del `.prose` (griglia + gap): i blocchi di testo non
+   hanno margini propri, è il genitore a distanziarli. */
+.prose-row-text {
+  display: grid;
+  gap: var(--space-3);
+  align-content: center;
+}
+
+.prose-figure {
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.prose-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  cursor: zoom-in;
+}
+
+/* Le nostre foto sono spesso verticali: a piena colonna diventerebbero alte
+   quanto due schermate. Restano centrate e più strette del testo. */
+.prose-figure--portrait {
+  max-width: 30rem;
+  margin-inline: auto;
+}
+
+.prose figcaption,
+.prose-figure figcaption {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.g-item figcaption,
+.g-caption {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  padding: 0.5rem 0.15rem 0;
+}
+
+.article-meta {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-2);
+}
+
+.price-note {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  margin-top: 0.3rem;
+}
+
+/* Recensioni autentiche (scheda Google) + fallback quando non ce ne sono */
+.review-source,
+.review-date {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.review-source a {
+  color: var(--amber-strong);
+  text-decoration: underline;
+}
+
+.review-stars .review-star-empty {
+  color: var(--line);
+}
+
+.review-cta {
+  max-width: 640px;
+  margin-inline: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-3);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+  text-align: center;
+  color: var(--amber);
+}
+
+.review-cta h3 {
+  color: var(--ink);
+}
+
+.review-cta p {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  max-width: 46ch;
+}
+
+/* Link contestuale sotto un video della gallery (es. api regine) */
+.video-link {
+  position: absolute;
+  z-index: 3;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 251, 242, 0.95);
+  color: var(--amber-deep);
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.video-link:hover {
+  background: #fff;
+}
+
+.contact-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 0.35rem;
+}
+
+/* Mentre il video va, i controlli nativi occupano il basso: il link sparisce */
+.video-item[data-playing] .video-link {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   HERO CON IMMAGINE DI SFONDO (full-bleed)
+   Media dietro il testo + scrim per garantire il contrasto.
+   Focal point regolabile per pagina: --hero-pos (desktop), --hero-pos-m (mobile).
+   --------------------------------------------------------------------------- */
+
+.hero--bg,
+.page-hero--bg {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  align-content: center;
+  color: var(--white);
+}
+
+.hero--bg {
+  min-height: clamp(440px, 54vh, 560px);
+}
+
+.page-hero--bg {
+  padding-top: calc(var(--header-h) + var(--space-4));
+  padding-bottom: var(--space-5);
+  min-height: clamp(340px, 44vh, 460px);
+}
+
+.page-hero--bg-tall {
+  min-height: clamp(430px, 58vh, 580px);
+}
+
+.hero-bg-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  /* colore di fondo nel caso l'immagine non sia ancora caricata (miele scuro) */
+  background: #4a2908;
+}
+
+.hero-bg-media picture,
+.hero-bg-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-bg-media img {
+  object-fit: cover;
+  object-position: var(--hero-pos, 50% 45%);
+}
+
+/* Velo caldo color miele invece del nero: due gradienti (verticale per la
+   leggibilità, laterale perché il testo sta a sinistra) con tonalità
+   ambra/caramello. Il contrasto resta alto — è il velo a garantirlo, non il
+   colore del testo — ed è misurato da scripts/qa-contrast.mjs. */
+.hero-bg-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    /* velo verticale: tiene leggibile il testo, più chiaro verso il basso */
+    linear-gradient(
+      180deg,
+      rgba(60, 34, 10, 0.74) 0%,
+      rgba(72, 41, 12, 0.62) 45%,
+      rgba(96, 56, 16, 0.5) 100%
+    ),
+    /* il testo occupa tutta la larghezza: velo diagonale leggero */
+    linear-gradient(90deg, rgba(58, 33, 10, 0.6) 0%, rgba(112, 68, 16, 0.44) 100%);
+}
+
+/* Da 900px il testo sta nella colonna di sinistra: a destra il velo si alleggerisce
+   e la fotografia traspare con la sua tonalità miele. */
+@media (min-width: 900px) {
+  /* Da desktop il testo sta in colonna (max 42rem a partire dal centro): il velo
+     resta pieno fin lì e poi si alleggerisce molto, così la foto respira a
+     destra. Il verticale è leggero: serve solo a smorzare il bordo alto. */
+  .hero-bg-scrim {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(58, 33, 10, 0.3) 0%,
+        rgba(70, 40, 12, 0.24) 55%,
+        rgba(96, 56, 16, 0.18) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(54, 31, 9, 0.74) 0,
+        /* Il velo resta pieno fino al bordo destro della colonna di testo:
+           42rem di colonna + 2rem di padding del contenitore (70rem), centrato. */
+        rgba(54, 31, 9, 0.68) calc(44rem + max(0px, (100vw - 70rem) / 2)),
+        rgba(74, 43, 13, 0.26) calc(51rem + max(0px, (100vw - 70rem) / 2)),
+        rgba(84, 50, 15, 0.05) 100%
+      );
+  }
+}
+
+@media (max-width: 899px) {
+  .hero-bg-media img {
+    object-position: var(--hero-pos-m, var(--hero-pos, 50% 45%));
+  }
+}
+
+/* Testo su fotografia: colori opachi, così il contrasto è calcolabile */
+.on-image h1,
+.on-image h2,
+.on-image h3 {
+  color: var(--white);
+}
+
+.on-image p,
+.on-image .hero-sub,
+.on-image .trust li {
+  color: #f4efe6;
+}
+
+.on-image .eyebrow {
+  color: #ffe9bf;
+}
+
+.on-image .breadcrumbs {
+  color: #f5f0e6;
+}
+
+.on-image .breadcrumbs a,
+.on-image .breadcrumbs span {
+  color: #f5f0e6;
+}
+
+.on-image .breadcrumbs a:hover {
+  color: var(--white);
+}
+
+.on-image .trust svg {
+  color: #ffe9bf;
+}
+
+.on-image .btn-ghost {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.on-image .btn-ghost:hover {
+  background: var(--white);
+  color: var(--amber-deep);
+  border-color: var(--white);
+}
+
+/* Su schermi piccoli la hero con foto viene compattata: il titolo, il
+   sottotitolo e le CTA restano sopra la piega. */
+@media (max-width: 599px) {
+  .hero--bg {
+    padding-top: calc(var(--header-h) + var(--space-3));
+    padding-bottom: var(--space-4);
+  }
+
+  .hero--bg .hero-sub {
+    font-size: 1.02rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .hero--bg .hero-cta {
+    margin-bottom: var(--space-3);
+  }
+
+  .page-hero--bg {
+    padding-top: calc(var(--header-h) + var(--space-3));
+    padding-bottom: var(--space-4);
   }
 }

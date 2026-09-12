@@ -1,41 +1,74 @@
 ---
+import Emoji from '../components/Emoji.astro';
 import Base from '../layouts/Base.astro';
 import Picture from '../components/Picture.astro';
-import HoneyCard from '../components/HoneyCard.astro';
 import Gallery from '../components/Gallery.astro';
 import Testimonials from '../components/Testimonials.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Icons from '../components/Icons.astro';
+import PriceBadge from '../components/PriceBadge.astro';
+import ProductCards from '../components/ProductCards.astro';
 import { site } from '../data/site';
+import { polline, apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../data/bee-products';
+import { priceFrom } from '../lib/price';
 import { localBusiness, faqPage } from '../lib/schema';
 
-const title = "Miele Non Pastorizzato e 100% Italiano a Cassano d'Adda | Bio & Golosità";
-const description = "Miele di Acacia € 6,00 · Miele Millefiori € 5,00 · Miele di Castagno € 6,50 · Consegna a domicilio a Cassano d'Adda (MI) e provincia · Chiama ora per ordinare";
+/**
+ * Home = bacheca dei prodotti. I 5 mieli hanno le loro schede complete su
+ * /miele/ (griglia, prezzi, formati) e qui non si ripetono: da qui si sceglie
+ * il *reparto* (miele, polline, regine, nuclei) e si entra nella pagina dedicata.
+ */
+const homeProducts = [
+  {
+    href: '/miele/',
+    ...repartoImages.miele,
+    title: 'I nostri mieli',
+    text: 'Acacia, millefiori e castagno: mieli non pastorizzati, raccolti e smielati a freddo. In stagione prepariamo anche il miele in favo.',
+    price: priceFrom(site.honeys.flatMap((h) => h.priceFormats)),
+  },
+  {
+    href: '/polline-d-api/',
+    ...repartoImages.polline,
+    title: "Polline d'api",
+    text: "Raccolto dalle nostre api tra la Martesana e la Gera d'Adda: fresco o essiccato, con le indicazioni per conservarlo.",
+    price: polline.prezzo ?? prezzoSuRichiesta,
+  },
+  {
+    href: '/api-regine/',
+    ...repartoImages.apiRegine,
+    title: 'Api regine',
+    text: 'Regine feconde dalla nostra selezione, per rinnovare un alveare o avviarne uno nuovo.',
+    price: apiRegine.prezzo ?? prezzoSuRichiesta,
+  },
+  {
+    href: '/nuclei-api/',
+    ...repartoImages.nuclei,
+    title: "Nuclei d'api",
+    text: 'Famiglie già avviate con regina feconda e telai con covata: la via più semplice per partire.',
+    price: nuclei.prezzo ?? prezzoSuRichiesta,
+  },
+];
+
+const title = "Miele 100% Italiano a Cassano d'Adda | Bio & Golosità";
+const description =
+  "Miele di Acacia € 6,00 · Miele Millefiori € 5,00 · Miele di Castagno € 6,50 · Apicoltore a Cassano d'Adda (MI): consegna in zona, ordina al 351 537 6719";
 
 const homeFaq = [
   {
-    q: 'Vendete anche secchi da 10 kg o quantità grandi?',
-    a: 'Sì: per ordini superiori a 10 kg prepariamo secchi da 10 kg con un prezzo personalizzato e leggermente scontato. Contattaci per un preventivo su misura: chiama o scrivi su WhatsApp.',
+    q: 'Il miele è prodotto direttamente da voi?',
+    a: 'Sì. Gestiamo direttamente i nostri apiari e ci occupiamo personalmente della produzione e della smielatura.',
   },
   {
-    q: 'Il vostro miele è 100% italiano?',
-    a: 'Sì: tutto il nostro miele è 100% italiano, convenzionale e artigianale. Le api sono nostre e gli apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Nord Milano e la Val Brembana: un miele di produzione propria, raccolto e smielato a pochi chilometri da casa tua.',
+    q: 'Il miele è pastorizzato?',
+    a: 'No. Il nostro miele non viene sottoposto a pastorizzazione.',
   },
   {
-    q: 'Dove posso comprare il vostro miele?',
-    a: 'Puoi ritirare il miele direttamente in azienda a Cassano d\'Adda, in Via Salvo D\'Acquisto 9, su appuntamento: chiama o scrivi su WhatsApp prima di passare, così ti aspettiamo. Oppure possiamo portartelo a casa: la consegna può essere gratuita, dipende dall\'ordine e da dove mi trovo quando mi chiami — chiamaci e ti confermo subito.',
+    q: 'Posso acquistare il miele direttamente dall\'apicoltore?',
+    a: 'Sì. In azienda a Cassano d\'Adda, in Via Salvo D\'Acquisto 9, su appuntamento; oppure con consegna a domicilio nelle zone servite.',
   },
   {
-    q: 'Il miele cristallizza: è normale?',
-    a: 'Sì, è assolutamente naturale: la cristallizzazione è un processo spontaneo del miele puro e non pastorizzato. Per riportarlo fluido basta scaldare il barattolo a bagnomaria a bassa temperatura.',
-  },
-  {
-    q: 'Fate consegne?',
-    a: 'Sì: consegniamo a domicilio nella nostra zona tra Milano, Bergamo e Cremona: Cassano d\'Adda, Groppello d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Pozzuolo Martesana, Inzago, Rivolta d\'Adda, Vailate e Caravaggio. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa puoi ritirare in sede su appuntamento.',
-  },
-  {
-    q: 'Da dove viene il vostro miele?',
-    a: 'Il miele viene dai miei apiari, che gestisco io con api proprie, tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Nord Milano e la Val Brembana. È un miele locale, raccolto e smielato a pochi chilometri da casa tua.',
+    q: 'Fate consegne a domicilio?',
+    a: 'Sì, tra Milano, Bergamo, Cremona e Lodi: spesso è gratuita, dipende dall\'ordine e dalla zona. Chiama o scrivi su WhatsApp e ti confermiamo subito.',
   },
 ];
 ---
@@ -44,25 +77,46 @@ const homeFaq = [
   title={title}
   description={description}
   pathname="/"
-  preloadHero={true}
+  preloadImage="apiari_hd"
   jsonLd={[localBusiness(), faqPage(homeFaq)]}
 >
 
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
+  {/*
+    Inquadratura della hero: la foto è orizzontale (1672×941) e mostra gli
+    apiari in mezzo al prato, con gli alberi e il cielo in alto. Le arnie
+    (chiare) stanno nella fascia centrale, y 30–70%, e a sinistra del centro
+    (x 12–25%), quindi:
+    - da desktop la fascia taglia poco in altezza (10% a 1440, ~33% a 1920):
+      col 50% si tengono cielo, arnie e prato;
+    - su mobile la fascia è più alta che larga, quindi il taglio è
+      ORIZZONTALE e si vede solo ~27% della larghezza: lì conta la X, e il 18%
+      è la finestra che tiene dentro le arnie (misurato sui pixel chiari).
+  */}
+  <section class="hero hero--bg on-image" style="--hero-pos: 50% 50%; --hero-pos-m: 18% 50%">
+    <div class="hero-bg-media" aria-hidden="true">
+      <Picture
+        base="apiari_hd"
+        alt=""
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        zoomable={false}
+      />
+    </div>
+    <div class="hero-bg-scrim" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-text">
         <span class="eyebrow">api proprie · dal 2020</span>
         <h1>
-          Miele genuino a Cassano d'Adda e in tutta la provincia di Milano
+          Miele artigianale 100% italiano a Cassano d'Adda, direttamente dall'apicoltore
         </h1>
         <p class="hero-sub">
-          Acacia, millefiori e castagno: miele 100% italiano di api proprie,
-          non pastorizzato. Consegna a domicilio a Cassano d'Adda e dintorni,
-          in molti casi gratuita: chiama e ti confermiamo. Oppure ritiro in
-          sede su appuntamento.
+          Miele di acacia, millefiori e castagno, non pastorizzato e raccolto nei
+          nostri apiari. Vendita diretta a Cassano d'Adda e consegna a domicilio
+          nei dintorni.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="#mieli">
+          <a class="btn btn-primary btn-lg" href="/miele/">
             Scopri i nostri mieli
             <Icons name="arrow" size={20} />
           </a>
@@ -71,88 +125,73 @@ const homeFaq = [
             Chiama ora
           </a>
         </div>
+        {/*
+          Questa riga NON ripete le promesse già scritte sopra (100% italiano,
+          api proprie, non pastorizzato, dal 2020 le dicono eyebrow, h1 e
+          sottotitolo) né quelle della sezione "Perché scegliere" qui sotto:
+          aggiunge i dati pratici (scelta, consegna, ritiro), che nella hero
+          non compaiono.
+        */}
         <ul class="trust">
-          <li><Icons name="check" size={18} /> 100% Made in Italy</li>
-          <li><Icons name="check" size={18} /> Api proprie</li>
-          <li><Icons name="check" size={18} /> Miele non pastorizzato</li>
-          <li><Icons name="check" size={18} /> {site.experienceYears} anni di esperienza</li>
-          <li><Icons name="check" size={18} /> Possibile consegna gratuita</li>
+          <li><Icons name="check" size={18} /> 5 varietà di miele</li>
+          <li><Icons name="check" size={18} /> Consegna tra Milano, Bergamo, Cremona e Lodi</li>
+          <li><Icons name="check" size={18} /> Ritiro in azienda su appuntamento</li>
         </ul>
-      </div>
-      <div class="hero-media">
-        <Picture
-          base="hero_bg"
-          alt="Tre barattoli di miele di acacia, millefiori e castagno di Bio & Golosità a Cassano d'Adda"
-          sizes="(min-width: 900px) 42vw, 100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
-        <span class="hero-badge">100% Made in Italy · api proprie</span>
       </div>
     </div>
   </section>
 
-  <section class="section section--soft" id="mieli" aria-labelledby="mieli-title">
+  <section class="section section--soft" id="prodotti" aria-labelledby="prodotti-title">
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
-        <span class="eyebrow">direttamente dall'apiario</span>
-        <h2 id="mieli-title">I nostri mieli</h2>
+        {/*
+          L'eyebrow resta (ogni sezione della home ne ha uno, è il ritmo della
+          pagina), ma non dice "direttamente dall'apiario/apicoltore": nella hero
+          h1 e nell'eyebrow della gallery c'è già. Qui anticipa l'altra cosa,
+          che la hero non dice — oltre al miele produciamo anche il resto.
+        */}
+        <span class="eyebrow">non solo miele</span>
+        <h2 id="prodotti-title">I nostri prodotti</h2>
         <p>
-          Cinque mieli di stagione, raccolti e smielati da me nei miei
-          apiari tra Cassano d'Adda, la Gera d'Adda, la Martesana, il Parco
-          Nord Milano e la Val Brembana.
+          Miele, polline, api regine e nuclei: tutto di produzione propria, venduto
+          direttamente. Scegli il prodotto e nella pagina dedicata trovi prezzi,
+          formati e disponibilità.
         </p>
       </div>
-      <div class="honey-grid">
-        {
-          site.honeys.map((h, i) => (
-            <HoneyCard honey={h} eager={i === 0} />
-          ))
-        }
-      </div>
+      <ProductCards cards={homeProducts} linkLabel="Vedi prezzi e disponibilità" />
     </div>
   </section>
 
   <section class="section" aria-labelledby="why-title">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">perché scegliere il nostro miele</span>
-        <h2 id="why-title">Miele vero, fatto come una volta</h2>
+        <span class="eyebrow">perché scegliere il nostro miele<Emoji name="honey-pot" /></span>
+        <h2 id="why-title">Miele artigianale direttamente dall'apicoltore</h2>
         <p>
-          Niente miscele anonime: ogni barattolo racconta le fioriture della
-          nostra zona.
+          Niente miscele anonime: ogni barattolo nasce dalle nostre api e
+          racconta le fioriture dei territori in cui lavoriamo.
         </p>
       </div>
       <div class="features">
         <div class="feature">
-          <div class="feature-icon"><Icons name="home" size={26} /></div>
-          <h3>Api proprie</h3>
-          <p>Gestisco i miei apiari in prima persona: sai sempre da dove arriva il tuo miele.</p>
-        </div>
-        <div class="feature">
           <div class="feature-icon"><Icons name="package" size={26} /></div>
           <h3>Non pastorizzato</h3>
-          <p>Smielato a freddo e non pastorizzato, conserva polline, enzimi e profumi originali.</p>
+          <p>Smielato e invasettato senza pastorizzazione, per preservare il profilo aromatico, il gusto e le caratteristiche naturali del raccolto.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="leaf" size={26} /></div>
-          <h3>100% Made in Italy</h3>
-          <p>Miele convenzionale artigianale italiano, di api proprie, raccolto tra la Martesana e la Gera d'Adda.</p>
+          <h3>Miele 100% italiano</h3>
+          <p>Miele artigianale di produzione propria, raccolto dalle nostre api negli apiari della Lombardia.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="shield" size={26} /></div>
-          <h3>{site.experienceYears} anni di esperienza</h3>
-          <p>Dal 2020 curo le api con passione e metodi rispettosi dell'ambiente.</p>
+          <h3>Apicoltore dal {site.apicoltoreDal}</h3>
+          <p>Dal {site.apicoltoreDal} mi prendo cura personalmente delle mie api, tra la Martesana e la Gera d'Adda.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="sparkle" size={26} /></div>
           <h3>Prezzo onesto</h3>
-          <p>Vendita diretta dall'apicoltore: qualità alta al prezzo giusto, senza intermediari.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon"><Icons name="clock" size={26} /></div>
-          <h3>Ritiro e consegna rapidi</h3>
-          <p>Ritiro in sede su appuntamento a Cassano d'Adda o consegna a domicilio in tutta la zona tra Milano, Bergamo e Cremona: in molti casi gratuita, chiama e ti confermiamo.</p>
+          <p>Vendita diretta dall'apicoltore, senza intermediari: acquisti il miele direttamente da chi alleva le api, lo raccoglie e lo confeziona.</p>
         </div>
       </div>
     </div>
@@ -169,20 +208,19 @@ const homeFaq = [
         />
       </div>
       <div class="split-text">
-        <span class="eyebrow">il tuo apicoltore</span>
-        <h2>Mi chiamo Raffaele e le api sono la mia passione</h2>
+        <span class="eyebrow">il tuo apicoltore<Emoji name="honeybee" /></span>
+        <h2 id="about-title">Mi chiamo Raffaele e le api sono la mia passione</h2>
         <p>
-          Da <strong>oltre 6 anni</strong> mi prendo cura delle mie api a Cassano
-          d'Adda e nelle campagne tra la Gera d'Adda e la Martesana. Ogni
-          barattolo di Bio & Golosità è il risultato del mio lavoro paziente,
-          fatto di controlli in apiario, fioriture seguite settimana per
-          settimana e smielatura a freddo.
+          Dal {site.apicoltoreDal} mi prendo cura delle mie api a Cassano d'Adda
+          e nelle campagne tra la Gera d'Adda e la Martesana. Ogni barattolo di
+          Bio & Golosità è il risultato del mio lavoro paziente, fatto di
+          controlli in apiario, fioriture seguite settimana per settimana e
+          smielatura a freddo.
         </p>
         <ul>
           <li><Icons name="check" size={20} /> Apiari che gestisco io, senza intermediari</li>
           <li><Icons name="check" size={20} /> Miele locale della provincia di Milano e dintorni</li>
           <li><Icons name="check" size={20} /> Lavoro artigianale, a piccoli lotti</li>
-          <li><Icons name="check" size={20} /> Mi occupo della salute delle api e dell'ambiente</li>
         </ul>
         <a class="btn btn-primary btn-lg mt-3" href="/chi-siamo/">
           La mia storia
@@ -198,48 +236,32 @@ const homeFaq = [
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
         <span class="eyebrow">dove siamo e dove consegniamo</span>
-        <h2 id="zone-title">Cassano d'Adda, al centro tra Milano, Bergamo, Cremona e Lodi</h2>
+        <h2 id="zone-title">Vendita e consegna di miele a Cassano d'Adda e nella Martesana</h2>
         <p>
-          La nostra azienda è in Via Salvo D'Acquisto 9 a Cassano d'Adda, al
-          confine tra le province di Milano, Bergamo, Cremona e Lodi. Vendita
-          diretta in sede su appuntamento e consegna a domicilio, in molti
-          casi gratuita — chiama e ti confermiamo — nella Martesana, nella
-          Gera d'Adda, fino a Trezzo sull'Adda, Vaprio d'Adda, al Parco Nord
-          Milano e in tutta la provincia di Milano.
+          La nostra azienda agricola si trova in Via Salvo D'Acquisto 9 a
+          Cassano d'Adda. Vendiamo direttamente il nostro miele e consegniamo
+          anche nella Martesana, nella Gera d'Adda e in numerosi comuni tra le
+          province di Milano, Bergamo, Cremona e Lodi.
         </p>
       </div>
       <ul class="chips" style="justify-content:center;">
-        {site.areaServed.map((t) => <li>{t}</li>)}
+        {site.areaServedFeatured.map((t) => <li>{t}</li>)}
       </ul>
+      <p class="mt-3" style="text-align:center;">
+        …e molti altri comuni tra le province di Milano, Bergamo, Cremona e Lodi.
+      </p>
+      <div class="contact-cta mt-4" style="justify-content:center;">
+        <a class="btn btn-ghost btn-lg" href="/consegna-miele/">
+          Scopri tutte le zone servite
+          <Icons name="arrow" size={20} />
+        </a>
+      </div>
     </div>
   </section>
 
   <Testimonials />
 
-  <section class="section" aria-labelledby="cta-title">
-    <div class="container">
-      <div class="cta-band">
-        <span class="eyebrow" style="color:#ffe9bf;">il miele è pronto</span>
-        <h2 id="cta-title">Hai voglia di miele vero? Chiama ora</h2>
-        <p>
-          Una telefonata di trenta secondi e il tuo miele di Cassano d'Adda è
-          prenotato. Se preferisci, scrivici su WhatsApp.
-        </p>
-        <div class="contact-cta" style="justify-content:center;">
-          <a class="btn btn-light btn-lg" href={site.phoneHref}>
-            <Icons name="phone" size={20} />
-            Chiama ora
-          </a>
-          <a class="btn btn-ghost btn-lg" style="border-color:#ffe9bf;color:#ffe9bf;" href={site.whatsapp} target="_blank" rel="noopener">
-            <Icons name="whatsapp" size={20} />
-            WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="faq-title">
+  <section class="section section--soft" aria-labelledby="faq-title">
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
         <span class="eyebrow">domande frequenti</span>

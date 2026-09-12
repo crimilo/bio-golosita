@@ -1,43 +1,225 @@
 import { chromium } from 'playwright-core';
+import { readdirSync, statSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
 
-const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+const BASE = process.env.QA_BASE ?? 'http://localhost:8091';
+const VIEWPORTS = [
+  { name: 'mobile-360', w: 360, h: 740 }, // Android piccoli: è qui che le etichette lunghe traboccavano
+  { name: 'mobile', w: 375, h: 667 },
+  { name: 'desktop', w: 1280, h: 800 },
+];
+
+/** Tutte le pagine HTML di dist/, come URL. */
+function findPages(dir = 'dist', out = []) {
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    if (statSync(full).isDirectory()) findPages(full, out);
+    else if (entry === 'index.html') {
+      const rel = relative('dist', dir);
+      out.push('/' + (rel ? rel.split(sep).join('/') + '/' : ''));
+    } else if (entry === '404.html') out.push('/404.html');
+  }
+  return out;
+}
+
+const pages = findPages().sort();
+const browser = await chromium.launch({
+  executablePath: '/usr/bin/chromium',
+  args: ['--no-sandbox'],
+});
 const results = [];
 const check = (name, ok, extra = '') => {
   results.push(`${ok ? '✓' : '✗'} ${name}${extra ? ' — ' + extra : ''}`);
 };
 
-for (const vp of [
-  { name: 'mobile', w: 375, h: 667 },
-  { name: 'desktop', w: 1280, h: 800 },
-]) {
+// --- 1. Interazioni sulla home (una volta per viewport) ---------------------
+for (const vp of VIEWPORTS) {
   const ctx = await browser.newContext({ viewport: { width: vp.w, height: vp.h } });
   const page = await ctx.newPage();
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text().slice(0, 120)));
   page.on('pageerror', (e) => errors.push('PAGEERROR: ' + e.message.slice(0, 120)));
 
-  await page.goto('http://localhost:8091/', { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
 
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  check(`[${vp.name}] nessun overflow orizzontale`, overflow <= 0, overflow > 0 ? `${overflow}px` : '');
+  const cta = page.locator('.header-cta').first();
+  // Mobile: la CTA telefonica c'è e sta su una riga sola; sotto i 480px mostra
+  // solo l'icona (a 360px "Chiama ora" andava a capo e sembrava rotta).
+  // Desktop (>=900px): la CTA non c'è, servirebbe a poco senza vivavoce.
+  if (vp.w < 900) {
+    check(`[${vp.name}] CTA header visibile`, await cta.isVisible());
+    // Il conteggio delle righe è sulla label: l'altezza del bottone è fissa,
+    // quindi non direbbe nulla. 0 righe = label nascosta (solo icona).
+    const ctaInfo = await cta.evaluate((el) => {
+      const label = el.querySelector('.header-cta-label');
+      return {
+        righe: label.getClientRects().length,
+        label: getComputedStyle(label).display !== 'none',
+        nome: el.getAttribute('aria-label') || (el.textContent || '').trim(),
+        icona: getComputedStyle(el.querySelector('svg')).display !== 'none',
+      };
+    });
+    check(
+      `[${vp.name}] CTA header su una riga (label su ${ctaInfo.righe} riga/righe)`,
+      ctaInfo.righe === (vp.w < 480 ? 0 : 1)
+    );
+    // soglia 480px (come in CSS), non il nome del viewport
+    check(
+      `[${vp.name}] CTA header ${vp.w < 480 ? 'solo icona' : 'icona + testo'}`,
+      vp.w < 480 ? !ctaInfo.label : ctaInfo.label
+    );
+    check(
+      `[${vp.name}] CTA header ha un nome accessibile ("${ctaInfo.nome}")`,
+      Boolean(ctaInfo.nome) && ctaInfo.icona
+    );
+  } else {
+    check(`[${vp.name}] CTA telefonica assente su desktop`, !(await cta.isVisible()));
 
-  const cta = await page.locator('.header-cta').first();
-  check(`[${vp.name}] CTA header visibile`, await cta.isVisible());
+    // Il menu sta a filo del bordo destro del contenuto, con lo stesso margine
+    // che ha il logo a sinistra (scelta esplicita: menu desktop a destra).
+    const navGeo = await page.evaluate(() => {
+      const nav = document.querySelector('.nav');
+      const inner = document.querySelector('.header-inner');
+      const logo = document.querySelector('.logo');
+      if (!nav || !inner || !logo) return null;
+      const n = nav.getBoundingClientRect();
+      const i = inner.getBoundingClientRect();
+      const cs = getComputedStyle(inner);
+      const innerRight = i.right - parseFloat(cs.paddingRight);
+      const innerLeft = i.left + parseFloat(cs.paddingLeft);
+      return {
+        rightInset: Math.round(innerRight - n.right),
+        logoInset: Math.round(logo.getBoundingClientRect().left - innerLeft),
+        gap: Math.round(n.left - logo.getBoundingClientRect().right),
+        navW: Math.round(n.width),
+      };
+    });
+    check(
+      `[${vp.name}] menu a filo del bordo destro (${navGeo?.rightInset}px, come il logo a ${navGeo?.logoInset}px)`,
+      navGeo && Math.abs(navGeo.rightInset - navGeo.logoInset) <= 2 && navGeo.gap >= 8
+    );
+  }
+
+  // Fascia 480-560px: non è coperta dagli sweep, la label è visibile e la CTA
+  // non deve andare a capo né far traboccare l'header.
+  if (vp.name === 'mobile-360') {
+    for (const w of [480, 520, 560]) {
+      await page.setViewportSize({ width: w, height: 800 });
+      const mid = await cta.evaluate((el) => {
+        const label = el.querySelector('.header-cta-label');
+        return {
+          righe: label.getClientRects().length,
+          larghezza: Math.round(el.getBoundingClientRect().width),
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        };
+      });
+      check(
+        `[${w}px] CTA header su una riga (label su ${mid.righe} riga/righe, ${mid.larghezza}px)`,
+        mid.righe === 1 && mid.overflow <= 0
+      );
+    }
+    await page.setViewportSize({ width: vp.w, height: vp.h });
+  }
+
   const navVisible = await page.locator('.nav a').first().isVisible().catch(() => false);
-  if (vp.name === 'mobile') check('[mobile] nav nascosta (solo logo+CTA)', !navVisible);
-  else check('[desktop] nav visibile', navVisible);
+  // soglia 900px, non il nome del viewport: così aggiungere viewport non rompe il check
+  if (vp.w < 900) check(`[${vp.name}] nav nascosta (solo logo+CTA)`, !navVisible);
+  else check(`[${vp.name}] nav visibile`, navVisible);
 
-  const wa = await page.locator('.wa-float');
+  // Il desktop stretto non deve rimpicciolire i link del menu: la regola è che
+  // la dimensione resta la stessa a ogni larghezza (niente fascia "compattata").
+  if (vp.name === 'desktop') {
+    const misure = [];
+    for (const w of [900, 1000, 1100, 1149]) {
+      await page.setViewportSize({ width: w, height: 800 });
+      misure.push(
+        await page.evaluate((larghezza) => {
+          const nav = document.querySelector('.nav');
+          const links = [...nav.querySelectorAll('a')];
+          const navBox = nav.getBoundingClientRect();
+          const logo = document.querySelector('.logo').getBoundingClientRect();
+          const inner = document.querySelector('.header-inner');
+          return {
+            larghezza,
+            font: getComputedStyle(links[0]).fontSize,
+            unaRiga: links.every((a) => a.getBoundingClientRect().top === links[0].getBoundingClientRect().top),
+            gap: Math.round(navBox.left - logo.right),
+            dentro:
+              navBox.right <=
+              inner.getBoundingClientRect().right - parseFloat(getComputedStyle(inner).paddingRight) + 1,
+          };
+        }, w)
+      );
+    }
+    await page.setViewportSize({ width: vp.w, height: vp.h });
+    const font = [...new Set(misure.map((m) => m.font))];
+    check(
+      `[desktop] link del menu mai più piccoli (font ${font.join(' / ')} a ${misure.map((m) => m.larghezza).join('/')}px)`,
+      font.length === 1 && parseFloat(font[0]) >= 15
+    );
+    check(
+      `[desktop] menu intero anche a 900px (${misure[0].gap}px dal logo, una riga: ${misure[0].unaRiga})`,
+      misure.every((m) => m.unaRiga && m.gap >= 8 && m.dentro)
+    );
+  }
+
+  const wa = page.locator('.wa-float');
   check(`[${vp.name}] bottone WhatsApp fisso`, await wa.isVisible());
   const waPos = await wa.boundingBox();
   check(`[${vp.name}] WhatsApp in basso a destra`, waPos && waPos.x > vp.w - 100 && waPos.y > vp.h - 100);
 
-  const heroImg = await page.locator('.hero-media img').first();
-  await heroImg.click();
-  const lb = await page.locator('#lightbox');
-  check(`[${vp.name}] lightbox si apre al tap`, await lb.getAttribute('open') !== null);
+  // hero con immagine di sfondo: presente, caricata con priorità e senza lightbox
+  const heroBg = page.locator('.hero-bg-media img').first();
+  check(`[${vp.name}] hero con immagine di sfondo`, (await heroBg.count()) > 0);
+  check(
+    `[${vp.name}] hero image eager + fetchpriority high`,
+    (await heroBg.getAttribute('loading')) === 'eager' &&
+      (await heroBg.getAttribute('fetchpriority')) === 'high'
+  );
+  check(
+    `[${vp.name}] hero image precaricata (stesso URL del preload)`,
+    await page.evaluate(() => {
+      const link = document.querySelector('link[rel="preload"][as="image"]');
+      const img = document.querySelector('.hero-bg-media img');
+      if (!link || !img) return false;
+      return (link.getAttribute('imagesrcset') || '').includes(new URL(img.currentSrc).pathname);
+    })
+  );
+  check(
+    `[${vp.name}] lo sfondo NON è cliccabile (niente lightbox)`,
+    !(await heroBg.getAttribute('class'))?.includes('lightbox-target')
+  );
+
+  // le card prodotto della home devono PORTARE alla pagina, non aprire la lightbox
+  const cardImg = page.locator('#prodotti .card-media img').first();
+  check(`[${vp.name}] card prodotti cliccabile (immagine)`, (await cardImg.count()) > 0);
+  check(
+    `[${vp.name}] immagine della card NON apre la lightbox`,
+    !(await cardImg.getAttribute('class'))?.includes('lightbox-target')
+  );
+
+  // lightbox su una foto della galleria (non è dentro un link)
+  const zoomable = page.locator('.gallery-grid .g-item img').first();
+  await zoomable.click();
+  const lb = page.locator('#lightbox');
+  check(`[${vp.name}] lightbox si apre al tap`, (await lb.getAttribute('open')) !== null);
+  const srcOf = () => page.locator('#lightbox img').getAttribute('src');
+  const firstSrc = await srcOf();
+  check(
+    `[${vp.name}] lightbox: frecce per sfogliare la galleria`,
+    (await page.locator('.lightbox-nav:visible').count()) === 2
+  );
+  await page.locator('.lightbox-next').click();
+  const nextSrc = await srcOf();
+  check(`[${vp.name}] freccia avanti cambia foto`, nextSrc !== firstSrc);
+  await page.locator('.lightbox-prev').click();
+  check(`[${vp.name}] freccia indietro torna alla foto precedente`, (await srcOf()) === firstSrc);
+  await page.keyboard.press('ArrowRight');
+  check(`[${vp.name}] tastiera ← → nella lightbox`, (await srcOf()) === nextSrc);
   await page.locator('#lightbox img').click();
-  const zoomed = await page.locator('#lightbox img').evaluate((el) => el.classList.contains('zoomed'));
+  const zoomed = await page
+    .locator('#lightbox img')
+    .evaluate((el) => el.classList.contains('zoomed'));
   check(`[${vp.name}] zoom al secondo tap`, zoomed);
   await page.locator('.lightbox-close').click();
   check(`[${vp.name}] lightbox si chiude`, (await lb.getAttribute('open')) === null);
@@ -46,9 +228,207 @@ for (const vp of [
   const playing = await page.locator('[data-video]').first().getAttribute('data-playing');
   check(`[${vp.name}] video parte al click`, playing !== null);
 
+  // video nuovo nella pagina api regine
+  await page.goto(`${BASE}/api-regine/`, { waitUntil: 'load' });
+  const regineVideo = page.locator('[data-video]').first();
+  check(`[${vp.name}] /api-regine/ ha il video della regina`, (await regineVideo.count()) > 0);
+  // il poster viene applicato quando il video si avvicina al viewport
+  await regineVideo.scrollIntoViewIfNeeded();
+  await page
+    .waitForFunction(
+      () => !!document.querySelector('[data-video] video')?.getAttribute('poster'),
+      null,
+      { timeout: 5000 }
+    )
+    .catch(() => {});
+  check(
+    `[${vp.name}] il video ha il poster`,
+    (await regineVideo.locator('video').getAttribute('poster'))?.includes(
+      'ape-regina-con-api-poster'
+    )
+  );
+  await regineVideo.locator('.video-play').click();
+  check(
+    `[${vp.name}] il video della regina parte`,
+    (await regineVideo.getAttribute('data-playing')) !== null
+  );
+
+  // Etichetta prezzo: in alto a sinistra DENTRO la foto, identica fra le card
+  // della home, quelle di /miele/ e quelle dei prodotti. Ogni etichetta presente
+  // deve stare nel riquadro della foto e non essere tagliata. Su /miele/ le card
+  // del miele sono 6 (cinque varietà + il miele in favo, "Prezzo su richiesta").
+  for (const [url, attese] of [['/', 4], ['/miele/', 9]]) {
+    await page.goto(`${BASE}${url}`, { waitUntil: 'domcontentloaded' });
+    const badge = await page.evaluate(() => {
+      const out = [];
+      for (const b of document.querySelectorAll('.price-badge')) {
+        const media = b.closest('.card-media, .honey-card-media');
+        if (!media) {
+          out.push({ ok: false, motivo: `"${b.textContent.trim()}" fuori da una card` });
+          continue;
+        }
+        const mb = media.getBoundingClientRect();
+        const bb = b.getBoundingClientRect();
+        out.push({
+          ok:
+            bb.left >= mb.left - 0.5 &&
+            bb.top >= mb.top - 0.5 &&
+            bb.right <= mb.right + 0.5 &&
+            bb.bottom <= mb.bottom + 0.5 &&
+            b.scrollWidth <= Math.ceil(b.clientWidth) + 1 &&
+            b.scrollHeight <= Math.ceil(b.clientHeight) + 1,
+          motivo: `"${b.textContent.trim()}" ${Math.round(bb.width)}×${Math.round(bb.height)} su ${b.getClientRects().length} riga/righe`,
+        });
+      }
+      return out;
+    });
+    check(
+      `[${vp.name}] ${url} etichette prezzo dentro la foto (${badge.length}/${attese})`,
+      badge.length === attese && badge.every((b) => b.ok),
+      badge.filter((b) => !b.ok).map((b) => b.motivo).join(' | ')
+    );
+  }
+
   check(`[${vp.name}] nessun errore console`, errors.length === 0, errors.slice(0, 2).join(' | '));
+  await ctx.close();
+}
+
+// --- 2. Sweep di tutte le pagine: overflow, h1, errori ----------------------
+for (const vp of VIEWPORTS) {
+  const ctx = await browser.newContext({ viewport: { width: vp.w, height: vp.h } });
+  const page = await ctx.newPage();
+  let errors = [];
+  page.on('console', (m) => m.type() === 'error' && errors.push(m.text().slice(0, 120)));
+  page.on('pageerror', (e) => errors.push('PAGEERROR: ' + e.message.slice(0, 120)));
+
+  for (const path of pages) {
+    errors = [];
+    const res = await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded' });
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    );
+    const h1 = await page.locator('h1:visible').count();
+    // le img del lightbox hanno src="" di proposito: contano solo quelle con un src vero
+    const brokenImgs = await page.evaluate(
+      () =>
+        [...document.images].filter(
+          (i) => i.getAttribute('src') && i.complete && i.naturalWidth === 0
+        ).length
+    );
+    // etichette che escono dal loro bottone (white-space: nowrap + testo lungo):
+    // il testo trabocca visivamente pur senza allargare la pagina
+    // frase attaccata dopo il punto ("…appuntamento.Scegli"): in JSX la riga
+    // nuova dopo </strong> viene tagliata e il testo si incolla. A occhio sfugge.
+    const attaccati = await page.evaluate(() => {
+      const sel = 'p, li, h2, h3, h4, figcaption, dd, dt, .eyebrow, .review';
+      const out = [];
+      for (const el of document.querySelectorAll(sel)) {
+        const t = (el.textContent || '').replace(/\s+/g, ' ').trim();
+        const m = t.match(/\.[A-ZA\u00c0-\u00d6][a-z\u00e0-\u00ff]/);
+        if (m) out.push(t.slice(Math.max(0, m.index - 25), m.index + 25));
+      }
+      return out;
+    });
+    const clipped = await page.evaluate(() =>
+      [...document.querySelectorAll('.btn')]
+        .filter((el) => el.scrollWidth > Math.ceil(el.clientWidth) + 1)
+        .map((el) => (el.textContent || '').trim().slice(0, 40))
+    );
+    const ok =
+      (res?.status() ?? 500) < 400 &&
+      overflow <= 0 &&
+      h1 === 1 &&
+      errors.length === 0 &&
+      brokenImgs === 0 &&
+      clipped.length === 0 &&
+      attaccati.length === 0;
+    check(
+      `[${vp.name}] ${path}`,
+      ok,
+      [
+        (res?.status() ?? 500) >= 400 ? `HTTP ${res.status()}` : '',
+        overflow > 0 ? `overflow ${overflow}px` : '',
+        h1 !== 1 ? `${h1} h1 visibili` : '',
+        brokenImgs ? `${brokenImgs} img rotte` : '',
+        clipped.length ? `testo fuori dal bottone: ${clipped.slice(0, 2).join(' / ')}` : '',
+        attaccati.length ? `frase attaccata dopo il punto: "…${attaccati[0]}…"` : '',
+        errors.length ? errors.slice(0, 1).join('') : '',
+      ]
+        .filter(Boolean)
+        .join(' | ')
+    );
+    // La voce del menu della pagina attuale deve avere lo stesso aspetto del
+    // passaggio del mouse: è il modo in cui l'utente capisce dove si trova.
+    // Il confronto è fra stili calcolati (colore, sottolineatura, fondo),
+    // quindi vale per entrambe le versioni del menu (desktop e mobile).
+    const navNow = page.locator('#site-nav');
+    // Da mobile il menu è chiuso: lo apro per poter confrontare la voce attiva.
+    let apertoPerIlTest = false;
+    if ((await navNow.count()) && !(await navNow.isVisible())) {
+      const toggle = page.locator('.nav-toggle');
+      if ((await toggle.count()) && (await toggle.isVisible())) {
+        await toggle.click();
+        apertoPerIlTest = true;
+      }
+    }
+    if ((await navNow.count()) && (await navNow.isVisible())) {
+      const attese = navNow.locator("a[aria-current='page']");
+      const n = await attese.count();
+      if (n === 1) {
+        const stile = (el) => {
+          const cs = getComputedStyle(el);
+          return `${cs.color}|${cs.borderBottomColor}|${cs.backgroundColor}`;
+        };
+        const attiva = await attese.first().evaluate(stile);
+        const altra = navNow.locator("a:not([aria-current='page'])").first();
+        await altra.hover();
+        const hover = await altra.evaluate(stile);
+        check(
+          `[${vp.name}] ${path} voce attiva = effetto hover`,
+          attiva === hover,
+          attiva === hover ? '' : `attiva ${attiva} ≠ hover ${hover}`
+        );
+        await page.mouse.move(0, 0);
+      }
+    }
+    if (apertoPerIlTest) await page.locator('.nav-toggle').click();
+
+    // Ogni immagine dentro un link interno deve PORTARE alla pagina: mai aprire
+    // la lightbox (card prodotto, schede dei mieli, guide). Gira dopo i controlli
+    // della pagina, così la navigazione non sporca gli errori di console.
+    const imgLink = await page.evaluate(() => {
+      const a = [...document.querySelectorAll('a[href]')].find((x) => {
+        const href = x.getAttribute('href') || '';
+        return (
+          x.querySelector('img') &&
+          href.startsWith('/') && // interno, niente tel:/mailto:/http
+          !href.includes('#') &&
+          !x.hasAttribute('download') &&
+          x.getAttribute('target') !== '_blank'
+        );
+      });
+      if (!a) return null;
+      a.setAttribute('data-qa-imglink', '1');
+      return { href: a.getAttribute('href') };
+    });
+    if (imgLink) {
+      const went = await Promise.all([
+        page.waitForURL((u) => u.pathname === imgLink.href, { timeout: 3000 }).then(() => true).catch(() => false),
+        page.locator('a[data-qa-imglink] img').first().click(),
+      ]).then(([ok]) => ok);
+      const lightboxOpen = (await page.locator('#lightbox').getAttribute('open')) !== null;
+      check(
+        `[${vp.name}] ${path} foto cliccata → ${imgLink.href}`,
+        went && !lightboxOpen,
+        `atterrato su ${new URL(page.url()).pathname}${lightboxOpen ? ' (lightbox aperta invece di navigare)' : ''}`
+      );
+    }
+  }
   await ctx.close();
 }
 
 await browser.close();
 console.log(results.join('\n'));
+const bad = results.filter((r) => r.startsWith('✗'));
+console.log(bad.length ? `\nQA BROWSER: ${bad.length} problemi` : '\nQA BROWSER: TUTTO OK');
+process.exit(bad.length ? 1 : 0);

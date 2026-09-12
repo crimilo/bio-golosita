@@ -1,27 +1,37 @@
 ---
+import Emoji from '../components/Emoji.astro';
 import Base from '../layouts/Base.astro';
 import Picture from '../components/Picture.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Icons from '../components/Icons.astro';
 import { site } from '../data/site';
-import { localBusiness } from '../lib/schema';
+import { localBusiness, aboutPage } from '../lib/schema';
 
 const title = "Apicoltore a Cassano d'Adda (MI) | Bio & Golosità";
 const description =
-  "Antoci Raffaele, apicoltore a Cassano d'Adda (MI) con 6+ anni di esperienza: api proprie, miele non pastorizzato. Scopri la storia di Bio & Golosità.";
+  "Antoci Raffaele, apicoltore a Cassano d'Adda (MI) dal 2020: api proprie, miele artigianale non pastorizzato. Scopri la storia di Bio & Golosità.";
+
+const crumbs = [{ name: 'Chi siamo', path: '/chi-siamo/' }];
+// La foto di Raffaele sta nella hero, accanto al testo (il disegno originale
+// della pagina): niente sfondo a tutta pagina, e la foto è la prima cosa che si
+// vede. È anche l'immagine da precaricare, perché è l'elemento più grande
+// sopra la piega.
+const heroImg = 'raffaele_sorridente_con_le_sue_api';
 ---
 
 <Base
   title={title}
   description={description}
   pathname="/chi-siamo/"
-  jsonLd={[localBusiness()]}
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  jsonLd={[localBusiness(), aboutPage('/chi-siamo/')]}
 >
   <section class="page-hero">
     <div class="container">
       <nav class="breadcrumbs" aria-label="Percorso">
         <a href="/">Home</a>
-        <span>/</span>
+        <span aria-hidden="true">/</span>
         <span>Chi siamo</span>
       </nav>
       <div class="split">
@@ -37,7 +47,7 @@ const description =
         </div>
         <figure class="split-media">
           <Picture
-            base="raffaele_sorridente_con_le_sue_api"
+            base={heroImg}
             alt="Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api a Cassano d'Adda"
             sizes="(min-width: 900px) 26vw, 100vw"
             loading="eager"
@@ -84,7 +94,16 @@ const description =
           artigianali</strong>, di <strong>api proprie</strong>, smielati a
           freddo e non pastorizzati. Controllo gli apiari settimana dopo
           settimana e smielo a piccoli lotti, senza fretta: ogni barattolo
-          porta il sapore di questo territorio, tra Milano, Bergamo e Cremona.
+          porta il sapore di questo territorio, tra Milano, Bergamo, Cremona e Lodi.
+        </p>
+        <p>
+          Oltre al miele vendo il <a href="/polline-d-api/">polline d'api</a> dei
+          miei apiari e preparo <a href="/api-regine/">api regine</a> e{' '}
+          <a href="/nuclei-api/">nuclei d'api</a> per chi ha già un apiario o
+          vuole cominciare. Nella pagina <a href="/miele/">i nostri mieli</a>{' '}
+          trovi schede, prezzi e formati, e nelle <a href="/guide/">guide</a> ho
+          scritto quello che mi chiedono più spesso sulla lavorazione del miele,
+          sulla cristallizzazione e su come si avvia una famiglia di api.
         </p>
         <blockquote class="story-quote">
           <p>
@@ -99,7 +118,7 @@ const description =
           <cite>Raffaele, apicoltore</cite>
         </blockquote>
         <ul>
-          <li><Icons name="check" size={20} /> Azienda fondata nel 2020 · {site.experienceYears} anni di esperienza</li>
+          <li><Icons name="check" size={20} /> Apicoltore dal {site.apicoltoreDal}, azienda agricola a Cassano d'Adda</li>
           <li><Icons name="check" size={20} /> Api proprie, che seguo io stesso in apiario</li>
           <li><Icons name="check" size={20} /> Smielatura a freddo e miele non pastorizzato</li>
           <li><Icons name="check" size={20} /> Vendita diretta: conosci chi produce</li>
@@ -122,7 +141,7 @@ const description =
   <section class="section section--soft" aria-labelledby="method-title">
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
-        <span class="eyebrow">il nostro metodo</span>
+        <span class="eyebrow">il nostro metodo<Emoji name="honey-pot" /></span>
         <h2 id="method-title">Come nasce il nostro miele</h2>
       </div>
       <div class="features">
@@ -150,32 +169,9 @@ const description =
     </div>
   </section>
 
-  <section class="section" aria-labelledby="cta-title">
-    <div class="container">
-      <div class="cta-band">
-        <span class="eyebrow" style="color:#ffe9bf;">prova il nostro miele</span>
-        <h2 id="cta-title">Vieni a trovarmi a Cassano d'Adda</h2>
-        <p>
-          {site.address.street} — {site.address.zip} {site.address.city} ({site.address.province}).
-          Chiama prima di passare: ti preparo i barattoli.
-        </p>
-        <div class="contact-cta" style="justify-content:center;">
-          <a class="btn btn-light btn-lg" href={site.phoneHref}>
-            <Icons name="phone" size={20} />
-            Chiama ora
-          </a>
-          <a class="btn btn-primary btn-lg" href="/#mieli">
-            Vedi i nostri mieli
-            <Icons name="arrow" size={20} />
-          </a>
-          <a class="btn btn-ghost btn-lg" style="border-color:#ffe9bf;color:#ffe9bf;" href={site.googleMapsUrl} target="_blank" rel="noopener">
-            <Icons name="pin" size={20} />
-            Vedi su Google Maps
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <ContactSection />
+  <ContactSection
+    eyebrow="prova il nostro miele"
+    title="Vieni a trovarmi a Cassano d'Adda"
+    intro="Chiama o scrivi prima di passare: ti preparo i barattoli."
+  />
 </Base>

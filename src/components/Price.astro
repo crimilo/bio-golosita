@@ -1,0 +1,16 @@
+---
+import { priceAmount, splitPrice } from '../lib/price';
+
+interface Props {
+  value: string | null | undefined;
+}
+
+const { value } = Astro.props;
+const { main, unit } = splitPrice(value);
+// Il prezzo in grande solo quando c'è davvero un prezzo: "Prezzo su richiesta"
+// resta della misura di prima (è un avviso, non un numero che deve saltare
+// all'occhio).
+const isPrice = priceAmount(main) != null;
+---
+
+{main ? isPrice ? <span class="price-main">{main}</span> : main : null}{unit && <span class="price-unit">{unit}</span>}

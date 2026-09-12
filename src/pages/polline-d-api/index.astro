@@ -1,0 +1,98 @@
+---
+import ProductPage from '../../components/ProductPage.astro';
+import ProseBlocks from '../../components/ProseBlocks.astro';
+import { polline, availabilityFallback, prezzoSuRichiesta, prezzoNota } from '../../data/bee-products';
+import { product, faqPage } from '../../lib/schema';
+
+const pathname = polline.path;
+const crumbs = [{ name: polline.name, path: pathname }];
+
+/** Le voci senza valore non vengono pubblicate: meglio poche righe vere. */
+const specs = polline.specs
+  .filter((s) => s.value)
+  .map((s) => ({ label: s.label, value: s.value as string }));
+specs.push({ label: 'Prezzo', value: polline.prezzo ?? prezzoSuRichiesta });
+
+const blocks = [
+  {
+    p: "Il polline d'api è quello dei fiori, che le api impastano in piccole palline e riportano all'alveare. Ha una stagionalità stretta e una vita più breve del miele: per questo conta moltissimo come viene raccolto, essiccato e conservato.",
+  },
+  {
+    h2: 'Da dove arriva il nostro polline',
+  },
+  {
+    p: "Viene dagli apiari che seguiamo tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Nord Milano e la Val Brembana: le api sono nostre e il polline non viene acquistato da terzi per essere rivenduto. È la stessa filiera del nostro miele.",
+  },
+  {
+    img: {
+      base: 'ape_polline',
+      alt: "Macro di un'ape coperta di polline su un rametto",
+      caption: 'Il polline lo portano le api, fiore dopo fiore',
+    },
+  },
+  {
+    h2: 'Perché la conservazione conta più di tutto',
+  },
+  {
+    p: 'Il polline appena raccolto contiene molta umidità: in un ambiente caldo e umido deperisce in fretta. La differenza tra un polline buono e uno che ha perso profumo si gioca tutta dopo la raccolta. Quando lo ordini ti spieghiamo come conservarlo a casa tua.',
+  },
+  {
+    ul: [
+      "<strong>Fresco:</strong> profumo più intenso, va tenuto in frigorifero o in freezer.",
+      "<strong>Essiccato:</strong> più stabile, si conserva a temperatura ambiente al riparo da luce e umidità.",
+      "In entrambi i casi: luce, calore e umidità sono i tre nemici da tenere lontani.",
+    ],
+  },
+  {
+    h2: "Come si usa il polline d'api",
+  },
+  {
+    p: "Al naturale, un cucchiaino alla volta, oppure su yogurt, macedonia, frullati, cereali e miele. Il sapore è delicato, con note di fiori e di erba: è un ingrediente, non un dolcificante. Ne parliamo nella guida <a href=\"/guide/polline-fresco-o-essiccato-conservazione/\">polline fresco o essiccato: differenze e come conservarlo</a>.",
+  },
+];
+---
+
+<ProductPage
+  {pathname}
+  title={polline.title}
+  description={polline.description}
+  {crumbs}
+  h1={polline.h1}
+  eyebrow="prodotto dell'alveare · api proprie"
+  intro={polline.intro}
+  hero={{
+    base: 'polline_granuli',
+    alt: "Polline d'api in granuli con un cucchiaio di legno",
+  }}
+  {/* Niente hero in bg: come nelle pagine dei singoli mieli, la hero è solo
+      testo su fondo chiaro e la foto del polline nel blocco prodotto fa da
+      riferimento visivo. */}
+  availability={polline.disponibilita}
+  {availabilityFallback}
+  price={polline.prezzo}
+  priceFallback={prezzoSuRichiesta}
+  priceNote={prezzoNota}
+  highlights={polline.highlights}
+  {specs}
+  faq={polline.faq}
+  gallery={polline.gallery}
+  videos={[
+    {
+      src: '/video/api-che-impollinano.mp4',
+      poster: '/video/api-che-impollinano-poster-57854801.avif',
+      label: 'Le api che impollinano un fiore',
+      cls: 'video-item--tall',
+    },
+  ]}
+  galleryTitle="Il polline d'api e le fioriture da cui nasce"
+  galleryIntro="Le foto raccontano il prodotto e il lavoro delle api: sono immagini illustrative del polline e delle fioriture della nostra zona."
+  jsonLd={[product({ ...polline, intro: polline.intro, image: 'polline_granuli' }, pathname, { category: "Polline d'api" }), faqPage(polline.faq)]}
+>
+  <section class="section">
+    <div class="container">
+      <div class="prose">
+        <ProseBlocks {blocks} />
+      </div>
+    </div>
+  </section>
+</ProductPage>

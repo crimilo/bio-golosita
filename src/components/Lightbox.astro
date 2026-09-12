@@ -1,25 +1,119 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima immagine">
   <img src="" alt="" width="1200" height="900" />
+  {/* Slide video: le frecce sfogliano foto E video, così la sequenza della
+      galleria non si ferma alla prima foto. */}
+  <video class="lightbox-video" controls playsinline preload="metadata" hidden></video>
+  <button class="lightbox-nav lightbox-prev" type="button" aria-label="Foto precedente">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+  </button>
+  <button class="lightbox-nav lightbox-next" type="button" aria-label="Foto successiva">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+  </button>
   <button class="lightbox-close" type="button" aria-label="Chiudi">✕</button>
-  <p class="lightbox-hint">Tocca l'immagine per ingrandire · tocca di nuovo per ridurre</p>
+  <p class="lightbox-hint" id="lightbox-hint">
+    <span class="lightbox-hint-zoom">Tocca l'immagine per ingrandire · tocca di nuovo per ridurre</span><span class="lightbox-hint-nav">
+      {' '}· ← → per scorrere</span>
+  </p>
 </div>
 
 <script>
   const lb = document.getElementById('lightbox');
   const lbImg = lb.querySelector('img');
+  const lbVideo = lb.querySelector('video');
   const closeBtn = lb.querySelector('.lightbox-close');
+  const prevBtn = lb.querySelector('.lightbox-prev');
+  const nextBtn = lb.querySelector('.lightbox-next');
+  const hintNav = lb.querySelector('.lightbox-hint-nav');
 
-  const open = (img) => {
+  /**
+   * Slide della stessa galleria (stessa sezione), nell'ordine del documento:
+   * foto e video insieme, così le frecce sfogliano anche i video.
+   */
+  let group = [];
+  let index = 0;
+
+  const stopVideo = () => {
+    if (!lbVideo.paused) lbVideo.pause();
+    lbVideo.currentTime = 0;
+  };
+
+  const collect = (scope) => {
+    const out = [];
+    for (const el of scope.querySelectorAll('img.lightbox-target, figure[data-video]')) {
+      if (el.tagName === 'IMG') {
+        // Le immagini dentro un link NON entrano nella galleria: chi le tocca
+        // vuole seguire il link (schede prodotto, card).
+        if (!el.closest('a')) out.push({ img: el });
+        continue;
+      }
+      const v = el.querySelector('video');
+      const src = v?.querySelector('source')?.getAttribute('src') ?? v?.getAttribute('src');
+      if (!v || !src) continue;
+      out.push({
+        video: {
+          src,
+          // `dataset.poster` esiste finché VideoFigure non ha caricato il poster
+          poster: v.poster || v.dataset.poster || '',
+          label: v.getAttribute('aria-label') || '',
+        },
+      });
+    }
+    return out;
+  };
+
+  const show = (i) => {
+    if (group.length === 0) return;
+    index = (i + group.length) % group.length;
+    const media = group[index];
+    stopVideo();
+
+    if (media.video) {
+      lb.classList.add('has-video');
+      lb.setAttribute('aria-label', 'Anteprima video');
+      lbImg.hidden = true;
+      lbVideo.hidden = false;
+      lbVideo.src = media.video.src;
+      lbVideo.poster = media.video.poster;
+      if (media.video.label) lbVideo.setAttribute('aria-label', media.video.label);
+      // Si arriva qui con un click o una freccia (gesto utente), quindi il
+      // video può partire anche con l'audio; se il browser lo blocca, restano
+      // i controlli nativi.
+      lbVideo.play().catch(() => {});
+      return;
+    }
+
+    lb.classList.remove('has-video');
+    lb.setAttribute('aria-label', 'Anteprima immagine');
+    lbVideo.hidden = true;
+    lbVideo.removeAttribute('src');
+
+    const img = media.img;
+    lbImg.hidden = false;
     lbImg.removeAttribute('width');
     lbImg.removeAttribute('height');
     lbImg.style.maxWidth = '';
     lbImg.src = img.dataset.full || img.currentSrc || img.src;
     lbImg.alt = img.alt || '';
     lbImg.classList.remove('zoomed');
+    lbImg.style.transformOrigin = '';
     lbImg.onload = () => {
       if (lbImg.naturalWidth > 0)
         lbImg.style.maxWidth = `min(${lbImg.naturalWidth}px, 100%, 1200px)`;
     };
+  };
+
+  const open = (img) => {
+    // foto e video della stessa sezione formano la galleria sfogliabile
+    const scope = img.closest('section') ?? document.body;
+    group = collect(scope);
+    const at = group.findIndex((m) => m.img === img);
+    if (group.length < 2) group = [{ img }];
+    index = at >= 0 ? at : 0;
+    const many = group.length > 1;
+    prevBtn.hidden = !many;
+    nextBtn.hidden = !many;
+    hintNav.hidden = !many;
+    show(index);
     lb.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
@@ -27,17 +121,30 @@
   };
   const close = () => {
     lb.removeAttribute('open');
+    lb.classList.remove('has-video');
+    lbVideo.hidden = true;
+    lbVideo.removeAttribute('src');
+    stopVideo();
+    lbImg.hidden = false;
     lbImg.classList.remove('zoomed');
     lbImg.style.transformOrigin = '';
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
   };
+  const step = (d) => show(index + d);
 
   document.addEventListener('click', (e) => {
     const t = e.target.closest('.lightbox-target');
-    if (t && t.tagName === 'IMG') {
+    // L'anteprima si apre solo dalle foto fuori da un link (le stesse che
+    // `collect` mette in galleria): chi tocca una foto dentro un link vuole
+    // seguire il link, e i video si aprono dal loro tasto play.
+    if (t && t.tagName === 'IMG' && !t.closest('a')) {
       e.preventDefault();
       open(t);
+    } else if (e.target.closest('.lightbox-prev')) {
+      step(-1);
+    } else if (e.target.closest('.lightbox-next')) {
+      step(1);
     } else if (e.target === lb || e.target === closeBtn) {
       close();
     }
@@ -56,6 +163,9 @@
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lb.hasAttribute('open')) close();
+    if (!lb.hasAttribute('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
   });
 </script>

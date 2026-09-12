@@ -1,30 +1,30 @@
 ---
 import Picture from './Picture.astro';
-import Icons from './Icons.astro';
+import VideoFigure from './VideoFigure.astro';
 
 const videos = [
   {
     src: '/video/smielatura.mp4',
-    poster: '/video/smielatura-poster-2c769c8a.webp',
+    poster: '/video/smielatura-poster-2c769c8a.avif',
     label: 'La smielatura del nostro miele',
     cls: 'video-item--wide',
   },
   {
     src: '/video/api-che-producono.mp4',
-    poster: '/video/api-che-producono-poster-2fd11576.webp',
+    poster: '/video/api-che-producono-poster-2fd11576.avif',
     label: 'Le api al lavoro negli apiari',
     cls: 'video-item--wide',
   },
   {
     src: '/video/due-api-regina.mp4',
-    poster: '/video/due-api-regina-poster-35fa49f1.webp',
+    poster: '/video/due-api-regina-poster-35fa49f1.avif',
     label: 'Due api regine a confronto',
     cls: 'video-item--wide',
   },
   {
-    src: '/video/tiktok.mp4',
-    poster: '/video/tiktok-poster-207c9fa7.webp',
-    label: 'Dall\'apiario al barattolo',
+    src: '/video/api-che-producono-il-miele.mp4',
+    poster: '/video/api-che-producono-il-miele-poster-a687f38c.avif',
+    label: 'Le api che producono il miele, sui telai',
     cls: 'video-item--tall',
   },
 ];
@@ -32,9 +32,7 @@ const videos = [
 const photos = [
   { base: 'api_che_producono', cls: 'g-item--square', alt: 'Api che producono il miele — Bio & Golosità Cassano d\'Adda' },
   { base: 'apiario', cls: 'g-item--tall', alt: 'Apiario di Bio & Golosità a Cassano d\'Adda (MI)' },
-  { base: 'arnie', cls: 'g-item--tall', alt: 'Arnie curate dall\'apicoltore Antoci Raffaele' },
   { base: 'api', cls: 'g-item--tall', alt: 'Le api di Bio & Golosità, miele della Martesana' },
-  { base: 'raffaele_sorridente_con_le_sue_api', cls: 'g-item--tall', alt: 'Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api' },
   { base: 'raffaele', cls: 'g-item--square', alt: 'Raffaele Antoci, apicoltore di Bio & Golosità a Cassano d\'Adda' },
 ];
 ---
@@ -61,50 +59,9 @@ const photos = [
 
       {
         videos.map((v) => (
-          <figure class={`video-item ${v.cls}`} style="margin:0;" data-video>
-            <video preload="none" playsinline muted loop controls data-poster={v.poster} aria-label={v.label}>
-              <source src={v.src} type="video/mp4" />
-            </video>
-            <button class="video-play" type="button" aria-label={`Riproduci: ${v.label}`}>
-              <Icons name="play" size={26} />
-            </button>
-          </figure>
+          <VideoFigure src={v.src} poster={v.poster} label={v.label} cls={v.cls} link={v.link} />
         ))
       }
     </div>
   </div>
 </section>
-
-<script>
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue;
-          const video = e.target.querySelector('video');
-          if (video && video.dataset.poster) {
-            video.poster = video.dataset.poster;
-            delete video.dataset.poster;
-          }
-          io.unobserve(e.target);
-        }
-      },
-      { rootMargin: '300px' }
-    );
-    document.querySelectorAll('[data-video]').forEach((item) => io.observe(item));
-  }
-
-  document.querySelectorAll('[data-video]').forEach((item) => {
-    const video = item.querySelector('video');
-    const play = item.querySelector('.video-play');
-    play.addEventListener('click', () => {
-      video.play();
-      item.setAttribute('data-playing', '');
-      video.setAttribute('controls', '');
-      video.focus();
-    });
-    video.addEventListener('pause', () => {
-      if (video.currentTime === 0) item.removeAttribute('data-playing');
-    });
-  });
-</script>

@@ -1,17 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+const crumbs = [{ name: 'Pagina non trovata', path: '/404/' }];
+const heroImg = 'hero_bg';
 ---
-<Base title="Pagina non trovata | Bio & Golosità" description="La pagina che cerchi non esiste. Torna alla home di Bio & Golosità, miele a Cassano d'Adda (MI)." pathname="/404/" jsonLd={[]} robots="noindex, nofollow">
-  <section class="hero" style="text-align:center;">
+<Base
+  title="Pagina non trovata | Bio & Golosità"
+  description="La pagina che cerchi non esiste. Torna alla home di Bio & Golosità, miele a Cassano d'Adda (MI)."
+  pathname="/404/"
+  preloadImage={heroImg}
+  jsonLd={[]}
+  robots="noindex, nofollow"
+>
+  <PageHero
+    h1="Pagina non trovata"
+    eyebrow="ops..."
+    crumbs={crumbs}
+    bg={{ base: heroImg, position: '50% 45%', positionMobile: '50% 50%' }}
+    intro="La pagina che stai cercando non esiste o è stata spostata. Torna alla home e scopri il nostro miele."
+  />
+
+  <section class="section" style="padding-top: 0;">
     <div class="container">
-      <span class="eyebrow">ops...</span>
-      <h1>Pagina non trovata</h1>
-      <p class="hero-sub" style="margin-inline:auto;">
-        La pagina che stai cercando non esiste o è stata spostata.
-        Torna alla home e scopri il nostro miele.
-      </p>
-      <div class="hero-cta" style="justify-content:center;">
+      <div class="contact-cta" style="justify-content:center;">
         <a class="btn btn-primary btn-lg" href="/">Torna alla home</a>
+        <a class="btn btn-ghost btn-lg" href="/miele/">Vedi i nostri mieli</a>
       </div>
     </div>
   </section>

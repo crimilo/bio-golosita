@@ -1,6 +1,13 @@
 # build output
 dist/
 
+# sorgenti video in root: sono gli originali da cui si ricodificano i video
+# pubblicati in public/video/ (che restano tracciati). ~110 MB, tenuti fuori dal
+# repo: un clone pulito costruisce lo stesso sito, solo la ricodifica richiede i
+# file locali. Le foto di root restano invece tracciate: le usa
+# scripts/process-images.mjs.
+/*.mp4
+
 # generated types
 .astro/
 

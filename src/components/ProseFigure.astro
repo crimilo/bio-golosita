@@ -1,0 +1,26 @@
+---
+import Picture from './Picture.astro';
+import { imgDims } from '../lib/images.js';
+
+interface Props {
+  base: string;
+  alt: string;
+  caption?: string;
+  /** larghezza resa della foto: serve alle `sizes` del srcset */
+  sizes: string;
+}
+
+const { base, alt, caption, sizes } = Astro.props;
+
+// A piena colonna una foto verticale diventa alta come due schermate: la
+// riconosciamo dal manifest e la teniamo più stretta, centrata. Dentro una
+// .prose-row la colonna è già stretta, quindi il limite non ha effetto (e sulle
+// righe impilate da mobile resta valido).
+const dim = imgDims(base);
+const portrait = !!dim && dim.height > dim.width;
+---
+
+<figure class={`prose-figure${portrait ? ' prose-figure--portrait' : ''}`}>
+  <Picture base={base} alt={alt} sizes={sizes} loading="lazy" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

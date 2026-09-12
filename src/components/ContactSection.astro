@@ -1,17 +1,26 @@
 ---
 import Icons from './Icons.astro';
 import { site } from '../data/site';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+}
+
+const {
+  eyebrow = 'siamo a due passi da te',
+  title = 'Contattaci',
+  intro = 'Una chiamata o un messaggio WhatsApp: ti diciamo subito cosa è disponibile.',
+} = Astro.props;
 ---
 
 <section class="section" id="contatti" aria-labelledby="contatti-title">
   <div class="container">
     <div class="section-head center" style="margin-inline:auto;">
-      <span class="eyebrow">siamo a due passi da te</span>
-      <h2 id="contatti-title">Contattaci: il miele è pronto</h2>
-      <p>
-        Ordina in pochi secondi: una chiamata o un messaggio WhatsApp e il tuo
-        miele di Cassano d'Adda è tuo.
-      </p>
+      <span class="eyebrow">{eyebrow}</span>
+      <h2 id="contatti-title">{title}</h2>
+      <p>{intro}</p>
     </div>
 
     <div class="contact-card contact-card--wide">
@@ -52,6 +61,7 @@ import { site } from '../data/site';
         <div>
           <h3>Orari</h3>
           <p>{site.hours}</p>
+          <p class="contact-note">{site.hoursNote}</p>
         </div>
       </div>
       <div class="contact-row">
@@ -59,14 +69,8 @@ import { site } from '../data/site';
         <div>
           <h3>Ritiro e consegna</h3>
           <p>
-            Consegna a domicilio a Cassano d'Adda e in tutta la zona tra
-            Milano, Bergamo e Cremona: Fara Gera d'Adda, Trezzo sull'Adda, Vaprio
-            d'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta
-            d'Adda, Caravaggio e dintorni. La consegna può essere gratuita:
-            dipende dall'ordine e da dove mi trovo quando mi chiami, quindi
-            chiama e ti confermo subito. In alternativa, ritiro in sede su
-            appuntamento: chiama o scrivi prima di passare, spesso siamo in
-            apiario.
+            Consegna a domicilio nella zona tra Milano, Bergamo, Cremona e Lodi,
+            spesso gratuita; oppure ritiro in sede su appuntamento.
           </p>
         </div>
       </div>

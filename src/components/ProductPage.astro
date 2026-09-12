@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from './PageHero.astro';
+import Picture from './Picture.astro';
+import Faq from './Faq.astro';
+import PhotoGallery from './PhotoGallery.astro';
+import ContactSection from './ContactSection.astro';
+import Price from './Price.astro';
+import Icons from './Icons.astro';
+import { site } from '../data/site';
+import type { Crumb, FaqItem, GalleryPhoto } from '../lib/types';
+import { localBusiness } from '../lib/schema';
+
+interface Props {
+  pathname: string;
+  title: string;
+  description: string;
+  crumbs: Crumb[];
+  h1: string;
+  eyebrow: string;
+  intro: string;
+  hero: { base: string; alt: string };
+  /**
+   * Immagine di sfondo della hero (full-bleed). Se assente la hero resta solo
+   * testo su fondo chiaro, come nelle pagine dei singoli mieli, e la foto del
+   * prodotto nel blocco sotto diventa il riferimento visivo.
+   */
+  heroBg?: { base: string; position?: string; positionMobile?: string; height?: 'default' | 'tall' };
+  /** riga di disponibilità: se assente si usa il testo neutro passato dal chiamante */
+  availability?: string | null;
+  availabilityFallback: string;
+  price?: string | null;
+  priceFallback: string;
+  /** nota mostrata sotto il prezzo quando il prezzo non è pubblicato */
+  priceNote?: string;
+  highlights?: string[];
+  specs: { label: string; value: string }[];
+  faq: FaqItem[];
+  gallery: GalleryPhoto[];
+  /** video nella stessa griglia della gallery (es. ape regina) */
+  videos?: { src: string; poster: string; label: string; cls?: string; link?: { href: string; label: string } }[];
+  galleryTitle: string;
+  galleryIntro?: string;
+  jsonLd?: any[];
+}
+
+const {
+  pathname,
+  title,
+  description,
+  crumbs,
+  h1,
+  eyebrow,
+  intro,
+  hero,
+  heroBg,
+  availability,
+  availabilityFallback,
+  price,
+  priceFallback,
+  priceNote,
+  highlights = [],
+  specs,
+  faq,
+  gallery,
+  videos = [],
+  galleryTitle,
+  galleryIntro,
+  jsonLd = [],
+} = Astro.props;
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname={pathname}
+  type="product"
+  crumbs={crumbs}
+  preloadImage={heroBg?.base}
+  jsonLd={[localBusiness(), ...jsonLd]}
+>
+  <PageHero
+    h1={h1}
+    eyebrow={eyebrow}
+    intro={intro}
+    crumbs={crumbs}
+    variant="product"
+    bg={heroBg}
+  />
+
+  <section class="section" style={heroBg ? undefined : 'padding-top: var(--space-3);'}>
+    <div class="container product-grid">
+      <div class="product-media">
+        <Picture
+          base={hero.base}
+          alt={hero.alt}
+          sizes="(min-width: 900px) 520px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div>
+        <p class="product-price"><Price value={price ?? priceFallback} /></p>
+
+        {!price && priceNote && <p class="price-note">{priceNote}</p>}
+
+        <p class="bulk-note">
+          <Icons name="info" size={18} />
+          {availability ?? availabilityFallback}
+        </p>
+
+        {
+          highlights.length > 0 && (
+            <ul class="chips">
+              {highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          )
+        }
+
+        <div class="contact-cta mt-3">
+          <a class="btn btn-primary btn-lg" href={site.phoneHref}>
+            <Icons name="phone" size={20} />
+            Chiama ora
+          </a>
+          <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
+            <Icons name="whatsapp" size={20} />
+            Scrivi su WhatsApp
+          </a>
+        </div>
+
+        <p class="mt-3" style="font-size:0.9rem;">
+          Ritiro in sede su appuntamento: {site.address.street}, {site.address.zip}{' '}
+          {site.address.city} ({site.address.province}) — chiama prima di passare.
+          Oppure consegna concordata: in molti casi è gratuita, chiamaci e ti
+          confermiamo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="scheda-title">
+    <div class="container">
+      <div class="prose">
+        <span class="eyebrow">scheda</span>
+        <h2 id="scheda-title">Le informazioni essenziali</h2>
+        <ul class="specs">
+          {
+            specs.map((s) => (
+              <li>
+                <strong>{s.label}:</strong>
+                <span>{s.value}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <slot />
+
+  <PhotoGallery
+    id="foto"
+    photos={gallery}
+    videos={videos}
+    eyebrow="foto"
+    title={galleryTitle}
+    intro={galleryIntro}
+  />
+
+  <Faq id="faq-title" items={faq} soft />
+
+  <ContactSection />
+</Base>

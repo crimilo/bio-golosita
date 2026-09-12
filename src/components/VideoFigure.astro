@@ -1,0 +1,85 @@
+---
+import Icons from './Icons.astro';
+
+interface Props {
+  src: string;
+  /** poster già ottimizzato (hash), es. /video/ape-regina-con-api-poster-919ab2ed.avif */
+  poster: string;
+  label: string;
+  /** video-item--wide (default) o video-item--tall */
+  cls?: string;
+  link?: { href: string; label: string };
+}
+
+const { src, poster, label, cls = 'video-item--wide', link } = Astro.props;
+---
+
+<figure class={`video-item ${cls}`} style="margin:0;" data-video>
+  <video preload="none" playsinline muted loop controls data-poster={poster} aria-label={label}>
+    <source src={src} type="video/mp4" />
+  </video>
+  <button class="video-play" type="button" aria-label={`Riproduci: ${label}`}>
+    <Icons name="play" size={26} />
+  </button>
+  {
+    link && (
+      <a class="video-link" href={link.href}>
+        {link.label}
+        <Icons name="arrow" size={16} />
+      </a>
+    )
+  }
+</figure>
+
+<script>
+  /* Attiva il poster solo quando il video si avvicina al viewport e collega il
+     tasto play. Idempotente: si può usare più volte nella stessa pagina. */
+  const initVideoFigures = () => {
+    const items = [...document.querySelectorAll('[data-video]')].filter(
+      (el) => !el.dataset.videoReady
+    );
+    if (!items.length) return;
+
+    const loadPoster = (item) => {
+      const video = item.querySelector('video');
+      if (video && video.dataset.poster) {
+        video.poster = video.dataset.poster;
+        delete video.dataset.poster;
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            loadPoster(e.target);
+            io.unobserve(e.target);
+          }
+        },
+        { rootMargin: '300px' }
+      );
+      items.forEach((item) => io.observe(item));
+    } else {
+      items.forEach(loadPoster);
+    }
+
+    for (const item of items) {
+      item.dataset.videoReady = '';
+      const video = item.querySelector('video');
+      const play = item.querySelector('.video-play');
+      if (!video || !play) continue;
+      play.addEventListener('click', () => {
+        video.play();
+        item.setAttribute('data-playing', '');
+        video.setAttribute('controls', '');
+        video.focus();
+      });
+      video.addEventListener('pause', () => {
+        if (video.currentTime === 0) item.removeAttribute('data-playing');
+      });
+    }
+  };
+
+  initVideoFigures();
+</script>

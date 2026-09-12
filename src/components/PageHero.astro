@@ -1,0 +1,94 @@
+---
+import Picture from './Picture.astro';
+import type { Crumb } from '../lib/types';
+
+interface Props {
+  h1: string;
+  intro?: string;
+  crumbs: Crumb[];
+  eyebrow?: string;
+  /**
+   * Immagine di sfondo full-bleed della hero (decorativa). Se assente la hero
+   * resta solo testo su fondo chiaro: è il caso delle pagine dei singoli mieli,
+   * dove la foto del barattolo sta nel blocco prodotto subito sotto.
+   */
+  bg?: {
+    base: string;
+    /** focal positioning desktop, es. '50% 40%' */
+    position?: string;
+    /** focal positioning sotto i 900px (default: come desktop) */
+    positionMobile?: string;
+    /** 'tall' per le hero più alte (apertura di un'area) */
+    height?: 'default' | 'tall';
+  };
+  variant?: 'default' | 'product';
+}
+
+const { h1, intro, crumbs, eyebrow, bg, variant = 'default' } = Astro.props;
+
+const sectionClass = [
+  'page-hero',
+  bg ? 'page-hero--bg' : '',
+  bg ? 'on-image' : '',
+  variant === 'product' ? 'page-hero--product' : '',
+  bg?.height === 'tall' ? 'page-hero--bg-tall' : '',
+]
+  .filter(Boolean)
+  .join(' ');
+
+const heroStyle = [
+  bg?.position ? `--hero-pos: ${bg.position}` : '',
+  bg?.positionMobile ? `--hero-pos-m: ${bg.positionMobile}` : '',
+]
+  .filter(Boolean)
+  .join('; ');
+---
+
+<section class={sectionClass} style={heroStyle || undefined}>
+  {
+    bg && (
+      <>
+        <div class="hero-bg-media" aria-hidden="true">
+          <Picture
+            base={bg.base}
+            alt=""
+            sizes="100vw"
+            loading="eager"
+            fetchpriority="high"
+            zoomable={false}
+          />
+        </div>
+        <div class="hero-bg-scrim" aria-hidden="true" />
+      </>
+    )
+  }
+
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Percorso">
+      <a href="/">Home</a>
+      {
+        crumbs.map((c, i) => (
+          <>
+            <span aria-hidden="true">/</span>
+            {c.path && i < crumbs.length - 1 ? (
+              <a href={c.path}>{c.name}</a>
+            ) : (
+              <span>{c.name}</span>
+            )}
+          </>
+        ))
+      }
+    </nav>
+
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    <h1>{h1}</h1>
+    {intro && <p>{intro}</p>}
+    {/*
+      Slot per le CTA della hero. Stanno DENTRO la hero, allineate al testo:
+      prima erano in una <section> a parte subito sotto, e finivano su fondo
+      chiaro 8px dopo la fine della foto — sembravano staccate dalla pagina e
+      non si capiva a cosa appartenessero.
+    */}
+    <slot />
+  </div>
+</section>

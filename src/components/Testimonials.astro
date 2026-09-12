@@ -1,31 +1,108 @@
 ---
 import Icons from './Icons.astro';
 import { site } from '../data/site';
+
+/**
+ * Recensioni della scheda Google Business Profile.
+ * `site.reviews` contiene SOLO recensioni reali (vedi le istruzioni in
+ * src/data/site.js): se è vuoto si mostra un riquadro che rimanda alle
+ * recensioni su Google, senza inventare nulla.
+ */
+const reviews = site.reviews;
+
+const stars = (n) => Array.from({ length: 5 }, (_, i) => i < n);
 ---
 
-<section class="section section--soft" aria-labelledby="reviews-title">
+<section class="section" aria-labelledby="reviews-title">
   <div class="container">
     <div class="section-head center" style="margin-inline:auto;">
       <span class="eyebrow">la parola ai clienti</span>
-      <h2 id="reviews-title">Cosa dicono di noi</h2>
-    </div>
-    <div class="reviews-grid">
+      <h2 id="review">Cosa dicono di noi</h2>
       {
-        site.reviews.map((r) => (
-          <figure class="review">
-            <div class="review-stars" role="img" aria-label="5 stelle su 5">
-              {[0, 1, 2, 3, 4].map(() => <Icons name="star" size={18} />)}
-            </div>
-            <blockquote>
-              <p>“{r.text}”</p>
-            </blockquote>
-            <figcaption>
-              <span class="review-author">{r.name}</span>
-              <span class="review-town">· {r.town}</span>
-            </figcaption>
-          </figure>
-        ))
+        reviews.length > 0 && (
+          <p>
+            Recensioni reali dalla nostra scheda Google: nome, stelle e parole
+            dei clienti che hanno acquistato il miele direttamente
+            dall'apicoltore.
+          </p>
+        )
       }
     </div>
+
+    {
+      reviews.length === 0 ? (
+        <div class="review-cta">
+          <Icons name="star" size={26} />
+          <h3>Le recensioni dei clienti sono su Google</h3>
+          <p>
+            Le recensioni di Bio &amp; Golosità le trovi sulla scheda Google
+            dell'azienda, scritte dai clienti che hanno acquistato il miele
+            direttamente dall'apicoltore: qui non ne copiamo nessuna.
+          </p>
+          <a
+            class="btn btn-primary btn-lg"
+            href={site.googleMapsUrl}
+            target="_blank"
+            rel="noopener"
+          >
+            <Icons name="arrow" size={20} />
+            Leggi le recensioni su Google
+          </a>
+        </div>
+      ) : (
+        <div class="reviews-grid">
+          {reviews.map((r) => (
+            <figure class="review">
+              <div class="review-stars" role="img" aria-label={`${r.stars} stelle su 5`}>
+                {stars(r.stars).map((filled) =>
+                  filled ? (
+                    <Icons name="star" size={18} />
+                  ) : (
+                    <span class="review-star-empty">
+                      <Icons name="star" size={18} />
+                    </span>
+                  )
+                )}
+              </div>
+              <blockquote>
+                <p>“{r.text}”</p>
+              </blockquote>
+              <figcaption>
+                <span class="review-author">{r.name}</span>
+                {r.town && <span class="review-town">· {r.town}</span>}
+                <span class="review-meta">
+                  <span class="review-source">
+                    Recensione {r.url ? <a href={r.url} target="_blank" rel="noopener">Google</a> : 'Google'}
+                  </span>
+                  {r.date && (
+                    <span class="review-date">
+                      ·{' '}
+                      {new Intl.DateTimeFormat('it-IT', { month: 'long', year: 'numeric' }).format(
+                        // T12:00 evita slittamenti di fuso sulla data ISO
+                        new Date(`${r.date}T12:00:00`)
+                      )}
+                    </span>
+                  )}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      reviews.length > 0 && (
+        <div class="contact-cta mt-4" style="justify-content:center;">
+          <a class="btn btn-ghost btn-lg" href={site.googleMapsUrl} target="_blank" rel="noopener">
+            Tutte le recensioni su Google
+            {/* freccia diagonale IN CODA al testo: è il segnale che il link
+                porta fuori dal sito, in una nuova scheda */}
+            <Icons name="arrow-up-right" size={20} />
+            <span class="sr-only">(si apre in una nuova scheda)</span>
+          </a>
+        </div>
+      )
+    }
   </div>
 </section>

@@ -1,5 +1,5 @@
 ---
-import manifest from '../data/img-manifest.js';
+import { imgSrcset, imgUrl, largestWidth, imgDims } from '../lib/images.js';
 
 interface Props {
   base: string;
@@ -26,28 +26,20 @@ const {
   objectPosition,
 } = Astro.props;
 
-const entry = manifest[base];
-const variants = Object.keys(entry.variants)
-  .map(Number)
-  .sort((a, b) => a - b);
-
-const suffix = entry.hash ? `-${entry.hash}` : '';
-
-const mkSrcset = (ext) =>
-  variants.map((w) => `/img/${base}-${w}${suffix}.${ext} ${w}w`).join(', ');
-
-const largest = variants[variants.length - 1];
-const imgW = width ?? entry.variants[largest].width;
-const imgH = height ?? entry.variants[largest].height;
+const largest = largestWidth(base);
+const dims = imgDims(base);
+const imgW = width ?? dims.width;
+const imgH = height ?? dims.height;
 const cls = `${Astro.props.class ?? ''} ${zoomable ? 'lightbox-target' : ''}`.trim();
 ---
 
 <picture>
-  <source type="image/avif" srcset={mkSrcset('avif')} sizes={sizes} />
-  <source type="image/webp" srcset={mkSrcset('webp')} sizes={sizes} />
+  {/* Unico formato: AVIF (l'immagine è già generata solo in AVIF, vedi
+      scripts/process-images.mjs). */}
+  <source type="image/avif" srcset={imgSrcset(base)} sizes={sizes} />
   <img
-    src={`/img/${base}-${largest}${suffix}.webp`}
-    srcset={mkSrcset('webp')}
+    src={imgUrl(base)}
+    srcset={imgSrcset(base)}
     sizes={sizes}
     width={imgW}
     height={imgH}
@@ -55,8 +47,8 @@ const cls = `${Astro.props.class ?? ''} ${zoomable ? 'lightbox-target' : ''}`.tr
     loading={loading}
     decoding="async"
     fetchpriority={fetchpriority}
-    class={cls}
-    data-full={`/img/${base}-${largest}${suffix}.avif`}
+    class={cls || undefined}
+    data-full={imgUrl(base, { width: largest })}
     style={objectPosition ? `object-position: ${objectPosition}` : undefined}
   />
 </picture>

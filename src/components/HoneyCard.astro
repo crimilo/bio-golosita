@@ -1,6 +1,9 @@
 ---
 import Picture from './Picture.astro';
 import Icons from './Icons.astro';
+import PriceBadge from './PriceBadge.astro';
+import { priceFrom } from '../lib/price';
+import { prezzoSuRichiesta } from '../data/bee-products';
 
 interface Props {
   honey: any;
@@ -8,6 +11,10 @@ interface Props {
 }
 const { honey, eager = false } = Astro.props;
 const href = `/miele/${honey.slug}/`;
+// Come le card dei prodotti dell'alveare: se il prezzo non è pubblicato la
+// pastiglia non sparisce, dice "Prezzo su richiesta" (il miele in favo non ha
+// ancora un prezzo: vedi `priceFormats` vuoto in site.js).
+const price = priceFrom(honey.priceFormats) ?? prezzoSuRichiesta;
 ---
 
 <a class="honey-card" href={href}>
@@ -22,7 +29,7 @@ const href = `/miele/${honey.slug}/`;
       zoomable={false}
       class=""
     />
-    <span class="honey-card-price">{honey.priceFrom}</span>
+    <PriceBadge value={price} />
   </div>
   <div class="honey-card-body">
     <h3>{honey.name}</h3>

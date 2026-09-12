@@ -6,6 +6,13 @@ const googleMapsUrl =
 const googleMapsEmbedUrl =
   'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1958.53!2d9.5244833!3d45.5355768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47814b2f5343dc1d:0x479af6135571444d!2sApicoltura+e+Vendita+Miele+Bio+%26+Golosit%C3%A0+Cassano+d%E2%80%99Adda!5e0!3m2!1sit!2sit!4v1725012345678';
 
+// Risposta unica per la FAQ sulle consegne: era ripetuta identica nelle 5
+// pagine miele, così resta una sola fonte da aggiornare.
+export const deliveryFaq = {
+  q: 'Fate consegne nella mia zona?',
+  a: "Sì: consegniamo a domicilio nella zona tra Milano, Bergamo, Cremona e Lodi, e in molti casi la consegna è gratuita (dipende dall'ordine e dalla zona). In alternativa c'è il ritiro in sede a Cassano d'Adda su appuntamento.",
+};
+
 export const site = {
   name: 'Bio & Golosità',
   legalName: 'Azienda Agricola Bio & Golosità di Antoci Raffaele',
@@ -31,11 +38,17 @@ export const site = {
     geo: { lat: 45.5355768, lng: 9.5244833 },
   },
 
-  hours: 'Su appuntamento · chiama o scrivi prima di passare',
+  hours: 'Tutti i giorni 08:00–20:00',
+  hoursNote:
+    'Ti consigliamo comunque di chiamare o scrivere prima di passare: durante la giornata potremmo trovarci in apiario.',
 
   founded: 2020,
-  experienceYears: '6+',
+  /** Apicoltore dal 2020: una data fissa non invecchia, “6+ anni” sì. */
+  apicoltoreDal: 2020,
   priceRange: '€€',
+  // Data di validità dei prezzi nello schema Product: aggiornala ogni anno
+  // (o mettila a null per non dichiararla affatto).
+  priceValidUntil: '2027-12-31',
 
   socials: [
     { name: 'Facebook', url: facebookUrl, handle: 'Bio & Golosità' },
@@ -68,43 +81,123 @@ export const site = {
     'Parco Nord Milano',
   ],
 
-  reviews: [
+  /**
+   * Le località più vicine/importanti, usate come chip nella home: in pagina ne
+   * bastano poche, l'elenco completo vive in /consegna-miele/ (deliveryZones).
+   */
+  areaServedFeatured: [
+    "Cassano d'Adda",
+    "Fara Gera d'Adda",
+    "Vaprio d'Adda",
+    "Trezzo sull'Adda",
+    'Gorgonzola',
+    'Treviglio',
+  ],
+
+  // Le stesse località di areaServed, raggruppate per la pagina /consegna-miele/
+  deliveryZones: [
     {
-      name: 'Maria R.',
-      town: 'Cassano d\'Adda',
-      text: 'Miele millefiori buonissimo, si sente che è appena raccolto. Raffaele è gentilissimo e disponibile, ordino sempre da lui.',
+      name: "Cassano d'Adda e dintorni",
+      towns: [
+        "Cassano d'Adda",
+        "Groppello d'Adda",
+        "Fara Gera d'Adda",
+        'Inzago',
+        'Pozzuolo Martesana',
+      ],
     },
     {
-      name: 'Luca B.',
-      town: 'Treviglio',
-      text: 'Il miele di acacia non cristallizza mai ed è davvero delicato. Qualità superiore rispetto a quello del supermercato.',
+      name: 'Martesana e Milano Est',
+      towns: [
+        'Gorgonzola',
+        'Melzo',
+        "Vaprio d'Adda",
+        "Trezzo sull'Adda",
+        'Cernusco sul Naviglio',
+        'Parco Nord Milano',
+      ],
     },
     {
-      name: 'Giulia M.',
-      town: 'Gorgonzola',
-      text: 'Preso il miele di castagno per un regalo: sapore intenso che ha conquistato tutti. Consegna rapida e prezzo onesto.',
-    },
-    {
-      name: 'Andrea P.',
-      town: 'Pozzuolo Martesana',
-      text: 'Miele genuino, non pastorizzato, con il gusto di una volta. Si vede che le api sono curate con passione.',
+      name: "Gera d'Adda, Bergamasca e Cremonese",
+      towns: ['Treviglio', 'Caravaggio', "Rivolta d'Adda", 'Vailate'],
     },
   ],
 
+  // ─────────────────────────────────────────────────────────────────────────
+  // ✅ Recensioni autentiche della scheda Google Business Profile.
+  //    Testi fedeli all'originale (nomi con l'iniziale maiuscola), stelle reali.
+  //    Due recensioni erano troncate da Google ("… More"): sono state chiuse
+  //    all'ultima frase completa, senza aggiungere né cambiare parole.
+  //    La recensione "Ottimi prodotti bio naturali." è volutamente esclusa:
+  //    il miele è convenzionale e non certificato biologico, e non vogliamo
+  //    rilanciare quell'ambiguità sul sito.
+  //    Formato: { name, stars (1-5), text, date?, town?, url? }
+  //    Se `reviews` è vuoto la home mostra un riquadro che rimanda a Google.
+  // ─────────────────────────────────────────────────────────────────────────
+  reviews: [
+    {
+      name: 'Valerio Pellizzari',
+      stars: 5,
+      date: '2026-09-08',
+      text: 'Miele di qualità eccellente il meglio sul mercato! Persone gentili e con prezzo decisamente competitivo',
+    },
+    {
+      name: 'Francesca Catania',
+      stars: 5,
+      date: '2026-09-09',
+      text: 'Prodotti genuini e deliziosi, e assistenza clienti impeccabile!!!',
+    },
+    {
+      name: 'Annamaria Sorte',
+      stars: 5,
+      date: '2026-09-05',
+      text: 'Un miele semplicemente straordinario! 🍯❤️ Qualità, genuinità e un sapore davvero unico.',
+    },
+    {
+      name: 'C G',
+      stars: 5,
+      date: '2026-09-08',
+      text: 'Miele buonissimo, servizio impeccabile, privato diversi tipi di miele e tutti eccezionali',
+    },
+    {
+      name: 'Irina Carp',
+      stars: 5,
+      date: '2026-09-04',
+      text: 'Molto contenta della produzione e del servizio. Ottimo miele e sempre puntuali.',
+    },
+    {
+      name: 'D S',
+      stars: 5,
+      date: '2026-09-08',
+      text: 'Consigliatissimo, miele buono direttamente a casa',
+    },
+  ],
+
+  /**
+   * I cinque mieli. `priceFormats` sono i formati di vendita con il loro
+   * prezzo, scritti a mano come tutto il resto dei prezzi del sito: il primo è
+   * il prezzo d'ingresso (quello che si vede per primo e sulle card), gli altri
+   * restano visibili sotto. Da qui si ricavano la riga di prezzo, la tabella
+   * /miele/, le FAQ e i dati strutturati (una variante Google per formato).
+   */
   honeys: [
     {
       slug: 'miele-di-acacia',
       name: 'Miele di Acacia',
       image: 'miele_di_acacia',
       color: '#f3e2a1',
-      price: '€ 6,00 (500 g) · € 11,00/kg',
-      priceFrom: 'da € 6,00',
+      priceFormats: [
+        { size: '500 g', price: '€ 6,00' },
+        { size: '1 kg', price: '€ 11,00' },
+      ],
       title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
         'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 351 537 6719.',
       intro:
-        'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nei boschi e nelle campagne della Martesana e della Gera d\'Adda, dove la robinia fiorisce tra fine maggio e giugno. Essendo ricco di fruttosio, ha un indice glicemico più basso rispetto allo zucchero da cucina: si scioglie in bocca e non copre mai gli altri sapori.',
+        'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nei boschi e nelle campagne della Martesana e della Gera d\'Adda, dove la robinia fiorisce tra fine maggio e giugno. Essendo molto ricco di fruttosio resta fluido anche dopo mesi in credenza, si scioglie in bocca e non copre mai gli altri sapori.',
       harvest: 'Raccolto tra maggio e giugno',
+      /** Annata del raccolto in vendita (es. 'Raccolto 2026'): da completare a mano. */
+      annata: null,
       characteristics: [
         'Colore: giallo paglierino, quasi trasparente',
         'Gusto: dolce e delicato, note floreali',
@@ -113,11 +206,14 @@ export const site = {
       ],
       uses:
         'Il miele di acacia è ideale per la colazione: non altera il sapore di tisane, latte e caffè e resta fluido anche in inverno. Ottimo anche per dolcificare yogurt e frutta fresca, oppure spalmato su pane e fette biscottate.',
+      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
+      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
       benefits: [
-        'Delicato e dolce: non copre i sapori, perfetto per tisane, latte e caffè',
-        'A base di fruttosio: resta liquido a lungo e viene digerito facilmente da molti',
-        'Energia a rapido assorbimento, ideale prima di una passeggiata o dello sport',
-        'Gusto delicato, apprezzato anche da chi di solito non ama il miele',
+        'Fruttosio alto: è il motivo per cui resta liquido anche dopo mesi in credenza',
+        'Gusto delicato e floreale: non copre il sapore di tisane, latte e caffè',
+        'Colore chiaro, quasi trasparente: si riconosce al primo sguardo',
+        'Raccolto tra fine maggio e giugno nei boschi della Martesana e della Gera d\'Adda',
+        'Si abbina con tutto: formaggi freschi, yogurt, frutta, pane e colazione',
       ],
       specs: [
         { label: 'Colore', value: 'giallo paglierino, quasi trasparente' },
@@ -127,6 +223,12 @@ export const site = {
         { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
         { label: 'Abbinamenti', value: 'tisane, latte, yogurt, frutta fresca' },
       ],
+      video: {
+        src: '/video/smielatura-acacia.mp4',
+        poster: '/video/smielatura-acacia-poster-5bd8734b.avif',
+        label: 'La smielatura del miele di acacia (raccolto 2026)',
+        cls: 'video-item--tall',
+      },
       faq: [
         {
           q: 'Il miele di acacia cristallizza?',
@@ -140,10 +242,7 @@ export const site = {
           q: 'Come si conserva il miele di acacia?',
           a: 'In un barattolo ben chiuso, al riparo dalla luce e dall\'umidità, a temperatura ambiente. Non serve il frigorifero.',
         },
-        {
-          q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
-        },
+        { ...deliveryFaq },
       ],
     },
     {
@@ -153,14 +252,17 @@ export const site = {
       cardImage: 'miele_millefiori_card',
       imgPos: 'center 70%',
       color: '#f6d98a',
-      price: '€ 5,00 (500 g) · € 9,00/kg',
-      priceFrom: 'da € 5,00',
+      priceFormats: [
+        { size: '500 g', price: '€ 5,00' },
+        { size: '1 kg', price: '€ 9,00' },
+      ],
       title: 'Miele Millefiori Primaverile a Cassano d\'Adda | Bio & Golosità',
       description:
         'Miele millefiori primaverile di api proprie a Cassano d\'Adda (MI): floreale, cremoso, dal profumo di frutteto in fiore. Ordinalo su WhatsApp o al telefono.',
       intro:
         'Il millefiori primaverile raccoglie i nettari dei primi fiori dell\'anno: pesco, ciliegio, susino e i fiori di campo che sbocciano lungo l\'Adda e nei frutteti della Martesana. È un miele floreale e avvolgente, dal profumo intenso di primavera. È il più "di stagione" che produco: cambia leggermente ogni anno, perché racconta il clima e le fioriture di quella primavera.',
       harvest: 'Raccolto tra aprile e maggio',
+      annata: null,
       characteristics: [
         'Colore: ambra chiaro, dorato',
         'Gusto: floreale, con note di frutteto',
@@ -169,11 +271,14 @@ export const site = {
       ],
       uses:
         'Perfetto spalmato su pane caldo e fette biscottate, ma anche per dolcificare il latte dei bambini e preparare dolci semplici. Il suo profumo floreale esalta anche formaggi freschi e ricotta.',
+      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
+      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
       benefits: [
-        'Raccoglie il polline delle prime fioriture: un concentrato di aromi di primavera',
-        'Emolliente per la gola, da gustare da solo o nel latte caldo della sera',
-        'Fonte di energia naturale, dolce ma mai stucchevole',
-        'Versatile: va bene a colazione, in cucina e sui formaggi freschi',
+        'Raccoglie i nettari delle prime fioriture dell\'anno: frutteti e fiori di campo',
+        'Profumo intenso di primavera: si sente al naso prima ancora che in bocca',
+        'Consistenza cremosa: è il nostro miele più facile da spalmare',
+        'Cristallizza finemente dopo qualche mese: è normale, e lo rende ancora più cremoso',
+        'Versatile: a colazione, nel latte, sui formaggi freschi e in cucina',
       ],
       specs: [
         { label: 'Colore', value: 'ambra chiaro, dorato' },
@@ -196,10 +301,7 @@ export const site = {
           q: 'Da dove vengono le api?',
           a: 'I miei apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Nord Milano e la Val Brembana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
         },
-        {
-          q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
-        },
+        { ...deliveryFaq },
       ],
     },
     {
@@ -207,14 +309,17 @@ export const site = {
       name: 'Miele Millefiori Estivo al Tiglio e More',
       image: 'miele_millefiori_estivo_more',
       color: '#e8b45a',
-      price: '€ 5,00 (500 g) · € 9,00/kg',
-      priceFrom: 'da € 5,00',
+      priceFormats: [
+        { size: '500 g', price: '€ 5,00' },
+        { size: '1 kg', price: '€ 9,00' },
+      ],
       title: 'Miele al Tiglio e More a Cassano d\'Adda | Bio & Golosità',
       description:
         'Miele millefiori estivo al tiglio e more di api proprie a Cassano d\'Adda (MI): intenso, note di tiglio e more selvatiche. Ordinalo oggi: consegna in zona.',
       intro:
         'Il millefiori estivo al tiglio e more è il miele delle grandi fioriture di piena estate: tiglio, more selvatiche, phacelia e i fiori spontanei delle golene dell\'Adda. Rispetto al primaverile è più scuro, più denso e più ricco di minerali — le fioriture estive sono più concentrate — con un carattere deciso e un gusto corposo, che in autunno si fa ancora più carico.',
       harvest: 'Raccolto tra giugno e luglio',
+      annata: null,
       characteristics: [
         'Colore: ambra dorato, più carico in autunno',
         'Gusto: corposo, con note di tiglio e more selvatiche',
@@ -223,11 +328,14 @@ export const site = {
       ],
       uses:
         'Ottimo per la colazione ma anche in cucina: glassa carni e verdure, dolcifica le tisane della sera e si sposa benissimo con formaggi stagionati. È il miele preferito da chi ama i sapori decisi.',
+      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
+      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
       benefits: [
-        'Più ricco di minerali rispetto ai mieli primaverili, grazie alle fioriture estive',
-        'Le note di tiglio sono tradizionalmente associate a un momento di relax',
-        'Corposo e aromatico: bastano piccole quantità per dare carattere a un piatto',
-        'Perfetto con formaggi stagionati e con i dolci della tradizione',
+        'Più scuro e ricco di minerali rispetto ai mieli primaverili, per le fioriture estive',
+        'Note di tiglio e di more selvatiche: un profilo aromatico inconfondibile',
+        'Corposo: ne basta poco per dare carattere a un piatto',
+        'Cristallizzazione lenta e grossolana: resta fluido a lungo',
+        'Da formaggi stagionati, arrosti e dolci della tradizione',
       ],
       specs: [
         { label: 'Colore', value: 'ambra dorato, più carico' },
@@ -237,6 +345,12 @@ export const site = {
         { label: 'Conservazione', value: 'barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)' },
         { label: 'Abbinamenti', value: 'colazione, glassature di carne, formaggi stagionati' },
       ],
+      video: {
+        src: '/video/smielatura-millefiori-tiglio-more.mp4',
+        poster: '/video/smielatura-millefiori-tiglio-more-poster-918a2227.avif',
+        label: 'La smielatura del millefiori tiglio e more (raccolto 2026)',
+        cls: 'video-item--tall',
+      },
       faq: [
         {
           q: 'Perché il millefiori estivo al tiglio e more è più scuro?',
@@ -250,10 +364,7 @@ export const site = {
           q: 'Il miele al tiglio e more è adatto ai bambini?',
           a: 'Sì, come tutti i nostri mieli non subisce trattamenti termici né filtrazioni aggressive. Ricorda solo che il miele non va dato ai bambini sotto i 12 mesi.',
         },
-        {
-          q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
-        },
+        { ...deliveryFaq },
       ],
     },
     {
@@ -261,14 +372,17 @@ export const site = {
       name: 'Miele Millefiori Estivo al Tiglio e Ailanto',
       image: 'miele_millefiori_estivo_ailanto',
       color: '#d9a83f',
-      price: '€ 5,00 (500 g) · € 9,00/kg',
-      priceFrom: 'da € 5,00',
+      priceFormats: [
+        { size: '500 g', price: '€ 5,00' },
+        { size: '1 kg', price: '€ 9,00' },
+      ],
       title: 'Miele al Tiglio e Ailanto a Cassano d\'Adda | Bio & Golosità',
       description:
         'Miele millefiori estivo con alta percentuale di tiglio e ailanto, la pianta del paradiso: retrogusto di pesca, di api proprie a Cassano d\'Adda (MI).',
       intro:
         'Un millefiori estivo raro e particolare: oltre al tiglio, contiene una percentuale importante di nettare di ailanto — l\'albero detto anche "pianta del paradiso" (Ailanthus altissima). I suoi fiori regalano al miele un caratteristico retrogusto di pesca, che si unisce alle note fresche del tiglio: un gusto che non trovi in nessun altro miele. Le nostre api lo raccolgono nelle grandi fioriture estive degli apiari tra la Martesana, la Gera d\'Adda, il Parco Nord Milano e la Val Brembana.',
       harvest: 'Raccolto tra giugno e luglio',
+      annata: null,
       characteristics: [
         'Colore: ambra dorato, più chiaro e luminoso',
         'Gusto: dolce, con note di tiglio e retrogusto di pesca',
@@ -277,11 +391,14 @@ export const site = {
       ],
       uses:
         'Perfetto per la colazione e per dolcificare tisane e latte: le note di tiglio lo rendono ideale per la sera. Si sposa bene con formaggi freschi, yogurt e frutta, e in cucina con piatti delicati.',
+      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
+      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
       benefits: [
-        'Alta percentuale di tiglio, tradizionalmente associato a relax e benessere',
         'Il retrogusto di pesca dell\'ailanto lo rende un miele unico e riconoscibile',
         'Dolce e aromatico: piace anche a chi preferisce sapori non troppo intensi',
+        'Colore più chiaro e luminoso rispetto agli altri millefiori estivi',
         'Disponibile in quantità limitate, perché l\'ailanto fiorisce solo a giugno e luglio',
+        'Con formaggi freschi, yogurt e frutta, ma anche in cucina con piatti delicati',
       ],
       specs: [
         { label: 'Colore', value: 'ambra dorato, più chiaro e luminoso' },
@@ -304,10 +421,7 @@ export const site = {
           q: 'Quando viene raccolto?',
           a: 'Come il millefiori estivo al tiglio e more, viene raccolto tra giugno e luglio, quando tiglio e ailanto sono in piena fioritura. È smielato a freddo e non pastorizzato, come tutti i nostri mieli.',
         },
-        {
-          q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
-        },
+        { ...deliveryFaq },
       ],
     },
     {
@@ -315,14 +429,17 @@ export const site = {
       name: 'Miele di Castagno',
       image: 'miele_di_castagno',
       color: '#8a4b1f',
-      price: '€ 6,50 (500 g) · € 12,00/kg',
-      priceFrom: 'da € 6,50',
+      priceFormats: [
+        { size: '500 g', price: '€ 6,50' },
+        { size: '1 kg', price: '€ 12,00' },
+      ],
       title: 'Miele di Castagno a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
         'Miele di castagno di api proprie a Cassano d\'Adda (MI): scuro, intenso, leggermente amaro. Perfetto con formaggi stagionati. Ordina al telefono.',
       intro:
         'Il miele di castagno è il più caratteristico dei nostri mieli: scuro, intenso e leggermente amarognolo, con un profumo forte e persistente. È tra i mieli più ricchi di sali minerali — in particolare ferro e potassio — ed è il compagno ideale dei formaggi stagionati e dei piatti robusti della nostra tradizione.',
       harvest: 'Raccolto tra giugno e luglio',
+      annata: null,
       characteristics: [
         'Colore: ambra scuro, quasi bruno',
         'Gusto: intenso, legnoso, con retrogusto amarognolo',
@@ -331,11 +448,14 @@ export const site = {
       ],
       uses:
         'Il miele di castagno esalta formaggi stagionati e erborinati, accompagna arrosti e carni rosse, polenta e insalate con noci. In pasticceria è perfetto per panpepato, biscotti speziati e dolci autunnali.',
+      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
+      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
       benefits: [
         'Tra i mieli più ricchi di sali minerali, in particolare ferro e potassio',
-        'Tradizionalmente usato per la gola e le vie respiratorie',
+        'Retrogusto amarognolo: è il segno della sua autenticità e della sua forza',
         'Sapore intenso e persistente: una piccola quantità dà carattere a molti piatti',
-        'Lento a cristallizzare, si conserva bene anche a lungo',
+        'Cristallizza molto lentamente e si conserva bene anche a lungo',
+        'Da formaggi stagionati, carni rosse, polenta e dolci speziati',
       ],
       specs: [
         { label: 'Colore', value: 'ambra scuro, quasi bruno' },
@@ -358,18 +478,141 @@ export const site = {
           q: 'Dove trovo i castagni nella zona di Cassano d\'Adda?',
           a: 'Le mie api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda, nelle colline tra Bergamo e Cremona e nella Val Brembana, a poca distanza dai miei apiari.',
         },
-        {
-          q: 'Fate consegne nella mia zona?',
-          a: 'Sì: consegniamo a domicilio in tutta la zona tra Milano, Bergamo e Cremona — Cassano d\'Adda, Fara Gera d\'Adda, Trezzo sull\'Adda, Vaprio d\'Adda, il Parco Nord Milano, Treviglio, Gorgonzola, Melzo, Rivolta d\'Adda, Caravaggio e dintorni. La consegna può essere gratuita: dipende dall\'ordine e da dove mi trovo quando mi chiami, quindi chiama o scrivici su WhatsApp e ti confermo subito. In alternativa c\'è il ritiro in sede su appuntamento.',
-        },
+        { ...deliveryFaq },
       ],
     },
   ],
+
+  /**
+   * Miele in favo: non è una varietà, è il miele lasciato nel favo con la sua
+   * cera. Sta fuori da `honeys` perché griglia e tabella prezzi di /miele/
+   * ragionano sui formati 500 g / 1 kg di ogni varietà. Ha però la sua scheda
+   * completa: per schede, footer, catalogo e link incrociati si usa
+   * `honeyProducts` (in fondo al file).
+   *
+   * `priceFormats: []` = prezzo non pubblicato: la pagina mostra "Prezzo su
+   * richiesta" e i dati strutturati non pubblicano l'offerta. Da completare a
+   * mano, es. `priceFormats: [{ size: 'favo intero', price: '€ 18,00' }]`.
+   */
+  honeyComb: {
+    slug: 'miele-in-favo',
+    name: 'Miele in favo',
+    kind: 'favo',
+    image: 'miele_in_favo',
+    color: '#f0c96b',
+    priceFormats: [],
+    title: "Miele in Favo | Favo di Miele delle Nostre Api, Cassano d'Adda",
+    description:
+      "Miele in favo delle nostre api a Cassano d'Adda: favo intero con la sua cera, non pastorizzato né scaldato. Vendita diretta e consegna in zona.",
+    heroIntro:
+      "Miele in favo delle nostre api: il favo opercolato, tagliato dal telaio e invasettato con la sua cera, senza smielatura e senza trattamento termico. Arriva dagli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
+    intro:
+      "Il miele in favo è il miele come lo hanno fatto le api: ancora chiuso nelle cellette di cera, opercolato, esattamente come si presenta aprendo l'arnia. Per prepararlo non si smiela niente: il favo si taglia dal telaio e si mette nel vasetto intero, senza scaldarlo e senza filtrarlo. Resta quindi un miele più aromatico e dalla consistenza unica, con la cera che si sente sotto i denti.",
+    harvest: 'Raccolto in stagione, quando il favo è opercolato',
+    /** Annata del raccolto in vendita: da completare a mano. */
+    annata: null,
+    /** In pagina: "Da dove arriva questo favo". */
+    subject: 'favo',
+    category: 'Miele in favo',
+    characteristics: [
+      'Il miele resta nel favo, con la sua cera',
+      // `characteristics[1]` è il testo che la card usa nella griglia di /miele/:
+      // qui deve restare in evidenza la disponibilità, non la lavorazione.
+      'Disponibilità poca: pochi favi, solo su prenotazione',
+      'Nessuna smielatura: il favo si taglia intero',
+      'Non pastorizzato, mai scaldato',
+      'Da gustare con pane, formaggi e frutta',
+    ],
+    /** Nota del blocco prodotto, al posto di `site.bulkNote`. */
+    note: 'Disponibilità poca e solo su prenotazione: prepariamo pochi favi a stagione, quindi conviene chiedere in anticipo.',
+    uses:
+      "Il miele in favo si gusta con la sua cera: si taglia un pezzetto e si mangia con pane, formaggio, ricotta o frutta, oppure direttamente con il cucchiaino. La cera è commestibile: si può mangiare insieme al miele o masticarla e scartarla, come si faceva una volta. Su una fetta di pane caldo il favo si ammorbidisce da solo e il miele esce dalle cellette.",
+    // Voci della tracciabilità diverse dai barattoli: qui non c'è smielatura.
+    workNote:
+      'Nessuna smielatura: il favo si taglia dal telaio e si invasetta intero, senza trattamento termico',
+    storageNote: 'Vasetto chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)',
+    specs: [
+      { label: "Cos'è", value: 'miele lasciato nel favo di cera, come lo hanno fatto le api' },
+      { label: 'Cera', value: 'commestibile: si mangia con il miele, oppure si mastica e si scarta' },
+      { label: 'Lavorazione', value: 'nessuna smielatura, nessun trattamento termico' },
+      { label: 'Cristallizzazione', value: 'possibile nel tempo: è naturale, nel favo non si scalda' },
+      { label: 'Conservazione', value: 'vasetto chiuso, al riparo da luce e umidità (10–25 °C)' },
+      {
+        label: 'Disponibilità',
+        value: 'poca e solo su prenotazione: pochi favi a stagione',
+      },
+      { label: 'Abbinamenti', value: 'pane, formaggi, ricotta, frutta, colazione' },
+    ],
+    video: {
+      src: '/video/miele-in-favo.mp4',
+      poster: '/video/miele-in-favo-poster-4d2db9b1.avif',
+      label: 'Raffaele mostra il miele in favo e lo assaggia',
+      cls: 'video-item--tall',
+    },
+    /**
+     * La sequenza di foto ricavate dal video, **in ordine d'uso**: dalla prima,
+     * il favo ancora attaccato al telaio, fino all'assaggio di Raffaele. Le basi
+     * sono numerate come i file in root (`miele-in-favo-1.avif` →
+     * `miele_in_favo_1`), quindi l'ordine dell'array è l'ordine in pagina e
+     * nella galleria a schermo intero.
+     */
+    galleryTitle: "Dal favo all'assaggio",
+    galleryIntro:
+      'Sei fotogrammi in ordine, presi dal video qui sopra: si parte dal favo ancora attaccato al telaio e si arriva all\'assaggio.',
+    gallery: [
+      {
+        base: 'miele_in_favo_1',
+        alt: 'Il favo ancora attaccato al telaio, con il miele dove le api l\'hanno fatto',
+        cls: 'g-item--portrait',
+        caption: 'Il favo ancora attaccato al telaio, dove le api hanno fatto il miele',
+      },
+      { base: 'miele_in_favo_2', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 2', cls: 'g-item--portrait' },
+      { base: 'miele_in_favo_3', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 3', cls: 'g-item--portrait' },
+      { base: 'miele_in_favo_4', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 4', cls: 'g-item--portrait' },
+      { base: 'miele_in_favo_5', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 5', cls: 'g-item--portrait' },
+      { base: 'miele_in_favo_6', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 6', cls: 'g-item--portrait' },
+    ],
+    /** Guida consigliata in fondo alla scheda. */
+    guide: {
+      href: '/guide/perche-il-miele-cristallizza/',
+      label: 'Perché il miele cristallizza (e come riportarlo liquido)',
+    },
+    faq: [
+      {
+        q: 'Si mangia anche la cera?',
+        a: "Sì: la cera d'api è commestibile e si può mangiare insieme al miele, oppure masticarla e scartarla, come si faceva tradizionalmente. Non viene digerita, ma è parte del prodotto: il favo si mangia così com'è.",
+      },
+      {
+        q: 'Come si conserva il miele in favo?',
+        a: "In un vasetto ben chiuso, al riparo dalla luce e dall'umidità, a temperatura ambiente (10–25 °C): non serve il frigorifero. Tienilo lontano da fonti di calore, perché la cera si ammorbidisce con il caldo.",
+      },
+      {
+        q: 'Il miele in favo cristallizza?',
+        a: 'Può succedere: la cristallizzazione è un processo naturale e la cera la rallenta, ma non la impedisce. Nel favo non si scalda per riportarlo liquido, perché il calore scioglierebbe la cera: si mangia com\'è, e su pane caldo si ammorbidisce da solo.',
+      },
+      {
+        q: 'Da quale miele è fatto il favo?',
+        a: "Dipende dalla stagione: il favo si prepara quando le api hanno opercolato le cellette nella fioritura del momento, quindi può essere millefiori o di una fioritura singola. Quando lo ordini ti diciamo da quale raccolto arriva.",
+      },
+      { ...deliveryFaq },
+    ],
+  },
 };
 
+/**
+ * Tutte le schede del miele: le cinque varietà più il miele in favo. Da usare
+ * per le pagine (`/miele/<slug>/`), il footer, il catalogo dei dati strutturati
+ * e i link incrociati; per griglia e tabella prezzi restano le sole varietà
+ * (`site.honeys`).
+ */
+export const honeyProducts = [...site.honeys, site.honeyComb];
+
 export const nav = [
-  { href: '/#mieli', label: 'I nostri mieli' },
-  { href: '/chi-siamo', label: 'Chi siamo' },
-  { href: '/#galleria', label: 'Galleria' },
-  { href: '/contatti', label: 'Contatti' },
+  { href: '/miele/', label: 'Mieli' },
+  { href: '/polline-d-api/', label: 'Polline' },
+  { href: '/api-regine/', label: 'Api regine' },
+  { href: '/nuclei-api/', label: 'Nuclei' },
+  { href: '/guide/', label: 'Guide' },
+  { href: '/chi-siamo/', label: 'Chi siamo' },
+  { href: '/contatti/', label: 'Contatti' },
 ];

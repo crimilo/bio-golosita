@@ -1,0 +1,18 @@
+---
+import Price from './Price.astro';
+
+/**
+ * Etichetta prezzo in alto a sinistra sopra la foto della card.
+ * Usata sia dalle card dei mieli (/miele/) sia da quelle della home, così le
+ * due rese restano identiche: il prezzo sta *sulla* immagine, non nel corpo.
+ * Il testo passa da `Price`, quindi vale la stessa regola dei box:
+ * "300,00 € (10,00 € al pezzo)" → totale in evidenza, divisione più piccola.
+ */
+interface Props {
+  /** Prezzo già formattato, es. "da € 5,00" oppure "Prezzo su richiesta". */
+  value: string | null | undefined;
+}
+const { value } = Astro.props;
+---
+
+<span class="price-badge"><Price value={value} /></span>

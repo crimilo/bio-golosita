@@ -1,0 +1,65 @@
+---
+import Icons from './Icons.astro';
+import Picture from './Picture.astro';
+
+export interface LinkCard {
+  href: string;
+  title: string;
+  text: string;
+  /** base dell'immagine (manifest): se c'è, la card mostra la foto come la home */
+  img?: string;
+  alt?: string;
+}
+
+interface Props {
+  id: string;
+  cards: LinkCard[];
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  soft?: boolean;
+}
+
+const { id, cards, eyebrow, title, intro, soft = false } = Astro.props;
+---
+
+<section class={`section${soft ? ' section--soft' : ''}`} aria-labelledby={title ? id : undefined}>
+  <div class="container">
+    {
+      title && (
+        <div class="section-head">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          <h2 id={id}>{title}</h2>
+          {intro && <p>{intro}</p>}
+        </div>
+      )
+    }
+    <div class="cards">
+      {
+        cards.map((c) => (
+          <a class={`card${c.img ? ' card--media' : ''}`} href={c.href}>
+            {
+              c.img && (
+                <div class="card-media">
+                  <Picture
+                    base={c.img}
+                    alt={c.alt ?? ''}
+                    sizes="(min-width: 900px) 30vw, 100vw"
+                    loading="lazy"
+                    zoomable={false}
+                  />
+                </div>
+              )
+            }
+            <h3>{c.title}</h3>
+            <p>{c.text}</p>
+            <span class="card-link">
+              Scopri di più
+              <Icons name="arrow" size={18} />
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

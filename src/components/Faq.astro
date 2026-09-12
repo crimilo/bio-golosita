@@ -1,0 +1,40 @@
+---
+import type { FaqItem } from '../lib/types';
+
+interface Props {
+  id: string;
+  items: FaqItem[];
+  eyebrow?: string;
+  title?: string;
+  soft?: boolean;
+  center?: boolean;
+}
+
+const {
+  id,
+  items,
+  eyebrow = 'domande frequenti',
+  title = 'Domande frequenti',
+  soft = false,
+  center = true,
+} = Astro.props;
+---
+
+<section class={`section${soft ? ' section--soft' : ''}`} aria-labelledby={id}>
+  <div class="container">
+    <div class="section-head" style={center ? 'margin-inline:auto;' : undefined}>
+      <span class="eyebrow">{eyebrow}</span>
+      <h2 id={id}>{title}</h2>
+    </div>
+    <div class="faq">
+      {
+        items.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

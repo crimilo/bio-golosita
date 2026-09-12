@@ -1,0 +1,173 @@
+---
+import ProductPage from '../../components/ProductPage.astro';
+import ProseBlocks from '../../components/ProseBlocks.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import { apiRegine, availabilityFallback, prezzoSuRichiesta, prezzoNota, repartoImages } from '../../data/bee-products';
+import { guideCard } from '../../data/guides';
+import { product, faqPage } from '../../lib/schema';
+
+const pathname = apiRegine.path;
+const crumbs = [{ name: apiRegine.name, path: pathname }];
+
+const specs = apiRegine.specs
+  .filter((s) => s.value)
+  .map((s) => ({ label: s.label, value: s.value as string }));
+specs.push({ label: 'Prezzo', value: apiRegine.prezzo ?? prezzoSuRichiesta });
+
+const relatedCards = [
+  {
+    href: '/nuclei-api/',
+    ...repartoImages.nuclei,
+    title: "Nuclei d'api",
+    text: 'Una famiglia già avviata con regina feconda e telai con covata: la via più semplice per partire.',
+  },
+  guideCard(
+    'come-introdurre-una-nuova-ape-regina',
+    'Come introdurre una nuova ape regina',
+    'Tempi, metodo e controlli: la guida con gli errori da evitare quando si cambia regina.'
+  ),
+  {
+    href: '/miele/',
+    ...repartoImages.miele,
+    title: 'I nostri mieli',
+    text: 'Cinque mieli 100% italiani di api proprie, non pastorizzati: acacia, millefiori e castagno.',
+  },
+];
+
+const blocks = [
+  { h2: 'Razze e linee disponibili' },
+  ...(apiRegine.razze.length
+    ? ([
+        {
+          p: `In questo periodo alleviamo <strong>${apiRegine.razze.join(', ')}</strong>. Se ti interessa una linea in particolare, chiedici conferma prima della prenotazione: la disponibilità cambia con la stagione.`,
+        },
+      ] as const)
+    : ([
+        {
+          p: "Le razze e le linee disponibili cambiano con la stagione e con l'andamento dell'allevamento. Dicci cosa stai cercando: ti diciamo subito cosa c'è in questo periodo. E se non sai quale scegliere, ti aiutiamo a capire cosa serve al tuo apiario.",
+        },
+      ])),
+  { h2: 'Regine feconde, già in deposizione' },
+  {
+    // Testo e foto sulla stessa riga da desktop (`.prose-row`: la foto sta a
+    // fianco del testo, sotto i 900px va sotto). Prima erano due blocchi
+    // separati — `p` + `img` — e il secondo finiva sempre sotto il testo.
+    row: {
+      text: [
+        {
+          p: "Le nostre api regine sono <strong>tutte feconde</strong>: hanno già compiuto il volo di fecondazione e depongono le uova, quindi si introducono in un alveare orfano o in un nucleo e la famiglia riparte senza attese. Sono allevate da noi negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda: regine di provincia, abituate al clima e alle fioriture di qui. Ne parliamo nella guida <a href=\"/guide/come-introdurre-una-nuova-ape-regina/\">come introdurre una nuova ape regina</a>.",
+        },
+      ],
+      img: {
+        // Foto secondaria della pagina: quella del blocco prodotto è la regina
+        // (`ape_regina_di_raffaele`), qui ci sono le api invece che la stessa foto.
+        base: 'api',
+        alt: "Le nostre api in apiario, a Cassano d'Adda",
+        caption: "Le nostre api, in apiario a Cassano d'Adda",
+      },
+    },
+  },
+  { h2: 'Come funziona la prenotazione' },
+  {
+    p: "Le regine si preparano nei mesi utili all'allevamento e la disponibilità è settimanale: la prenotazione è sempre una chiacchierata, non un carrello. Dicci quante regine ti servono, in che periodo e dove ti trovi.",
+  },
+  {
+    ul: [
+      '<strong>Telefono:</strong> la via più rapida, soprattutto in stagione.',
+      '<strong>WhatsApp:</strong> comodo per lasciare scritto numero, periodo e zona.',
+      '<strong>Ritiro in sede:</strong> a Cassano d\'Adda, su appuntamento, quando le regine sono pronte.',
+      '<strong>Consegna:</strong> concordata nella zona tra Milano, Bergamo, Cremona e Lodi.',
+    ],
+  },
+  { h2: 'Il momento giusto per cambiare regina' },
+  {
+    p: "Le regine si sostituiscono di norma tra la primavera e l'inizio dell'estate, quando le famiglie si sviluppano e c'è nettare in campo: è il periodo in cui l'accettazione riesce meglio. Se hai un dubbio sul tuo caso, scrivici prima di ordinare: preferiamo dirti se è il momento sbagliato.",
+  },
+  {
+    note: 'Le informazioni sanitarie e i documenti che accompagnano le regine ce li chiedi direttamente: ti diamo tutte le indicazioni sulla partita, senza giri di parole.',
+  },
+];
+---
+
+<ProductPage
+  {pathname}
+  title={apiRegine.title}
+  description={apiRegine.description}
+  {crumbs}
+  h1={apiRegine.h1}
+  eyebrow="allevamento proprio · Lombardia"
+  intro={apiRegine.intro}
+  hero={{
+    base: 'ape_regina_di_raffaele',
+    alt: "L'ape regina dell'apiario di Raffaele Antoci, apicoltore di Bio & Golosità a Cassano d'Adda",
+  }}
+  {/* Niente hero in bg: come nelle pagine dei singoli mieli, la hero è solo
+      testo su fondo chiaro e la foto del prodotto nel blocco sotto fa da
+      riferimento visivo. */}
+  videos={[
+    {
+      src: '/video/ape-regina-con-api.mp4',
+      poster: '/video/ape-regina-con-api-poster-919ab2ed.avif',
+      label: "Ape regina con le sue api attorno, in apiario a Cassano d'Adda",
+      cls: 'video-item--wide',
+    },
+    {
+      src: '/video/nascita-di-una-regina.mp4',
+      poster: '/video/nascita-di-una-regina-poster-f063b65c.avif',
+      label: "La nascita di un'ape regina, in apiario",
+      cls: 'video-item--tall',
+    },
+    {
+      src: '/video/marcatura-della-regina.mp4',
+      poster: '/video/marcatura-della-regina-poster-4e596bfb.avif',
+      label: "Raffaele mostra come e perché si marca un'ape regina",
+      cls: 'video-item--tall',
+    },
+  ]}
+  availability={apiRegine.disponibilita}
+  {availabilityFallback}
+  price={apiRegine.prezzo}
+  priceFallback={prezzoSuRichiesta}
+  priceNote={prezzoNota}
+  {specs}
+  faq={apiRegine.faq}
+  gallery={apiRegine.gallery}
+  galleryTitle="Le nostre regine, gli apiari e i controlli"
+  galleryIntro="Tutte foto del nostro apiario: la regina al centro e i controlli sui telai."
+  jsonLd={[product({ ...apiRegine, image: 'ape_regina_di_raffaele' }, pathname, { category: 'Api regine' }), faqPage(apiRegine.faq)]}
+>
+  <section class="section">
+    <div class="container">
+      <div class="prose">
+        <ProseBlocks {blocks} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">perché comprare da noi</span>
+        <h2 id="plus-title">Comprare regine da un apicoltore, non da un catalogo</h2>
+      </div>
+      <div class="cards">
+        {
+          apiRegine.cards.map((c) => (
+            <div class="card">
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <LinkCards
+    id="collegati"
+    cards={relatedCards}
+    soft
+    eyebrow="continua"
+    title="Nuclei, guide e mieli"
+  />
+</ProductPage>

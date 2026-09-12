@@ -1,0 +1,326 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Picture from '../../components/Picture.astro';
+import HoneyCard from '../../components/HoneyCard.astro';
+import Faq from '../../components/Faq.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import ProductCards from '../../components/ProductCards.astro';
+import { polline, apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../../data/bee-products';
+import ContactSection from '../../components/ContactSection.astro';
+import ProseBlocks from '../../components/ProseBlocks.astro';
+import Icons from '../../components/Icons.astro';
+import Emoji from '../../components/Emoji.astro';
+import { site, honeyProducts } from '../../data/site';
+import { guideCard } from '../../data/guides';
+import { entryFormat, priceLine } from '../../lib/price';
+import { localBusiness, collectionPage, faqPage } from '../../lib/schema';
+
+const pathname = '/miele/';
+// Foto dei tre barattoli: la stessa che era la hero della home prima di
+// `apiari_hd`, ora libera. È 4:3 (1600×1200) e i barattoli stanno nella metà
+// bassa, con il centro di massa appena a destra dell'asse (52%): allineando in
+// BASSO si vedono tutti e tre e si taglia lo sfondo chiaro in alto.
+// Sotto i 900px la fascia è più alta che larga, quindi il taglio è ORIZZONTALE
+// e la posizione verticale non ha effetto: lì conta il 52%.
+const heroImg = 'hero_bg';
+const title = 'Miele Italiano Artigianale Non Pastorizzato | Bio & Golosità';
+const description =
+  "Miele 100% italiano di api proprie a Cassano d'Adda: acacia, millefiori e castagno, non pastorizzati. Prezzi, formati e consegna in zona.";
+
+const crumbs = [{ name: 'I nostri mieli', path: pathname }];
+
+// Formati di vendita dei mieli (500 g / 1 kg), letti dai dati: FAQ e tabella
+// prezzi seguono `priceFormats`, così un formato in più non va scritto anche qui.
+const priceFormats = site.honeys[0]?.priceFormats ?? [];
+
+const faq = [
+  {
+    q: 'Il vostro miele è italiano?',
+    a: "Sì: è 100% italiano, prodotto dalle nostre api negli apiari tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Nord Milano e la Val Brembana. Non importiamo miele e non facciamo miscele con mieli esteri.",
+  },
+  // Nessuna FAQ sul biologico: il miele non è certificato bio e sul sito la
+  // parola "bio" non viene mai usata come claim (è solo il nome dell'azienda).
+  {
+    q: 'Che differenza c\'è tra miele pastorizzato e non pastorizzato?',
+    a: 'Il miele pastorizzato viene scaldato ad alte temperature per restare liquido più a lungo: diventa più stabile ma perde parte di profumo e aromi. Il nostro non è pastorizzato: lo smieliamo a freddo e lo invasettiamo a piccoli lotti.',
+  },
+  {
+    q: 'Quanto costa il miele e in quali formati lo vendete?',
+    // I prezzi di entrambi i formati sono nella tabella qui sopra, con i raccolti:
+    // qui restano quelli del barattolo da 500 g, così la risposta non ripete 10
+    // prezzi che il lettore ha già davanti.
+    a: `Barattoli da 500 g e da 1 kg: nella tabella sopra trovi tutti i prezzi. Da 500 g: ${site.honeys
+      .map((h) => `${h.name} ${entryFormat(h.priceFormats)?.price ?? prezzoSuRichiesta}`)
+      .join(', ')}. Per negozi, agriturismi e ristoranti parliamone.`,
+  },
+  {
+    q: 'Dove posso comprare il vostro miele?',
+    a: "In azienda a Cassano d'Adda, in Via Salvo D'Acquisto 9, su appuntamento (chiama o scrivi prima di passare), oppure con consegna a domicilio nella zona tra Milano, Bergamo, Cremona e Lodi: in molti casi è gratuita.",
+  },
+];
+
+const blocks = [
+  {
+    // Foto e testo sulla stessa riga da desktop (la foto sta a fianco, non
+    // sotto): sotto i 900px il blocco si impila, foto dopo il testo.
+    row: {
+      text: [
+        {
+          p: "Il miele che vendiamo nasce da api nostre e da apiari che seguiamo in prima persona, tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Nord Milano e la Val Brembana. Non compriamo miele da altri per rivenderlo: la filiera è corta, e possiamo dirti da dove arriva ogni barattolo.",
+        },
+        {
+          p: 'Lo smieliamo a freddo e <strong>non lo pastorizziamo</strong>: il miele esce dai telai, decanta e viene invasettato a piccoli lotti. È un lavoro più lento che scaldare tutto e standardizzarlo, ma è quello che lascia a un millefiori di primavera il profumo del frutteto.',
+        },
+      ],
+      img: {
+        base: 'arnia_piena_di_api',
+        alt: 'Arnia piena di api sui telai',
+        caption: "Un'arnia piena di api sui telai: il miele, prima della smielatura",
+      },
+    },
+  },
+  {
+    row: {
+      text: [
+        {
+          h2: 'Non pastorizzato, 100% italiano, artigianale: cosa significa davvero',
+          id: 'non-pastorizzato',
+        },
+        {
+          ul: [
+            '<strong>Non pastorizzato</strong>: nessun trattamento termico, quindi il miele mantiene profumo e carattere della fioritura.',
+            '<strong>100% italiano</strong>: prodotto in Italia da api nostre, in Lombardia. Nessuna miscela con mieli di importazione.',
+            '<strong>Artigianale e di api proprie</strong>: lavorazione a piccoli lotti, controlli in apiario e smielatura fatta da noi. Puoi chiederci da quale apiario e in che periodo.',
+          ],
+        },
+      ],
+      img: {
+        base: 'apiario',
+        alt: 'Il nostro apiario: le arnie dove nasce il miele',
+        caption: 'I nostri apiari: da qui parte tutto, a pochi chilometri da casa tua',
+      },
+    },
+  },
+  {
+    note: "In etichetta il miele italiano non pastorizzato non si riconosce da un simbolo: si riconosce dal nome del produttore e dalla località. Se hai un dubbio, chiedicelo.",
+  },
+];
+
+const otherProducts = [
+  {
+    href: '/polline-d-api/',
+    ...repartoImages.polline,
+    price: polline.prezzo ?? prezzoSuRichiesta,
+    title: "Polline d'api",
+    text: "Il polline raccolto dalle nostre api, con origine tracciabile e le indicazioni giuste per conservarlo.",
+  },
+  {
+    href: '/api-regine/',
+    ...repartoImages.apiRegine,
+    price: apiRegine.prezzo ?? prezzoSuRichiesta,
+    title: 'Api regine',
+    text: 'Regine feconde dalla nostra selezione, per chi vuole rinnovare un alveare o avviarne uno nuovo.',
+  },
+  {
+    href: '/nuclei-api/',
+    ...repartoImages.nuclei,
+    price: nuclei.prezzo ?? prezzoSuRichiesta,
+    title: "Nuclei d'api",
+    text: 'Famiglie già avviate con regina feconda e telai con covata: la via più semplice per partire.',
+  },
+  {
+    href: '/consegna-miele/',
+    ...repartoImages.consegna,
+    title: 'Consegna e zone servite',
+    text: 'Come funziona la consegna a domicilio tra Milano, Bergamo, Cremona e Lodi, e dove ritirare su appuntamento.',
+  },
+];
+
+const guideCards = [
+  guideCard(
+    'miele-non-pastorizzato-cosa-significa',
+    'Miele non pastorizzato: cosa significa davvero',
+    'Cosa cambia nel miele quando viene scaldato, e come riconoscere un miele lavorato a freddo.'
+  ),
+  guideCard(
+    'perche-il-miele-cristallizza',
+    'Perché il miele cristallizza',
+    'La cristallizzazione non è un difetto: ecco perché succede e come riportare il miele liquido.'
+  ),
+  guideCard(
+    'miele-acacia-millefiori-castagno-differenze',
+    'Acacia, millefiori o castagno: le differenze',
+    'Colore, gusto e abbinamenti a confronto, per scegliere il miele giusto per il tuo uso.'
+  ),
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname={pathname}
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  jsonLd={[
+    localBusiness(),
+    collectionPage({
+      name: 'I nostri mieli',
+      description,
+      pathname,
+      items: honeyProducts.map((h) => ({
+        name: h.name,
+        path: `/miele/${h.slug}/`,
+        image: h.cardImage ?? h.image,
+      })),
+    }),
+    faqPage(faq),
+  ]}
+>
+  <PageHero
+    h1="Miele italiano artigianale: acacia, millefiori e castagno"
+    eyebrow="api proprie · non pastorizzato · 100% italiano"
+    intro="Mieli di produzione propria, smielati a freddo nei nostri apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda. Li vendiamo direttamente, senza intermediari: prezzi chiari e consegna in zona."
+    crumbs={crumbs}
+    bg={{ base: heroImg, height: 'tall', position: '52% 100%', positionMobile: '52% 100%' }}
+  >
+    <div class="contact-cta">
+      <a class="btn btn-primary btn-lg" href={site.phoneHref}>
+        <Icons name="phone" size={20} />
+        Chiama ora
+      </a>
+      <a class="btn btn-ghost btn-lg" href="#prezzi">
+        <Icons name="arrow" size={20} />
+        Vedi prezzi e formati
+      </a>
+    </div>
+  </PageHero>
+
+  <section class="section section--soft" id="mieli" aria-labelledby="mieli-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">direttamente dall'apiario<Emoji name="honey-pot" /></span>
+        <h2 id="mieli-title">I nostri mieli</h2>
+        {/*
+          Niente elenco delle cinque varietà: i nomi sono già nelle card qui
+          sotto (h3 + link) e nella tabella prezzi, a un scroll di distanza.
+          Resta solo quello che le card non dicono — cosa sono e la
+          stagionalità del favo.
+        */}
+        <p>
+          Ogni miele ha la sua scheda, con il raccolto, le caratteristiche e il
+          prezzo. In stagione prepariamo anche il <strong>miele in favo</strong>,
+          con la sua cera.
+        </p>
+      </div>
+      {/*
+        La griglia mostra tutte le schede del miele: le cinque varietà più il
+        miele in favo (`honeyProducts`). Il favo non ha un prezzo pubblicato,
+        quindi la sua card non porta la pastiglia del prezzo (vedi HoneyCard) e
+        nella tabella prezzi qui sotto c'è una nota al posto della riga.
+      */}
+      <div class="honey-grid">
+        {honeyProducts.map((h, i) => <HoneyCard honey={h} eager={i === 0} />)}
+      </div>
+      {/*
+        Unico link da questa pagina alla pagina-categoria dei millefiori: sta
+        qui sotto la griglia a cui si riferisce, non in un blocco a sé dentro
+        la sezione "come lavoriamo", dov'era fuori tema.
+      */}
+      <p class="mt-3" style="text-align:center;">
+        Tre dei nostri mieli sono millefiori: <a href="/miele/miele-millefiori/">cos'è il miele millefiori e perché cambia da un anno all'altro</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="artigianale">
+    <div class="container">
+      <div class="prose prose--wide">
+        <span class="eyebrow">come lavoriamo</span>
+        <h2 id="artigianale">Miele artigianale: cosa vuol dire nel nostro caso</h2>
+        <ProseBlocks blocks={blocks} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="prezzi" aria-labelledby="prezzi-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">trasparenza</span>
+        <h2 id="prezzi-title">Prezzi e formati</h2>
+        <p>
+          Prezzi di vendita diretta, senza intermediari. Per quantità importanti
+          prepariamo secchi da 10 kg su preventivo.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="price-table">
+          <caption class="sr-only">Prezzi dei mieli Bio &amp; Golosità</caption>
+          <thead>
+            <tr>
+              <th scope="col">Miele</th>
+              {priceFormats.map((f) => (
+                <th scope="col">Barattolo {f.size}</th>
+              ))}
+              <th scope="col">Raccolto</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              site.honeys.map((h) => (
+                <tr>
+                  <th scope="row">
+                    <a href={`/miele/${h.slug}/`}>{h.name}</a>
+                  </th>
+                  {priceFormats.map((f) => (
+                    <td data-label={`Barattolo ${f.size}`}>
+                      {h.priceFormats.find((p) => p.size === f.size)?.price ?? '—'}
+                    </td>
+                  ))}
+                  <td data-label="Raccolto">{h.harvest.replace(/^Raccolto /, '')}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3">
+        <strong>Quantità importanti:</strong> {site.bulkNote}
+      </p>
+      <p class="mt-3">
+        <strong>{site.honeyComb.name}:</strong> non ha i formati da 500 g e da 1 kg
+        — si prepara in pochi pezzi e solo su prenotazione: chiedicelo.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="prodotti" aria-labelledby="prodotti-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">dalla stessa azienda</span>
+        <h2 id="prodotti-title">Polline, api regine e nuclei d'api</h2>
+        <p>
+          Oltre al miele vendiamo gli altri prodotti del nostro allevamento:
+          polline d'api, api regine e nuclei.
+        </p>
+      </div>
+      <ProductCards cards={otherProducts} />
+    </div>
+  </section>
+
+  <LinkCards
+    id="guide"
+    cards={guideCards}
+    eyebrow="per capirne di più"
+    title="Le guide sul miele"
+    intro="Approfondimenti scritti da chi produce: lavorazione, conservazione e differenze tra i mieli."
+  />
+
+  <Faq id="faq-title" items={faq} eyebrow="domande frequenti sul miele" title="Tutto quello che vuoi sapere" soft />
+
+  <ContactSection
+    eyebrow="il miele è pronto"
+    title="Hai voglia di miele vero?"
+    intro="Chiama o scrivici su WhatsApp per sapere quali mieli sono disponibili e prenotare il ritiro o la consegna."
+  />
+</Base>

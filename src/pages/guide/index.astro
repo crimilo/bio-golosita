@@ -1,0 +1,111 @@
+---
+import Emoji from '../../components/Emoji.astro';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Picture from '../../components/Picture.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import { repartoImages } from '../../data/bee-products';
+import ContactSection from '../../components/ContactSection.astro';
+import { guides } from '../../data/guides';
+import { localBusiness, collectionPage } from '../../lib/schema';
+
+const pathname = '/guide/';
+const heroImg = 'sciame_7';
+const title = 'Guide su Miele e Api, Scritte da Chi Alleva | Bio & Golosità';
+const description =
+  "Guide sull'apicoltura spiegate da chi produce: miele non pastorizzato, cristallizzazione, differenze tra i mieli, nuclei, api regine e polline d'api.";
+
+const crumbs = [{ name: 'Guide', path: pathname }];
+
+const commercialCards = [
+  {
+    href: '/miele/',
+    ...repartoImages.miele,
+    title: 'I nostri mieli',
+    text: 'Acacia, millefiori e castagno: cinque mieli 100% italiani non pastorizzati, con prezzi e formati.',
+  },
+  {
+    href: '/polline-d-api/',
+    ...repartoImages.polline,
+    title: "Polline d'api",
+    text: 'Il polline raccolto dalle nostre api: origine, conservazione e come si usa.',
+  },
+  {
+    href: '/api-regine/',
+    ...repartoImages.apiRegine,
+    title: 'Api regine',
+    text: 'Regine feconde dalla nostra selezione, per rinnovare o avviare un alveare.',
+  },
+  {
+    href: '/nuclei-api/',
+    ...repartoImages.nuclei,
+    title: "Nuclei d'api",
+    text: 'Famiglie già avviate con regina feconda e covata: la via più semplice per iniziare.',
+  },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname={pathname}
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  jsonLd={[
+    localBusiness(),
+    collectionPage({
+      name: 'Guide di Bio & Golosità',
+      description,
+      pathname,
+      items: guides.map((g) => ({ name: g.h1, path: `/guide/${g.slug}/` })),
+    }),
+  ]}
+>
+  <PageHero
+    h1="Guide sul miele, sulle api e sull'alveare"
+    eyebrow="approfondimenti"
+    intro="Le cose che ci chiedono più spesso, scritte per esteso: come si lavora il miele, perché cristallizza, cosa cambia tra un miele e l'altro, cosa serve per iniziare con un alveare. Niente promesse: solo quello che facciamo e vediamo in apiario."
+    crumbs={crumbs}
+    bg={{ base: heroImg, position: '50% 40%', positionMobile: '55% 38%' }}
+  />
+
+  <section class="section" style="padding-top: var(--space-2);" aria-labelledby="tutte">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">tutte le guide</span>
+        <h2 id="tutte">Sei guide, sei domande frequenti</h2>
+      </div>
+      <div class="cards">
+        {
+          guides.map((g) => (
+            <a class="card card--media" href={`/guide/${g.slug}/`}>
+              <div class="card-media">
+                <Picture
+                  base={g.hero.base}
+                  alt={g.hero.alt}
+                  sizes="(min-width: 900px) 30vw, 100vw"
+                  loading="lazy"
+                  zoomable={false}
+                />
+              </div>
+              <h3>{g.h1}</h3>
+              <p>{g.excerpt}</p>
+              <span class="card-link">Leggi la guida · {g.readingTime}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <LinkCards
+    id="prodotti"
+    cards={commercialCards}
+    soft
+    eyebrow="dove trovi i prodotti"
+    title="Le pagine dei nostri prodotti"
+    intro="Se dalle guide vuoi passare ai prodotti, qui trovi prezzi, formati e disponibilità."
+  />
+
+  <ContactSection />
+</Base>

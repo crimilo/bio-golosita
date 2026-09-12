@@ -1,0 +1,192 @@
+---
+import Emoji from '../../../components/Emoji.astro';
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Picture from '../../../components/Picture.astro';
+import HoneyCard from '../../../components/HoneyCard.astro';
+import Faq from '../../../components/Faq.astro';
+import ContactSection from '../../../components/ContactSection.astro';
+import Icons from '../../../components/Icons.astro';
+import { site } from '../../../data/site';
+import { priceLine } from '../../../lib/price';
+import { localBusiness, collectionPage, faqPage } from '../../../lib/schema';
+
+const pathname = '/miele/miele-millefiori/';
+const heroImg = 'prato_fiorito';
+const title = 'Miele Millefiori Italiano Artigianale | Bio & Golosità';
+const description =
+  "Cos'è il miele millefiori e quali produciamo: primaverile, estivo al tiglio e more, estivo al tiglio e ailanto. Di api proprie a Cassano d'Adda.";
+
+const crumbs = [
+  { name: 'I nostri mieli', path: '/miele/' },
+  { name: 'Miele millefiori', path: pathname },
+];
+
+const millefiori = site.honeys.filter((h) => h.slug.startsWith('miele-millefiori-'));
+
+const faq = [
+  {
+    q: 'Il millefiori primaverile e quello estivo sono diversi?',
+    a: 'Sì, molto. Il primaverile si raccoglie tra aprile e maggio, dalle prime fioriture dei frutteti e dei fiori di campo: è più chiaro, delicato e profumato, e cristallizza finemente. Il millefiori estivo arriva tra giugno e luglio: è più scuro, denso e corposo, con note di tiglio e di more selvatiche.',
+  },
+  {
+    q: 'Perché il millefiori cambia gusto da un anno all\'altro?',
+    a: "Perché dipende dalle fioriture: pioggia, temperature e periodo di fioritura cambiano ogni anno, quindi cambiano i nettari che le api raccolgono. È la caratteristica che rende il millefiori il miele più legato al territorio.",
+  },
+  {
+    q: 'Il millefiori cristallizza?',
+    a: 'Sì, come quasi tutti i mieli: è un processo naturale, non un difetto. Il primaverile cristallizza finemente in pochi mesi, i millefiori estivi più lentamente. Per riportarlo liquido, bagnomaria a bassa temperatura.',
+  },
+  {
+    q: 'Quanto costa il miele millefiori?',
+    a: `${millefiori[0] ? priceLine(millefiori[0].priceFormats) : 'Prezzo su richiesta'}. Per ordini superiori a 10 kg prepariamo secchi da 10 kg su preventivo.`,
+  },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname={pathname}
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  jsonLd={[
+    localBusiness(),
+    collectionPage({
+      name: 'Mieli millefiori di Bio & Golosità',
+      description,
+      pathname,
+      items: millefiori.map((h) => ({
+        name: h.name,
+        path: `/miele/${h.slug}/`,
+        image: h.cardImage ?? h.image,
+      })),
+    }),
+    faqPage(faq),
+  ]}
+>
+  <PageHero
+    h1="Miele millefiori italiano"
+    eyebrow="primaverile · estivo al tiglio e more · tiglio e ailanto"
+    intro="Il millefiori è il miele delle fioriture che si incontrano, non di una sola pianta: per questo cambia ogni anno e racconta il territorio meglio di ogni altro miele. Ne produciamo tre, raccolti in momenti diversi della stagione."
+    crumbs={crumbs}
+    bg={{ base: heroImg, height: 'tall', position: '50% 50%', positionMobile: '50% 45%' }}
+  >
+    <div class="contact-cta">
+      <a class="btn btn-primary btn-lg" href={site.phoneHref}>
+        <Icons name="phone" size={20} />
+        Chiama ora
+      </a>
+      <a class="btn btn-ghost btn-lg" href="#millefiori">
+        <Icons name="arrow" size={20} />
+        Vedi i tre millefiori
+      </a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="cos-e">
+    <div class="container">
+      <div class="prose">
+        <span class="eyebrow">che cos'è</span>
+        <h2 id="cos-e">Che cos'è il miele millefiori</h2>
+        <p>
+          Quando parliamo di miele millefiori — o <em>millefiori</em>, come si
+          scrive spesso in etichetta — parliamo di un miele che non ha una pianta
+          di riferimento: le api bottinano su tutte le fioriture disponibili
+          intorno agli apiari. Il risultato è un miele "d'insieme", che non
+          ripete mai esattamente se stesso.
+        </p>
+        <p>
+          È il contrario di un monoflora come il{' '}
+          <a href="/miele/miele-di-acacia/">miele di acacia</a> o il{' '}
+          <a href="/miele/miele-di-castagno/">miele di castagno</a>, dove la
+          fioritura dominante si riconosce nel colore e nel gusto. Nel millefiori
+          si riconosce invece il <strong>periodo</strong>: un millefiori raccolto
+          a maggio non assomiglia a uno raccolto a luglio.
+        </p>
+        <figure class="prose-figure">
+          <Picture
+            base="prato_fiorito"
+            alt="Prato di campagna con fiori spontanei di vari colori"
+            sizes="(min-width: 900px) 46rem, 100vw"
+            loading="lazy"
+          />
+          <figcaption>
+            Il millefiori nasce dall'insieme delle fioriture di un periodo: per
+            questo ogni annata ha il suo profumo
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft" id="millefiori" aria-labelledby="tre-title">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">le nostre produzioni</span>
+        <h2 id="tre-title">I nostri tre mieli millefiori</h2>
+        <p>
+          Tre raccolti diversi per periodo, colore e carattere: trovi la scheda
+          completa di ognuno con raccolto, caratteristiche e prezzo.
+        </p>
+      </div>
+      <div class="honey-grid">
+        {millefiori.map((h) => <HoneyCard honey={h} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="scegliere">
+    <div class="container">
+      <div class="prose">
+        <span class="eyebrow">come scegliere</span>
+        <h2 id="scegliere">Quale millefiori scegliere</h2>
+        <ul>
+          <li>
+            <Icons name="check" size={18} />
+            <span>
+              <strong>Per la colazione di tutti i giorni</strong> e per spalmare
+              sul pane: il{' '}
+              <a href="/miele/miele-millefiori-primaverile/">
+                millefiori primaverile
+              </a>, più chiaro, delicato e cremoso.
+            </span>
+          </li>
+          <li>
+            <Icons name="check" size={18} />
+            <span>
+              <strong>Per la cucina</strong>, i formaggi stagionati e i piatti
+              di carattere: il{' '}
+              <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">
+                millefiori estivo al tiglio e more
+              </a>, più scuro e corposo.
+            </span>
+          </li>
+          <li>
+            <Icons name="check" size={18} />
+            <span>
+              <strong>Per un regalo o per qualcosa di raro:</strong> il{' '}
+              <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">
+                millefiori estivo al tiglio e ailanto
+              </a>, con il retrogusto di pesca che danno i fiori di ailanto.
+            </span>
+          </li>
+        </ul>
+        <p>
+          Se vuoi un confronto più ampio — millefiori contro acacia e castagno —
+          leggi la guida{' '}
+          <a href="/guide/miele-acacia-millefiori-castagno-differenze/">
+            miele di acacia, millefiori o castagno: le differenze
+          </a>
+          . E se ti interessa come lavoriamo il miele, la pagina dei{' '}
+          <a href="/miele/">nostri mieli</a> spiega cosa significa
+          &laquo;non pastorizzato&raquo; nel nostro caso.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Faq id="faq-title" items={faq} eyebrow="domande sul millefiori" title="Domande frequenti" soft />
+
+  <ContactSection />
+</Base>

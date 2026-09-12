@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProseBlocks from '../../components/ProseBlocks.astro';
+import LinkCards from '../../components/LinkCards.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { guides, guideCard } from '../../data/guides';
+import manifest from '../../data/img-manifest.js';
+import { localBusiness, article } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return guides.map((g) => ({ params: { slug: g.slug }, props: { guide: g } }));
+}
+
+const { guide } = Astro.props;
+const pathname = `/guide/${guide.slug}/`;
+
+const crumbs = [
+  { name: 'Guide', path: '/guide/' },
+  { name: guide.h1, path: pathname },
+];
+
+const dateLabel = new Intl.DateTimeFormat('it-IT', {
+  month: 'long',
+  year: 'numeric',
+}).format(new Date(guide.datePublished));
+
+const otherGuides = guides
+  .filter((g) => g.slug !== guide.slug)
+  .slice(0, 3)
+  .map((g) => guideCard(g.slug, g.h1, g.excerpt));
+
+const heroEntry = manifest[guide.hero.base];
+const heroWidth = Math.max(...Object.keys(heroEntry.variants).map(Number));
+const ogImage = `/img/${guide.hero.base}-${heroWidth}-${heroEntry.hash}.avif`;
+const heroImg = guide.hero.base;
+---
+
+<Base
+  title={guide.title}
+  description={guide.description}
+  pathname={pathname}
+  type="article"
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  ogImage={ogImage}
+  jsonLd={[localBusiness(), article(guide, pathname)]}
+>
+  <PageHero
+    h1={guide.h1}
+    eyebrow="guida"
+    intro={guide.excerpt}
+    crumbs={crumbs}
+    bg={{ base: heroImg, position: '50% 45%', positionMobile: '50% 42%' }}
+  />
+
+  {/* La riga con autore e tempo di lettura apriva la pagina attaccata alla hero
+      (0.5rem di padding): serve aria sopra, non solo sotto. */}
+  <section class="section" style="padding-top: var(--space-4);">
+    <div class="container">
+      <p class="article-meta">
+        Tempo di lettura: {guide.readingTime} · Aggiornata a {dateLabel} ·{" "}
+        <a href="/chi-siamo/">Scritta da Raffaele Antoci, apicoltore</a>
+      </p>
+      <div class="prose">
+        <ProseBlocks blocks={guide.blocks} />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="dal produttore"
+    title={guide.push.label}
+    text={guide.push.note}
+    extraLink={{ href: guide.push.href, label: 'Vai alla pagina' }}
+  />
+
+  <LinkCards
+    id="altre-guide"
+    cards={otherGuides}
+    soft
+    eyebrow="continua a leggere"
+    title="Altre guide"
+  />
+
+  <ContactSection />
+</Base>

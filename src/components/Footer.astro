@@ -2,6 +2,29 @@
 import Logo from './Logo.astro';
 import Icons from './Icons.astro';
 import { site } from '../data/site';
+
+/** Solo le voci principali: le varianti di millefiori restano raggiungibili
+ *  dalla pagina /miele/miele-millefiori/ (vedi spec footer). */
+const honeyLinks = [
+  { href: '/miele/', label: 'Tutti i mieli' },
+  { href: '/miele/miele-di-acacia/', label: 'Miele di Acacia' },
+  { href: '/miele/miele-millefiori/', label: 'Miele Millefiori' },
+  { href: '/miele/miele-di-castagno/', label: 'Miele di Castagno' },
+  { href: '/miele/miele-in-favo/', label: 'Miele in Favo' },
+];
+
+const productLinks = [
+  { href: '/polline-d-api/', label: "Polline d'api" },
+  { href: '/api-regine/', label: 'Api regine' },
+  { href: '/nuclei-api/', label: "Nuclei d'api" },
+  { href: '/consegna-miele/', label: 'Consegna miele' },
+];
+
+const infoLinks = [
+  { href: '/guide/', label: 'Guide' },
+  { href: '/chi-siamo/', label: 'Chi siamo' },
+  { href: '/contatti/', label: 'Contatti' },
+];
 ---
 
 <footer class="footer">
@@ -10,8 +33,9 @@ import { site } from '../data/site';
       <div>
         <Logo />
         <p class="mt-2" style="max-width: 30rem;">
-          {site.tagline}. {site.legalName}: miele di api proprie, non pastorizzato,
-          raccolto nelle campagne della Martesana e della Gera d'Adda.
+          Bio &amp; Golosità è un'azienda agricola e apistica di Cassano d'Adda.
+          Produciamo miele artigianale 100% italiano dalle nostre api, con
+          vendita diretta e consegna nelle zone servite.
         </p>
         <ul class="footer-socials" aria-label="Seguici sui social">
           {site.socials.map((s) => (
@@ -27,14 +51,23 @@ import { site } from '../data/site';
       <div>
         <h2 class="footer-heading">I nostri mieli</h2>
         <ul>
-          {site.honeys.map((h) => (
-            <li><a href={`/miele/${h.slug}/`}>{h.name}</a></li>
+          {honeyLinks.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
           ))}
         </ul>
       </div>
 
       <div>
-        <h2 class="footer-heading">Contatti</h2>
+        <h2 class="footer-heading">Prodotti dell'apicoltura</h2>
+        <ul>
+          {productLinks.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="footer-heading">Contatti e info</h2>
         <ul>
           <li>
             <a href={site.phoneHref}>{site.phoneDisplay}</a>
@@ -42,26 +75,18 @@ import { site } from '../data/site';
           <li>
             <a href={site.whatsapp} rel="noopener" target="_blank">WhatsApp</a>
           </li>
-          <li>
-            <a href="/contatti/">Pagina contatti</a>
-          </li>
+          {infoLinks.map((l) => (
+            <li><a href={l.href}>{l.label}</a></li>
+          ))}
         </ul>
-      </div>
-
-      <div>
-        <h2 class="footer-heading">Sede</h2>
-        <address>
-          {site.legalName}
-          <br />
+        <address class="mt-2">
           {site.address.street}
           <br />
           {site.address.zip} {site.address.city} ({site.address.province})
           <br />
-          {site.address.region}, {site.address.country}
+          {site.hours}
           <br />
-          P. IVA {site.vatId}
-          <br />
-          REA MI-{site.rea}
+          P. IVA {site.vatId} · REA MI-{site.rea}
         </address>
       </div>
     </div>
@@ -69,7 +94,8 @@ import { site } from '../data/site';
     <div class="footer-bottom">
       <span>© {new Date().getFullYear()} Bio & Golosità · Antoci Raffaele · Tutti i diritti riservati</span>
       <span>
-        Miele prodotto e confezionato con api proprie · {site.experienceYears} anni di esperienza
+        Miele prodotto e confezionato con api proprie · Apicoltore dal{' '}
+        {site.apicoltoreDal}
       </span>
     </div>
   </div>

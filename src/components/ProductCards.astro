@@ -1,0 +1,54 @@
+---
+import Icons from './Icons.astro';
+import Picture from './Picture.astro';
+import PriceBadge from './PriceBadge.astro';
+
+/**
+ * Griglia di card dei "reparti" (mieli, polline, regine, nuclei, consegna):
+ * foto in alto con l'etichetta prezzo, testo e link. La usano la home e /miele/,
+ * così le due rese restano identiche e nessuna card resta senza immagine.
+ */
+export interface ProductCard {
+  href: string;
+  /** base dell'immagine nel manifest */
+  img: string;
+  alt: string;
+  title: string;
+  text: string;
+  /** se assente (es. pagina di servizio) la card non mostra il prezzo */
+  price?: string | null;
+}
+
+interface Props {
+  cards: ProductCard[];
+  linkLabel?: string;
+  /** larghezze rese dalla griglia `.cards` (auto-fill, min 250px):
+      1 colonna sotto ~520px, 2 fino a 900px, poi 25vw */
+  sizes?: string;
+}
+
+const {
+  cards,
+  linkLabel = 'Scopri di più',
+  sizes = '(min-width: 900px) 25vw, (min-width: 520px) 50vw, 100vw',
+} = Astro.props;
+---
+
+<div class="cards">
+  {
+    cards.map((p) => (
+      <a class="card card--media" href={p.href}>
+        <div class="card-media">
+          <Picture base={p.img} alt={p.alt} sizes={sizes} loading="lazy" zoomable={false} />
+          {p.price && <PriceBadge value={p.price} />}
+        </div>
+        <h3>{p.title}</h3>
+        <p>{p.text}</p>
+        <span class="card-link">
+          {linkLabel}
+          <Icons name="arrow" size={18} />
+        </span>
+      </a>
+    ))
+  }
+</div>

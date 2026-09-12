@@ -5,7 +5,8 @@ import Footer from '../components/Footer.astro';
 import WhatsApp from '../components/WhatsApp.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { site } from '../data/site';
-import manifest from '../data/img-manifest.js';
+import { breadcrumbs } from '../lib/schema';
+import { imgSrcset, imgUrl } from '../lib/images.js';
 import fontCss from '../assets/fonts.css?raw';
 
 interface Props {
@@ -15,8 +16,12 @@ interface Props {
   ogImage?: string;
   type?: string;
   jsonLd?: any[];
-  preloadHero?: boolean;
+  /** base dell'immagine hero da precaricare (evita il doppio download su LCP) */
+  preloadImage?: string;
   robots?: string;
+  /** Percorso di navigazione DOPO la home: Base aggiunge da sé "Home" e
+   *  genera il BreadcrumbList JSON-LD. */
+  crumbs?: { name: string; path: string }[];
 }
 
 const {
@@ -26,15 +31,17 @@ const {
   ogImage = '/og.jpg',
   type = 'website',
   jsonLd = [],
-  preloadHero = false,
+  preloadImage,
   robots = 'index, follow',
+  crumbs,
 } = Astro.props;
+
+const allJsonLd = crumbs
+  ? [...jsonLd, breadcrumbs([{ name: 'Home', path: '/' }, ...crumbs])]
+  : jsonLd;
 
 const canonical = `${site.domain}${pathname}`;
 const ogUrl = `${site.domain}${pathname}`;
-
-const heroBase = 'hero_bg';
-const heroSuffix = manifest[heroBase]?.hash ? `-${manifest[heroBase].hash}` : '';
 ---
 
 <!doctype html>
@@ -69,20 +76,21 @@ const heroSuffix = manifest[heroBase]?.hash ? `-${manifest[heroBase].hash}` : ''
     <style is:inline set:html={fontCss}></style>
 
     {
-      preloadHero && (
-        <>
-          <link
-            rel="preload"
-            as="image"
-            href={`/img/${heroBase}-800${heroSuffix}.avif`}
-            fetchpriority="high"
-          />
-        </>
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          type="image/avif"
+          imagesrcset={imgSrcset(preloadImage, 'avif')}
+          imagesizes="100vw"
+          href={imgUrl(preloadImage, { ext: 'avif' })}
+          fetchpriority="high"
+        />
       )
     }
 
     {
-      jsonLd.map((obj) => (
+      allJsonLd.map((obj) => (
         <script type="application/ld+json" set:html={JSON.stringify(obj)} />
       ))
     }

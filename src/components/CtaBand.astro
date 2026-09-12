@@ -1,0 +1,52 @@
+---
+import Icons from './Icons.astro';
+import { site } from '../data/site';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  text: string;
+  extraLink?: { href: string; label: string };
+  whatsappLabel?: string;
+}
+
+const { eyebrow, title, text, extraLink, whatsappLabel = 'WhatsApp' } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <span class="eyebrow" style="color:#ffe9bf;">{eyebrow}</span>
+      <h2>{title}</h2>
+      <p>{text}</p>
+      <div class="contact-cta" style="justify-content:center;">
+        <a class="btn btn-light btn-lg" href={site.phoneHref}>
+          <Icons name="phone" size={20} />
+          Chiama ora
+        </a>
+        <a
+          class="btn btn-ghost btn-lg"
+          style="border-color:#ffe9bf;color:#ffe9bf;"
+          href={site.whatsapp}
+          target="_blank"
+          rel="noopener"
+        >
+          <Icons name="whatsapp" size={20} />
+          {whatsappLabel}
+        </a>
+        {
+          extraLink && (
+            <a
+              class="btn btn-ghost btn-lg"
+              style="border-color:#ffe9bf;color:#ffe9bf;"
+              href={extraLink.href}
+            >
+              <Icons name="arrow" size={20} />
+              {extraLink.label}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

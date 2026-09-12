@@ -1,0 +1,58 @@
+---
+import Picture from './Picture.astro';
+import VideoFigure from './VideoFigure.astro';
+import type { GalleryPhoto } from '../lib/types';
+
+interface VideoItem {
+  src: string;
+  poster: string;
+  label: string;
+  cls?: string;
+  link?: { href: string; label: string };
+}
+
+interface Props {
+  id: string;
+  photos: GalleryPhoto[];
+  /** video mostrati nella stessa griglia, dopo le foto */
+  videos?: VideoItem[];
+  /** colonne della griglia su schermo largo: 2 (default) o 3 */
+  columns?: number;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  soft?: boolean;
+}
+
+const { id, photos, videos = [], columns = 2, eyebrow, title, intro, soft = false } = Astro.props;
+---
+
+<section class={`section${soft ? ' section--soft' : ''}`} aria-labelledby={id}>
+  <div class="container">
+    {
+      title && (
+        <div class="section-head">
+          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+          <h2 id={id}>{title}</h2>
+          {intro && <p>{intro}</p>}
+        </div>
+      )
+    }
+    <div class={`gallery-grid${columns === 3 ? ' gallery-grid--three' : ''}`}>
+      {
+        photos.map((p) => (
+          <figure class={`g-item ${p.cls ?? 'g-item--square'}`} style="margin:0;">
+            <Picture base={p.base} alt={p.alt} sizes="(min-width:900px) 33vw, 50vw" />
+            {p.caption && <figcaption class="g-caption">{p.caption}</figcaption>}
+          </figure>
+        ))
+      }
+
+      {
+        videos.map((v) => (
+          <VideoFigure src={v.src} poster={v.poster} label={v.label} cls={v.cls} link={v.link} />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,201 @@
+---
+import Emoji from '../../components/Emoji.astro';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Picture from '../../components/Picture.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icons from '../../components/Icons.astro';
+import { site } from '../../data/site';
+import { localBusiness, faqPage, deliveryService } from '../../lib/schema';
+
+const pathname = '/consegna-miele/';
+const heroImg = 'miele_versare';
+const title = 'Consegna Miele a Domicilio in Martesana | Bio & Golosità';
+const description =
+  "Come funziona la consegna del miele a domicilio tra Cassano d'Adda, Martesana, Gera d'Adda, Milano Est e Bergamasca: zone servite, tempi e ritiro.";
+
+const crumbs = [{ name: 'Consegna miele', path: pathname }];
+
+const faq = [
+  {
+    q: 'La consegna del miele è gratuita?',
+    a: "In molti casi sì: dipende dall'ordine e dalla zona. Non abbiamo una tariffa fissa, perché ogni consegna la organizziamo su misura. Dicci dove sei e cosa ti serve: ti diciamo subito se la consegna è gratuita.",
+  },
+  {
+    q: 'Quanto tempo ci vuole per ricevere il miele?',
+    a: 'Di solito organizziamo in pochi giorni, anche per un ordine urgente: i tempi dipendono dalla zona e dal periodo. Chiama o scrivi e ti diciamo subito quando possiamo consegnare.',
+  },
+  {
+    q: 'Posso ordinare quantità importanti o per un negozio?',
+    a: "Sì. Per ordini superiori a 10 kg prepariamo secchi da 10 kg su preventivo. Se hai un negozio, un agriturismo o un ristorante, parliamone: valutiamo formati, prezzi e tempi.",
+  },
+  {
+    q: 'Consegnate anche polline, api regine e nuclei?',
+    a: 'Sì, miele e polline si consegnano a domicilio. Per api regine e nuclei la consegna si concorda caso per caso, perché sono prodotti stagionali e delicati da trasportare.',
+  },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname={pathname}
+  crumbs={crumbs}
+  preloadImage={heroImg}
+  jsonLd={[
+    localBusiness(),
+    deliveryService({
+      pathname,
+      name: 'Consegna a domicilio del miele e dei prodotti dell\'alveare',
+      description,
+    }),
+    faqPage(faq),
+  ]}
+>
+  <PageHero
+    h1="Consegna del miele a domicilio in Martesana e Milano Est"
+    eyebrow="consegna e ritiro · Cassano d'Adda"
+    intro="Consegniamo il miele a casa tua, nella Martesana, nella Gera d'Adda e fino a Milano Est. In molti casi la consegna è gratuita, e per chi preferisce c'è il ritiro in azienda su appuntamento."
+    crumbs={crumbs}
+    bg={{ base: heroImg, position: '50% 45%', positionMobile: '50% 45%' }}
+  >
+    <div class="contact-cta">
+      <a class="btn btn-primary btn-lg" href={site.phoneHref}>
+        <Icons name="phone" size={20} />
+        Chiama ora
+      </a>
+      <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
+        <Icons name="whatsapp" size={20} />
+        Scrivici su WhatsApp
+      </a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="come-funziona">
+    <div class="container split">
+      <div class="split-text">
+        <span class="eyebrow">come funziona</span>
+        <h2 id="come-funziona">Tre passi per ricevere il miele</h2>
+        <p>
+          Non c'è un carrello da riempire né un form da compilare: la consegna
+          si organizza parlando.
+        </p>
+        <ul>
+          <li>
+            <Icons name="check" size={20} />
+            <span>
+              <strong>1. Chiama o scrivi su WhatsApp.</strong> Dicci quale miele
+              ti serve, in quali formati e dove ti trovi.
+            </span>
+          </li>
+          <li>
+            <Icons name="check" size={20} />
+            <span>
+              <strong>2. Ti confermiamo disponibilità e prezzo.</strong> Se la
+              consegna è gratuita te lo diciamo subito.
+            </span>
+          </li>
+          <li>
+            <Icons name="check" size={20} />
+            <span>
+              <strong>3. Consegna a domicilio in zona o ritiro su appuntamento.</strong>{' '}
+              Scegli la soluzione più comoda.
+            </span>
+          </li>
+        </ul>
+      </div>
+      <figure class="split-media">
+        <Picture
+          base="miele_colazione"
+          alt="Miele servito su un tagliere con pane, formaggio e mandorle"
+          sizes="(min-width: 900px) 45vw, 100vw"
+          loading="lazy"
+        />
+        <figcaption>Il miele arriva a casa tua, pronto da aprire</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--soft" aria-labelledby="zone">
+    <div class="container">
+      <div class="section-head center" style="margin-inline:auto;">
+        <span class="eyebrow">zone servite</span>
+        <h2 id="zone">Dove consegniamo il miele</h2>
+        <p>
+          Siamo a Cassano d'Adda, al confine tra le province di Milano, Bergamo,
+          Cremona e Lodi: da qui copriamo la Martesana, la Gera d'Adda e Milano
+          Est.
+        </p>
+      </div>
+      <div class="cards">
+        {
+          site.deliveryZones.map((z) => (
+            <div class="card">
+              <h3>{z.name}</h3>
+              <ul class="chips">
+                {z.towns.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-3" style="text-align:center;">
+        Sei poco fuori da queste zone? Chiedici comunque: valuta la zona e
+        dicci cosa ti serve.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="ritiro">
+    <div class="container">
+      <div class="prose">
+        <span class="eyebrow">in alternativa</span>
+        <h2 id="ritiro">Ritiro in azienda su appuntamento</h2>
+        <p>
+          {site.address.street} — {site.address.zip} {site.address.city} (
+          {site.address.province}), a pochi minuti da Trezzo sull'Adda, Vaprio
+          d'Adda e Fara Gera d'Adda. Il ritiro è su <strong>appuntamento</strong>:
+          chiama o scrivi prima di passare, così ti aspettiamo con i barattoli
+          pronti e non rischi di trovare l'azienda chiusa perché siamo in
+          apiario.
+        </p>
+        <p>
+          Se vieni a ritirare puoi anche vedere da vicino com'è fatto il nostro
+          lavoro: nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo la
+          storia dell'azienda, e nelle guide trovi gli approfondimenti su{' '}
+          <a href="/guide/miele-non-pastorizzato-cosa-significa/">
+            miele non pastorizzato
+          </a>{' '}
+          e{' '}
+          <a href="/guide/perche-il-miele-cristallizza/">
+            cristallizzazione
+          </a>
+          .
+        </p>
+      </div>
+      <div class="map-card mt-4">
+        <iframe
+          src={site.googleMapsEmbedUrl}
+          height="340"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Mappa: ${site.name}, ${site.address.street}, ${site.address.zip} ${site.address.city} (${site.address.province})`}
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <Faq id="faq-title" items={faq} eyebrow="domande sulla consegna" title="Domande frequenti sulla consegna" soft />
+
+  <CtaBand
+    eyebrow="consegna in zona"
+    title="Dicci dove sei: ti diciamo subito se la consegna è gratuita"
+    text="Una chiamata di trenta secondi e sappiamo cosa portarti, quando e come."
+    extraLink={{ href: '/miele/', label: 'Vedi prezzi e formati' }}
+  />
+
+</Base>

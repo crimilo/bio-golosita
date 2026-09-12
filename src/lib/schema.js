@@ -1,10 +1,6 @@
-import { site } from '../data/site.js';
+import { site, honeyProducts } from '../data/site.js';
+import { entryFormat, priceAmount } from './price.js';
 import manifest from '../data/img-manifest.js';
-
-export const priceNum = (priceStr) => {
-  const m = priceStr.match(/\d+[.,]\d+/);
-  return m ? Number.parseFloat(m[0].replace(',', '.')) : 9;
-};
 
 const imgUrl = (base) => {
   const entry = manifest[base];
@@ -21,7 +17,25 @@ const areaServedType = (name) => {
 const businessDescription = () =>
   `Apicoltore a Cassano d'Adda (Milano): miele 100% italiano e artigianale di api proprie — ${site.honeys
     .map((h) => h.name.toLowerCase().replace(/^(miele\s+)?(di\s+)?/, ''))
-    .join(', ')} — non pastorizzato e smielato a freddo.`;
+    .join(', ')} — non pastorizzato e smielato a freddo. Produciamo anche polline d'api, api regine e nuclei d'api.`;
+
+/** L'apicoltore, come entità Person (E-E-A-T). */
+export function person() {
+  return {
+    '@type': 'Person',
+    name: site.owner,
+    jobTitle: 'Apicoltore',
+    url: `${site.domain}/chi-siamo/`,
+    worksFor: { '@type': 'Organization', name: site.legalName },
+    knowsAbout: [
+      'Apicoltura',
+      "Miele italiano di produzione propria",
+      "Polline d'api",
+      'Allevamento di api regine',
+      "Nuclei d'api",
+    ],
+  };
+}
 
 export function localBusiness() {
   return {
@@ -40,7 +54,7 @@ export function localBusiness() {
     logo: `${site.domain}/favicon.svg`,
     priceRange: site.priceRange,
     foundingDate: String(site.founded),
-    founder: { '@type': 'Person', name: site.owner },
+    founder: person(),
     address: {
       '@type': 'PostalAddress',
       streetAddress: site.address.street,
@@ -57,47 +71,204 @@ export function localBusiness() {
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        opens: '09:00',
-        closes: '19:00',
+        dayOfWeek: [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday',
+        ],
+        opens: '08:00',
+        closes: '20:00',
       },
     ],
     areaServed: site.areaServed.map((name) => ({ '@type': areaServedType(name), name })),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Mieli Bio & Golosità',
-      itemListElement: site.honeys.map((h) => ({
-        '@type': 'Offer',
-        name: h.name,
-        image: imgUrl(h.cardImage ?? h.image),
-        url: `${site.domain}/miele/${h.slug}/`,
-        priceCurrency: 'EUR',
-        price: priceNum(h.price),
+      itemListElement: honeyProducts.map((h) => {
+        const price = priceAmount(entryFormat(h.priceFormats)?.price);
+        return {
+          '@type': 'Offer',
+          name: h.name,
+          image: imgUrl(h.cardImage ?? h.image),
+          url: `${site.domain}/miele/${h.slug}/`,
+          priceCurrency: 'EUR',
+          // niente prezzo inventato: se nei dati manca, l'offerta resta senza
+          ...(price != null ? { price } : {}),
+        };
+      }),
+    },
+  };
+}
+
+/**
+ * Product schema.
+ *
+ * - **Più formati di vendita** (`priceFormats`: i mieli, 500 g e 1 kg) →
+ *   `ProductGroup` con `hasVariant`: una `Product` per formato, ognuna con la
+ *   sua `Offer`, `size` e uno `sku` stabile. È la forma che Google chiede per un
+ *   prodotto con varianti sulla stessa pagina
+ *   (developers.google.com/search/docs/appearance/structured-data/product-variants).
+ * - **Un solo formato** (polline, api regine, nuclei) → `Product` con la sua
+ *   `Offer`, `size` incluso quando c'è (`item.formato`).
+ *
+ * Se il prezzo non è pubblicato (`prezzo: null`) l'offerta viene omessa: meglio
+ * nessun prezzo che un prezzo inventato. Lo stesso vale per il numero: si legge
+ * da `priceFormats`/`prezzo` con `priceAmount`, che torna `null` se non trova
+ * cifre. Lo `sku` delle varianti è derivato da slug + formato (`miele-di-acacia-500g`):
+ * un identificatore stabile, non un codice di magazzino inventato sul prodotto.
+ */
+export function product(item, pathname, { category } = {}) {
+  const url = `${site.domain}${pathname}`;
+  // Immagini del prodotto: la principale e, se c'è, quelle della galleria (per
+  // il miele in favo è la sequenza di foto ricavate dal video). Google accetta
+  // più URL nello stesso campo `image`.
+  const images = [
+    imgUrl(item.cardImage ?? item.image),
+    ...(item.gallery ?? []).map((g) => imgUrl(g.base)),
+  ];
+  const description = item.description ?? item.intro?.slice(0, 200);
+  const formats = item.priceFormats ?? [];
+
+  /** Offerta uguale per tutte le varianti: cambia solo il prezzo. */
+  const offer = (price) => ({
+    '@type': 'Offer',
+    url,
+    priceCurrency: 'EUR',
+    price,
+    ...(site.priceValidUntil ? { priceValidUntil: site.priceValidUntil } : {}),
+    availability: 'https://schema.org/InStock',
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: { '@type': 'Organization', name: site.legalName },
+  });
+
+  if (formats.length > 1) {
+    const group = {
+      '@context': 'https://schema.org',
+      '@type': 'ProductGroup',
+      name: `${item.name} — ${site.name}`,
+      description,
+      url,
+      brand: { '@type': 'Brand', name: site.name },
+      productGroupID: item.slug,
+      variesBy: ['https://schema.org/size'],
+      hasVariant: formats.map((f) => {
+        const price = priceAmount(f.price);
+        return {
+          '@type': 'Product',
+          name: `${item.name} ${f.size} — ${site.name}`,
+          sku: `${item.slug}-${f.size.replace(/\s+/g, '')}`,
+          size: f.size,
+          image: images,
+          description,
+          manufacturer: { '@type': 'Organization', name: site.legalName },
+          ...(price != null ? { offers: offer(price) } : {}),
+        };
+      }),
+    };
+    if (category) group.category = category;
+    return group;
+  }
+
+  const out = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `${item.name} — ${site.name}`,
+    image: images,
+    description,
+    brand: { '@type': 'Brand', name: site.name },
+    manufacturer: { '@type': 'Organization', name: site.legalName },
+  };
+  const size = formats[0]?.size ?? item.formato;
+  if (size) out.size = size;
+  if (category) out.category = category;
+  // `priceFormats` (mieli) oppure `prezzo`/`price` (prodotti dell'allevamento)
+  const price = priceAmount(formats[0]?.price ?? item.prezzo ?? item.price);
+  if (price != null) out.offers = offer(price);
+  return out;
+}
+
+/** Pagina-hub che elenca prodotti o contenuti (es. /miele/, /guide/). */
+export function collectionPage({ name, description, pathname, items }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name,
+    description,
+    url: `${site.domain}${pathname}`,
+    inLanguage: 'it-IT',
+    isPartOf: { '@type': 'WebSite', name: site.name, url: `${site.domain}/` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: items.length,
+      itemListElement: items.map((it, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: it.name,
+        url: `${site.domain}${it.path}`,
+        ...(it.image ? { image: imgUrl(it.image) } : {}),
       })),
     },
   };
 }
 
-export function product(honey, pathname) {
+export function article(guide, pathname) {
   const url = `${site.domain}${pathname}`;
   return {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: `${honey.name} — Bio & Golosità`,
-    image: [imgUrl(honey.cardImage ?? honey.image)],
-    description: honey.intro.slice(0, 200),
-    brand: { '@type': 'Brand', name: site.name },
-    manufacturer: { '@type': 'Organization', name: site.legalName },
-    offers: {
-      '@type': 'Offer',
-      url,
-      priceCurrency: 'EUR',
-      price: priceNum(honey.price),
-      priceValidUntil: '2027-12-31',
-      availability: 'https://schema.org/InStock',
-      itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@type': 'Organization', name: site.legalName },
+    '@type': 'Article',
+    headline: guide.h1,
+    description: guide.description,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: [imgUrl(guide.hero.base)],
+    inLanguage: 'it-IT',
+    datePublished: guide.datePublished,
+    dateModified: guide.dateModified ?? guide.datePublished,
+    author: person(),
+    publisher: {
+      '@type': 'Organization',
+      name: site.legalName,
+      url: `${site.domain}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${site.domain}/favicon.svg`,
+      },
     },
+  };
+}
+
+/** Servizio di consegna a domicilio, per la pagina /consegna-miele/. */
+export function deliveryService({ pathname, name, description }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    description,
+    url: `${site.domain}${pathname}`,
+    serviceType: 'Consegna a domicilio',
+    provider: { '@type': 'LocalBusiness', '@id': `${site.domain}/#azienda` },
+    availableChannel: {
+      '@type': 'ServiceChannel',
+      servicePhone: { '@type': 'ContactPoint', telephone: site.phoneDisplay },
+      serviceUrl: site.whatsapp,
+    },
+    areaServed: site.areaServed.map((n) => ({ '@type': areaServedType(n), name: n })),
+  };
+}
+
+/** Pagina "chi siamo" come AboutPage con l'apicoltore come entità principale. */
+export function aboutPage(pathname) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    url: `${site.domain}${pathname}`,
+    inLanguage: 'it-IT',
+    mainEntity: person(),
+    about: { '@type': 'LocalBusiness', '@id': `${site.domain}/#azienda` },
   };
 }
 
