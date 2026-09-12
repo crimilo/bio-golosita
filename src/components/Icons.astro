@@ -8,6 +8,7 @@ export type IconName =
   | 'pin'
   | 'clock'
   | 'arrow'
+  | 'arrow-down'
   | 'arrow-up-right'
   | 'check'
   | 'star'
@@ -33,6 +34,9 @@ const icons = {
     '<path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.344-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/>',
   clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
   arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  // Freccia verso il basso: per le CTA che portano a una sezione più in basso
+  // nella stessa pagina (es. l'hero di /miele/ verso "I nostri mieli").
+  'arrow-down': '<path d="M12 5v14"/><path d="m6 13 6 6 6-6"/>',
   // Freccia diagonale (in alto a destra): segnala che il link porta fuori dal
   // sito, in una nuova scheda. Va messa DOPO il testo, non prima.
   'arrow-up-right': '<path d="M7 7h10v10"/><path d="M7 17 17 7"/>',
