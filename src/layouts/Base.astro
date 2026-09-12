@@ -36,9 +36,12 @@ const {
   crumbs,
 } = Astro.props;
 
-const allJsonLd = crumbs
-  ? [...jsonLd, breadcrumbs([{ name: 'Home', path: '/' }, ...crumbs])]
-  : jsonLd;
+// `.filter(Boolean)`: `product()` torna `null` quando non c'è un'offerta da
+// pubblicare (niente prezzo pubblicato), così la pagina non emette un nodo
+// Product che Google segnala come item non valido.
+const allJsonLd = (
+  crumbs ? [...jsonLd, breadcrumbs([{ name: 'Home', path: '/' }, ...crumbs])] : jsonLd
+).filter(Boolean);
 
 const canonical = `${site.domain}${pathname}`;
 const ogUrl = `${site.domain}${pathname}`;

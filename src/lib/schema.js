@@ -115,11 +115,17 @@ export function localBusiness() {
  * - **Un solo formato** (polline, api regine, nuclei) → `Product` con la sua
  *   `Offer`, `size` incluso quando c'è (`item.formato`).
  *
- * Se il prezzo non è pubblicato (`prezzo: null`) l'offerta viene omessa: meglio
- * nessun prezzo che un prezzo inventato. Lo stesso vale per il numero: si legge
- * da `priceFormats`/`prezzo` con `priceAmount`, che torna `null` se non trova
+ * Se il prezzo non è pubblicato (`prezzo: null`) la funzione torna `null`: senza
+ * prezzo non c'è `offers`, e un `Product` senza `offers`, `review` né
+ * `aggregateRating` è un **item non valido** per Google
+ * (developers.google.com/search/docs/appearance/structured-data/product-snippet),
+ * che lo segnala in Search Console. Meglio omettere del tutto il nodo — e non
+ * inventare un prezzo — che pubblicarne uno invalido. Il numero si legge da
+ * `priceFormats`/`prezzo` con `priceAmount`, che torna `null` se non trova
  * cifre. Lo `sku` delle varianti è derivato da slug + formato (`miele-di-acacia-500g`):
  * un identificatore stabile, non un codice di magazzino inventato sul prodotto.
+ *
+ * I chiamanti devono scartare il `null` (lo fa già `Base.astro`).
  */
 export function product(item, pathname, { category } = {}) {
   const url = `${site.domain}${pathname}`;
@@ -146,6 +152,25 @@ export function product(item, pathname, { category } = {}) {
   });
 
   if (formats.length > 1) {
+    const variants = formats.map((f) => {
+      const price = priceAmount(f.price);
+      return {
+        '@type': 'Product',
+        name: `${item.name} ${f.size} — ${site.name}`,
+        sku: `${item.slug}-${f.size.replace(/\s+/g, '')}`,
+        size: f.size,
+        image: images,
+        description,
+        manufacturer: { '@type': 'Organization', name: site.legalName },
+        ...(price != null ? { offers: offer(price) } : {}),
+      };
+    });
+    // Nessuna variante con un'offerta → il ProductGroup resterebbe senza
+    // `offers`: item non valido, quindi non lo emettiamo. Le varianti senza
+    // prezzo vengono scartate una per una, così un ProductGroup resta valido
+    // anche quando solo alcuni formati hanno un prezzo pubblicato.
+    const priced = variants.filter((v) => 'offers' in v);
+    if (priced.length === 0) return null;
     const group = {
       '@context': 'https://schema.org',
       '@type': 'ProductGroup',
@@ -155,19 +180,7 @@ export function product(item, pathname, { category } = {}) {
       brand: { '@type': 'Brand', name: site.name },
       productGroupID: item.slug,
       variesBy: ['https://schema.org/size'],
-      hasVariant: formats.map((f) => {
-        const price = priceAmount(f.price);
-        return {
-          '@type': 'Product',
-          name: `${item.name} ${f.size} — ${site.name}`,
-          sku: `${item.slug}-${f.size.replace(/\s+/g, '')}`,
-          size: f.size,
-          image: images,
-          description,
-          manufacturer: { '@type': 'Organization', name: site.legalName },
-          ...(price != null ? { offers: offer(price) } : {}),
-        };
-      }),
+      hasVariant: priced,
     };
     if (category) group.category = category;
     return group;
@@ -187,7 +200,10 @@ export function product(item, pathname, { category } = {}) {
   if (category) out.category = category;
   // `priceFormats` (mieli) oppure `prezzo`/`price` (prodotti dell'allevamento)
   const price = priceAmount(formats[0]?.price ?? item.prezzo ?? item.price);
-  if (price != null) out.offers = offer(price);
+  // Niente prezzo → niente `offers` → `Product` non valido per Google: la
+  // pagina resta senza nodo Product (meglio che un item segnalato come invalido).
+  if (price == null) return null;
+  out.offers = offer(price);
   return out;
 }
 
