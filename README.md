@@ -352,7 +352,12 @@ un prezzo reale (`priceAmount`, niente valori di ripiego) — `CollectionPage` +
 `ItemList`, `Article`, `Service` (consegne), `AboutPage`, `FAQPage`,
 `BreadcrumbList` (generato da `Base.astro` dal prop `crumbs`)
 - `sitemap.xml` generato a fine build dalle pagine reali (`src/integrations/sitemap.mjs`),
-`robots.txt`, `_redirects` con www → dominio canonico
+`robots.txt`, `_redirects`
+- Il redirect **www → dominio canonico non sta in `_redirects`**: i Worker con
+static assets accettano solo percorsi relativi e il deploy rifiuta le regole a
+livello di dominio (code 100324), quindi la riga va lasciata fuori. Il redirect
+è una Redirect Rule di Cloudflare che gira *davanti* al Worker e conserva
+percorso e query string
 - Immagini AVIF/WebP con `width`/`height`, lazy load (LCP escluso), font WOFF2
   subsettati (latin, senza `unicode-range`: bug WebKit su iOS Safari) con `font-display: swap`
 

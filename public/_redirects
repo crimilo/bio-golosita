@@ -1,3 +1,16 @@
-# Dominio canonico: niente www. Il redirect http -> https è gestito da
-# Cloudflare (SSL/TLS > Always Use HTTPS).
-https://www.bioegolosita.it/* https://bioegolosita.it/:splat 301
+# Redirect per gli asset statici del Worker.
+#
+# Qui valgono SOLO percorsi relativi: le regole a livello di dominio non sono
+# supportate da _redirects e il deploy le rifiuta ("Only relative URLs are
+# allowed", code 100324). La vecchia riga `www.bioegolosita.it/* -> dominio
+# canonico` è stata tolta proprio per questo: faceva fallire il deploy e non
+# serviva a niente.
+#
+# Il redirect www -> dominio canonico è già attivo, ma sta fuori da questo file:
+# è una regola di Cloudflare (Rules > Redirect Rules, o Bulk Redirects) che gira
+# DAVANTI al Worker e conserva percorso e query string. Verificato sul dominio:
+#   www.bioegolosita.it/miele/miele-di-acacia/  ->  301 verso lo stesso percorso
+#   www.bioegolosita.it/guide/?x=1              ->  301 conservando ?x=1
+#
+# Formato delle regole, se servissero in futuro (percorsi relativi, una per riga):
+#   /vecchio/ /nuovo/ 301
