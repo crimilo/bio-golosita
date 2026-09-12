@@ -483,7 +483,7 @@ export const site = {
     image: 'miele_in_favo',
     color: '#f0c96b',
     priceFormats: [],
-    title: "Miele in Favo | Favo di Miele delle Nostre Api, Cassano d'Adda",
+    title: 'Miele in Favo Italiano Artigianale | Bio & Golosità',
     description:
       "Miele in favo delle nostre api a Cassano d'Adda: favo intero con la sua cera, non pastorizzato né scaldato. Vendita diretta e consegna in zona.",
     heroIntro:
