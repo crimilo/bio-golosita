@@ -3,7 +3,8 @@
 Sito dell'azienda apistica **Bio & Golosità di Antoci Raffaele** — miele di api
 proprie a Cassano d'Adda (MI), provincia di Milano.
 
-Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Pages**.
+Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
+(static assets) — `wrangler deploy` con `wrangler.jsonc`, non Pages.
 
 ## Pagine
 
@@ -33,9 +34,14 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Pages**.
 bun install
 bun run dev          # sviluppo su localhost:4321
 bun run build        # build statica in dist/
-bun run assets       # rigenera font, immagini, poster, favicon
-bun run deploy       # build + publish su Cloudflare Pages (progetto: bio-golosita)
+bun run assets       # rigenera font, immagini, poster, favicon — servono i sorgenti in root, che NON sono nel repo (vedi "Immagini")
+bun run deploy       # build + `wrangler deploy` del Worker `bio-golosita` (static assets da ./dist)
 ```
+
+Un `git push` su `main` fa partire da solo il build di Cloudflare Builds
+(`bun run build` + `npx wrangler deploy`): non serve deployare a mano, e **una
+build rotta non pubblica niente** — le API di Workers rifiutano l'intero
+rilascio, quindi gli asset nuovi restano invisibili finché non passa.
 
 ## Struttura
 
@@ -294,7 +300,10 @@ scritta non renderizza, vedi QA).
       scheda Google (non vanno stimati).
       Le nuove recensioni si aggiungono in `src/data/site.js` → `reviews`.
 - [ ] **Partita IVA / REA**: aggiungerli nel footer quando disponibili
-- [ ] **Dominio**: aggiungere `bioegolosita.it` come custom domain su Cloudflare Pages
+- [x] **Dominio**: `bioegolosita.it` è il custom domain del Worker `bio-golosita`.
+      Il redirect **www → dominio canonico** è una Redirect Rule di Cloudflare che
+      gira *davanti* al Worker (conserva percorso e query string) e **non** una
+      riga di `_redirects`: lì valgono solo percorsi relativi, vedi “QA”.
 - [x] **Google Maps**: scheda attiva — embed della mappa e CTA ("Apri su
       Google Maps", "Vedi su Google Maps") e `hasMap`/`sameAs`
       del JSON-LD puntano alla scheda Google Business Profile
@@ -443,9 +452,19 @@ esecuzione. Conseguenze da sapere:
   ogni anteprima dei link — e le favicon (`favicon-*.png`, `apple-touch-icon.png`,
   `favicon.ico`, `logo.svg`).
 
-I sorgenti in root vengono processati da `scripts/process-images.mjs` e
-`scripts/posters.mjs` (le sorgenti jpg dei poster stanno in root, non in
-`public/`, così non vengono servite).
+**I sorgenti delle immagini non sono nel repo.** Il commit *Project cleanup*
+(`8a80489`) ha tolto da git **e dal disco** i 36 file sorgente — le foto
+originali del titolare, `apiari-hd.png`, `hero-bg.jpg`, le sorgenti jpg dei
+poster, `miele-in-favo-*.avif` — per non caricare il repo di decine di MB;
+`.gitignore` non li nomina, quindi non rientrano da soli in un `git add -A`.
+Gli script di pipeline (`process-images.mjs`, `posters.mjs`, `favicons.mjs`) li
+cercano ancora in root, quindi **`bun run assets` non gira** finché non si
+ripescano dalla storia (`git checkout a38161c -- <file>`) o dalle copie del
+titolare. La build non ne ha bisogno: usa gli AVIF già in `public/img/` e
+`src/data/img-manifest.js`.
+
+Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
+*root* si intende il nome del file di partenza, non un file presente nel repo.
 
 - `miele_acacia.jpg`, `miele_castagno.jpg`, `miele_millefiori_tiglio_e_alianto.jpg`
   e `miele_millefiori_tiglio_e_more.jpg` — foto originali del titolare

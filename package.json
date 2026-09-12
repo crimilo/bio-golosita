@@ -11,7 +11,7 @@
 		"preview": "astro build && astro preview",
 		"astro": "astro",
 		"assets": "node scripts/fetch-fonts.mjs && node scripts/process-images.mjs && node scripts/posters.mjs && node scripts/favicons.mjs",
-		"deploy": "astro build && wrangler pages deploy dist --project-name bio-golosita"
+		"deploy": "astro build && wrangler deploy"
 	},
 	"dependencies": {
 		"astro": "^7.3.0"
