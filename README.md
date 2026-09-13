@@ -20,7 +20,7 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 | `/miele/miele-di-castagno/` | Landing SEO Miele di Castagno |
 | `/miele/miele-in-favo/` | **Miele in favo**: il miele lasciato nella sua cera, con video |
 | `/polline-d-api/` | **Polline d'api**: prodotto, origine, conservazione, FAQ, **video dell'impollinazione** |
-| `/api-regine/` | **Api regine**: regine feconde già in deposizione, linea Buckfast (F1 da madre F0), disponibilità, prenotazione, FAQ, **video di nascita e marcatura della regina + quello della regina F1 sulle covate** |
+| `/api-regine/` | **Api regine**: regine feconde già in deposizione, linea Buckfast (F1 da madre F0), disponibilità, prenotazione, FAQ, **video della regina F1 sulle covate nel testo** e sezione finale **solo video** (nascita, marcatura, regina con le sue api attorno) |
 | `/nuclei-api/` | **Nuclei d'api**: struttura dei singoli mieli (prodotto → scheda → tracciabilità → foto → FAQ → altri prodotti), nucleo vs sciame vs pacco d'api, disponibilità, trasporto, **video delle api che si creano lo spazio** |
 | `/consegna-miele/` | **Consegna**: come funziona, zone servite, ritiro in sede, map |
 | `/guide/` | **Hub guide**: 6 approfondimenti collegati alle pagine commerciali |
@@ -496,8 +496,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   stessa foto della regina non compare due volte nella pagina.
 - `arnia-piena-di-api.jpg` (root) — foto di un'arnia piena di api, ottimizzata in
   `public/img/arnia_piena_di_api-*`: è la foto della card dei nuclei (home e
-  `/miele/`), una foto nel testo di `/miele/` e una nella gallery di
-  `/api-regine/`. `arnia-piena-di-api2.jpg` non è più usata (sul blocco prodotto
+  `/miele/`) e una foto nel testo di `/miele/`. `arnia-piena-di-api2.jpg` non è più usata (sul blocco prodotto
   di `/nuclei-api/` c'è `sciame_4`): le sue varianti non si generano più, basta
   rimettere la riga in `scripts/process-images.mjs` per riaverla.
 - `miele-in-favo.png` (root, 1264×1188, quasi quadrata) — foto originale del

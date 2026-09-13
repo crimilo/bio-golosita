@@ -233,9 +233,11 @@ export const apiRegine = {
     },
   ],
 
-  // Gallery: nessuna foto ripetuta. La regina è già nel blocco prodotto e le api
-  // nel testo (`api`), quindi qui restano le arnie, l'apiario e il lavoro in
-  // apiario (il vecchio telaio in mano è stato tolto dal sito).
+  // Foto della galleria della pagina. Da quando la sezione in fondo mostra solo
+  // i tre video delle regine (nascita, marcatura, regina con le api attorno)
+  // **non si vedono più in pagina** e non finiscono nei dati strutturati:
+  // restano qui pronte all'uso, basta ripassare `gallery={apiRegine.gallery}` a
+  // `ProductPage.astro`.
   gallery: [
     {
       base: 'arnia_piena_di_api',

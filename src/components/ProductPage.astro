@@ -36,11 +36,15 @@ interface Props {
   highlights?: string[];
   specs: { label: string; value: string }[];
   faq: FaqItem[];
-  gallery: GalleryPhoto[];
+  gallery?: GalleryPhoto[];
   /** video nella stessa griglia della gallery (es. ape regina) */
   videos?: { src: string; poster: string; label: string; cls?: string; link?: { href: string; label: string } }[];
   galleryTitle: string;
   galleryIntro?: string;
+  /** id/aria-labelledby della sezione e eyebrow: "video" quando la griglia ha
+   *  solo filmati (es. /api-regine/), altrimenti restano "foto". */
+  galleryId?: string;
+  galleryEyebrow?: string;
   jsonLd?: any[];
 }
 
@@ -62,10 +66,12 @@ const {
   highlights = [],
   specs,
   faq,
-  gallery,
+  gallery = [],
   videos = [],
   galleryTitle,
   galleryIntro,
+  galleryId = 'foto',
+  galleryEyebrow = 'foto',
   jsonLd = [],
 } = Astro.props;
 ---
@@ -163,10 +169,10 @@ const {
   <slot />
 
   <PhotoGallery
-    id="foto"
+    id={galleryId}
     photos={gallery}
     videos={videos}
-    eyebrow="foto"
+    eyebrow={galleryEyebrow}
     title={galleryTitle}
     intro={galleryIntro}
   />

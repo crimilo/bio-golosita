@@ -132,10 +132,14 @@ const blocks = [
   priceNote={prezzoNota}
   {specs}
   faq={apiRegine.faq}
-  gallery={apiRegine.gallery}
-  galleryTitle="Le api, le arnie e gli apiari"
-  galleryIntro="Tutte foto dei nostri apiari: le famiglie di api e le arnie, come le vediamo noi."
-  jsonLd={[product({ ...apiRegine, image: 'ape_regina_di_raffaele' }, pathname, { category: 'Api regine' }), faqPage(apiRegine.faq)]}
+  {/* La sezione in fondo è **solo video**: i tre filmati delle regine (nascita,
+      marcatura e regina con le sue api attorno). Le foto della galleria non si
+      mostrano più: restano in `apiRegine.gallery`, pronte all'uso. */}
+  galleryId="video"
+  galleryEyebrow="video"
+  galleryTitle="Le regine in video"
+  galleryIntro="Tre filmati dal nostro apiario: come nasce una regina, come si marca e la regina con le sue api attorno."
+  jsonLd={[product({ ...apiRegine, image: 'ape_regina_di_raffaele', gallery: [] }, pathname, { category: 'Api regine' }), faqPage(apiRegine.faq)]}
 >
   <section class="section">
     <div class="container">
