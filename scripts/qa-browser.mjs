@@ -228,29 +228,55 @@ for (const vp of VIEWPORTS) {
   const playing = await page.locator('[data-video]').first().getAttribute('data-playing');
   check(`[${vp.name}] video parte al click`, playing !== null);
 
-  // video nuovo nella pagina api regine
+  // Video nella pagina api regine: quello della galleria (`ape-regina-con-api`)
+  // e quello nuovo della regina F1 sulle covate, che sta nel testo sotto la
+  // sezione «La nostra linea: regine Buckfast, figlie di una madre F0» ed è
+  // quindi il PRIMO `[data-video]` della pagina. Si cercano per `src`, non per
+  // posizione, così l'ordine nella pagina può cambiare.
   await page.goto(`${BASE}/api-regine/`, { waitUntil: 'load' });
-  const regineVideo = page.locator('[data-video]').first();
+  const videoConSrc = (file) =>
+    page.locator('[data-video]').filter({ has: page.locator(`source[src*="${file}"]`) });
+  const regineVideo = videoConSrc('ape-regina-con-api.mp4');
+  const f1Video = videoConSrc('regina-f1-su-covate.mp4');
   check(`[${vp.name}] /api-regine/ ha il video della regina`, (await regineVideo.count()) > 0);
+  check(`[${vp.name}] /api-regine/ ha il video della regina F1`, (await f1Video.count()) > 0);
+
   // il poster viene applicato quando il video si avvicina al viewport
-  await regineVideo.scrollIntoViewIfNeeded();
-  await page
-    .waitForFunction(
-      () => !!document.querySelector('[data-video] video')?.getAttribute('poster'),
-      null,
-      { timeout: 5000 }
-    )
-    .catch(() => {});
+  const posterDi = async (locator, file) => {
+    await locator.scrollIntoViewIfNeeded();
+    await page
+      .waitForFunction(
+        (needle) =>
+          !!Array.from(document.querySelectorAll('[data-video] video'))
+            .find((v) => v.querySelector('source')?.getAttribute('src')?.includes(needle))
+            ?.getAttribute('poster'),
+        file,
+        { timeout: 5000 }
+      )
+      .catch(() => {});
+    return locator.locator('video').getAttribute('poster');
+  };
   check(
-    `[${vp.name}] il video ha il poster`,
-    (await regineVideo.locator('video').getAttribute('poster'))?.includes(
+    `[${vp.name}] il video della regina ha il poster`,
+    (await posterDi(regineVideo, 'ape-regina-con-api.mp4'))?.includes(
       'ape-regina-con-api-poster'
+    )
+  );
+  check(
+    `[${vp.name}] il video della F1 ha il poster`,
+    (await posterDi(f1Video, 'regina-f1-su-covate.mp4'))?.includes(
+      'regina-f1-su-covate-poster'
     )
   );
   await regineVideo.locator('.video-play').click();
   check(
     `[${vp.name}] il video della regina parte`,
     (await regineVideo.getAttribute('data-playing')) !== null
+  );
+  await f1Video.locator('.video-play').click();
+  check(
+    `[${vp.name}] il video della F1 parte`,
+    (await f1Video.getAttribute('data-playing')) !== null
   );
 
   // Etichetta prezzo: in alto a sinistra DENTRO la foto, identica fra le card

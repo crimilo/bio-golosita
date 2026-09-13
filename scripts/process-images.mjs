@@ -40,8 +40,11 @@ const WIDTHS = {
   // `arnia-piena-di-api2.jpg` non è più usata: sul blocco prodotto di
   // /nuclei-api/ c'è `sciame_4`. Per riaverla basta rimettere la sua riga.
   'arnia-piena-di-api.jpg': { base: 'arnia_piena_di_api', widths: [1200, 900, 600, 400] },
-  // Miele in favo: la sorgente è 474×550, quindi si genera solo la variante 400
-  'miele-in-favo.jpg': { base: 'miele_in_favo', widths: [400] },
+  // Miele in favo: foto del titolare (sorgente PNG 1264×1188, quasi quadrata).
+  // Stesse larghezze delle altre foto di prodotto: sul blocco prodotto di
+  // /miele/miele-in-favo/ la foto sta in una colonna da 520px, quindi 1200 basta
+  // anche a DPR 2.
+  'miele-in-favo.png': { base: 'miele_in_favo', widths: [1200, 900, 600, 400] },
   // Sequenza del miele in favo ricavata dal video (478×850, verticale): le foto
   // sono numerate nell'ordine d'uso, dal favo ancora attaccato all'assaggio.
   'miele-in-favo-1.avif': { base: 'miele_in_favo_1', widths: [400] },

@@ -2,6 +2,8 @@
 import ProductPage from '../../components/ProductPage.astro';
 import ProseBlocks from '../../components/ProseBlocks.astro';
 import LinkCards from '../../components/LinkCards.astro';
+import Icons from '../../components/Icons.astro';
+import type { IconName } from '../../components/Icons.astro';
 import { apiRegine, availabilityFallback, prezzoSuRichiesta, prezzoNota, repartoImages } from '../../data/bee-products';
 import { guideCard } from '../../data/guides';
 import { product, faqPage } from '../../lib/schema';
@@ -35,18 +37,20 @@ const relatedCards = [
 ];
 
 const blocks = [
-  { h2: 'Razze e linee disponibili' },
-  ...(apiRegine.razze.length
-    ? ([
-        {
-          p: `In questo periodo alleviamo <strong>${apiRegine.razze.join(', ')}</strong>. Se ti interessa una linea in particolare, chiedici conferma prima della prenotazione: la disponibilità cambia con la stagione.`,
-        },
-      ] as const)
-    : ([
-        {
-          p: "Le razze e le linee disponibili cambiano con la stagione e con l'andamento dell'allevamento. Dicci cosa stai cercando: ti diciamo subito cosa c'è in questo periodo. E se non sai quale scegliere, ti aiutiamo a capire cosa serve al tuo apiario.",
-        },
-      ])),
+  { h2: 'La nostra linea: regine Buckfast, figlie di una madre F0' },
+  {
+    p: `Alleviamo una sola linea, la <strong>${apiRegine.linea.razza}</strong>: la nostra regina madre è una <strong>F0 selezionata</strong>, fecondata con <strong>inseminazione strumentale</strong>, e le regine che vendiamo sono le sue figlie, cioè le <strong>F1</strong>. Genetica conosciuta e carattere uniforme tra una regina e l'altra: altre razze o linee non le trattiamo.`,
+  },
+  {
+    // Il video sta sotto la sezione F0 → F1: si vede la regina F1 sulle
+    // covate, cioè il risultato della linea raccontata qui sopra. Verticale,
+    // quindi `.prose-video` + `.video-item--tall` (default).
+    video: {
+      src: '/video/regina-f1-su-covate.mp4',
+      poster: '/video/regina-f1-su-covate-poster-b231f1f2.avif',
+      label: 'La regina F1 della nostra linea Buckfast sulle covate',
+    },
+  },
   { h2: 'Regine feconde, già in deposizione' },
   {
     // Testo e foto sulla stessa riga da desktop (`.prose-row`: la foto sta a
@@ -82,9 +86,6 @@ const blocks = [
   { h2: 'Il momento giusto per cambiare regina' },
   {
     p: "Le regine si sostituiscono di norma tra la primavera e l'inizio dell'estate, quando le famiglie si sviluppano e c'è nettare in campo: è il periodo in cui l'accettazione riesce meglio. Se hai un dubbio sul tuo caso, scrivici prima di ordinare: preferiamo dirti se è il momento sbagliato.",
-  },
-  {
-    note: 'Le informazioni sanitarie e i documenti che accompagnano le regine ce li chiedi direttamente: ti diamo tutte le indicazioni sulla partita, senza giri di parole.',
   },
 ];
 ---
@@ -132,8 +133,8 @@ const blocks = [
   {specs}
   faq={apiRegine.faq}
   gallery={apiRegine.gallery}
-  galleryTitle="Le nostre regine, gli apiari e i controlli"
-  galleryIntro="Tutte foto del nostro apiario: la regina al centro e i controlli sui telai."
+  galleryTitle="Le api, le arnie e gli apiari"
+  galleryIntro="Tutte foto dei nostri apiari: le famiglie di api e le arnie, come le vediamo noi."
   jsonLd={[product({ ...apiRegine, image: 'ape_regina_di_raffaele' }, pathname, { category: 'Api regine' }), faqPage(apiRegine.faq)]}
 >
   <section class="section">
@@ -144,16 +145,21 @@ const blocks = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" aria-labelledby="plus-title">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">perché comprare da noi</span>
         <h2 id="plus-title">Comprare regine da un apicoltore, non da un catalogo</h2>
       </div>
-      <div class="cards">
+      {/* Stesse card con icona della sezione "Perché scegliere il nostro miele"
+          della home: `.features` + `.feature` + `.feature-icon`. */}
+      <div class="features">
         {
           apiRegine.cards.map((c) => (
-            <div class="card">
+            <div class="feature">
+              <div class="feature-icon">
+                <Icons name={c.icon as IconName} size={26} />
+              </div>
               <h3>{c.title}</h3>
               <p>{c.text}</p>
             </div>

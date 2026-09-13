@@ -81,7 +81,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Come si conserva un miele non pastorizzato' },
       {
-        p: 'Non serve il frigorifero: anzi, il freddo accelera la cristallizzazione. Il miele va tenuto in un barattolo ben chiuso, al riparo dalla luce e dall\'umidità, a temperatura ambiente (indicativamente tra 10 e 25 °C). Il cucchiaio va usato asciutto, perché l\'acqua è l\'unica cosa che può davvero rovinare il miele. Se cristallizza, non è un difetto: si riporta liquido con delicatezza, scaldando il barattolo a bagnomaria a bassa temperatura.',
+        p: 'Il miele va tenuto in un barattolo ben chiuso, al buio e sotto i 14 °C: una cantina o un locale fresco. Il frigorifero non serve. Il cucchiaio va usato asciutto, perché l\'acqua è l\'unica cosa che può davvero rovinare il miele. Se cristallizza, non è un difetto: si riporta liquido con delicatezza, scaldando il barattolo a bagnomaria a bassa temperatura.',
       },
       {
         p: 'Se vuoi approfondire questo aspetto, abbiamo scritto una guida dedicata a <a href="/guide/perche-il-miele-cristallizza/">perché il miele cristallizza e come riportarlo liquido</a>.',
@@ -136,9 +136,9 @@ const base: Omit<Guide, 'datePublished'>[] = [
           caption: 'Gli zuccheri del miele sono gli stessi del nettare: cambia solo il modo in cui si separano',
         },
       },
-      { h2: 'Il freddo accelera, il caldo ritarda' },
+      { h2: 'Dove conservarlo: cosa cambia con la temperatura' },
       {
-        p: 'La temperatura influisce molto: intorno ai 14 °C la cristallizzazione è più rapida, mentre sopra i 25–30 °C rallenta. Per questo il frigorifero non è un buon posto per il miele: lo fa cristallizzare prima. La credenza, lontano da fonti di calore e dalla luce, è la posizione giusta.',
+        p: 'La temperatura conta, e il miele sta meglio al fresco: la cristallizzazione è più rapida tra i 5 e i 14 °C, mentre sopra i 25 °C rallenta. Conservarlo al buio e sotto i 14 °C — in cantina o in un locale non riscaldato — è quello che gli fa bene, perché luce e calore prolungato sono ciò che gli fa perdere profumo e aromi. Se in cantina il barattolo cristallizza un po\' prima, non è un problema: qui sotto c\'è come riportarlo liquido.',
       },
       { h2: 'Come riportare liquido il miele cristallizzato' },
       {
@@ -194,11 +194,11 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Miele di acacia: chiaro, delicato, sempre liquido' },
       {
-        p: 'Il miele di acacia è il più conosciuto e il più "facile" dei mieli: colore giallo paglierino quasi trasparente, gusto dolce e delicato con note floreali, e una caratteristica che lo rende unico: grazie all\'alto contenuto di fruttosio non cristallizza praticamente mai, quindi resta fluido anche dopo mesi in credenza.',
+        p: 'Il miele di acacia è il più conosciuto e il più "facile" dei mieli: colore giallo paglierino quasi trasparente, gusto dolce e delicato con note floreali, e una caratteristica che lo rende unico: grazie all\'alto contenuto di fruttosio non cristallizza praticamente mai, quindi resta fluido anche dopo mesi in cantina.',
       },
       {
         ul: [
-          '<strong>Quando si raccoglie:</strong> la robinia fiorisce tra la fine di maggio e giugno.',
+          '<strong>Quando si raccoglie:</strong> la robinia fiorisce tra la fine di aprile e i primi giorni di maggio.',
           '<strong>Come si usa:</strong> tisane, latte, caffè, yogurt e frutta: non copre gli altri sapori.',
           '<strong>A chi piace:</strong> a chi di solito non ama i mieli troppo intensi, e a chi vuole un miele sempre pronto all\'uso.',
         ],
@@ -215,12 +215,12 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Miele millefiori: il sapore della stagione' },
       {
-        p: 'Il millefiori non viene da una sola fioritura, ma dall\'insieme dei nettari disponibili in un periodo. È il miele più "territoriale" che esista: cambia di anno in anno, e due millefiori diversi possono avere profumi molto distanti tra loro. Nella nostra produzione ne distinguiamo due, raccolti in momenti diversi.',
+        p: 'Il millefiori non viene da una sola fioritura, ma dall\'insieme dei nettari disponibili in un periodo. È il miele più "territoriale" che esista: cambia di anno in anno, e due millefiori diversi possono avere profumi molto distanti tra loro. Nella nostra produzione ne distinguiamo tre, raccolti in momenti diversi.',
       },
       {
         ul: [
-          '<strong>Millefiori primaverile:</strong> ambra chiaro, profumo floreale con note di frutteto, raccolto tra aprile e maggio. Cristallizza finemente dopo qualche mese e si spalma benissimo.',
-          '<strong>Millefiori estivo al tiglio e more:</strong> più scuro e corposo, con note di tiglio e di more selvatiche, raccolto tra giugno e luglio. Ottimo anche con i formaggi stagionati.',
+          '<strong>Millefiori primaverile:</strong> ambra chiaro, profumo floreale con note di frutteto, raccolto tra marzo e aprile. Cristallizza finemente dopo qualche mese e si spalma benissimo.',
+          '<strong>Millefiori estivo al tiglio e more:</strong> più scuro e corposo, con note di tiglio e di more selvatiche, raccolto a giugno. Ottimo anche con i formaggi stagionati.',
           '<strong>Millefiori estivo al tiglio e ailanto:</strong> dolce e aromatico, con il caratteristico retrogusto di pesca che danno i fiori di ailanto. Disponibile in quantità limitate.',
         ],
       },
@@ -341,7 +341,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Cosa facciamo noi' },
       {
-        p: 'Prepariamo nuclei con regina feconda della nostra selezione, negli apiari tra Cassano d\'Adda, la Martesana e la Gera d\'Adda. La disponibilità dipende dalla stagione: se ti serve un nucleo, scrivici e ti diciamo a che punto siamo, quando possiamo consegnare e come organizzare il ritiro.',
+        p: 'Prepariamo nuclei con regina feconda della nostra linea Buckfast, negli apiari tra Cassano d\'Adda, la Martesana e la Gera d\'Adda. La disponibilità dipende dalla stagione: se ti serve un nucleo, scrivici e ti diciamo a che punto siamo, quando possiamo consegnare e come organizzare il ritiro.',
       },
       { cta: { href: '/nuclei-api/', label: "Guarda i nuclei d'api in vendita" } },
     ],
@@ -363,7 +363,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
     push: {
       href: '/api-regine/',
       label: 'Vedi le api regine disponibili',
-      note: 'Alleviamo regine feconde dalla nostra selezione, a Cassano d\'Adda: nella pagina dedicata trovi disponibilità, razze e come prenotare.',
+      note: 'Alleviamo regine feconde della nostra linea Buckfast, a Cassano d\'Adda: nella pagina dedicata trovi disponibilità, come prenotare e come ritirare.',
     },
     blocks: [
       {
@@ -380,13 +380,13 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Scegliere il momento: la parte più importante' },
       {
-        p: 'La regola d\'oro è introdurre una regina <strong>quando c\'è abbondanza di nettare</strong> e non in piena estate sotto siccità, né in autunno avanzato: con un flusso nettarifero attivo le api sono occupate, accolgono meglio e c\'è meno pressione sulla nuova regina. Si lavora nelle ore più fresche, meglio nel tardo pomeriggio o alla sera, quando il campo di api di ritorno si riduce e la maggior parte delle bottinatrici è in alveare.',
+        p: 'La regola d\'oro è introdurre una regina <strong>quando c\'è abbondanza di nettare</strong> e non in piena estate sotto siccità, né in autunno avanzato: con un flusso nettarifero attivo le api sono occupate, accolgono meglio e c\'è meno pressione sulla nuova regina. Si lavora nelle ore più fresche, meglio nel tardo pomeriggio o alla sera, quando le api di ritorno si diradano e la maggior parte delle bottinatrici è in alveare.',
       },
       {
         img: {
-          base: 'raffaele_che_mostra_larnia_in_mano',
-          alt: "Raffaele Antoci che tiene in mano un telaio, durante un controllo",
-          caption: 'Prima di introdurre: controlla che la famiglia non abbia celle reali',
+          base: 'sciame_5',
+          alt: "Api di Bio & Golosità in apiario, a Cassano d'Adda",
+          caption: "Le nostre api in apiario, a Cassano d'Adda",
         },
       },
       { h2: 'Prima di introdurre: tre controlli' },
@@ -405,12 +405,12 @@ const base: Omit<Guide, 'datePublished'>[] = [
         ul: [
           'Metti la regina nella gabbietta con la parte chiusa verso la covata e libera la parte con il candito o il tappo zuccherato.',
           'Lascia che siano le api a liberarla, consumando in qualche giorno il candito: è il segnale che l\'hanno accettata.',
-          'Non aprire l\'alveare per controllare ogni giorno: ogni apertura aumenta la confusione della famiglia.',
+          'Non aprire l\'alveare per almeno 5 giorni dopo l\'inserimento: ogni apertura aumenta la confusione della famiglia e, se la regina non è ancora accettata, il rischio è che la uccidano. Vale soprattutto quando si introduce una regina per la prima volta.',
         ],
       },
       { h2: 'I controlli dopo l\'introduzione' },
       {
-        p: 'Dopo qualche giorno dalla liberazione della regina, un controllo veloce: la regina deve essere viva, in movimento e in mezzo alla covata. Il segno definitivo è la presenza di <strong>uova fresche</strong>, nei giorni successivi: se la regina depone, il lavoro è fatto. Se invece trovi celle reali di emergenza, la famiglia sta cercando la sua strada e potresti dover introdurre una nuova regina.',
+        p: 'Dopo almeno 5 giorni dall\'inserimento, un controllo veloce: la regina deve essere viva, in movimento e in mezzo alla covata. Il segno definitivo è la presenza di <strong>uova fresche</strong>, nei giorni successivi: se la regina depone, il lavoro è fatto. Se invece trovi celle reali di emergenza, la famiglia sta cercando la sua strada e potresti dover introdurre una nuova regina.',
       },
       {
         note: 'Questi sono i passaggi generali. La scelta della gabbietta, i tempi rispetto alla stagione e alla forza della famiglia cambiano da apiario ad apiario: quando ti consegniamo una regina ti diciamo volentieri come la introduciamo noi.',
@@ -421,13 +421,13 @@ const base: Omit<Guide, 'datePublished'>[] = [
           'Dimenticare di cercare le celle reali e la vecchia regina prima di introdurre.',
           'Introdurre in una giornata fredda, ventosa o senza nettare in campo.',
           'Liberare la regina troppo presto, "a mano", senza gabbietta.',
-          'Aprire l\'alveare ogni giorno per controllare: più disturbo, più rifiuto.',
+          'Aprire l\'alveare nei primi 5 giorni per controllare: è il modo più semplice per far uccidere una regina appena introdotta, soprattutto se è la prima volta.',
           'Confondere una regina nuova con una regina "piccola e scura" e toglierla per errore: guarda prima se depone.',
         ],
       },
       { h2: 'Le nostre regine' },
       {
-        p: 'Alleviamo regine feconde a Cassano d\'Adda, negli apiari tra la Martesana e la Gera d\'Adda: sono regine di provincia, abituate al clima e alle fioriture della Lombardia. Si vendono già in deposizione: se ti serve una regina per un alveare che vuoi rinnovare, scrivici e ti diciamo subito cosa è disponibile in questo periodo.',
+        p: 'Alleviamo regine feconde a Cassano d\'Adda, negli apiari tra la Martesana e la Gera d\'Adda: sono regine di provincia, abituate al clima e alle fioriture della Lombardia. La nostra linea è una sola, <strong>Buckfast</strong>: la regina madre è una F0 selezionata con inseminazione strumentale e quelle che vendiamo sono le sue figlie, le F1. Si vendono già in deposizione: se ti serve una regina per un alveare che vuoi rinnovare, scrivici e ti diciamo subito cosa è disponibile in questo periodo.',
       },
       { cta: { href: '/api-regine/', label: 'Vedi le api regine disponibili' } },
     ],
@@ -449,7 +449,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
     push: {
       href: '/polline-d-api/',
       label: "Scopri il polline d'api di Bio & Golosità",
-      note: "Il nostro polline viene dagli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda. Nella pagina dedicata trovi origine, conservazione e come ordinarlo.",
+      note: "Il nostro polline viene dagli apiari tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana. Nella pagina dedicata trovi origine, conservazione e come ordinarlo.",
     },
     blocks: [
       {
@@ -476,7 +476,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       {
         ul: [
-          '<strong>Polline fresco</strong>: profumo più ricco, granuli morbidi, va tenuto in frigorifero o in freezer e consumato entro pochi mesi.',
+          '<strong>Polline fresco</strong>: profumo più ricco, granuli morbidi, va tenuto in frigorifero e, per la scorta lunga, in freezer; si consuma entro pochi mesi.',
           '<strong>Polline essiccato</strong>: più asciutto e stabile, si conserva a temperatura ambiente, ma con aroma meno intenso.',
           '<strong>In entrambi i casi</strong> conta la catena del freddo e la rapidità del confezionamento dopo la raccolta.',
         ],
@@ -508,9 +508,16 @@ const base: Omit<Guide, 'datePublished'>[] = [
           '<strong>Nessuna promessa terapeutica sull\'etichetta</strong>: il polline è un alimento, non un rimedio.',
         ],
       },
+      {
+        img: {
+          base: 'prato_fiorito',
+          alt: 'Prato di campagna con fiori spontanei di vari colori',
+          caption: 'Un prato in fiore: i colori diversi dei granuli sono i colori diversi dei fiori',
+        },
+      },
       { h2: 'Il nostro polline' },
       {
-        p: 'Il polline che vendiamo arriva dagli apiari tra Cassano d\'Adda, la Martesana, la Gera d\'Adda e il Parco Nord Milano, dove sono le nostre api, ed è confezionato a piccoli lotti. Se vuoi sapere cosa c\'è disponibile in questo periodo, se è fresco o essiccato e come conservarlo al meglio, chiamaci o scrivici: te lo spieghiamo in due minuti.',
+        p: 'Il polline che vendiamo arriva dagli apiari tra Cassano d\'Adda, la Martesana, la Gera d\'Adda e il Parco Adda Nord, dove sono le nostre api, ed è confezionato a piccoli lotti. Se vuoi sapere cosa c\'è disponibile in questo periodo, se è fresco o essiccato e come conservarlo al meglio, chiamaci o scrivici: te lo spieghiamo in due minuti.',
       },
       { cta: { href: '/polline-d-api/', label: "Scopri il polline d'api di Bio & Golosità" } },
     ],

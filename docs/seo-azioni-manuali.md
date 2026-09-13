@@ -18,7 +18,7 @@ qualsiasi nuovo contenuto.
       Vendita Miele" o la località **solo per posizionarsi è una violazione**
       delle linee guida Google e può portare alla sospensione del profilo.
       Verifica e allinea (es. *«Bio & Golosità di Antoci Raffaele»*).
-- [ ] **Orari**: il sito ora pubblica *«Tutti i giorni 08:00–20:00»* con la nota
+- [ ] **Orari**: il sito ora pubblica *«Tutti i giorni 08:00–21:00»* con la nota
       *«ti consigliamo comunque di chiamare o scrivere prima di passare: durante
       la giornata potremmo trovarci in apiario»*. La scheda Google **deve dire la
       stessa cosa**: se gli orari reali sono diversi, cambiali in
@@ -61,14 +61,16 @@ scambio, nessun incentivo.
 > homepage sono state rimosse perché non autentiche.
 
 > ✅ **Fatto**: le 4 recensioni non autentiche sono state rimosse e la homepage
-> mostra ora **8 recensioni reali** della scheda Google (nome, stelle, etichetta
-> "Recensione Google"), con testo fedele all'originale.
+> mostra ora **3 recensioni reali** della scheda Google (nome, stelle, etichetta
+> "Recensione Google"), con testo fedele all'originale: sono tutte quelle in
+> `src/data/site.js` → `reviews`, e la pagina ne mostra esattamente 3 (nessun
+> contatore gonfiato).
 >
-> Nota: due recensioni erano troncate da Google ("… More") e sono state chiuse
+> Nota: quando un testo arriva da Google troncato ("… More") viene chiuso
 > all'ultima frase completa, senza aggiungere né cambiare parole. La recensione
 > *"Ottimi prodotti bio naturali."* è stata **esclusa di proposito**: il miele è
 > convenzionale e non certificato biologico, e sul sito evitiamo quell'ambiguità.
-> Se vuoi, mandami il testo completo delle due recensioni tagliate e le estendo.
+> Se vuoi, mandami altre recensioni della scheda e le aggiungo.
 
 ### Come aggiungere altre recensioni
 
@@ -137,17 +139,21 @@ In `src/data/bee-products.js` (le pagine funzionano già senza, mostrando
 
 - [ ] **Polline**: formato (es. 250 g), raccolto (mesi), lavorazione (fresco o
       essiccato), prezzo, disponibilità.
-- [ ] **Api regine**: razze/linee allevate (solo quelle reali), prezzo,
-      disponibilità della stagione, da quando si prenota, documenti sanitari.
-- [ ] **Nuclei**: composizione (numero e tipo di telai), razza, prezzo,
-      disponibilità, da quando si prenota.
+- [x] **Api regine**: linea — una sola, Buckfast: madre F0 selezionata con
+      inseminazione strumentale, si vendono le figlie F1 (`apiRegine.linea`).
+- [ ] **Api regine**: prezzo, disponibilità della stagione, da quando si
+      prenota, documenti sanitari.
+- [ ] **Nuclei**: composizione (numero e tipo di telai), prezzo,
+      disponibilità, da quando si prenota. (Razza: fatta — regina F1 Buckfast.)
 
 In `src/data/site.js`:
 
-- [x] `reviews`: 8 recensioni Google autentiche inserite (vedi sezione 2).
+- [x] `reviews`: recensioni Google autentiche inserite (vedi sezione 2) — nel
+      repo ce ne sono **3**, tante quante ne mostra la home.
 - [ ] `hours` / `hoursNote`: verifica che corrispondano alla scheda Google.
 - [ ] `annata` di ogni miele (es. "Raccolto 2026") per la sezione tracciabilità.
-- [ ] Partita IVA / REA se mancano.
+- [x] Partita IVA / REA: pubblicati nel footer (`P.IVA 12606370968`,
+      `REA MI-2744949`) e nel JSON-LD `LocalBusiness` (`vatID`).
 
 ## 6. Da non fare
 

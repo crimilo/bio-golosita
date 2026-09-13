@@ -32,7 +32,7 @@ const crumbs = [{ name: 'I nostri mieli', path: pathname }];
 const faq = [
   {
     q: 'Il vostro miele è italiano?',
-    a: "Sì: è 100% italiano, prodotto dalle nostre api negli apiari tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Nord Milano e la Val Brembana. Non importiamo miele e non facciamo miscele con mieli esteri.",
+    a: "Sì: è 100% italiano, prodotto dalle nostre api negli apiari tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana. Non importiamo miele e non facciamo miscele con mieli esteri.",
   },
   // Nessuna FAQ sul biologico: il miele non è certificato bio e sul sito la
   // parola "bio" non viene mai usata come claim (è solo il nome dell'azienda).
@@ -53,7 +53,7 @@ const blocks = [
     row: {
       text: [
         {
-          p: "Il miele che vendiamo nasce da api nostre e da apiari che seguiamo in prima persona, tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Nord Milano e la Val Brembana. Non compriamo miele da altri per rivenderlo: la filiera è corta, e possiamo dirti da dove arriva ogni barattolo.",
+          p: "Il miele che vendiamo nasce da api nostre e da apiari che seguiamo in prima persona, tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord (area protetta) e la Val Brembana. Non compriamo miele da altri per rivenderlo: la filiera è corta, e possiamo dirti da dove arriva ogni barattolo.",
         },
         {
           p: 'Lo smieliamo a freddo e <strong>non lo pastorizziamo</strong>: il miele esce dai telai, decanta e viene invasettato a piccoli lotti. È un lavoro più lento che scaldare tutto e standardizzarlo, ma è quello che lascia a un millefiori di primavera il profumo del frutteto.',
@@ -106,7 +106,7 @@ const otherProducts = [
     ...repartoImages.apiRegine,
     price: apiRegine.prezzo ?? prezzoSuRichiesta,
     title: 'Api regine',
-    text: 'Regine feconde dalla nostra selezione, per chi vuole rinnovare un alveare o avviarne uno nuovo.',
+    text: 'Regine feconde della nostra linea Buckfast, per chi vuole rinnovare un alveare o avviarne uno nuovo.',
   },
   {
     href: '/nuclei-api/',
@@ -166,7 +166,7 @@ const guideCards = [
   <PageHero
     h1="Miele italiano artigianale: acacia, millefiori e castagno"
     eyebrow="api proprie · non pastorizzato · 100% italiano"
-    intro="Mieli di produzione propria, smielati a freddo nei nostri apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda. Li vendiamo direttamente, senza intermediari: prezzi chiari e consegna in zona."
+    intro="Mieli di produzione propria, smielati a freddo nei nostri apiari a Cassano d'Adda. Vendita diretta e consegna in zona."
     crumbs={crumbs}
     bg={{ base: heroImg, height: 'tall', position: '52% 100%', positionMobile: '52% 100%' }}
   >
@@ -185,7 +185,7 @@ const guideCards = [
   <section class="section section--soft" id="mieli" aria-labelledby="mieli-title">
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
-        <span class="eyebrow">direttamente dall'apiario<Emoji name="honey-pot" /></span>
+        <span class="eyebrow">direttamente dall'apiario</span>
         <h2 id="mieli-title">I nostri mieli</h2>
         {/*
           Niente elenco delle cinque varietà: i nomi sono già nelle card qui
@@ -193,9 +193,7 @@ const guideCards = [
           sono e la stagionalità del favo.
         */}
         <p>
-          Ogni miele ha la sua scheda, con il raccolto, le caratteristiche e il
-          prezzo. In stagione prepariamo anche il <strong>miele in favo</strong>,
-          con la sua cera.
+        In stagione trovi anche il miele in favo.
         </p>
       </div>
       {/*
@@ -212,7 +210,7 @@ const guideCards = [
         la sezione "come lavoriamo", dov'era fuori tema.
       */}
       <p class="mt-3" style="text-align:center;">
-        Tre dei nostri mieli sono millefiori: <a href="/miele/miele-millefiori/">cos'è il miele millefiori e perché cambia da un anno all'altro</a>.
+        Tre dei nostri mieli sono millefiori: <a href="/miele/miele-millefiori/">scopri cos'è il miele millefiori e perché cambia da un anno all'altro</a>.
       </p>
     </div>
   </section>

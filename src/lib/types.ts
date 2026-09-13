@@ -11,6 +11,9 @@ export type Block =
   /** Testo e foto sulla stessa riga: da desktop la foto sta a fianco, da mobile
    *  va sotto (vedi `.prose-row` in global.css). */
   | { row: { text: Block[]; img: { base: string; alt: string; caption?: string } } }
+  /** Video verticale dentro il testo: reso in `.prose-video` (vedi ProseBlocks),
+   *  con il poster AVIF caricato solo quando il video si avvicina al viewport. */
+  | { video: { src: string; poster: string; label: string; cls?: string } }
   | { note: string }
   | { cta: { href: string; label: string } };
 

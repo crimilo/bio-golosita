@@ -9,8 +9,8 @@
  *     da sola (testo + eventuale prezzo).
  *
  *   polline.raccoltoDa / lavorazione
- *   apiRegine.razze / prenotazioneDa / documenti
- *   nuclei.telai / razza / prenotazioneDa
+ *   apiRegine.prenotazioneDa / documenti
+ *   nuclei.telai / prenotazioneDa
  *
  *   Le disponibilità sono scritte: polline fresco aprile–maggio (essiccato anche
  *   dopo), api regine feconde da fine maggio, nuclei dai primi di aprile.
@@ -73,12 +73,12 @@ export const polline = {
     {
       label: 'Origine',
       value:
-        "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana, la Gera d'Adda e il Parco Nord Milano",
+        "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord (area protetta) e la Val Brembana",
     },
     {
       label: 'Come si conserva',
       value:
-        'In barattolo ben chiuso, al riparo da luce e umidità. Il polline fresco va tenuto in frigorifero o in freezer; quello essiccato a temperatura ambiente.',
+        'In barattolo ben chiuso, al buio. Il polline fresco va tenuto in frigorifero e, per la scorta lunga, in freezer; quello essiccato a temperatura ambiente.',
     },
     { label: 'Formato', value: '200 g' }, // come `formato` qui sopra: barattolo da 200 g
     { label: 'Raccolto', value: null }, // da completare: es. 'aprile – settembre'
@@ -93,11 +93,11 @@ export const polline = {
   faq: [
     {
       q: "Da dove viene il vostro polline d'api?",
-      a: "Dai nostri apiari: le api sono nostre e gli alveari sono tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Nord Milano e la Val Brembana. Lo raccogliamo e confezioniamo a piccoli lotti, come facciamo con il miele.",
+      a: "Dai nostri apiari: le api sono nostre e gli alveari sono tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana. Lo raccogliamo e confezioniamo a piccoli lotti, come facciamo con il miele.",
     },
     {
       q: "Il polline d'api va tenuto in frigorifero?",
-      a: 'Il polline fresco va in frigorifero o in freezer; quello essiccato si conserva in un barattolo chiuso, al riparo dalla luce, a temperatura ambiente. Quando lo ordini ti spieghiamo come conservare quello che ti consegniamo.',
+      a: 'Il polline fresco va in frigorifero e, per la scorta lunga, in freezer; quello essiccato si conserva in un barattolo chiuso, al riparo dalla luce, a temperatura ambiente. Quando lo ordini ti spieghiamo come conservare quello che ti consegniamo.',
     },
     {
       q: "Come si usa il polline d'api?",
@@ -137,9 +137,19 @@ export const apiRegine = {
   h1: 'Api regine in vendita in Lombardia',
   title: 'Vendita Api Regine in Lombardia | Bio & Golosità',
   description:
-    'Api regine da apicoltore in Lombardia: regine feconde già in deposizione, razze e disponibilità della stagione, prenotazione e ritiro a Cassano d\'Adda.',
+    'Api regine da apicoltore in Lombardia: regine feconde già in deposizione, figlie F1 di una madre Buckfast F0. Prenotazione e ritiro a Cassano d\'Adda.',
+  /**
+   * La linea che alleviamo: una sola, Buckfast. La regina madre è una F0
+   * selezionata fecondata con inseminazione strumentale; le regine che
+   * vendiamo sono le sue figlie, quindi F1. Da qui prendono il nome sia la
+   * sezione «La nostra linea» della pagina sia la scheda tecnica.
+   */
+  linea: {
+    razza: 'Buckfast',
+    madre: 'F0 selezionata, fecondata con inseminazione strumentale',
+    vendute: 'F1, le figlie della madre F0',
+  },
   // ↓↓↓ da completare
-  razze: [], // es. ['Ligustica', 'Buckfast'] — solo quelle che allevi davvero
   prezzo: null,
   disponibilita: 'Api regine feconde disponibili da fine maggio in poi',
   prenotazioneDa: null,
@@ -147,7 +157,7 @@ export const apiRegine = {
   // ↑↑↑ da completare
 
   intro:
-    "Alleviamo le nostre api a Cassano d'Adda, al confine tra le province di Milano, Bergamo, Cremona e Lodi: dalla nostra selezione nascono le api regine che mettiamo a disposizione degli apicoltori della Lombardia. Vendiamo solo regine feconde, già in deposizione: per rinnovare un alveare, sostituire una regina vecchia o avviare nuovi nuclei. Qui trovi cosa forniamo, come funziona la prenotazione e come ritirare.",
+    "Alleviamo le nostre api a Cassano d'Adda, al confine tra le province di Milano, Bergamo, Cremona e Lodi: dalla nostra linea Buckfast nascono le api regine che mettiamo a disposizione degli apicoltori della Lombardia. Vendiamo solo regine feconde, già in deposizione: per rinnovare un alveare, sostituire una regina vecchia o avviare nuovi nuclei. Qui trovi cosa forniamo, come funziona la prenotazione e come ritirare.",
 
   // Tipologie di regina. In pagina non c'è più la sezione "tipologie": da quando
   // vendiamo solo regine feconde una sola card ripeteva quello che il testo e la
@@ -159,27 +169,34 @@ export const apiRegine = {
     },
   ],
 
+  // Punti di forza mostrati come card con icona nella sezione "Perché comprare
+  // da noi" di /api-regine/: stesse `.feature` della home. `icon` è uno dei nomi
+  // di src/components/Icons.astro.
   cards: [
     {
+      icon: 'home',
       title: 'Allevate da noi, in Lombardia',
-      text: "Le regine nascono dalla nostra selezione, negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda: sono api abituate al clima e alle fioriture di questa zona.",
+      text: "Le regine nascono dalla nostra linea Buckfast, negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda: sono api abituate al clima e alle fioriture di questa zona.",
     },
     {
+      icon: 'clock',
       title: 'Disponibilità reale, stagione dopo stagione',
       text: 'Le regine si prenotano nei mesi utili all\'allevamento e sono disponibili in genere a partire da fine maggio: la disponibilità cambia di settimana in settimana, per questo conviene prenotare. Chiamaci e ti diciamo subito cosa c\'è.',
     },
     {
+      icon: 'package',
       title: 'Ritiro e consegna in Lombardia',
       text: "Puoi ritirare in sede a Cassano d'Adda su appuntamento, oppure concordare la consegna nella zona tra Milano, Bergamo, Cremona e Lodi. Per spedizioni o quantità importanti, chiedici un preventivo.",
     },
     {
+      icon: 'shield',
       title: 'Informazioni sanitarie e documenti',
       text: "Ogni partita di regine ha la sua storia sanitaria: chiedici quali documenti la accompagnano. Ti diamo tutte le informazioni che servono prima dell'acquisto.",
     },
   ],
 
   specs: [
-    { label: 'Razze e linee', value: null }, // da completare in `razze`
+    { label: 'Razza', value: 'Buckfast: regine F1 da una madre F0 selezionata con inseminazione strumentale' },
     { label: 'Tipologie', value: 'Regine feconde, già fecondate e in deposizione' },
     {
       label: 'Provenienza',
@@ -208,16 +225,17 @@ export const apiRegine = {
     },
     {
       q: 'Da dove vengono le vostre api regine?',
-      a: "Nascono negli apiari dell'azienda, a Cassano d'Adda e nella zona tra la Martesana e la Gera d'Adda: sono regine allevate in Lombardia, abituate al clima e alle fioriture di qui.",
+      a: "Nascono negli apiari dell'azienda, a Cassano d'Adda e nella zona tra la Martesana e la Gera d'Adda: sono regine allevate in Lombardia, della nostra linea Buckfast, abituate al clima e alle fioriture di qui.",
     },
     {
       q: 'Come si introducono le nuove regine?',
-      a: "Con calma, rispettando i tempi della famiglia e usando le gabbiette di introduzione. Quando ti consegniamo le regine ti spieghiamo il metodo che usiamo noi.",
+      a: "Con calma, rispettando i tempi della famiglia e usando le gabbiette di introduzione. Dopo l'inserimento lascia l'alveare chiuso per almeno 5 giorni: aprirlo prima è il modo più semplice per far uccidere la regina, soprattutto se è la prima volta che ne introduci una. Quando ti consegniamo le regine ti spieghiamo il metodo che usiamo noi.",
     },
   ],
 
   // Gallery: nessuna foto ripetuta. La regina è già nel blocco prodotto e le api
-  // nel testo (`api`), quindi qui restano le arnie, il telaio e l'apiario.
+  // nel testo (`api`), quindi qui restano le arnie, l'apiario e il lavoro in
+  // apiario (il vecchio telaio in mano è stato tolto dal sito).
   gallery: [
     {
       base: 'arnia_piena_di_api',
@@ -226,10 +244,10 @@ export const apiRegine = {
       caption: 'Una famiglia numerosa sui telai: è il lavoro di una regina in salute',
     },
     {
-      base: 'raffaele_che_mostra_larnia_in_mano',
-      alt: "Raffaele Antoci che tiene in mano un telaio del nostro apiario",
+      base: 'sciame_5',
+      alt: "Api di Bio & Golosità in apiario, a Cassano d'Adda",
       cls: 'g-item--tall',
-      caption: 'I controlli in apiario: da qui parte la selezione delle regine',
+      caption: "Le nostre api in apiario, a Cassano d'Adda",
     },
     {
       base: 'apiario',
@@ -249,7 +267,7 @@ export const nuclei = {
     "Nuclei d'api da apicoltore in Lombardia: cosa comprende un nucleo, sciame, nucleo e pacco d'api, disponibilità e prenotazione. Cassano d'Adda (MI).",
   // ↓↓↓ da completare
   telai: null, // es. '5 telai (3 di covata + 2 di scorte)'
-  razza: null, // es. 'Ligustica' — solo se è quella che vendi
+  razza: 'Buckfast (F1 da madre F0)', // la regina del nucleo è una figlia della nostra madre F0
   prezzo: null,
   disponibilita: 'Nuclei disponibili dai primi di aprile in poi',
   prenotazioneDa: null,
@@ -283,7 +301,7 @@ export const nuclei = {
   cards: [
     {
       title: 'Regina feconda inclusa',
-      text: 'I nostri nuclei partono con una regina feconda della nostra selezione: la famiglia è già in grado di crescere da sola.',
+      text: 'I nostri nuclei partono con una regina feconda F1 della nostra linea Buckfast: la famiglia è già in grado di crescere da sola.',
     },
     {
       title: 'Telai con covata novel',
@@ -301,8 +319,11 @@ export const nuclei = {
 
   specs: [
     { label: 'Composizione', value: null }, // da completare: es. '5 telai: 3 di covata + 2 di scorte'
-    { label: 'Regina', value: 'Feconda, della nostra selezione' },
-    { label: 'Razza', value: null }, // da completare
+    { label: 'Regina', value: 'Feconda, F1 della nostra linea Buckfast' },
+    {
+      label: 'Razza',
+      value: 'Buckfast: la regina è una F1 da una madre F0 selezionata con inseminazione strumentale',
+    },
     {
       label: 'Provenienza',
       value:
@@ -384,12 +405,6 @@ export const nuclei = {
       alt: 'Api sui telai di un favo',
       cls: 'g-item--square',
       caption: 'Api sui telai: da una famiglia così parte un nucleo',
-    },
-    {
-      base: 'raffaele_che_mostra_larnia_in_mano',
-      alt: "Raffaele Antoci che controlla un telaio",
-      cls: 'g-item--tall',
-      caption: 'Il controllo dei telai prima della consegna',
     },
   ],
 };

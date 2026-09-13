@@ -10,7 +10,7 @@ const imgUrl = (base) => {
 };
 
 const areaServedType = (name) => {
-  if (name === 'Parco Nord Milano') return 'Park';
+  if (name === 'Parco Adda Nord') return 'Park';
   return 'City';
 };
 
@@ -81,7 +81,7 @@ export function localBusiness() {
           'Sunday',
         ],
         opens: '08:00',
-        closes: '20:00',
+        closes: '21:00',
       },
     ],
     areaServed: site.areaServed.map((name) => ({ '@type': areaServedType(name), name })),

@@ -27,6 +27,12 @@ const posters = [
   'api-che-producono-il-miele-poster.jpg',
   'api-che-si-creano-spazio-poster.jpg',
   'api-che-impollinano-poster.jpg',
+  // Regina F1 sulle covate (/api-regine/): fotogramma a 5 s, scelto misurando
+  // la nitidezza (varianza del laplaciano) di dieci fotogrammi distribuiti sul
+  // video e prendendo il più definito. Per cambiarlo, sostituisci il jpg e
+  // rilancia `npm run assets`, oppure
+  // `ffmpeg -ss <secondi> -i public/video/regina-f1-su-covate.mp4 -frames:v 1 -q:v 2 regina-f1-su-covate-poster.jpg`
+  'regina-f1-su-covate-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }

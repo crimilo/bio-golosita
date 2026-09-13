@@ -55,7 +55,7 @@ const traceability = [
   },
   {
     label: 'Regina',
-    value: 'Feconda, della nostra selezione, già in deposizione',
+    value: 'Feconda, F1 della nostra linea Buckfast, già in deposizione',
   },
   {
     label: 'Composizione',
@@ -110,7 +110,7 @@ const blocks = [
   },
   { h3: 'Razza e provenienza' },
   {
-    p: "I nuclei nascono negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda, con una regina della nostra selezione. Se ti serve una razza precisa, dillo quando prenoti: certi abbinamenti si preparano in anticipo.",
+    p: "I nuclei nascono negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda, con una regina feconda della nostra linea Buckfast. È una <strong>F1</strong>, figlia della nostra madre <strong>F0</strong> selezionata con inseminazione strumentale: una genetica conosciuta e uniforme, che alleviamo solo noi.",
   },
   {
     h3: 'Disponibilità e prenotazione',
@@ -135,11 +135,11 @@ const blocks = [
 ];
 
 /**
- * Gallery: la foto principale (`sciame_4`) e quella della tracciabilità non si
- * ripetono nella griglia.
+ * Gallery: la foto principale (`sciame_4`) e quella della tracciabilità
+ * (`sciame_5`) non si ripetono nella griglia.
  */
 const gallery = nuclei.gallery.filter(
-  (p) => p.base !== 'sciame_4' && p.base !== 'raffaele_che_mostra_larnia_in_mano'
+  (p) => p.base !== 'sciame_4' && p.base !== 'sciame_5'
 );
 
 /**
@@ -157,7 +157,7 @@ const otherProducts = [
     href: '/api-regine/',
     ...repartoImages.apiRegine,
     title: 'Api regine',
-    text: 'Regine feconde dalla nostra selezione, per rinnovare un alveare o avviarne uno nuovo.',
+    text: 'Regine feconde della nostra linea Buckfast, per rinnovare un alveare o avviarne uno nuovo.',
     price: apiRegine.prezzo ?? prezzoSuRichiesta,
   },
   {
@@ -284,12 +284,12 @@ const otherProducts = [
       </div>
       <figure class="split-media">
         <Picture
-          base="raffaele_che_mostra_larnia_in_mano"
-          alt="Raffaele Antoci che controlla un telaio delle sue arnie"
+          base="sciame_5"
+          alt="Api di Bio & Golosità in apiario, a Cassano d'Adda"
           sizes="(min-width: 900px) 45vw, 100vw"
           loading="lazy"
         />
-        <figcaption>Il controllo dei telai prima della consegna</figcaption>
+        <figcaption>Le nostre api in apiario, a Cassano d'Adda</figcaption>
       </figure>
     </div>
   </section>

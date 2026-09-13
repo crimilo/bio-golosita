@@ -20,7 +20,7 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 | `/miele/miele-di-castagno/` | Landing SEO Miele di Castagno |
 | `/miele/miele-in-favo/` | **Miele in favo**: il miele lasciato nella sua cera, con video |
 | `/polline-d-api/` | **Polline d'api**: prodotto, origine, conservazione, FAQ, **video dell'impollinazione** |
-| `/api-regine/` | **Api regine**: regine feconde già in deposizione, razze, disponibilità, prenotazione, FAQ, **video di nascita e marcatura della regina** |
+| `/api-regine/` | **Api regine**: regine feconde già in deposizione, linea Buckfast (F1 da madre F0), disponibilità, prenotazione, FAQ, **video di nascita e marcatura della regina + quello della regina F1 sulle covate** |
 | `/nuclei-api/` | **Nuclei d'api**: struttura dei singoli mieli (prodotto → scheda → tracciabilità → foto → FAQ → altri prodotti), nucleo vs sciame vs pacco d'api, disponibilità, trasporto, **video delle api che si creano lo spazio** |
 | `/consegna-miele/` | **Consegna**: come funziona, zone servite, ritiro in sede, map |
 | `/guide/` | **Hub guide**: 6 approfondimenti collegati alle pagine commerciali |
@@ -49,7 +49,7 @@ rilascio, quindi gli asset nuovi restano invisibili finché non passa.
 public/            # asset statici serviti così come sono (img/, video/, fonts/, og.jpg, _headers, _redirects…)
 src/
   data/site.js     # ★ dati dell'azienda: telefono, prezzi, orari, mieli, miele in favo, zone di consegna, area servita
-  data/bee-products.js  # ★ polline, api regine, nuclei: prezzi/disponibilità/razze (⚠️ voci da completare)
+  data/bee-products.js  # ★ polline, api regine, nuclei: prezzi/disponibilità/linea (⚠️ voci da completare)
   data/guides.ts   # ★ le 6 guide informative (titoli, meta, contenuto a blocchi)
   layouts/Base.astro
   components/      # Header, Footer, Picture (AVIF), Icons, Emoji, Lightbox, Gallery, PageHero, Faq,
@@ -198,7 +198,7 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   del footer e con i rimandi dentro i testi: le card "Gli altri mieli" per i
   mieli, "Nuclei, guide e mieli" / "Regine e guide per iniziare" per i prodotti
   dell'apicoltura.
-- **Tabella prezzi** (`/miele/#prezzi`): sotto i **640px** non scorre più in
+- **Tabella prezzi** (`/miele/#mieli`): sotto i **640px** non scorre più in
   orizzontale, si impila in schede usando i `data-label` delle celle come
   etichette. Era l'unica area del sito con scroll orizzontale: il QA browser
   verifica che nessun bottone abbia testo fuori dal riquadro e che la pagina non
@@ -221,7 +221,7 @@ disponibilità") e **non** inventano nulla. Fatto: polline (barattolo da 200 g a
 € 5,50 → `prezzo` + `formato`, e la disponibilità: fresco aprile–maggio,
 essiccato anche dopo), api regine (disponibili da fine maggio in poi), nuclei
 (dai primi di aprile in poi). Restano da completare `polline.raccolto/lavorazione`,
-`apiRegine.razze/prenotazioneDa/documenti`, `nuclei.telai/razza/prenotazioneDa`.
+`apiRegine.prenotazioneDa/documenti`, `nuclei.telai/prenotazioneDa`.
 Le disponibilità sono scritte in `disponibilita` **e** nella riga
 `Disponibilità` di `specs`; per i nuclei la stessa data compare anche nel testo e
 nella FAQ "Quando sono disponibili i nuclei?".
@@ -271,9 +271,11 @@ La **disponibilità è poca e solo su prenotazione**, e si dice in tre punti:
 della card) e la riga `Disponibilità` in `specs`; l'intro della hero e quella
 della griglia su `/miele/` lo nominano.
 `priceFormats: []` = prezzo non pubblicato: la pagina mostra "Prezzo su
-richiesta" e l'offerta non finisce nei dati strutturati. Compare in home (testo
+richiesta" e non emette né `Product` né `offers`. Compare in home (testo
 della card mieli), nell'hub `/miele/` (card della griglia + nota prezzi), nel
-footer, nella `ItemList` e nel catalogo dell'offerta di `LocalBusiness`.
+footer, nella `ItemList` e nel catalogo `hasOfferCatalog` di `LocalBusiness`,
+dove la voce resta **senza `price`** (nome, immagine e URL: nessun prezzo
+inventato).
 
 Nella pagina del miele il prezzo è in evidenza (`.product-price`): il formato
 d'ingresso in grande con il formato in piccolo, gli altri formati in una riga più
@@ -286,20 +288,22 @@ scritta non renderizza, vedi QA).
 - [x] **Numero di telefono**: aggiornato a +39 351 537 6719 (CTA "Chiama ora", WhatsApp e schema)
 - [x] **Prezzi mieli**: aggiornati — acacia 6,00 (500g) / 11,00 (kg), millefiori 5,00 / 9,00, castagno 6,50 / 12,00 (dati strutturati come `ProductGroup` con una variante per formato)
 - [x] **Prezzo polline**: barattolo da 200 g a € 5,50 (pagina, specifiche e `Product` con `Offer`)
-- [ ] **Orari**: pubblicati `Tutti i giorni 08:00–20:00` + nota "chiama prima di
+- [ ] **Orari**: pubblicati `Tutti i giorni 08:00–21:00` + nota "chiama prima di
       passare"; la scheda Google Business Profile deve riportare gli stessi orari
       (o correggi `hours` in `src/data/site.js`)
 - [x] **Recensioni**: le 4 recensioni segnaposto sono state rimosse e sostituite
-      con **8 recensioni reali della scheda Google** (testo fedele, stelle reali,
-      etichetta "Recensione Google"). Due recensioni erano troncate da Google
-      ("… More") e sono state chiuse all'ultima frase completa, senza cambiare
-      parole; la recensione "Ottimi prodotti bio naturali." è esclusa di proposito
-      perché il miele è convenzionale e non certificato biologico.
+      con **recensioni reali della scheda Google** (testo fedele, stelle reali,
+      etichetta "Recensione Google"): in `src/data/site.js` → `reviews` ce ne
+      sono **3**, e la pagina mostra esattamente quelle (nessun contatore
+      gonfiato). La recensione "Ottimi prodotti bio naturali." è esclusa di
+      proposito perché il miele è convenzionale e non certificato biologico.
       Lo schema `Review`/`AggregateRating` resta **volutamente assente**: per
       aggiungerlo servono media e numero di recensioni reali e aggiornati della
-      scheda Google (non vanno stimati).
+      scheda Google (non vanno stimati). La hero della home riporta «★ 4,9 su
+      Google»: è il dato della scheda, non lo calcola il sito.
       Le nuove recensioni si aggiungono in `src/data/site.js` → `reviews`.
-- [ ] **Partita IVA / REA**: aggiungerli nel footer quando disponibili
+- [x] **Partita IVA / REA**: pubblicati nel footer — `P.IVA 12606370968`,
+      `REA MI-2744949` — e `vatID` nel JSON-LD `LocalBusiness`.
 - [x] **Dominio**: `bioegolosita.it` è il custom domain del Worker `bio-golosita`.
       Il redirect **www → dominio canonico** è una Redirect Rule di Cloudflare che
       gira *davanti* al Worker (conserva percorso e query string) e **non** una
@@ -496,10 +500,13 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   `/api-regine/`. `arnia-piena-di-api2.jpg` non è più usata (sul blocco prodotto
   di `/nuclei-api/` c'è `sciame_4`): le sue varianti non si generano più, basta
   rimettere la riga in `scripts/process-images.mjs` per riaverla.
-- `miele-in-favo.jpg` (root, 474×550) — foto originale del titolare, ottimizzata
-  in `public/img/miele_in_favo-*` (solo variante 400): è la **foto del blocco
+- `miele-in-favo.png` (root, 1264×1188, quasi quadrata) — foto originale del
+  titolare, ottimizzata in `public/img/miele_in_favo-*` (varianti 1200, 900, 600,
+  400, come le altre foto di prodotto: il blocco prodotto di
+  `/miele/miele-in-favo/` ha una colonna da 520px): è la **foto del blocco
   prodotto** di `/miele/miele-in-favo/` e l'immagine della sua card nella griglia
-  di `/miele/`.
+  di `/miele/`. Sostituisce la foto precedente, che era 474×550 e generava la
+  sola variante 400.
 - `miele-in-favo-1.avif … miele-in-favo-6.avif` (root, 478×850, già AVIF) — sei
   fotogrammi ricavati dal video del favo, **numerati nell'ordine d'uso**: dal favo
   ancora attaccato al telaio (la 1) all'assaggio di Raffaele (la 6). Sono
@@ -518,7 +525,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 - I **video degli apiari** girati dal titolare (sorgenti in root, nome che dice
   cosa mostrano): pubblicati in `public/video/` con un nome parlante e ricodificati
   in H.264/AAC (compatibile su tutti i browser) con il comando qui sopra, più il
-  poster da un fotogramma. In totale 93,6 MB → 33,4 MB:
+  poster da un fotogramma. In totale 99,1 MB → 38,1 MB:
   - `smielatura_miele_acacia_2026.mp4` → `smielatura-acacia.mp4` (720×1280,
     19 s, 2,9 MB) — scheda del miele di acacia;
   - `video-che-mostra-la-smielatura-millefiori-more-e-tiglio-2026.mp4` →
@@ -533,13 +540,25 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   - `raffaele-che-mostra-lo-spirito-di-adattamento-delle-api-che-si-sono-create-spazio-da-sole.mp4`
     → `api-che-si-creano-spazio.mp4` (576×1024, 57 s, 8,2 MB) — `/nuclei-api/`;
   - `video-emozionante-girato-da-raffele-che-mostra-le-sue-api-che-impollinano-un-fiore.mp4`
-    → `api-che-impollinano.mp4` (480×856, 9 s, 0,5 MB) — `/polline-d-api/`.
+    → `api-che-impollinano.mp4` (480×856, 9 s, 0,5 MB) — `/polline-d-api/`;
+  - `regina-f1-su-covate.mp4` → `regina-f1-su-covate.mp4` (478×850, 19 s,
+    5,1 MB, audio mono 64k come gli altri) — `/api-regine/`, **non nella
+    galleria** ma nel testo, subito sotto la sezione «La nostra linea: regine
+    Buckfast, figlie di una madre F0»: è un blocco `video` di `ProseBlocks`
+    (mp4 + poster AVIF reso in `.prose-video`, come il video dei mieli). Il
+    poster è il fotogramma a 5 s, scelto misurando la nitidezza di dieci
+    fotogrammi distribuiti sul girato (vedi la voce in `scripts/posters.mjs`).
   I video sono `preload="none"` con poster: quei MB si scaricano solo se il
   visitatore li fa partire, non all'apertura della pagina.
 - **I metadati si tolgono prima di pubblicare**, foto e video. Le foto, senza
   ricodifica e senza toccare i pixel: `exiftool -all= -overwrite_original <file>`
   (per un PNG con un manifest C2PA serve anche `-JUMBF:all=`, che `-all=` da solo
-  non rimuove). I video, o con una passata senza ricodifica
+  non rimuove). Su un PNG `-all=` però non tocca i chunk di colore (`cHRM`,
+  esportati da ExifTool come `WhitePointX/Y`, `RedX/Y`, `GreenX/Y`, `BlueX/Y`:
+  «Not a deletable group: cHRM»): lì serve una passata
+  `magick <file>.png -strip <file>.png`, che è lossless (verificabile con
+  `magick compare -metric AE` sul prima/dopo = `0`) e lascia solo
+  IHDR/IDAT/IEND. I video, o con una passata senza ricodifica
   (`ffmpeg -i in -map 0 -map_metadata -1 -map_chapters -1 -c copy -fflags +bitexact out.mp4`)
   o direttamente con la ricodifica qui sopra, aggiungendo `-map_metadata -1` e
   `-fflags +bitexact` (che non scrive nemmeno il nome dell'encoder). Gli AVIF di
@@ -560,7 +579,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   sorgente in root (`arnie` non ha nemmeno più una voce in
   `process-images.mjs`), quindi non rigenerabili; per il
   lavoro in apiario si usano le foto del titolare
-  (`raffaele_che_mostra_larnia_in_mano`, `raffaele_sorridente_con_le_sue_api`,
+  (`raffaele_sorridente_con_le_sue_api`,
   `arnia_piena_di_api`, `ape_regina_di_raffaele`, `sciame_1` … `sciame_7`). Per
   questo le stock `apiario_arnie`, `apicoltore_telaio`, `favo_covata`,
   `arnia_nucleo` e `sciame_ramo` sono state **eliminate**: non reintrodurle.

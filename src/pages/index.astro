@@ -37,7 +37,7 @@ const homeProducts = [
     href: '/api-regine/',
     ...repartoImages.apiRegine,
     title: 'Api regine',
-    text: 'Regine feconde dalla nostra selezione, per rinnovare un alveare o avviarne uno nuovo.',
+    text: 'Regine feconde della nostra linea Buckfast, per rinnovare un alveare o avviarne uno nuovo.',
     price: apiRegine.prezzo ?? prezzoSuRichiesta,
   },
   {
@@ -111,9 +111,7 @@ const homeFaq = [
           Miele artigianale 100% italiano a Cassano d'Adda, direttamente dall'apicoltore
         </h1>
         <p class="hero-sub">
-          Miele di acacia, millefiori e castagno, non pastorizzato e raccolto nei
-          nostri apiari. Vendita diretta a Cassano d'Adda e consegna a domicilio
-          nei dintorni.
+            Dai nostri apiari, non pastorizzato e smielato a freddo.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary btn-lg" href="/miele/">
@@ -125,17 +123,10 @@ const homeFaq = [
             Chiama ora
           </a>
         </div>
-        {/*
-          Questa riga NON ripete le promesse già scritte sopra (100% italiano,
-          api proprie, non pastorizzato, dal 2020 le dicono eyebrow, h1 e
-          sottotitolo) né quelle della sezione "Perché scegliere" qui sotto:
-          aggiunge i dati pratici (scelta, consegna, ritiro), che nella hero
-          non compaiono.
-        */}
         <ul class="trust">
-          <li><Icons name="check" size={18} /> 5 varietà di miele</li>
-          <li><Icons name="check" size={18} /> Consegna tra Milano, Bergamo, Cremona e Lodi</li>
-          <li><Icons name="check" size={18} /> Ritiro in azienda su appuntamento</li>
+          <li><Icons name="check" size={18} /> 5 varietà tra cui scegliere</li>
+          <li><Icons name="check" size={18} /> Consegna a domicilio tra Milano, Bergamo, Cremona e Lodi</li>
+          <li><Icons name="check" size={18} /> ★ 4,9 su Google</li>
         </ul>
       </div>
     </div>
@@ -144,18 +135,11 @@ const homeFaq = [
   <section class="section section--soft" id="prodotti" aria-labelledby="prodotti-title">
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
-        {/*
-          L'eyebrow resta (ogni sezione della home ne ha uno, è il ritmo della
-          pagina), ma non dice "direttamente dall'apiario/apicoltore": nella hero
-          h1 e nell'eyebrow della gallery c'è già. Qui anticipa l'altra cosa,
-          che la hero non dice — oltre al miele produciamo anche il resto.
-        */}
         <span class="eyebrow">non solo miele</span>
         <h2 id="prodotti-title">I nostri prodotti</h2>
         <p>
           Miele, polline, api regine e nuclei: tutto di produzione propria, venduto
-          direttamente. Scegli il prodotto e nella pagina dedicata trovi prezzi,
-          formati e disponibilità.
+          direttamente.
         </p>
       </div>
       <ProductCards cards={homeProducts} linkLabel="Vedi prezzi e disponibilità" />
@@ -211,8 +195,8 @@ const homeFaq = [
         <span class="eyebrow">il tuo apicoltore<Emoji name="honeybee" /></span>
         <h2 id="about-title">Mi chiamo Raffaele e le api sono la mia passione</h2>
         <p>
-          Dal {site.apicoltoreDal} mi prendo cura delle mie api a Cassano d'Adda
-          e nelle campagne tra la Gera d'Adda e la Martesana. Ogni barattolo di
+          Ho gli apiari a Cassano d'Adda e nelle campagne tra la Gera d'Adda e
+          la Martesana. Ogni barattolo di
           Bio & Golosità è il risultato del mio lavoro paziente, fatto di
           controlli in apiario, fioriture seguite settimana per settimana e
           smielatura a freddo.

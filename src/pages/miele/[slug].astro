@@ -39,7 +39,7 @@ const traceability = [
   {
     label: 'Apiario di provenienza',
     value:
-      "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana, la Gera d'Adda e il Parco Nord Milano",
+      "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord (area protetta) e la Val Brembana",
   },
   { label: 'Periodo di raccolta', value: honey.harvest.replace(/^Raccolto /, '') },
   {
@@ -55,7 +55,7 @@ const traceability = [
     label: 'Conservazione consigliata',
     value:
       honey.storageNote ??
-      'Barattolo chiuso, al riparo da luce e umidità, a temperatura ambiente (10–25 °C)',
+      'Barattolo chiuso, al buio, sotto i 14 °C',
   },
 ];
 
@@ -72,7 +72,7 @@ const guideLabel =
 
 const heroIntro =
   honey.heroIntro ??
-  `${honey.name} 100% italiano e artigianale, di api proprie a ${local}, in provincia di Milano: non pastorizzato, smielato a freddo e raccolto nelle campagne della Martesana e della Gera d'Adda. ${honey.harvest}.`;
+  `${honey.name} 100% italiano e artigianale, di api proprie a ${local}, in provincia di Milano: non pastorizzato, smielato a freddo e raccolto negli apiari tra la Martesana, la Gera d'Adda e il Parco Adda Nord. ${honey.harvest}.`;
 
 // Prezzo ben visibile: il formato d'ingresso in grande, gli altri formati in
 // una riga più piccola sotto (stessa idea del "300,00 € (10,00 € al pezzo)").
@@ -239,11 +239,11 @@ const priceOthers = otherFormats(honey.priceFormats);
       </div>
       <figure class="split-media">
         <Picture
-          base={honey.photo ?? 'raffaele_che_mostra_larnia_in_mano'}
+          base={honey.photo ?? 'sciame_5'}
           alt={
             honey.photo
               ? `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`
-              : 'Raffaele Antoci con un telaio delle sue arnie'
+              : "Api di Bio & Golosità in apiario, a Cassano d'Adda"
           }
           sizes="(min-width: 900px) 45vw, 100vw"
           loading="lazy"

@@ -1,5 +1,6 @@
 ---
 import ProseFigure from './ProseFigure.astro';
+import VideoFigure from './VideoFigure.astro';
 import type { Block } from '../lib/types';
 
 interface Props {
@@ -36,6 +37,21 @@ const { blocks } = Astro.props;
           caption={b.img.caption}
           sizes="(min-width: 900px) 46rem, 100vw"
         />
+      );
+    }
+    if ('video' in b) {
+      // Video verticale dentro il testo: la colonna stretta di `.prose-video`
+      // gli fa mantenere l'aspetto 9/16 (`.video-item--tall`), senza ritagli.
+      // Il poster si carica solo avvicinandosi al viewport (VideoFigure.astro).
+      return (
+        <div class="prose-video">
+          <VideoFigure
+            src={b.video.src}
+            poster={b.video.poster}
+            label={b.video.label}
+            cls={b.video.cls ?? 'video-item--tall'}
+          />
+        </div>
       );
     }
     if ('row' in b) {
