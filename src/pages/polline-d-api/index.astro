@@ -2,6 +2,7 @@
 import ProductPage from '../../components/ProductPage.astro';
 import ProseBlocks from '../../components/ProseBlocks.astro';
 import { polline, availabilityFallback, prezzoSuRichiesta, prezzoNota } from '../../data/bee-products';
+import { ogImageFor } from '../../data/og';
 import { product, faqPage } from '../../lib/schema';
 
 const pathname = polline.path;
@@ -54,6 +55,7 @@ const blocks = [
 
 <ProductPage
   {pathname}
+  ogImage={ogImageFor(pathname)}
   title={polline.title}
   description={polline.description}
   {crumbs}

@@ -6,9 +6,11 @@ import Gallery from '../components/Gallery.astro';
 import Testimonials from '../components/Testimonials.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Icons from '../components/Icons.astro';
+import PhoneCta from '../components/PhoneCta.astro';
 import PriceBadge from '../components/PriceBadge.astro';
 import ProductCards from '../components/ProductCards.astro';
 import { site } from '../data/site';
+import { ogImageFor } from '../data/og';
 import { polline, apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../data/bee-products';
 import { priceFrom } from '../lib/price';
 import { localBusiness, faqPage } from '../lib/schema';
@@ -77,6 +79,7 @@ const homeFaq = [
   title={title}
   description={description}
   pathname="/"
+  ogImage={ogImageFor('/')}
   preloadImage="apiari_hd"
   jsonLd={[localBusiness(), faqPage(homeFaq)]}
 >
@@ -118,15 +121,15 @@ const homeFaq = [
             Scopri i nostri mieli
             <Icons name="arrow" size={20} />
           </a>
-          <a class="btn btn-ghost btn-lg" href={site.phoneHref}>
-            <Icons name="phone" size={20} />
-            Chiama ora
-          </a>
+          <PhoneCta variant="ghost" />
         </div>
+        {/* Un'icona per il significato di ogni riga, non tre check identici:
+            la spunta per il dato secco, il segnaposto per le zone di consegna,
+            la stella (piena, come in Testimonials) per il voto su Google. */}
         <ul class="trust">
           <li><Icons name="check" size={18} /> 5 varietà tra cui scegliere</li>
-          <li><Icons name="check" size={18} /> Consegna a domicilio tra Milano, Bergamo, Cremona e Lodi</li>
-          <li><Icons name="check" size={18} /> ★ 4,9 su Google</li>
+          <li><Icons name="pin" size={18} /> Consegna a domicilio tra Milano, Bergamo, Cremona e Lodi</li>
+          <li><Icons name="star" size={18} /> 4,9 su Google</li>
         </ul>
       </div>
     </div>
@@ -222,7 +225,7 @@ const homeFaq = [
         <span class="eyebrow">dove siamo e dove consegniamo</span>
         <h2 id="zone-title">Vendita e consegna di miele a Cassano d'Adda e nella Martesana</h2>
         <p>
-          La nostra azienda agricola si trova in Via Salvo D'Acquisto 9 a
+          Ci troviamo in Via Salvo D'Acquisto 9 a
           Cassano d'Adda. Vendiamo direttamente il nostro miele e consegniamo
           anche nella Martesana, nella Gera d'Adda e in numerosi comuni tra le
           province di Milano, Bergamo, Cremona e Lodi.

@@ -43,9 +43,10 @@ for (const vp of VIEWPORTS) {
   await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
 
   const cta = page.locator('.header-cta').first();
-  // Mobile: la CTA telefonica c'è e sta su una riga sola; sotto i 480px mostra
-  // solo l'icona (a 360px "Chiama ora" andava a capo e sembrava rotta).
-  // Desktop (>=900px): la CTA non c'è, servirebbe a poco senza vivavoce.
+  // Mobile: la CTA telefonica c'è e sta su una riga sola, con l'etichetta
+  // "Chiama ora" (è l'azione che conta lì); sotto i 480px solo l'icona (a
+  // 360px "Chiama ora" andava a capo e sembrava rotta).
+  // Desktop (>=900px): la CTA c'è, a destra del menu, e l'etichetta è il NUMERO.
   if (vp.w < 900) {
     check(`[${vp.name}] CTA header visibile`, await cta.isVisible());
     // Il conteggio delle righe è sulla label: l'altezza del bottone è fissa,
@@ -73,30 +74,45 @@ for (const vp of VIEWPORTS) {
       Boolean(ctaInfo.nome) && ctaInfo.icona
     );
   } else {
-    check(`[${vp.name}] CTA telefonica assente su desktop`, !(await cta.isVisible()));
-
-    // Il menu sta a filo del bordo destro del contenuto, con lo stesso margine
-    // che ha il logo a sinistra (scelta esplicita: menu desktop a destra).
-    const navGeo = await page.evaluate(() => {
-      const nav = document.querySelector('.nav');
-      const inner = document.querySelector('.header-inner');
-      const logo = document.querySelector('.logo');
-      if (!nav || !inner || !logo) return null;
-      const n = nav.getBoundingClientRect();
+    // Desktop: la CTA c'è e l'etichetta è il numero (a un computer il tap non
+    // serve: il numero si legge e si copia). Sta a destra del menu, a filo del
+    // bordo destro del contenuto — lo stesso margine che ha il logo a sinistra.
+    check(`[${vp.name}] CTA header visibile su desktop`, await cta.isVisible());
+    const headerGeo = await page.evaluate(() => {
+      const q = (s) => document.querySelector(s);
+      const nav = q('.nav');
+      const inner = q('.header-inner');
+      const logo = q('.logo');
+      const ctaEl = q('.header-cta');
+      if (!nav || !inner || !logo || !ctaEl) return null;
       const i = inner.getBoundingClientRect();
       const cs = getComputedStyle(inner);
       const innerRight = i.right - parseFloat(cs.paddingRight);
       const innerLeft = i.left + parseFloat(cs.paddingLeft);
+      const n = nav.getBoundingClientRect();
+      const c = ctaEl.getBoundingClientRect();
+      const l = logo.getBoundingClientRect();
+      const numero = ctaEl.querySelector('.cta-phone-label--number');
       return {
-        rightInset: Math.round(innerRight - n.right),
-        logoInset: Math.round(logo.getBoundingClientRect().left - innerLeft),
-        gap: Math.round(n.left - logo.getBoundingClientRect().right),
-        navW: Math.round(n.width),
+        rightInset: Math.round(innerRight - c.right),
+        logoInset: Math.round(l.left - innerLeft),
+        gapNavCta: Math.round(c.left - n.right),
+        numeroVisibile: numero && getComputedStyle(numero).display !== 'none',
+        numero: (numero?.textContent || '').trim(),
+        azioneNascosta: getComputedStyle(ctaEl.querySelector('.header-cta-label')).display === 'none',
       };
     });
     check(
-      `[${vp.name}] menu a filo del bordo destro (${navGeo?.rightInset}px, come il logo a ${navGeo?.logoInset}px)`,
-      navGeo && Math.abs(navGeo.rightInset - navGeo.logoInset) <= 2 && navGeo.gap >= 8
+      `[${vp.name}] CTA header mostra il numero ("${headerGeo?.numero}")`,
+      Boolean(headerGeo?.numeroVisibile && headerGeo.numero && headerGeo.azioneNascosta)
+    );
+    check(
+      `[${vp.name}] CTA a filo del bordo destro (${headerGeo?.rightInset}px, come il logo a ${headerGeo?.logoInset}px)`,
+      headerGeo && Math.abs(headerGeo.rightInset - headerGeo.logoInset) <= 2
+    );
+    check(
+      `[${vp.name}] CTA a destra del menu, staccata (${headerGeo?.gapNavCta}px)`,
+      headerGeo && headerGeo.gapNavCta >= 20
     );
   }
 
@@ -137,16 +153,26 @@ for (const vp of VIEWPORTS) {
           const nav = document.querySelector('.nav');
           const links = [...nav.querySelectorAll('a')];
           const navBox = nav.getBoundingClientRect();
-          const logo = document.querySelector('.logo').getBoundingClientRect();
+          const logo = document.querySelector('.logo');
+          const logoBox = logo.getBoundingClientRect();
           const inner = document.querySelector('.header-inner');
+          const i = inner.getBoundingClientRect();
+          const cs = getComputedStyle(inner);
+          const ctaBox = document.querySelector('.header-cta').getBoundingClientRect();
           return {
             larghezza,
             font: getComputedStyle(links[0]).fontSize,
             unaRiga: links.every((a) => a.getBoundingClientRect().top === links[0].getBoundingClientRect().top),
-            gap: Math.round(navBox.left - logo.right),
-            dentro:
-              navBox.right <=
-              inner.getBoundingClientRect().right - parseFloat(getComputedStyle(inner).paddingRight) + 1,
+            gap: Math.round(navBox.left - logoBox.right),
+            gapNavCta: Math.round(ctaBox.left - navBox.right),
+            // a 900px l'header è al limite: se qualcosa non ci sta, il flex
+            // schiaccia il logo (che ha min-width:0) invece di traboccare, e il
+            // testo del marchio finisce sotto il menu. Il logo "stirato" si
+            // vede da scrollWidth > clientWidth.
+            logoSchiacciato: logo.scrollWidth > logo.clientWidth + 1,
+            ctaDentro: ctaBox.right <= i.right - parseFloat(cs.paddingRight) + 1,
+            dentro: navBox.right <= i.right - parseFloat(cs.paddingRight) + 1,
+            overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
           };
         }, w)
       );
@@ -159,7 +185,12 @@ for (const vp of VIEWPORTS) {
     );
     check(
       `[desktop] menu intero anche a 900px (${misure[0].gap}px dal logo, una riga: ${misure[0].unaRiga})`,
-      misure.every((m) => m.unaRiga && m.gap >= 8 && m.dentro)
+      misure.every((m) => m.unaRiga && m.gap >= 8 && m.dentro && m.ctaDentro && m.overflow <= 0)
+    );
+    check(
+      `[desktop] header non si schiaccia, CTA staccata dal menu a ogni larghezza ` +
+        `(${misure.map((m) => `${m.larghezza}px: ${m.gapNavCta}px`).join(', ')})`,
+      misure.every((m) => !m.logoSchiacciato && m.gapNavCta >= 20)
     );
   }
 

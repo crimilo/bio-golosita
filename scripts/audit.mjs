@@ -172,11 +172,10 @@ for (const file of files) {
   }
 
   // Il menu deve far capire dove sei. Una sola voce accesa, e quella giusta
-  // per la sezione: su /miele/miele-di-acacia/ è accesa "Mieli" (non la home),
-  // su /guide/<slug>/ è accesa "Guide". Il controllo è sul blocco <nav>, non
-  // sulla pagina intera, così non prende il breadcrumb (che usa lo stesso
-  // aria-current). Sulla home e sul 404, che non sono voci del menu, non deve
-  // essere accesa nessuna voce.
+  // per la sezione: su /miele/miele-di-acacia/ è accesa "Mieli" (non la home).
+  // Il controllo è sul blocco <nav>, non sulla pagina intera, così non prende
+  // il breadcrumb (che usa lo stesso aria-current). Su home, 404 e guide, che
+  // non sono voci del menu, non deve essere accesa nessuna voce.
   const navBlock = h.match(/<nav class="nav"[\s\S]*?<\/nav>/)?.[0] ?? '';
   if (navBlock) {
     const accese = [...navBlock.matchAll(/<a[^>]*href="([^"]+)"[^>]*aria-current="page"/g)].map((m) => m[1]);

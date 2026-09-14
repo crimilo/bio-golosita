@@ -359,10 +359,30 @@ strong {
 
 .header-cta {
   height: 44px;
-  padding: 0 1.35em;
-  font-size: 0.95rem;
+  padding: 0 1.15em;
+  font-size: 0.9rem;
   /* la CTA dell'header non va mai a capo */
   white-space: nowrap;
+}
+
+/*
+ * Le CTA telefoniche (header, hero, blocchi prodotto) hanno due etichette: il
+ * numero da desktop, "Chiama ora" sotto i 900px — dove si tocca, e l'azione
+ * conta più del numero. Il CSS ne mostra una sola: `display:none` esce anche
+ * dall'albero di accessibilità, quindi il nome del link resta corretto a ogni
+ * larghezza.
+ */
+.cta-phone-label--number {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .cta-phone-label--action {
+    display: none;
+  }
+  .cta-phone-label--number {
+    display: inline;
+  }
 }
 
 @media (max-width: 899.98px) {
@@ -404,15 +424,13 @@ strong {
     border-color: transparent;
     color: var(--amber-strong);
   }
-  .header-cta {
-    padding: 0 1.1em;
-    font-size: 0.9rem;
-  }
 }
 
 /* Sotto i 480px solo l'icona: "Chiama ora" su due righe sembrava rotto, e
-   così l'area di tocco resta piena (bottone quadrato 44px). Sta DOPO il blocco
-   a 899.98px, che sennò le riporta il padding laterale addosso all'icona. */
+   così l'area di tocco resta piena (bottone quadrato 44px). Qui l'etichetta è
+   nascosta e la label col numero è già `display: none` a questa larghezza,
+   quindi resta la sola icona; a dare il nome accessibile al link è l'aria-label
+   in Header.astro. */
 @media (max-width: 479.98px) {
   .header-cta {
     width: 44px;
@@ -446,21 +464,31 @@ strong {
 }
 
 @media (min-width: 900px) {
-  /* Su desktop la CTA telefonica non serve (nessun vivavoce sul computer):
-     il numero resta nel footer e nel blocco contatti di ogni pagina. Con la
-     CTA e l'hamburger nascosti, anche il contenitore sparisce: altrimenti
-     lascia un margine vuoto dopo il menu. */
-  .header-cta,
-  .header-actions {
+  /* Da desktop l'header tiene la CTA telefonica a destra del menu, con il
+     numero: si legge e si copia, e il numero in chiaro fa capire subito a chi
+     si sta telefonando. L'hamburger invece sparisce (il menu è già in linea). */
+  .nav-toggle {
     display: none;
   }
-  /* Senza la CTA, il menu non ha più niente alla sua destra: `margin-left: auto`
-     lo tiene a filo del bordo destro del contenuto, con lo stesso margine che ha
-     il logo a sinistra. */
+  .header-actions {
+    display: flex;
+    /* Il `margin-left` è il respiro fra menu e CTA: il `gap` dell'header è 1rem
+       e da solo lasciava la pillola del numero appiccicata al menu. Non è
+       `auto`: quello spingerebbe la CTA al bordo staccandola dal menu (e i due
+       margini automatici si spartirebbero lo spazio, portando il menu a metà
+       pagina) — a filo del bordo destro ci pensa il `margin-left: auto` del
+       menu. */
+    margin-left: 0.5rem;
+  }
+  /* Il menu è l'ultimo blocco elastico prima della CTA: `margin-left: auto` lo
+     (e con lui la CTA) tiene a filo del bordo destro del contenuto, con lo
+     stesso margine che ha il logo a sinistra. Il gap è 1.2rem, non 1.6rem:
+     a 900px è la misura che lascia ~35px fra logo e menu anche con la CTA del
+     numero in linea (misurato da qa-browser.mjs). */
   .nav {
     display: flex;
     align-items: center;
-    gap: 1.6rem;
+    gap: 1.2rem;
     margin-left: auto;
   }
   /* La voce della sezione in cui ti trovi resta accesa come al passaggio del

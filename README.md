@@ -35,6 +35,7 @@ bun install
 bun run dev          # sviluppo su localhost:4321
 bun run build        # build statica in dist/
 bun run assets       # rigenera font, immagini, poster, favicon — servono i sorgenti in root, che NON sono nel repo (vedi "Immagini")
+bun run og           # rigenera le immagini OG delle pagine (public/og/, vedi "Immagini OG")
 bun run deploy       # build + `wrangler deploy` del Worker `bio-golosita` (static assets da ./dist)
 ```
 
@@ -46,21 +47,22 @@ rilascio, quindi gli asset nuovi restano invisibili finché non passa.
 ## Struttura
 
 ```
-public/            # asset statici serviti così come sono (img/, video/, fonts/, og.jpg, _headers, _redirects…)
+public/            # asset statici serviti così come sono (img/, video/, fonts/, og.jpg, og/, _headers, _redirects…)
 src/
   data/site.js     # ★ dati dell'azienda: telefono, prezzi, orari, mieli, miele in favo, zone di consegna, area servita
   data/bee-products.js  # ★ polline, api regine, nuclei: prezzi/disponibilità/linea (⚠️ voci da completare)
   data/guides.ts   # ★ le 6 guide informative (titoli, meta, contenuto a blocchi)
+  data/og.js       # ★ rotta → immagine OG (public/og/<slug>.jpg): unica fonte per sito e generatore
   layouts/Base.astro
   components/      # Header, Footer, Picture (AVIF), Icons, Emoji, Lightbox, Gallery, PageHero, Faq,
-                   # PhotoGallery, VideoFigure, ProseBlocks, ProseFigure, ProductPage, CtaBand, LinkCards…
+                   # PhotoGallery, VideoFigure, ProseBlocks, ProseFigure, ProductPage, CtaBand, PhoneCta, LinkCards…
   pages/           # pagine + route dinamiche /miele/[slug] e /guide/[slug]
   lib/schema.js    # generatori JSON-LD (LocalBusiness, Product, CollectionPage, Article, FAQPage, BreadcrumbList…)
   lib/images.js    # URL/srcset versionati dal manifest delle immagini (una sola fonte)
   lib/types.ts     # tipi condivisi (Block, Crumb, FaqItem, GalleryPhoto)
   integrations/sitemap.mjs  # genera dist/sitemap.xml dalle pagine reali a fine build
   styles/global.css
-scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, OG
+scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, OG (scripts/og/)
 ```
 
 ## Hero con immagine di sfondo
@@ -140,38 +142,55 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   menu hanno le loro regole. Contrasto misurato: il caso più stretto è 4,51:1
   (ambra su `--bg-soft`, nel testo di `/nuclei-api/`), tutti gli altri ≥4,93:1 —
   sopra la soglia di 4,5:1 verificata da `qa-contrast.mjs`.
-- **Header**: i 7 link di navigazione si nascondono sotto i 900px (menu
-  hamburger). La CTA telefonica "Chiama ora" vive **solo sotto i 900px**: su
-  desktop sparisce (`display: none`), perché senza vivavoce non serve — il
-  numero resta nel footer e nel blocco contatti di ogni pagina. Su mobile sta su
-  **una riga sempre** (`white-space: nowrap`) e sotto i **480px mostra solo
-  l'icona del telefono** (`.header-cta` 44×44, label in `.header-cta-label`
-  nascosta) con `aria-label="Chiama ora"` per il nome accessibile: il testo
-  andava a capo su due righe e sembrava rotto. `qa-browser.mjs` verifica che ci
-  sia sotto i 900px (solo icona sotto i 480px, su una riga fino a 560px) e che
-  **non** ci sia a 1280px.
-- **Menu desktop a destra**: sopra i 900px il menu sta a filo del bordo destro
-  del contenuto, con lo stesso margine che ha il logo a sinistra (scelta
-  esplicita). Dopo aver nascosto la CTA telefonica il menu non ha più niente alla
-  sua destra, quindi `margin-left: auto` lo porta al bordo: senza, resterebbe
-  appiccicato al logo. `qa-browser.mjs` controlla che il margine destro del menu
-  sia uguale a quello sinistro del logo (±2px) e che ci siano almeno 8px fra logo
-  e menu.
+- **Header**: i 6 link di navigazione si nascondono sotto i 900px (menu
+  hamburger). La CTA telefonica cambia **etichetta** con la larghezza: da desktop
+  (≥900px) mostra il **numero** (`site.phoneLocal`, "351 537 6719") a destra del
+  menu — si legge e si copia, e dice subito a chi si telefona; sotto i 900px torna
+  "Chiama ora", che è l'azione giusta da mobile; sotto i **480px resta solo
+  l'icona del telefono** (`.header-cta` 44×44), perché il testo andava a capo su
+  due righe e sembrava rotto. Le due etichette convivono nel DOM
+  (`.cta-phone-label--action` / `--number`) e il CSS ne mostra una sola:
+  `display: none` esce anche dall'albero di accessibilità, quindi il nome del
+  link resta corretto a ogni larghezza — e sotto i 480px lo tiene
+  l'`aria-label` ("Chiama ora: 351 537 6719"). `qa-browser.mjs` verifica che a
+  desktop la CTA ci sia, mostri il numero e non quella d'azione, e che sotto i
+  900px sia il contrario (solo icona sotto i 480px, su una riga fino a 560px).
+- **Menu desktop a destra, CTA in fondo**: sopra i 900px il menu e la CTA
+  telefonica stanno a filo del bordo destro del contenuto, con lo stesso margine
+  che ha il logo a sinistra (scelta esplicita). Fra menu e CTA ci sono **24px**
+  (il `gap` dell'header, 1rem, più `margin-left: 0.5rem` su `.header-actions`):
+  col solo `gap` la pillola del numero restava appiccicata al menu. È
+  `margin-left: auto` **sul menu** a spingere entrambi al bordo: sulla CTA un
+  margine automatico (o uno più generoso) la staccherebbe dal menu, e i due
+  margini automatici si spartirebbero lo spazio portando il menu a metà pagina.
+  Il `gap` fra le voci del menu è 1.2rem (non 1.6rem): è la misura che a 900px
+  lascia ~27px fra logo e menu anche con la CTA del numero in linea.
+  `qa-browser.mjs` controlla che la CTA sia a filo (±2px dal margine del logo),
+  che ci siano almeno 20px fra menu e CTA, che a 900/1000/1100/1149px il menu
+  resti su una riga **e che il logo non venga schiacciato**: a 900px l'header è
+  al limite e, se qualcosa non ci sta, il flex comprime il logo (`min-width: 0`)
+  invece di traboccare, facendo finire il testo del marchio sotto il menu.
 - **Voce di menu della pagina attuale**: la sezione in cui ti trovi resta accesa
   con **lo stesso effetto dell'hover** (desktop: testo ambra + sottolineatura;
   mobile: fondo tenue), così si capisce subito dove sei. L'evidenziazione è per
-  sezione, non per pagina esatta: su `/miele/miele-di-acacia/` è accesa "Mieli",
-  su `/guide/<slug>/` è accesa "Guide" (`isCurrent()` in `Header.astro`).
-  La home non è una voce del menu, quindi lì nessuna voce è accesa. Due controlli
+  sezione, non per pagina esatta: su `/miele/miele-di-acacia/` è accesa "Mieli"
+  (`isCurrent()` in `Header.astro`). La home **e le guide** non sono voci del
+  menu — le guide restano raggiungibili dal footer e dalle card in pagina —
+  quindi lì nessuna voce è accesa. Due controlli
   permanenti: `audit.mjs` verifica che la voce accesa sia **quella giusta** (e una
   sola) su ogni pagina, `qa-browser.mjs` confronta gli stili calcolati della voce
   attiva con quelli dell'hover e fallisce se differiscono — è così che è saltato
   fuori che da mobile la voce attiva teneva il separatore che l'hover toglie.
 - **I link del menu non si rimpiccioliscono mai**: nessuna fascia "compattata",
   la dimensione (0.95rem) è la stessa da 900px a 1920px. Il desktop stretto tiene
-  comunque: a 900px il menu è intero su una riga con 104px liberi prima del logo.
-  `qa-browser.mjs` misura il font a 900/1000/1100/1149px e fallisce se cambia o
-  scende sotto i 15px.
+  comunque: a 900px il menu è intero su una riga con ~27px fra logo e menu (il
+  resto dello spazio se lo prende la CTA del numero). `qa-browser.mjs` misura il
+  font a 900/1000/1100/1149px e fallisce se cambia o scende sotto i 15px.
+- **CTA telefonica di hero e blocchi prodotto**: `<PhoneCta>` — stesso scambio di
+  etichetta dell'header, con una differenza: da mobile mostra "Chiama ora" **e**
+  l'icona (lì la label non si nasconde mai). Da desktop l'etichetta è il numero,
+  così la pagina dice subito a chi telefonare. La CTA in fondo alle pagine
+  (`CtaBand`) resta invece "Chiama ora" a ogni larghezza.
 - **Etichetta prezzo delle card**: `<PriceBadge>` (`.price-badge`) sta in alto a
   sinistra **sopra la foto**, non nel corpo della card, ed è lo stesso componente
   per tutte le card con prezzo (home, `/miele/`, prodotti): così le rese non
@@ -324,7 +343,8 @@ scritta non renderizza, vedi QA).
 - **La home resta compatta**: ~900 parole e 9 sezioni, niente catalogo né
 enciclopedia. Il contenuto SEO vive nelle pagine di destinazione
 (`/miele/`, `/miele/miele-millefiori/`, `/polline-d-api/`, `/api-regine/`,
-`/nuclei-api/`, `/consegna-miele/`, `/guide/`), raggiungibili da menu e footer.
+`/nuclei-api/`, `/consegna-miele/`, `/guide/`), raggiungibili da menu — le
+guide, che non sono nel menu, dal footer e dalle card in pagina.
 Le regole interne: pagine commerciali ≤ ~1200 parole, FAQ 4-5 voci brevi,
 nessuna sezione duplicata in pagina (se il tema è già coperto da un blocco o da
 una guida, si linka invece di ripeterlo). Misura con `node scripts/density.mjs`.
@@ -398,12 +418,37 @@ node scripts/serve-gzip.mjs 8091 dist   # server statico con brotli per Lighthou
 Lighthouse (mobile, throttling standard): **Performance 99 · Accessibility 100 ·
 Best Practices 100 · SEO 100** (tutte le pagine; castagno 100/100/100/100).
 
-L'immagine OG (`public/og.jpg`, 1200×630) è generata da HTML+CSS in
-`scripts/og/og.html` e screenshot con Chromium headless; rigenerarla con:
+### Immagini OG
+
+Ogni pagina commerciale ha la sua anteprima social 1200×630 in
+`public/og/<slug>.jpg`: foto a tutta pagina con velo caldo e sopra occhiello,
+titolo, sottotitolo, chip con prezzo/disponibilità, badge e recapiti. Sono
+generate da HTML+CSS con Chromium headless:
 
 ```sh
-chromium --headless=new --no-sandbox --hide-scrollbars --window-size=1200,630 \
-  --screenshot=public/og.png file://$(pwd)/scripts/og/og.html
+bun run og              # tutte le pagine (o: node scripts/og/generate.mjs home miele)
+```
+
+- `src/data/og.js` è **l'unica fonte** dell'abbinamento rotta → file: le pagine
+  lo usano via `ogImageFor(path)` e il generatore legge la stessa lista, quindi
+  sito e immagini non possono divergere. Le pagine che non compaiono nella mappa
+  (guide, 404) restano sul fallback generico `/og.jpg`.
+- Il copy sta in `scripts/og/pages.mjs`, il layout in `scripts/og/generate.mjs`.
+  Le foto di sfondo sono quelle già pubblicate (`public/img/`, AVIF, `cover`).
+- Prima di scrivere ogni JPG il render viene **misurato**, non guardato a occhio:
+  overflow, testo fuori dai margini di 56px, gap tra i blocchi, righe del titolo,
+  budget di parole (titolo ≤ 8, sottotitolo ≤ 16, chip ≤ 3), foto davvero carica
+  e contrasto reale del testo sui pixel dello sfondo (≥ 4.5:1, come
+  `qa-contrast.mjs`). Se una pagina non passa, la generazione si ferma con errore.
+
+Il fallback generico `public/og.jpg` (1200×630, impaginazione a due colonne per le
+guide e la 404) è un file a parte, disegnato in `scripts/og/og.html`;
+rigenerarlo con:
+
+```sh
+chromium --headless=new --no-sandbox --hide-scrollbars \
+  --user-data-dir="$(mktemp -d)" --virtual-time-budget=4000 \
+  --window-size=1200,630 --screenshot=/tmp/og.png file://$(pwd)/scripts/og/og.html
 # poi convertire in JPG (es. con sharp)
 ```
 
@@ -451,8 +496,9 @@ esecuzione. Conseguenze da sapere:
   Android vecchi: ~1-3% del traffico) non mostrano la foto. Se in futuro serve
   il fallback, basta rimettere la seconda `<source>` e rigenerare le varianti.
 - **Restano fuori dalla regola** (non sono foto di pagina, e i lettori che le
-  consumano non leggono AVIF): `public/og.jpg` è l'anteprima social — WhatsApp,
-  Facebook e LinkedIn non renderizzano AVIF, quindi togliere il JPG romperebbe
+  consumano non leggono AVIF): le anteprime social — `public/og.jpg` (fallback
+  generico) e le immagini per pagina `public/og/*.jpg` — perché WhatsApp,
+  Facebook e LinkedIn non renderizzano AVIF, quindi togliere i JPG romperebbe
   ogni anteprima dei link — e le favicon (`favicon-*.png`, `apple-touch-icon.png`,
   `favicon.ico`, `logo.svg`).
 

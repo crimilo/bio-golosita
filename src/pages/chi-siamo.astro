@@ -5,6 +5,7 @@ import Picture from '../components/Picture.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Icons from '../components/Icons.astro';
 import { site } from '../data/site';
+import { ogImageFor } from '../data/og';
 import { localBusiness, aboutPage } from '../lib/schema';
 
 const title = "Apicoltore a Cassano d'Adda (MI) | Bio & Golosità";
@@ -23,6 +24,7 @@ const heroImg = 'raffaele_sorridente_con_le_sue_api';
   title={title}
   description={description}
   pathname="/chi-siamo/"
+  ogImage={ogImageFor('/chi-siamo/')}
   crumbs={crumbs}
   preloadImage={heroImg}
   jsonLd={[localBusiness(), aboutPage('/chi-siamo/')]}

@@ -5,6 +5,7 @@ import LinkCards from '../../components/LinkCards.astro';
 import Icons from '../../components/Icons.astro';
 import type { IconName } from '../../components/Icons.astro';
 import { apiRegine, availabilityFallback, prezzoSuRichiesta, prezzoNota, repartoImages } from '../../data/bee-products';
+import { ogImageFor } from '../../data/og';
 import { guideCard } from '../../data/guides';
 import { product, faqPage } from '../../lib/schema';
 
@@ -92,6 +93,7 @@ const blocks = [
 
 <ProductPage
   {pathname}
+  ogImage={ogImageFor(pathname)}
   title={apiRegine.title}
   description={apiRegine.description}
   {crumbs}

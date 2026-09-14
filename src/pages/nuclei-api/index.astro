@@ -17,7 +17,9 @@ import PhotoGallery from '../../components/PhotoGallery.astro';
 import ProductCards from '../../components/ProductCards.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import Icons from '../../components/Icons.astro';
+import PhoneCta from '../../components/PhoneCta.astro';
 import { site } from '../../data/site';
+import { ogImageFor } from '../../data/og';
 import {
   nuclei,
   polline,
@@ -174,6 +176,7 @@ const otherProducts = [
   title={nuclei.title}
   description={nuclei.description}
   pathname={pathname}
+  ogImage={ogImageFor(pathname)}
   type="product"
   crumbs={crumbs}
   jsonLd={[
@@ -214,10 +217,7 @@ const otherProducts = [
         </ul>
 
         <div class="contact-cta mt-3">
-          <a class="btn btn-primary btn-lg" href={site.phoneHref}>
-            <Icons name="phone" size={20} />
-            Chiama ora
-          </a>
+          <PhoneCta />
           <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
             <Icons name="whatsapp" size={20} />
             Scrivi su WhatsApp

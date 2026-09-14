@@ -8,7 +8,9 @@ import VideoFigure from '../../components/VideoFigure.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import Icons from '../../components/Icons.astro';
+import PhoneCta from '../../components/PhoneCta.astro';
 import { site, honeyProducts } from '../../data/site';
+import { ogImageFor } from '../../data/og';
 import { prezzoNota, prezzoSuRichiesta } from '../../data/bee-products';
 import { entryFormat, otherFormats } from '../../lib/price';
 import { product, faqPage, localBusiness } from '../../lib/schema';
@@ -84,6 +86,7 @@ const priceOthers = otherFormats(honey.priceFormats);
   title={honey.title}
   description={honey.description}
   pathname={pathname}
+  ogImage={ogImageFor(pathname)}
   type="product"
   crumbs={crumbs}
   jsonLd={[localBusiness(), product(honey, pathname, { category: honey.category ?? 'Miele' }), faqPage(honey.faq)]}
@@ -140,10 +143,7 @@ const priceOthers = otherFormats(honey.priceFormats);
         </ul>
 
         <div class="contact-cta mt-3">
-          <a class="btn btn-primary btn-lg" href={site.phoneHref}>
-            <Icons name="phone" size={20} />
-            Chiama ora
-          </a>
+          <PhoneCta />
           <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
             <Icons name="whatsapp" size={20} />
             Ordina su WhatsApp

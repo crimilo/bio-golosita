@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import ContactSection from '../components/ContactSection.astro';
 import { site } from '../data/site';
+import { ogImageFor } from '../data/og';
 import { localBusiness } from '../lib/schema';
 
 const title = 'Contatti Miele Cassano d\'Adda | Bio & Golosità';
@@ -21,6 +22,7 @@ const heroImg = 'apiario';
   title={title}
   description={description}
   pathname="/contatti/"
+  ogImage={ogImageFor('/contatti/')}
   crumbs={crumbs}
   preloadImage={heroImg}
   jsonLd={[localBusiness()]}

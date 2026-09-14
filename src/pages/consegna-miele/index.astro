@@ -6,7 +6,9 @@ import Picture from '../../components/Picture.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icons from '../../components/Icons.astro';
+import PhoneCta from '../../components/PhoneCta.astro';
 import { site } from '../../data/site';
+import { ogImageFor } from '../../data/og';
 import { localBusiness, faqPage, deliveryService } from '../../lib/schema';
 
 const pathname = '/consegna-miele/';
@@ -41,6 +43,7 @@ const faq = [
   title={title}
   description={description}
   pathname={pathname}
+  ogImage={ogImageFor(pathname)}
   crumbs={crumbs}
   preloadImage={heroImg}
   jsonLd={[
@@ -61,10 +64,7 @@ const faq = [
     bg={{ base: heroImg, position: '50% 45%', positionMobile: '50% 45%' }}
   >
     <div class="contact-cta">
-      <a class="btn btn-primary btn-lg" href={site.phoneHref}>
-        <Icons name="phone" size={20} />
-        Chiama ora
-      </a>
+      <PhoneCta />
       <a class="btn btn-ghost btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
         <Icons name="whatsapp" size={20} />
         Scrivici su WhatsApp

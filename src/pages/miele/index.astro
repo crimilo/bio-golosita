@@ -10,8 +10,10 @@ import { polline, apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '..
 import ContactSection from '../../components/ContactSection.astro';
 import ProseBlocks from '../../components/ProseBlocks.astro';
 import Icons from '../../components/Icons.astro';
+import PhoneCta from '../../components/PhoneCta.astro';
 import Emoji from '../../components/Emoji.astro';
-import { site, honeyProducts } from '../../data/site';
+import { honeyProducts } from '../../data/site';
+import { ogImageFor } from '../../data/og';
 import { guideCard } from '../../data/guides';
 import { localBusiness, collectionPage, faqPage } from '../../lib/schema';
 
@@ -146,6 +148,7 @@ const guideCards = [
   title={title}
   description={description}
   pathname={pathname}
+  ogImage={ogImageFor(pathname)}
   crumbs={crumbs}
   preloadImage={heroImg}
   jsonLd={[
@@ -171,10 +174,7 @@ const guideCards = [
     bg={{ base: heroImg, height: 'tall', position: '52% 100%', positionMobile: '52% 100%' }}
   >
     <div class="contact-cta">
-      <a class="btn btn-primary btn-lg" href={site.phoneHref}>
-        <Icons name="phone" size={20} />
-        Chiama ora
-      </a>
+      <PhoneCta />
       <a class="btn btn-ghost btn-lg" href="#mieli">
         <Icons name="arrow-down" size={20} />
         Scopri i nostri mieli

@@ -1,0 +1,38 @@
+---
+import Icons from './Icons.astro';
+import { site } from '../data/site';
+
+/**
+ * La CTA telefonica delle hero (e dei blocchi prodotto, che stanno subito sotto
+ * la hero e sono la stessa chiamata all'azione).
+ *
+ * Da desktop l'etichetta è il **numero**, non "Chiama ora": a un computer il
+ * tap non serve, il numero si legge e si copia, e dice subito a chi sta
+ * telefonando. Sotto i 900px resta "Chiama ora", che è l'azione giusta da
+ * mobile.
+ *
+ * Le due etichette convivono nel DOM e il CSS ne mostra una sola: `display:none`
+ * esce anche dall'albero di accessibilità, quindi il nome accessibile del link
+ * resta corretto a ogni larghezza (l'icona da sola non basterebbe).
+ */
+interface Props {
+  /** variante del bottone: `primary` (miele), `ghost` (bordo chiaro su foto), `light` */
+  variant?: 'primary' | 'ghost' | 'light';
+  /** `btn-lg`: le CTA di hero e blocchi prodotto sono tutte grandi */
+  large?: boolean;
+  iconSize?: number;
+  /** classi aggiuntive sul bottone (allineamenti, margini…) */
+  extraClass?: string;
+}
+
+const { variant = 'primary', large = true, iconSize = 20, extraClass = '' } = Astro.props;
+const cls = ['btn', `btn-${variant}`, large && 'btn-lg', 'cta-phone', extraClass]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a class={cls} href={site.phoneHref}>
+  <Icons name="phone" size={iconSize} />
+  <span class="cta-phone-label cta-phone-label--action">Chiama ora</span>
+  <span class="cta-phone-label cta-phone-label--number">{site.phoneLocal}</span>
+</a>

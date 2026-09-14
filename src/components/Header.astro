@@ -10,9 +10,8 @@ const { pathname } = Astro.props;
 
 /**
  * La voce attiva è quella della sezione in cui ti trovi, non solo la pagina
- * esatta: su /miele/miele-di-acacia/ resta acceso "Mieli", su /guide/<slug>/
- * resta acceso "Guide". La home non è una voce del menu, quindi lì nessuna
- * voce è accesa.
+ * esatta: su /miele/miele-di-acacia/ resta acceso "Mieli". La home e le guide
+ * non sono voci del menu, quindi lì nessuna voce è accesa.
  */
 const isCurrent = (href: string) =>
   href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href);
@@ -34,14 +33,20 @@ const isCurrent = (href: string) =>
       }
     </nav>
     <div class="header-actions">
-      <a class="btn btn-primary header-cta" href={site.phoneHref} aria-label="Chiama ora">
+      {/*
+        Una sola CTA che cambia etichetta con la larghezza: da desktop il numero
+        (+ "Chiama ora" da mobile, + sotto i 480px nient'altro che l'icona).
+        Sotto i 480px resta l'aria-label a dare il nome accessibile al bottone
+        quadrato: lì l'etichetta è nascosta.
+      */}
+      <a
+        class="btn btn-primary header-cta"
+        href={site.phoneHref}
+        aria-label={`Chiama ora: ${site.phoneLocal}`}
+      >
         <Icons name="phone" size={18} />
-        {/*
-          Sotto i 480px resta solo l'icona (la label viene nascosta via CSS):
-          il testo andava a capo su due righe e sembrava rotto. L'aria-label
-          tiene comunque il nome accessibile del link.
-        */}
-        <span class="header-cta-label">Chiama ora</span>
+        <span class="cta-phone-label cta-phone-label--action header-cta-label">Chiama ora</span>
+        <span class="cta-phone-label cta-phone-label--number">{site.phoneLocal}</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Apri menu">
         <span class="nav-toggle-line"></span>

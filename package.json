@@ -11,6 +11,7 @@
 		"preview": "astro build && astro preview",
 		"astro": "astro",
 		"assets": "node scripts/fetch-fonts.mjs && node scripts/process-images.mjs && node scripts/posters.mjs && node scripts/favicons.mjs",
+		"og": "node scripts/og/generate.mjs",
 		"deploy": "astro build && wrangler deploy"
 	},
 	"dependencies": {

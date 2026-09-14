@@ -7,7 +7,9 @@ import HoneyCard from '../../../components/HoneyCard.astro';
 import Faq from '../../../components/Faq.astro';
 import ContactSection from '../../../components/ContactSection.astro';
 import Icons from '../../../components/Icons.astro';
+import PhoneCta from '../../../components/PhoneCta.astro';
 import { site } from '../../../data/site';
+import { ogImageFor } from '../../../data/og';
 import { priceLine } from '../../../lib/price';
 import { localBusiness, collectionPage, faqPage } from '../../../lib/schema';
 
@@ -48,6 +50,7 @@ const faq = [
   title={title}
   description={description}
   pathname={pathname}
+  ogImage={ogImageFor(pathname)}
   crumbs={crumbs}
   preloadImage={heroImg}
   jsonLd={[
@@ -73,10 +76,7 @@ const faq = [
     bg={{ base: heroImg, height: 'tall', position: '50% 50%', positionMobile: '50% 45%' }}
   >
     <div class="contact-cta">
-      <a class="btn btn-primary btn-lg" href={site.phoneHref}>
-        <Icons name="phone" size={20} />
-        Chiama ora
-      </a>
+      <PhoneCta />
       <a class="btn btn-ghost btn-lg" href="#millefiori">
         <Icons name="arrow" size={20} />
         Vedi i tre millefiori

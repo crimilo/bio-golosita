@@ -24,6 +24,12 @@ export const site = {
   domain: 'https://bioegolosita.it',
 
   phoneDisplay: '+39 351 537 6719',
+  /**
+   * Numero senza prefisso internazionale: è quello che compare nelle CTA
+   * (header e hero) da desktop, dove il "+39" è solo rumore e il numero si
+   * legge — e si copia — meglio. Da mobile resta "Chiama ora", che è l'azione.
+   */
+  phoneLocal: '351 537 6719',
   phoneHref: 'tel:+393515376719',
   whatsapp: 'https://wa.me/393515376719?text=Ciao%2C%20vorrei%20informazioni%20sul%20vostro%20miele',
 
@@ -601,7 +607,6 @@ export const nav = [
   { href: '/polline-d-api/', label: 'Polline' },
   { href: '/api-regine/', label: 'Api regine' },
   { href: '/nuclei-api/', label: 'Nuclei' },
-  { href: '/guide/', label: 'Guide' },
   { href: '/chi-siamo/', label: 'Chi siamo' },
   { href: '/contatti/', label: 'Contatti' },
 ];

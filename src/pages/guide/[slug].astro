@@ -6,7 +6,6 @@ import LinkCards from '../../components/LinkCards.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import { guides, guideCard } from '../../data/guides';
-import manifest from '../../data/img-manifest.js';
 import { localBusiness, article } from '../../lib/schema';
 
 export function getStaticPaths() {
@@ -31,9 +30,6 @@ const otherGuides = guides
   .slice(0, 3)
   .map((g) => guideCard(g.slug, g.h1, g.excerpt));
 
-const heroEntry = manifest[guide.hero.base];
-const heroWidth = Math.max(...Object.keys(heroEntry.variants).map(Number));
-const ogImage = `/img/${guide.hero.base}-${heroWidth}-${heroEntry.hash}.avif`;
 const heroImg = guide.hero.base;
 ---
 
@@ -44,7 +40,6 @@ const heroImg = guide.hero.base;
   type="article"
   crumbs={crumbs}
   preloadImage={heroImg}
-  ogImage={ogImage}
   jsonLd={[localBusiness(), article(guide, pathname)]}
 >
   <PageHero
