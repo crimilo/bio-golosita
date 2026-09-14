@@ -170,6 +170,18 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   resti su una riga **e che il logo non venga schiacciato**: a 900px l'header è
   al limite e, se qualcosa non ci sta, il flex comprime il logo (`min-width: 0`)
   invece di traboccare, facendo finire il testo del marchio sotto il menu.
+- **Menu centrato otticamente, non solo come scatola**: il centro della scatola di
+  un link cade sempre al centro dell'header, ma l'inchiostro delle lettere no —
+  l'underline da 2px sta solo sotto e le metriche di Inter mettono il centro di
+  maiuscole e rigo ~1px sopra il centro della riga. Il padding di `.nav a` è
+  quindi asimmetrico di proposito (6px sopra, 2px sotto): senza, il menu sembrava
+  2px alto rispetto al logo e alla pillola della CTA, che sono forme piene.
+  Stesso discorso per `.logo-mark`, che da `inline` si portava dietro il
+  discendente del "tronco" (il line-height del logo): stava 1px alto dentro la
+  sua scatola e faceva crescere il logo di 2px — da `block` si centra davvero.
+  `qa-browser.mjs` qui misura i **pixel**, non le scatole: prende le voci senza
+  discendenti (`g/j/p/q/y`), trova le righe d'inchiostro e verifica che il centro
+  stia entro 1px dal centro dell'header, con logo e CTA entro 0.5px.
 - **Voce di menu della pagina attuale**: la sezione in cui ti trovi resta accesa
   con **lo stesso effetto dell'hover** (desktop: testo ambra + sottolineatura;
   mobile: fondo tenue), così si capisce subito dove sei. L'evidenziazione è per

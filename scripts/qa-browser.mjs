@@ -1,6 +1,7 @@
 import { chromium } from 'playwright-core';
 import { readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import sharp from 'sharp';
 
 const BASE = process.env.QA_BASE ?? 'http://localhost:8091';
 const VIEWPORTS = [
@@ -31,6 +32,38 @@ const results = [];
 const check = (name, ok, extra = '') => {
   results.push(`${ok ? '✓' : '✗'} ${name}${extra ? ' — ' + extra : ''}`);
 };
+
+/**
+ * Centro verticale dell'inchiostro (i pixel scuri) in una fascia di x, a partire
+ * da `clipY` (dove sta l'header, in coordinate documento) per `headerH` px.
+ * Il centro di una scatola non dice dove cade il testo — per quello servono i
+ * pixel: è così che si vede se il menu è centrato *otticamente*.
+ *
+ * `clip` di Playwright è in coordinate **documento**: l'header è `fixed`, quindi
+ * il ritaglio va preso dove sta lo scroll, non a y=0.
+ */
+async function inkCenter(page, x0, x1, clipY, headerH) {
+  const h = Math.round(headerH);
+  const shot = await page.screenshot({
+    clip: { x: x0, y: clipY, width: x1 - x0, height: h },
+    type: 'png',
+  });
+  const { data, info } = await sharp(shot).greyscale().raw().toBuffer({ resolveWithObject: true });
+  let top = -1;
+  let bottom = -1;
+  for (let y = 0; y < info.height; y++) {
+    let dark = 0;
+    for (let x = 0; x < info.width; x++) if (data[y * info.width + x] < 140) dark++;
+    if (dark > 0) {
+      if (top < 0) top = y;
+      bottom = y;
+    }
+  }
+  // Nessun inchiostro: meglio un errore esplicito di un NaN, che nella riga del
+  // risultato sembrerebbe uno scarto come gli altri.
+  if (top < 0) throw new Error(`nessun inchiostro nel ritaglio x=${x0}..${x1}, y=${clipY}`);
+  return (top + bottom) / 2 / (info.height / h);
+}
 
 // --- 1. Interazioni sulla home (una volta per viewport) ---------------------
 for (const vp of VIEWPORTS) {
@@ -192,6 +225,56 @@ for (const vp of VIEWPORTS) {
         `(${misure.map((m) => `${m.larghezza}px: ${m.gapNavCta}px`).join(', ')})`,
       misure.every((m) => !m.logoSchiacciato && m.gapNavCta >= 20)
     );
+
+    // Il menu dev'essere centrato *otticamente*, non solo come scatola: il
+    // centro della scatola di un link cade sempre al centro dell'header, mentre
+    // l'inchiostro delle lettere può stare più in alto (padding asimmetrico
+    // dell'underline, metriche del font). Qui si misura l'inchiostro vero, dai
+    // pixel: si prendono le voci senza discendenti (g/j/p/q/y), dove il centro
+    // dell'inchiostro È il centro che vede l'occhio, e si confronta con il
+    // centro dell'header. Logo e CTA sono forme piene, quindi basta la scatola.
+    const headerCtr = await page.evaluate(() => {
+      // L'header è `fixed`: riportiamo lo scroll a 0 (istantaneo, senza animazione)
+      // così il ritaglio dei pixel coincide con quello che si vede, e calcoliamo
+      // comunque la sua y nel documento — che per un header fisso è lo scroll.
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      const box = (s) => {
+        const b = document.querySelector(s).getBoundingClientRect();
+        return { x: b.x, right: b.right, cy: b.y + b.height / 2 };
+      };
+      const hdr = document.querySelector('.header').getBoundingClientRect();
+      return {
+        h: document.querySelector('.header-inner').getBoundingClientRect().height,
+        clipY: hdr.top + window.scrollY,
+        mark: box('.logo-mark').cy,
+        cta: box('.header-cta').cy,
+        // Le maiuscole che scendono sotto la riga (Q e J in Inter) e i
+        // discendenti minuscoli (g, j, p, q, y) allungano l'inchiostro verso il
+        // basso: per il centro che vede l'occhio si prendono le voci senza.
+        links: [...document.querySelectorAll('.nav a')]
+          .filter((a) => !/[gjpqyQJ]/.test(a.textContent))
+          .slice(0, 3)
+          .map((a) => { const b = a.getBoundingClientRect(); return { t: a.textContent.trim(), x: b.x, right: b.right }; }),
+      };
+    });
+    const meta = headerCtr.h / 2;
+    check(
+      `[desktop] logo e CTA a filo del centro dell'header (logo ${(headerCtr.mark - meta).toFixed(1)}px, CTA ${(headerCtr.cta - meta).toFixed(1)}px)`,
+      Math.abs(headerCtr.mark - meta) <= 0.5 && Math.abs(headerCtr.cta - meta) <= 0.5
+    );
+    // Senza voci misurate il giro sotto non farebbe nessun controllo e passerebbe
+    // "verde" a vuoto: se le etichette del menu cambiano, meglio un errore netto.
+    check(
+      `[desktop] voci del menu misurate per il centraggio ottico (${headerCtr.links.map((l) => l.t).join(', ') || 'nessuna'})`,
+      headerCtr.links.length > 0
+    );
+    for (const l of headerCtr.links) {
+      const ink = await inkCenter(page, l.x - 1, l.right + 1, headerCtr.clipY, headerCtr.h);
+      check(
+        `[desktop] voce "${l.t}" centrata in verticale (inchiostro a ${ink.toFixed(1)}px dal centro ${meta})`,
+        Math.abs(ink - meta) <= 1
+      );
+    }
   }
 
   const wa = page.locator('.wa-float');
