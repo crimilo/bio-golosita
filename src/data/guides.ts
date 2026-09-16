@@ -164,7 +164,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Quali dei nostri mieli cristallizzano' },
       {
-        p: 'Il <a href="/miele/miele-millefiori-primaverile/">millefiori primaverile</a> cristallizza finemente dopo qualche mese; il <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">millefiori estivo al tiglio e more</a> ha una cristallizzazione lenta e grossolana; il <a href="/miele/miele-di-acacia/">miele di acacia</a> e il <a href="/miele/miele-di-castagno/">miele di castagno</a> restano liquidi molto a lungo. Nella scheda di ogni miele trovi la voce dedicata. Il <a href="/miele/miele-in-favo/">miele in favo</a>, invece, non si scalda per riportarlo liquido: il calore scioglierebbe la cera, quindi si mangia com\'è (su pane caldo si ammorbidisce da solo).',
+        p: 'Il <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">millefiori estivo al tiglio e more</a> ha una cristallizzazione lenta e grossolana; il <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">millefiori estivo al tiglio e ailanto</a> l\'ha lenta ma più fine; il <a href="/miele/miele-di-acacia/">miele di acacia</a> e il <a href="/miele/miele-di-castagno/">miele di castagno</a> restano liquidi molto a lungo. Nella scheda di ogni miele trovi la voce dedicata. Il <a href="/miele/miele-in-favo/">miele in favo</a>, invece, non si scalda per riportarlo liquido: il calore scioglierebbe la cera, quindi si mangia com\'è (su pane caldo si ammorbidisce da solo).',
       },
       { cta: { href: '/miele/', label: 'Confronta i nostri mieli' } },
     ],
@@ -177,7 +177,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       'Colore, gusto e abbinamenti di acacia, millefiori e castagno: come scegliere il miele giusto per la colazione, la cucina o per un regalo.',
     h1: 'Miele di acacia, millefiori o castagno: le differenze',
     excerpt:
-      'Uno è chiaro e delicato, uno profuma di primavera, uno è scuro e deciso. Come scegliere il miele giusto partendo da come lo userai.',
+      'Uno è chiaro e delicato, uno profuma di tiglio, uno è scuro e deciso. Come scegliere il miele giusto partendo da come lo userai.',
     readingTime: '6 min',
     hero: {
       base: 'hero_bg',
@@ -186,7 +186,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
     push: {
       href: '/miele/',
       label: 'Vedi tutti i mieli con prezzi e formati',
-      note: 'Acacia, millefiori primaverile ed estivo, castagno: nella pagina dei mieli trovi le schede complete con raccolto, prezzi e formati.',
+      note: 'Acacia, i due millefiori estivi, castagno: nella pagina dei mieli trovi le schede complete con raccolto, prezzi e formati.',
     },
     blocks: [
       {
@@ -215,11 +215,10 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Miele millefiori: il sapore della stagione' },
       {
-        p: 'Il millefiori non viene da una sola fioritura, ma dall\'insieme dei nettari disponibili in un periodo. È il miele più "territoriale" che esista: cambia di anno in anno, e due millefiori diversi possono avere profumi molto distanti tra loro. Nella nostra produzione ne distinguiamo tre, raccolti in momenti diversi.',
+        p: 'Il millefiori non viene da una sola fioritura, ma dall\'insieme dei nettari disponibili in un periodo. È il miele più "territoriale" che esista: cambia di anno in anno, e due millefiori diversi possono avere profumi molto distanti tra loro. Nella nostra produzione ne distinguiamo due, entrambi raccolti a giugno.',
       },
       {
         ul: [
-          '<strong>Millefiori primaverile:</strong> ambra chiaro, profumo floreale con note di frutteto, raccolto tra marzo e aprile. Cristallizza finemente dopo qualche mese e si spalma benissimo.',
           '<strong>Millefiori estivo al tiglio e more:</strong> più scuro e corposo, con note di tiglio e di more selvatiche, raccolto a giugno. Ottimo anche con i formaggi stagionati.',
           '<strong>Millefiori estivo al tiglio e ailanto:</strong> dolce e aromatico, con il caratteristico retrogusto di pesca che danno i fiori di ailanto. Disponibile in quantità limitate.',
         ],
@@ -232,7 +231,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
         },
       },
       {
-        p: 'Schede complete: <a href="/miele/miele-millefiori-primaverile/">millefiori primaverile</a>, <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">tiglio e more</a>, <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">tiglio e ailanto</a>, e la panoramica sul <a href="/miele/miele-millefiori/">miele millefiori</a>.',
+        p: 'Schede complete: <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">tiglio e more</a>, <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">tiglio e ailanto</a>, e la panoramica sul <a href="/miele/miele-millefiori/">miele millefiori</a>.',
       },
       { h2: 'Miele di castagno: scuro, intenso, da formaggi' },
       {
@@ -247,7 +246,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       {
         img: {
-          base: 'miele_di_castagno',
+          base: 'miele-di-castagno',
           alt: "Barattolo di miele di castagno di Bio & Golosità",
           caption: 'Il miele di castagno: scuro, corposo, con retrogusto amarognolo',
         },
@@ -259,7 +258,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       {
         ul: [
           'Per <strong>tisane, latte e colazione</strong> ogni giorno: miele di acacia.',
-          'Per <strong>pane, fette biscottate e yogurt</strong>: millefiori primaverile, che è anche il più cremoso.',
+          'Per <strong>pane, fette biscottate e yogurt</strong>: millefiori estivo al tiglio e ailanto, più dolce e aromatico.',
           'Per <strong>cucina, carni e formaggi stagionati</strong>: millefiori estivo o castagno.',
           'Per un <strong>regalo</strong>: acacia per chi ama i sapori delicati, castagno per chi ama quelli decisi.',
           'Per <strong>provare qualcosa di raro</strong>: il millefiori estivo al tiglio e ailanto, con il retrogusto di pesca.',

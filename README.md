@@ -11,10 +11,9 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 | URL | Contenuto |
 | --- | --- |
 | `/` | Home **compatta**, 9 sezioni: hero corta, **i nostri prodotti** (miele, polline, api regine, nuclei: una card con foto per ciascuno), 4 motivi, Raffaele, foto apiari, dove consegniamo, recensioni Google, FAQ brevi, contatti |
-| `/miele/` | **Hub mieli**: i 5 mieli + il miele in favo nella stessa griglia, cosa significa artigianale/non pastorizzato, tabella prezzi e formati, FAQ |
+| `/miele/` | **Hub mieli**: i 4 mieli + il miele in favo nella stessa griglia, cosa significa artigianale/non pastorizzato, tabella prezzi e formati, FAQ |
 | `/miele/miele-di-acacia/` | Landing SEO Miele di Acacia, **con il video della smielatura** |
-| `/miele/miele-millefiori/` | **Hub millefiori**: cos'è il millefiori e le tre produzioni |
-| `/miele/miele-millefiori-primaverile/` | Landing SEO Miele Millefiori Primaverile |
+| `/miele/miele-millefiori/` | **Hub millefiori**: cos'è il millefiori e le due produzioni |
 | `/miele/miele-millefiori-estivo-al-tiglio-e-more/` | Landing SEO Miele Millefiori Estivo al Tiglio e More, **con il video della smielatura** |
 | `/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/` | Landing SEO Miele Millefiori Estivo al Tiglio e Ailanto |
 | `/miele/miele-di-castagno/` | Landing SEO Miele di Castagno |
@@ -70,7 +69,7 @@ scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, O
 Quasi tutte le pagine hanno la hero con la foto **dietro** al testo (full-bleed).
 Tre eccezioni volute:
 
-- le **cinque pagine dei singoli mieli**: hero **solo testo**, con la foto del
+- le **quattro pagine dei singoli mieli**: hero **solo testo**, con la foto del
   barattolo (o del favo) nel blocco prodotto subito sotto (resa originale, la più
   leggibile);
 - i **tre prodotti dell'alveare** (**`/polline-d-api/`**, **`/api-regine/`**,
@@ -525,15 +524,40 @@ ripescano dalla storia (`git checkout a38161c -- <file>`) o dalle copie del
 titolare. La build non ne ha bisogno: usa gli AVIF già in `public/img/` e
 `src/data/img-manifest.js`.
 
+**Un'eccezione: le foto di prodotto dei mieli.** Le cinque sorgenti
+`miele-*.jpg` (acacia, castagno, i due millefiori estivi, miele in favo) sono di
+nuovo in root — sono le foto dell'ultimo aggiornamento del catalogo e le uniche
+che `process-images.mjs` rigenera oggi: il resto delle basi resta com'è finché
+non si ripescano gli altri sorgenti.
+
 Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 *root* si intende il nome del file di partenza, non un file presente nel repo.
 
-- `miele_acacia.jpg`, `miele_castagno.jpg`, `miele_millefiori_tiglio_e_alianto.jpg`
-  e `miele_millefiori_tiglio_e_more.jpg` — foto originali del titolare
-  (acacia, castagno, tiglio e ailanto, tiglio e more), ottimizzate in
-  `public/img/miele_di_acacia-*`, `public/img/miele_di_castagno-*`,
-  `public/img/miele_millefiori_estivo_ailanto-*` e
-  `public/img/miele_millefiori_estivo_more-*`.
+- **Le foto di prodotto dei mieli** (root) — originali del titolare, una per
+  scheda, **già in 4:3** come il riquadro del blocco prodotto (`.product-media`)
+  e delle card (`.honey-card-media`), quindi riempiono lo slot senza ritaglio.
+  Il nome del file sorgente è **lo slug della pagina**, e lo è anche la base
+  pubblicata: URL dell'immagine e URL della pagina dicono la stessa cosa.
+  - `miele-di-acacia.jpg` → `public/img/miele-di-acacia-*`;
+  - `miele-di-castagno.jpg` → `public/img/miele-di-castagno-*`;
+  - `miele-millefiori-estivo-al-tiglio-e-more.jpg` →
+    `public/img/miele-millefiori-estivo-al-tiglio-e-more-*`;
+  - `miele-millefiori-estivo-al-tiglio-e-ailanto.jpg` →
+    `public/img/miele-millefiori-estivo-al-tiglio-e-ailanto-*`.
+
+  Tutte con le varianti 1200, 900, 600, 400: il blocco prodotto delle schede ha
+  una colonna da 520px (quindi 1200 basta anche a DPR 2) e le card della griglia
+  stanno a ~380-400px. La scheda **`miele-millefiori-primaverile` è stata tolta
+  dal catalogo** (il miele non si produce più): l'URL ora fa 301 sull'hub dei
+  millefiori (vedi `public/_redirects`), e con lei sono spariti la base
+  `miele_millefiori_primaverile` e la base `miele_millefiori_card` — era il
+  ritaglio 4:3 della foto del millefiori, che con sorgenti già 4:3 non serve più
+  (per questo `CROPS` in `process-images.mjs` è vuoto).
+- `miele-in-favo.png` (root, 1264×1188) — **sostituita** dalla foto nuova
+  `miele-in-favo.jpg` (2560×1920, 4:3): ottimizzata in
+  `public/img/miele-in-favo-*` (varianti 1200, 900, 600, 400) è la **foto del
+  blocco prodotto** di `/miele/miele-in-favo/` e l'immagine della sua card nella
+  griglia di `/miele/`.
 - `apiari-hd.png` (root, 1672×941) — **immagine generata**, non una foto: è
   un PNG con estensione `.jpg` (per questo rinominata), senza EXIF di macchina,
   come dichiarava il manifest C2PA che portava (`c2pa.created` di `gpt-image` /
@@ -557,13 +581,6 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   `/miele/`) e una foto nel testo di `/miele/`. `arnia-piena-di-api2.jpg` non è più usata (sul blocco prodotto
   di `/nuclei-api/` c'è `sciame_4`): le sue varianti non si generano più, basta
   rimettere la riga in `scripts/process-images.mjs` per riaverla.
-- `miele-in-favo.png` (root, 1264×1188, quasi quadrata) — foto originale del
-  titolare, ottimizzata in `public/img/miele_in_favo-*` (varianti 1200, 900, 600,
-  400, come le altre foto di prodotto: il blocco prodotto di
-  `/miele/miele-in-favo/` ha una colonna da 520px): è la **foto del blocco
-  prodotto** di `/miele/miele-in-favo/` e l'immagine della sua card nella griglia
-  di `/miele/`. Sostituisce la foto precedente, che era 474×550 e generava la
-  sola variante 400.
 - `miele-in-favo-1.avif … miele-in-favo-6.avif` (root, 478×850, già AVIF) — sei
   fotogrammi ricavati dal video del favo, **numerati nell'ordine d'uso**: dal favo
   ancora attaccato al telaio (la 1) all'assaggio di Raffaele (la 6). Sono

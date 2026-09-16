@@ -16,7 +16,7 @@ import { entryFormat, otherFormats } from '../../lib/price';
 import { product, faqPage, localBusiness } from '../../lib/schema';
 
 export function getStaticPaths() {
-  // tutte le schede del miele: le cinque varietà e il miele in favo
+  // tutte le schede del miele: le quattro varietà e il miele in favo
   return honeyProducts.map((h) => ({
     params: { slug: h.slug },
     props: { honey: h },

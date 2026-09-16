@@ -396,8 +396,8 @@ for (const vp of VIEWPORTS) {
   // Etichetta prezzo: in alto a sinistra DENTRO la foto, identica fra le card
   // della home, quelle di /miele/ e quelle dei prodotti. Ogni etichetta presente
   // deve stare nel riquadro della foto e non essere tagliata. Su /miele/ le card
-  // del miele sono 6 (cinque varietà + il miele in favo, "Prezzo su richiesta").
-  for (const [url, attese] of [['/', 4], ['/miele/', 9]]) {
+  // del miele sono 5 (quattro varietà + il miele in favo, "Prezzo su richiesta").
+  for (const [url, attese] of [['/', 4], ['/miele/', 8]]) {
     await page.goto(`${BASE}${url}`, { waitUntil: 'domcontentloaded' });
     const badge = await page.evaluate(() => {
       const out = [];

@@ -59,36 +59,6 @@ export default {
     },
     "hash": "9d6e3835"
   },
-  "miele_di_acacia": {
-    "width": 1200,
-    "height": 1600,
-    "hash": "97486601",
-    "variants": {
-      "300": {
-        "width": 300,
-        "height": 400
-      },
-      "400": {
-        "width": 400,
-        "height": 533
-      }
-    }
-  },
-  "miele_di_castagno": {
-    "width": 896,
-    "height": 1195,
-    "hash": "c6abe7b3",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 533
-      },
-      "600": {
-        "width": 600,
-        "height": 800
-      }
-    }
-  },
   "raffaele_con_suo_padre": {
     "width": 640,
     "height": 640,
@@ -100,40 +70,6 @@ export default {
       },
       "600": {
         "width": 600,
-        "height": 600
-      }
-    }
-  },
-  "miele_millefiori_estivo_ailanto": {
-    "width": 1200,
-    "height": 1600,
-    "hash": "34f13dfc",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 533
-      },
-      "600": {
-        "width": 600,
-        "height": 800
-      }
-    }
-  },
-  "miele_millefiori_card": {
-    "width": 1200,
-    "height": 1600,
-    "hash": "34f13dfc",
-    "variants": {
-      "300": {
-        "width": 300,
-        "height": 225
-      },
-      "480": {
-        "width": 480,
-        "height": 360
-      },
-      "800": {
-        "width": 800,
         "height": 600
       }
     }
@@ -162,36 +98,6 @@ export default {
       "1600": {
         "width": 1600,
         "height": 1200
-      }
-    }
-  },
-  "miele_millefiori_primaverile": {
-    "width": 1200,
-    "height": 1600,
-    "hash": "34f13dfc",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 533
-      },
-      "600": {
-        "width": 600,
-        "height": 800
-      }
-    }
-  },
-  "miele_millefiori_estivo_more": {
-    "width": 896,
-    "height": 1195,
-    "hash": "95df69b1",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 533
-      },
-      "600": {
-        "width": 600,
-        "height": 800
       }
     }
   },
@@ -723,29 +629,6 @@ export default {
       }
     }
   },
-  "miele_in_favo": {
-    "width": 1264,
-    "height": 1188,
-    "hash": "e598d2bf",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 376
-      },
-      "600": {
-        "width": 600,
-        "height": 564
-      },
-      "900": {
-        "width": 900,
-        "height": 846
-      },
-      "1200": {
-        "width": 1200,
-        "height": 1128
-      }
-    }
-  },
   "miele_in_favo_1": {
     "width": 478,
     "height": 850,
@@ -835,6 +718,121 @@ export default {
       },
       "1600": {
         "width": 1600,
+        "height": 900
+      }
+    }
+  },
+  "miele-di-acacia": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "5d4b2722",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "miele-di-castagno": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "30d1e6a2",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "miele-millefiori-estivo-al-tiglio-e-more": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "3b10c177",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "miele-millefiori-estivo-al-tiglio-e-ailanto": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "1c5ab875",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "miele-in-favo": {
+    "width": 2560,
+    "height": 1920,
+    "hash": "a060b314",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
         "height": 900
       }
     }

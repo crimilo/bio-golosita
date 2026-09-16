@@ -166,7 +166,7 @@ export const site = {
   ],
 
   /**
-   * I cinque mieli. `priceFormats` sono i formati di vendita con il loro
+   * I quattro mieli. `priceFormats` sono i formati di vendita con il loro
    * prezzo, scritti a mano come tutto il resto dei prezzi del sito: il primo è
    * il prezzo d'ingresso (quello che si vede per primo e sulle card), gli altri
    * restano visibili sotto. Da qui si ricavano la riga di prezzo, la tabella
@@ -176,7 +176,7 @@ export const site = {
     {
       slug: 'miele-di-acacia',
       name: 'Miele di Acacia',
-      image: 'miele_di_acacia',
+      image: 'miele-di-acacia',
       color: '#f3e2a1',
       priceFormats: [
         { size: '500 g', price: '€ 6,00' },
@@ -241,68 +241,9 @@ export const site = {
       ],
     },
     {
-      slug: 'miele-millefiori-primaverile',
-      name: 'Miele Millefiori Primaverile',
-      image: 'miele_millefiori_primaverile',
-      cardImage: 'miele_millefiori_card',
-      imgPos: 'center 70%',
-      color: '#f6d98a',
-      priceFormats: [
-        { size: '500 g', price: '€ 5,00' },
-        { size: '1 kg', price: '€ 9,00' },
-      ],
-      title: 'Miele Millefiori Primaverile a Cassano d\'Adda | Bio & Golosità',
-      description:
-        'Miele millefiori primaverile di api proprie a Cassano d\'Adda (MI): floreale, cremoso, dal profumo di frutteto in fiore. Ordinalo su WhatsApp o al telefono.',
-      intro:
-        'Il millefiori primaverile raccoglie i nettari dei primi fiori dell\'anno: pesco, ciliegio, susino e i fiori di campo che sbocciano nelle golene del Parco Adda Nord e nei frutteti della Martesana. È un miele floreale e avvolgente, dal profumo intenso di primavera. È il più "di stagione" che produco: cambia leggermente ogni anno, perché racconta il clima e le fioriture di quella primavera.',
-      harvest: 'Raccolto tra marzo e aprile',
-      annata: null,
-      characteristics: [
-        'Colore: ambra chiaro, dorato',
-        'Gusto: floreale, con note di frutteto',
-        'Consistenza: cremoso, cristallizza finemente',
-        'Aromatico al naso, perfetto per la colazione',
-      ],
-      uses:
-        'Perfetto spalmato su pane caldo e fette biscottate, ma anche per dolcificare il latte dei bambini e preparare dolci semplici. Il suo profumo floreale esalta anche formaggi freschi e ricotta.',
-      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
-      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
-      benefits: [
-        'Raccoglie i nettari delle prime fioriture dell\'anno: frutteti e fiori di campo',
-        'Profumo intenso di primavera: si sente al naso prima ancora che in bocca',
-        'Consistenza cremosa: è il nostro miele più facile da spalmare',
-        'Cristallizza finemente dopo qualche mese: è normale, e lo rende ancora più cremoso',
-        'Versatile: a colazione, nel latte, sui formaggi freschi e in cucina',
-      ],
-      specs: [
-        { label: 'Colore', value: 'ambra chiaro, dorato' },
-        { label: 'Profumo e sapore', value: 'floreale, con note di frutteto' },
-        { label: 'Cristallizzazione', value: 'fina e naturale, dopo qualche mese' },
-        { label: 'Raccolto', value: 'marzo – aprile' },
-        { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
-        { label: 'Abbinamenti', value: 'pane caldo, latte, ricotta e formaggi freschi' },
-      ],
-      faq: [
-        {
-          q: 'Che differenza c\'è tra millefiori primaverile ed estivo?',
-          a: 'Il primaverile viene dai fiori dei frutteti e delle prime fioriture: è più chiaro, delicato e profumato. L\'estivo raccoglie i nettari delle fioriture più tarde (tiglio, more, ailanto) ed è più intenso e corposo.',
-        },
-        {
-          q: 'Il millefiori primaverile cristallizza?',
-          a: 'Sì, è un processo naturale che avviene nel giro di alcuni mesi. Basta scaldare delicatamente il barattolo a bagnomaria per riportarlo fluido senza rovinarne le proprietà.',
-        },
-        {
-          q: 'Da dove vengono le api?',
-          a: 'I miei apiari si trovano tra Cassano d\'Adda, la Gera d\'Adda, la Martesana, il Parco Adda Nord (area protetta) e la Val Brembana, zone ricche di fioriture e poco inquinate, ideali per un miele genuino.',
-        },
-        { ...deliveryFaq },
-      ],
-    },
-    {
       slug: 'miele-millefiori-estivo-al-tiglio-e-more',
       name: 'Miele Millefiori Estivo al Tiglio e More',
-      image: 'miele_millefiori_estivo_more',
+      image: 'miele-millefiori-estivo-al-tiglio-e-more',
       color: '#e8b45a',
       priceFormats: [
         { size: '500 g', price: '€ 5,00' },
@@ -312,7 +253,7 @@ export const site = {
       description:
         'Miele millefiori estivo al tiglio e more di api proprie a Cassano d\'Adda (MI): intenso, note di tiglio e more selvatiche. Ordinalo oggi: consegna in zona.',
       intro:
-        'Il millefiori estivo al tiglio e more è il miele delle grandi fioriture di inizio estate: tiglio, more selvatiche, phacelia e i fiori spontanei delle golene del Parco Adda Nord. Rispetto al primaverile è più scuro, più denso e più ricco di minerali — le fioriture estive sono più concentrate — con un carattere deciso e un gusto corposo, che in autunno si fa ancora più carico.',
+        'Il millefiori estivo al tiglio e more è il miele delle grandi fioriture di inizio estate: tiglio, more selvatiche, phacelia e i fiori spontanei delle golene del Parco Adda Nord. È il più scuro dei nostri due millefiori: più denso e più ricco di minerali, con un carattere deciso e un gusto corposo, che in autunno si fa ancora più carico.',
       harvest: 'Raccolto a giugno',
       annata: null,
       characteristics: [
@@ -352,8 +293,8 @@ export const site = {
           a: 'Perché raccoglie nettari di fioriture estive (tiglio, phacelia, fiori di campo) che producono mieli più colorati e ricchi di minerali rispetto alle fioriture primaverili.',
         },
         {
-          q: 'Che differenza c\'è con il millefiori primaverile?',
-          a: 'Il primaverile è più chiaro, delicato e floreale, raccolto tra marzo e aprile. L\'estivo al tiglio e more arriva a giugno, con fioriture più concentrate: è più scuro, corposo e ricco di minerali. Chi cerca un miele dolce e leggero sceglie il primaverile, chi lo vuole deciso sceglie il tiglio e more.',
+          q: 'Che differenza c\'è con il millefiori estivo al tiglio e ailanto?',
+          a: 'Hanno lo stesso periodo di raccolta, giugno, ma composizione diversa: il tiglio e more è più scuro, denso e ricco di minerali, con le note di tiglio e di more selvatiche; il tiglio e ailanto è più chiaro e più dolce, con il retrogusto di pesca dei fiori di ailanto. Chi cerca un miele più delicato sceglie il tiglio e ailanto, chi lo vuole deciso sceglie il tiglio e more.',
         },
         {
           q: 'Il miele al tiglio e more è adatto ai bambini?',
@@ -365,7 +306,7 @@ export const site = {
     {
       slug: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
       name: 'Miele Millefiori Estivo al Tiglio e Ailanto',
-      image: 'miele_millefiori_estivo_ailanto',
+      image: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
       color: '#d9a83f',
       priceFormats: [
         { size: '500 g', price: '€ 5,00' },
@@ -422,7 +363,7 @@ export const site = {
     {
       slug: 'miele-di-castagno',
       name: 'Miele di Castagno',
-      image: 'miele_di_castagno',
+      image: 'miele-di-castagno',
       color: '#8a4b1f',
       priceFormats: [
         { size: '500 g', price: '€ 6,50' },
@@ -493,7 +434,7 @@ export const site = {
     slug: 'miele-in-favo',
     name: 'Miele in favo',
     kind: 'favo',
-    image: 'miele_in_favo',
+    image: 'miele-in-favo',
     color: '#f0c96b',
     priceFormats: [],
     title: 'Miele in Favo Italiano Artigianale | Bio & Golosità',
@@ -595,7 +536,7 @@ export const site = {
 };
 
 /**
- * Tutte le schede del miele: le cinque varietà più il miele in favo. Da usare
+ * Tutte le schede del miele: le quattro varietà più il miele in favo. Da usare
  * per le pagine (`/miele/<slug>/`), il footer, il catalogo dei dati strutturati
  * e i link incrociati; per griglia e tabella prezzi restano le sole varietà
  * (`site.honeys`).
