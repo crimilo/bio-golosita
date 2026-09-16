@@ -67,7 +67,7 @@ export const site = {
   googleMapsEmbedUrl,
 
   bulkNote:
-    'Per ordini superiori a 10 kg prepariamo secchi da 10 kg a un prezzo leggermente scontato, personalizzato su misura: contattaci per il preventivo.',
+    'Disponibili anche secchi da 5 kg e 10 kg, con prezzo dedicato per ordini superiori a 10 kg. Contattaci per un preventivo.',
 
   areaServed: [
     'Cassano d\'Adda',
