@@ -43,13 +43,15 @@ const blocks = [
     p: `Alleviamo una sola linea, la <strong>${apiRegine.linea.razza}</strong>: la nostra regina madre è una <strong>F0 selezionata</strong>, fecondata con <strong>inseminazione strumentale</strong>, e le regine che vendiamo sono le sue figlie, cioè le <strong>F1</strong>. Genetica conosciuta e carattere uniforme tra una regina e l'altra: altre razze o linee non le trattiamo.`,
   },
   {
-    // Il video sta sotto la sezione F0 → F1: si vede la regina F1 sulle
-    // covate, cioè il risultato della linea raccontata qui sopra. Verticale,
-    // quindi `.prose-video` + `.video-item--tall` (default).
+    // Il video sta sotto la sezione F0 → F1: si vede la regina con le sue api
+    // attorno, cioè la linea raccontata qui sopra. Orizzontale (848×478),
+    // quindi `video-item--wide` e, dentro il testo, `.prose-video--wide`: la
+    // colonna stretta di `.prose-video` è pensata per i video verticali.
     video: {
-      src: '/video/regina-f1-su-covate.mp4',
-      poster: '/video/regina-f1-su-covate-poster-b231f1f2.avif',
-      label: 'La regina F1 della nostra linea Buckfast sulle covate',
+      src: '/video/ape-regina-con-api.mp4',
+      poster: '/video/ape-regina-con-api-poster-919ab2ed.avif',
+      label: "Ape regina con le sue api attorno, in apiario a Cassano d'Adda",
+      cls: 'video-item--wide',
     },
   },
   { h2: 'Regine feconde, già in deposizione' },
@@ -109,10 +111,10 @@ const blocks = [
       riferimento visivo. */}
   videos={[
     {
-      src: '/video/ape-regina-con-api.mp4',
-      poster: '/video/ape-regina-con-api-poster-919ab2ed.avif',
-      label: "Ape regina con le sue api attorno, in apiario a Cassano d'Adda",
-      cls: 'video-item--wide',
+      src: '/video/regina-f1-su-covate.mp4',
+      poster: '/video/regina-f1-su-covate-poster-b231f1f2.avif',
+      label: 'La regina F1 della nostra linea Buckfast sulle covate',
+      cls: 'video-item--tall',
     },
     {
       src: '/video/nascita-di-una-regina.mp4',
@@ -134,8 +136,8 @@ const blocks = [
   priceNote={prezzoNota}
   {specs}
   faq={apiRegine.faq}
-  {/* La sezione in fondo è **solo video**: i tre filmati delle regine (nascita,
-      marcatura e regina con le sue api attorno). Le foto della galleria non si
+  {/* La sezione in fondo è **solo video**: i tre filmati delle regine (regina
+      F1 sulle covate, nascita e marcatura). Le foto della galleria non si
       mostrano più: restano in `apiRegine.gallery`, pronte all'uso. */}
   galleryId="video"
   galleryEyebrow="video"

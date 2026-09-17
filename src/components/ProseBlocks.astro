@@ -40,16 +40,19 @@ const { blocks } = Astro.props;
       );
     }
     if ('video' in b) {
-      // Video verticale dentro il testo: la colonna stretta di `.prose-video`
-      // gli fa mantenere l'aspetto 9/16 (`.video-item--tall`), senza ritagli.
+      // Video dentro il testo. Con il default verticale, la colonna stretta di
+      // `.prose-video` gli fa mantenere l'aspetto 9/16 (`.video-item--tall`),
+      // senza ritagli; un video orizzontale (`video-item--wide`) prende invece
+      // tutta la colonna di lettura (`.prose-video--wide`).
       // Il poster si carica solo avvicinandosi al viewport (VideoFigure.astro).
+      const cls = b.video.cls ?? 'video-item--tall';
       return (
-        <div class="prose-video">
+        <div class={`prose-video${cls === 'video-item--wide' ? ' prose-video--wide' : ''}`}>
           <VideoFigure
             src={b.video.src}
             poster={b.video.poster}
             label={b.video.label}
-            cls={b.video.cls ?? 'video-item--tall'}
+            cls={cls}
           />
         </div>
       );

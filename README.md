@@ -589,8 +589,11 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   pagina: la classe è `g-item--portrait` (aspetto 9/16, come i fotogrammi) su una
   griglia a 3 colonne, così le foto non vengono ritagliate da `object-fit: cover`.
 - `video_che_mostra_ape_regina_con_tante_api_attorno.mp4` (root) → pubblicato come
-  `public/video/ape-regina-con-api.mp4` sulla pagina `/api-regine/` (video
-  originale del titolare, non ricodificato: 9,8 MB, 848×478, ~21 s). Il poster
+  `public/video/ape-regina-con-api.mp4` sulla pagina `/api-regine/`, nel testo
+  sotto la sezione «La nostra linea: regine Buckfast, figlie di una madre F0»
+  (video originale del titolare, non ricodificato: 9,8 MB, 848×478, ~21 s, blocco
+  `video` di `ProseBlocks` con `cls: 'video-item--wide'`: orizzontale, quindi
+  `.prose-video--wide` a tutta colonna di lettura). Il poster
   `public/video/ape-regina-con-api-poster.jpg` è un fotogramma estratto con
   `ffmpeg -ss 2 -i <video> -frames:v 1 -q:v 3 <poster>.jpg` e ottimizzato da
   `scripts/posters.mjs`. Se serve alleggerirlo:
@@ -616,10 +619,9 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   - `video-emozionante-girato-da-raffele-che-mostra-le-sue-api-che-impollinano-un-fiore.mp4`
     → `api-che-impollinano.mp4` (480×856, 9 s, 0,5 MB) — `/polline-d-api/`;
   - `regina-f1-su-covate.mp4` → `regina-f1-su-covate.mp4` (478×850, 19 s,
-    5,1 MB, audio mono 64k come gli altri) — `/api-regine/`, **non nella
-    galleria** ma nel testo, subito sotto la sezione «La nostra linea: regine
-    Buckfast, figlie di una madre F0»: è un blocco `video` di `ProseBlocks`
-    (mp4 + poster AVIF reso in `.prose-video`, come il video dei mieli). Il
+    5,1 MB, audio mono 64k come gli altri) — `/api-regine/`, **primo filmato
+    della galleria** «Le regine in video» (gli altri due sono la nascita e la
+    marcatura): è verticale, quindi `video-item--tall` come loro. Il
     poster è il fotogramma a 5 s, scelto misurando la nitidezza di dieci
     fotogrammi distribuiti sul girato (vedi la voce in `scripts/posters.mjs`).
   I video sono `preload="none"` con poster: quei MB si scaricano solo se il

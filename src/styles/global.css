@@ -1861,6 +1861,17 @@ a.card--media:hover .card-media img {
   margin-inline: auto;
 }
 
+/* Video orizzontale nel testo (`video-item--wide`): tutta la colonna di lettura,
+   con l'aspetto 16/10 della classe. La colonna stretta qui sopra serve ai video
+   verticali, che a piena larghezza verrebbero ritagliati da `object-fit: cover`.
+   `width: 100%` è necessario: con i margini auto di `.prose-video` il blocco non
+   si allarga da solo e resterebbe grande quanto il video (300×150, la misura di
+   default di un `<video>` che non ha ancora caricato i metadati). */
+.prose-video--wide {
+  max-width: none;
+  width: 100%;
+}
+
 /* Riga testo + foto (blocco `row`): da desktop la foto sta A FIANCO del testo,
    sotto i 900px va sotto, come tutte le altre foto del prose. Le due colonne
    stanno dentro la colonna di lettura del prose (46rem), quindi il testo resta

@@ -342,11 +342,11 @@ for (const vp of VIEWPORTS) {
   const playing = await page.locator('[data-video]').first().getAttribute('data-playing');
   check(`[${vp.name}] video parte al click`, playing !== null);
 
-  // Video nella pagina api regine: quello della galleria (`ape-regina-con-api`)
-  // e quello nuovo della regina F1 sulle covate, che sta nel testo sotto la
-  // sezione «La nostra linea: regine Buckfast, figlie di una madre F0» ed è
-  // quindi il PRIMO `[data-video]` della pagina. Si cercano per `src`, non per
-  // posizione, così l'ordine nella pagina può cambiare.
+  // Video nella pagina api regine: quello nel testo sotto la sezione «La nostra
+  // linea: regine Buckfast, figlie di una madre F0» (`ape-regina-con-api`, il
+  // PRIMO `[data-video]` della pagina) e quello della galleria
+  // (`regina-f1-su-covate`). Si cercano per `src`, non per posizione, così
+  // l'ordine nella pagina può cambiare.
   await page.goto(`${BASE}/api-regine/`, { waitUntil: 'load' });
   const videoConSrc = (file) =>
     page.locator('[data-video]').filter({ has: page.locator(`source[src*="${file}"]`) });
