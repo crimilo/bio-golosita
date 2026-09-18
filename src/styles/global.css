@@ -830,6 +830,20 @@ strong {
   }
 }
 
+/* Galleria della home («dall'apiario alla tua tavola»): a due colonne piene
+   (1056px, quindi foto da 516px e verticali da 688px — più alte del viewport) i
+   media sembravano troppo grandi. Su desktop la griglia si ferma a 860px,
+   centrata: colonne da ~418px, che è anche la larghezza dichiarata in `sizes`
+   (33vw a 1280px), quindi il browser sceglie la variante giusta. Sotto i 900px
+   il container è già più stretto di 860px e la regola non ha effetto: lì la
+   galleria resta a piena larghezza come le altre. */
+@media (min-width: 900px) {
+  .gallery-grid--narrow {
+    max-width: 860px;
+    margin-inline: auto;
+  }
+}
+
 .g-item {
   position: relative;
   border-radius: var(--radius);

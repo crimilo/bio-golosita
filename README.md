@@ -221,6 +221,16 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   della **stessa sezione** (`img.lightbox-target`), quindi ogni galleria scorre
   solo le proprie immagini. Con una sola foto le frecce restano nascoste
   (`[hidden]`).
+- **Galleria della home** («dall'apiario alla tua tavola», `Gallery.astro`): su
+  desktop la griglia porta anche `gallery-grid--narrow` e si ferma a **860px**
+  centrata, cioè colonne da ~418px (foto 418×418 e verticali 418×557, video
+  orizzontali 418×261). A piena larghezza (1056px) le colonne erano da 516px e i
+  verticali da 688px — più alti del viewport — e la sezione arrivava a 2554px:
+  ora è ~2231px. La misura da 860px è anche quella dichiarata in `sizes` (33vw a
+  1280px), quindi il browser sceglie la variante giusta dell'immagine. Sotto i
+  900px il container è già più stretto di 860px e la galleria resta a piena
+  larghezza come le altre (`PhotoGallery.astro`), quindi il QA browser continua a
+  passare su mobile e desktop.
 - **Navigazione fra i prodotti**: non c'è più nessun tasto "Precedente /
   Successivo" in fondo alle pagine (il vecchio `ProductPager.astro` è stato
   rimosso, insieme al suo CSS e alla lista `beeProductItems`). Si va da un
