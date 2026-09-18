@@ -21,7 +21,7 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 | `/polline-d-api/` | **Polline d'api**: prodotto, origine, conservazione, FAQ, **video dell'impollinazione** |
 | `/api-regine/` | **Api regine**: regine feconde già in deposizione, linea Buckfast (F1 da madre F0), disponibilità, prenotazione, FAQ, **video della regina F1 sulle covate nel testo** e sezione finale **solo video** (nascita, marcatura, regina con le sue api attorno) |
 | `/nuclei-api/` | **Nuclei d'api**: struttura dei singoli mieli (prodotto → scheda → tracciabilità → foto → FAQ → altri prodotti), nucleo vs sciame vs pacco d'api, disponibilità, trasporto, **video delle api che si creano lo spazio** |
-| `/consegna-miele/` | **Consegna**: come funziona, zone servite, ritiro in sede, map |
+| `/consegna-miele/` | **Consegna**: come funziona (con la **foto degli ordini preparati** e il **video della preparazione nel blocco dei tre passi**), zone servite, ritiro in sede, map — hero con la foto di Raffaele |
 | `/guide/` | **Hub guide**: 6 approfondimenti collegati alle pagine commerciali |
 | `/guide/<slug>/` | Le 6 guide: non pastorizzato, cristallizzazione, differenze tra mieli, nucleo/sciame/pacco, introduzione regina, polline |
 | `/chi-siamo/` | E-E-A-T: storia, metodo, apicoltore |
@@ -221,16 +221,38 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   della **stessa sezione** (`img.lightbox-target`), quindi ogni galleria scorre
   solo le proprie immagini. Con una sola foto le frecce restano nascoste
   (`[hidden]`).
-- **Galleria della home** («dall'apiario alla tua tavola», `Gallery.astro`): su
-  desktop la griglia porta anche `gallery-grid--narrow` e si ferma a **860px**
-  centrata, cioè colonne da ~418px (foto 418×418 e verticali 418×557, video
-  orizzontali 418×261). A piena larghezza (1056px) le colonne erano da 516px e i
-  verticali da 688px — più alti del viewport — e la sezione arrivava a 2554px:
-  ora è ~2231px. La misura da 860px è anche quella dichiarata in `sizes` (33vw a
-  1280px), quindi il browser sceglie la variante giusta dell'immagine. Sotto i
-  900px il container è già più stretto di 860px e la galleria resta a piena
-  larghezza come le altre (`PhotoGallery.astro`), quindi il QA browser continua a
-  passare su mobile e desktop.
+- **Galleria della home** («dall'apiario alla tua tavola», `Gallery.astro`): è la
+  griglia delle altre gallerie (`gallery-grid` + `gallery-grid--three`) a piena
+  larghezza: **1056px con 3 colonne da 336px** (gap 24px). Prima su desktop la
+  griglia si fermava a 860px centrati, con 2 colonne da 418px
+  (`.gallery-grid--narrow`, ora rimossa): la sezione restava rientrata rispetto
+  alle altre e i media erano comunque grandi. A piena larghezza con 2 colonne le
+  colonne erano da 516px e i verticali da 688px — più alti del viewport — quindi
+  sono **3, non 2**: è la misura che tiene i media piccoli (336×448 i verticali,
+  336×210 i video orizzontali) senza rientrare dal bordo. Oggi la griglia ha
+  **4 foto e 2 video** (6 media, dopo che i due video «api» sono usciti dalla
+  galleria): è alta **932px** e la sezione **1255px** (con 8 media erano 1404px e
+  1727px). **Le tile tengono l'aspetto della sorgente** — quadrata la foto di
+  copertina, verticali `g-item--tall`, orizzontali `video-item--wide` — quindi in
+  una riga resta del vuoto sotto le tile più basse (fino a ~250px sotto il video
+  della smielatura, che è l'unico orizzontale). È una scelta: pareggiare le tile
+  vorrebbe dire tagliare le foto, e il video 16:9 diventerebbe verticale;
+  l'alternativa senza tagli è incolonnare i media come un muro
+  (`columns: 3` + `break-inside: avoid`), che però cambia l'ordine visivo (le
+  colonne si leggono dall'alto in basso, non da sinistra a destra).
+  **L'ordine dei media è quello
+  della frase dell'intro** — «le api al lavoro, la smielatura e i barattoli
+  pronti da portare a casa» — quindi in `Gallery.astro` c'è **un solo array
+  `media`** (`{ photo }` / `{ video }`, come i blocchi di `ProseBlocks`) e non due
+  liste foto/video: con due liste le foto finirebbero tutte prima dei video, e i
+  barattoli non potrebbero stare in fondo. La lightbox compone la galleria in
+  ordine di DOM, quindi sfoglia la stessa sequenza. Sotto i 700px
+  `gallery-grid--three` torna a 2 colonne, e il QA browser continua a passare su
+  mobile e desktop.
+  La larghezza della colonna è anche quella dichiarata in `sizes`
+  (`(min-width: 1120px) 336px, (min-width: 900px) 30vw, 50vw`), quindi il browser
+  sceglie la variante giusta dell'immagine: la foto nuova, in una colonna da
+  336px, a DPR 1 prende la **400**, non la 600.
 - **Navigazione fra i prodotti**: non c'è più nessun tasto "Precedente /
   Successivo" in fondo alle pagine (il vecchio `ProductPager.astro` è stato
   rimosso, insieme al suo CSS e alla lista `beeProductItems`). Si va da un
@@ -387,7 +409,7 @@ nel blocco contatti via prop (`eyebrow` / `title` / `intro`, es. `/miele/` e
   "da dove mi trovo". Si parla solo di consegna a domicilio in zona, tempi,
   costo e ritiro in sede. L'audit fallisce se una di quelle frasi ricompare.
 - **Località**: in home restano solo le 6 più importanti
-(`site.areaServedFeatured`) con la CTA "Scopri tutte le zone servite";
+(`site.areaServedFeatured`) con la CTA "Vedi dove consegniamo";
 l'elenco completo (15 località, `site.areaServed` → `deliveryZones`) vive in
 `/consegna-miele/`, e l'audit fallisce se una di quelle località sparisce dalla
 sezione "Dove consegniamo" o se `areaServedFeatured` contiene una località non
@@ -536,9 +558,11 @@ titolare. La build non ne ha bisogno: usa gli AVIF già in `public/img/` e
 
 **Un'eccezione: le foto di prodotto dei mieli.** Le cinque sorgenti
 `miele-*.jpg` (acacia, castagno, i due millefiori estivi, miele in favo) sono di
-nuovo in root — sono le foto dell'ultimo aggiornamento del catalogo e le uniche
-che `process-images.mjs` rigenera oggi: il resto delle basi resta com'è finché
-non si ripescano gli altri sorgenti.
+nuovo in root, insieme alle due foto di Raffaele con i mieli pronti da spedire
+(`raffaele-con-mieli-pronti-da-spedire-bio-e-golosita*.png`): sono le foto
+dell'ultimo aggiornamento del catalogo e le uniche che `process-images.mjs`
+rigenera oggi: il resto delle basi resta com'è finché non si ripescano gli altri
+sorgenti.
 
 Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 *root* si intende il nome del file di partenza, non un file presente nel repo.
@@ -591,6 +615,25 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   `/miele/`) e una foto nel testo di `/miele/`. `arnia-piena-di-api2.jpg` non è più usata (sul blocco prodotto
   di `/nuclei-api/` c'è `sciame_4`): le sue varianti non si generano più, basta
   rimettere la riga in `scripts/process-images.mjs` per riaverla.
+- `raffaele-con-mieli-pronti-da-spedire-bio-e-golosita.png` e
+  `…-bio-e-golosita2.png` (root, 1094×1479 e 1152×1501) — Raffaele con i mieli
+  preparati per gli ordini dei clienti, ottimizzate in
+  `public/img/raffaele_con_mieli_pronti_da_spedire-*` e
+  `public/img/raffaele_con_mieli_pronti_da_spedire_2-*` (varianti **1000, 900, 600, 400**:
+  le sorgenti non arrivano a 1200, quindi 1000 è la larghezza massima — per la
+  hero a piena pagina è la variante più grande che esista, quindi su schermi
+  retina il browser la ingrandisce). La **prima è la hero di `/consegna-miele/`**
+  (`50% 45%`; il soggetto sta nella fascia centrale dell'immagine, y ~33-90%) e
+  l'ultima foto della **galleria della home**; la **seconda** è la foto del
+  blocco «Tre passi per ricevere il miele» della stessa pagina, verticale e
+  quindi con il limite `.split-media--portrait` (24rem, come le
+  `.prose-figure--portrait`).
+- `raffaele.png` → base **`raffaele`** (il ritratto quadrato della galleria della
+  home): **ritirata**. Non era più usata da nessuna pagina, quindi le sue
+  varianti sono state tolte da `public/img/` e la voce è sparita dal manifest da
+  sola (la riga `'raffaele.png': [800, 480, 300]` in `scripts/process-images.mjs`
+  è commentata): per riaverla, rimettere la riga, il sorgente in root e
+  rilanciare `npm run assets`.
 - `miele-in-favo-1.avif … miele-in-favo-6.avif` (root, 478×850, già AVIF) — sei
   fotogrammi ricavati dal video del favo, **numerati nell'ordine d'uso**: dal favo
   ancora attaccato al telaio (la 1) all'assaggio di Raffaele (la 6). Sono
@@ -612,7 +655,8 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 - I **video degli apiari** girati dal titolare (sorgenti in root, nome che dice
   cosa mostrano): pubblicati in `public/video/` con un nome parlante e ricodificati
   in H.264/AAC (compatibile su tutti i browser) con il comando qui sopra, più il
-  poster da un fotogramma. In totale 99,1 MB → 38,1 MB:
+  poster da un fotogramma. In totale i video pubblicati in `public/video/` sono
+  **59,4 MB** (i sorgenti in root ne pesano 129,4):
   - `smielatura_miele_acacia_2026.mp4` → `smielatura-acacia.mp4` (720×1280,
     19 s, 2,9 MB) — scheda del miele di acacia;
   - `video-che-mostra-la-smielatura-millefiori-more-e-tiglio-2026.mp4` →
@@ -634,6 +678,14 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
     marcatura): è verticale, quindi `video-item--tall` come loro. Il
     poster è il fotogramma a 5 s, scelto misurando la nitidezza di dieci
     fotogrammi distribuiti sul girato (vedi la voce in `scripts/posters.mjs`).
+  - `raffaele-che-prepara-le-spedizioni.mp4` → `mieli-pronti-da-spedire.mp4`
+    (848×478, 62 s, 3,5 MB, audio mono 64k come gli altri) — `/consegna-miele/`,
+    nel blocco «Tre passi per ricevere il miele», dentro il testo come su
+    /api-regine/: è orizzontale, quindi `video-item--wide` in
+    `.prose-video--wide` (736×460). Il poster è il fotogramma a 27 s, il più
+    nitido di tutto il girato (varianza del laplaciano su un fotogramma al
+    secondo: i primi 24 s sono mossi, da lì in poi il filmato è fermo), vedi
+    `scripts/posters.mjs`.
   I video sono `preload="none"` con poster: quei MB si scaricano solo se il
   visitatore li fa partire, non all'apertura della pagina.
 - **I metadati si tolgono prima di pubblicare**, foto e video. Le foto, senza
@@ -658,7 +710,11 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   `honey_favo_aperto`, `ape_polline`,
   `polline_granuli`, `miele_cristallizzato`, `miele_colazione`, `miele_versare`.
   Vanno usate solo come immagini di contesto/illustrative, con
-  didascalie che descrivono quello che la foto mostra davvero.
+  didascalie che descrivono quello che la foto mostra davvero. `miele_colazione`
+  (il miele servito a tavola) non è più usata da nessuna pagina — in
+  `/consegna-miele/` al suo posto ci sono le foto di Raffaele — ma le sue
+  varianti restano in `public/img/`: la sorgente stock non è in repo, quindi una
+  volta cancellate non si potrebbero rigenerare.
 - **Apiari e persone: solo foto originali.** Nessuna foto stock deve mostrare un
   apiario o una persona in tuta da apicoltore. Per l'apiario le uniche foto
   ammesse sono `apiario` e `arnie` — varianti storiche in `public/img/`, senza

@@ -3,6 +3,7 @@ import Emoji from '../../components/Emoji.astro';
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Picture from '../../components/Picture.astro';
+import ProseBlocks from '../../components/ProseBlocks.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icons from '../../components/Icons.astro';
@@ -12,7 +13,8 @@ import { ogImageFor } from '../../data/og';
 import { localBusiness, faqPage, deliveryService } from '../../lib/schema';
 
 const pathname = '/consegna-miele/';
-const heroImg = 'miele_versare';
+// Hero: Raffaele con i mieli pronti per i clienti (foto verticale 1094×1479).
+const heroImg = 'raffaele_con_mieli_pronti_da_spedire';
 const title = 'Consegna Miele a Domicilio in Martesana | Bio & Golosità';
 const description =
   "Come funziona la consegna del miele a domicilio tra Cassano d'Adda, Martesana, Gera d'Adda, Milano Est e Bergamasca: zone servite, tempi e ritiro.";
@@ -37,6 +39,39 @@ const faq = [
     a: 'Sì, miele e polline si consegnano a domicilio. Per api regine e nuclei la consegna si concorda caso per caso, perché sono prodotti stagionali e delicati da trasportare.',
   },
 ];
+
+/**
+ * La foto e il video che raccontano la parte che non si vede di un ordine: i
+ * barattoli scelti dal lotto, etichettati e incartati a mano. Stanno nel blocco
+ * che spiega i tre passi per ricevere il miele — è lì che uno decide se
+ * fidarsi — invece che in una sezione a parte: il video è la prova di quello che
+ * la sezione racconta, non un capitolo nuovo.
+ *
+ * La foto è verticale quasi 3:4 (1152×1501), quindi resta più stretta della
+ * colonna di testo (`.split-media--portrait`); il video è orizzontale (848×478),
+ * quindi `video-item--wide` dentro il testo (`.prose-video--wide`), come su
+ * /api-regine/.
+ */
+const preparazione = {
+  photo: {
+    base: 'raffaele_con_mieli_pronti_da_spedire_2',
+    alt: 'Raffaele Antoci con le confezioni di miele preparate per gli ordini dei clienti',
+    caption: 'I mieli preparati per gli ordini dei clienti',
+  },
+  lead: "Ecco cosa succede quando ci scrivi: i barattoli destinati agli ordini si scelgono dal lotto, si etichettano e si incartano a mano, uno per uno.",
+  video: {
+    src: '/video/mieli-pronti-da-spedire.mp4',
+    poster: '/video/mieli-pronti-da-spedire-poster-e64ffea1.avif',
+    label: 'Raffaele prepara i mieli destinati agli ordini dei clienti',
+    cls: 'video-item--wide',
+  },
+};
+
+/** I blocchi del video dentro il testo: una riga di contesto e il filmato. */
+const preparazioneBlocks = [
+  { p: preparazione.lead },
+  { video: preparazione.video },
+];
 ---
 
 <Base
@@ -56,6 +91,15 @@ const faq = [
     faqPage(faq),
   ]}
 >
+  {/*
+    Inquadratura della hero: la foto è verticale (1094×1479) e il soggetto —
+    Raffaele con i barattoli pronti — sta nella fascia centrale, più o meno
+    y 33-90%, con il terzo alto che è sfondo piatto (misurato sui pixel).
+    - da desktop la fascia visibile è alta solo ~35% dell'immagine e parte dal
+      29%: si vedono testa, busto e la prima fila di barattoli;
+    - da mobile il taglio è solo orizzontale (si vede tutta l'altezza e il 77%
+      della larghezza): il 50% tiene il soggetto, che è a x 48%.
+  */}
   <PageHero
     h1="Consegna del miele a domicilio in Martesana e Milano Est"
     eyebrow="consegna e ritiro · Cassano d'Adda"
@@ -73,47 +117,58 @@ const faq = [
   </PageHero>
 
   <section class="section" aria-labelledby="come-funziona">
-    <div class="container split">
-      <div class="split-text">
-        <span class="eyebrow">come funziona</span>
-        <h2 id="come-funziona">Tre passi per ricevere il miele</h2>
-        <p>
-          Non c'è un carrello da riempire né un form da compilare: la consegna
-          si organizza parlando.
-        </p>
-        <ul>
-          <li>
-            <Icons name="check" size={20} />
-            <span>
-              <strong>1. Chiama o scrivi su WhatsApp.</strong> Dicci quale miele
-              ti serve, in quali formati e dove ti trovi.
-            </span>
-          </li>
-          <li>
-            <Icons name="check" size={20} />
-            <span>
-              <strong>2. Ti confermiamo disponibilità e prezzo.</strong> Se la
-              consegna è gratuita te lo diciamo subito.
-            </span>
-          </li>
-          <li>
-            <Icons name="check" size={20} />
-            <span>
-              <strong>3. Consegna a domicilio in zona o ritiro su appuntamento.</strong>{' '}
-              Scegli la soluzione più comoda.
-            </span>
-          </li>
-        </ul>
+    <div class="container">
+      <div class="split">
+        <div class="split-text">
+          <span class="eyebrow">come funziona</span>
+          <h2 id="come-funziona">Tre passi per ricevere il miele</h2>
+          <p>
+            Non c'è un carrello da riempire né un form da compilare: la consegna
+            si organizza parlando.
+          </p>
+          <ul>
+            <li>
+              <Icons name="check" size={20} />
+              <span>
+                <strong>1. Chiama o scrivi su WhatsApp.</strong> Dicci quale miele
+                ti serve, in quali formati e dove ti trovi.
+              </span>
+            </li>
+            <li>
+              <Icons name="check" size={20} />
+              <span>
+                <strong>2. Ti confermiamo disponibilità e prezzo.</strong> Se la
+                consegna è gratuita te lo diciamo subito.
+              </span>
+            </li>
+            <li>
+              <Icons name="check" size={20} />
+              <span>
+                <strong>3. Consegna a domicilio in zona o ritiro su appuntamento.</strong>{' '}
+                Scegli la soluzione più comoda.
+              </span>
+            </li>
+          </ul>
+        </div>
+        {/* La foto del passo 3: gli ordini già preparati. È verticale, quindi
+            resta più stretta della colonna (`.split-media--portrait`). */}
+        <figure class="split-media split-media--portrait">
+          <Picture
+            base={preparazione.photo.base}
+            alt={preparazione.photo.alt}
+            sizes="(min-width: 900px) 24rem, 100vw"
+            loading="lazy"
+          />
+          <figcaption>{preparazione.photo.caption}</figcaption>
+        </figure>
       </div>
-      <figure class="split-media">
-        <Picture
-          base="miele_colazione"
-          alt="Miele servito su un tagliere con pane, formaggio e mandorle"
-          sizes="(min-width: 900px) 45vw, 100vw"
-          loading="lazy"
-        />
-        <figcaption>Il miele arriva a casa tua, pronto da aprire</figcaption>
-      </figure>
+
+      {/* Il video chiude la sezione del "come funziona": è la stessa promessa
+          (un ordine preparato a mano, non un pacco da uno scaffale) mostrata
+          invece che raccontata. Dentro il testo, come su /api-regine/. */}
+      <div class="prose mt-4">
+        <ProseBlocks blocks={preparazioneBlocks} />
+      </div>
     </div>
   </section>
 

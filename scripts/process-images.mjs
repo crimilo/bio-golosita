@@ -33,7 +33,11 @@ const WIDTHS = {
   },
   'raffaele-sorridente-con-le-sue-api.jpg': [{ base: 'raffaele_sorridente_con_le_sue_api', widths: [1000, 600, 400] }],
   'raffaele_con_suo_padre.jpg': [600, 400],
-  'raffaele.png': [800, 480, 300],
+  // `raffaele.png` → base `raffaele` (il ritratto quadrato della galleria della
+  // home) è stato **ritirato**: la foto non è più usata da nessuna pagina e le
+  // sue varianti sono state tolte da `public/img/`. Per riaverla: rimettere
+  // qui la riga `'raffaele.png': [800, 480, 300]`, rimettere il sorgente in
+  // root e rilanciare `npm run assets`.
   // Foto di sciami / nuclei / apiario (pagina /nuclei-api/): una sola larghezza
   // massima per base, così funzionano sia gli scatti orizzontali sia i verticali.
   'sciami1.jpg': { base: 'sciame_1', widths: [1200, 900, 600, 400] },
@@ -45,6 +49,18 @@ const WIDTHS = {
   'sciami7.jpg': { base: 'sciame_7', widths: [1200, 900, 600, 400] },
   // Foto reale dell'ape regina dell'apiario (pagina /api-regine/)
   'ape_regina_di_raffaele.jpg': { base: 'ape_regina_di_raffaele', widths: [1200, 900, 600, 400] },
+  // Raffaele con i mieli pronti da spedire (pagina /consegna-miele/ e galleria
+  // della home). Sorgenti verticali (1094×1479 e 1152×1501) da telefono: la
+  // larghezza massima pubblicabile è 1000, perché la sorgente non arriva a
+  // 1200. Il numero finale distingue le due foto, come `sciame_1` … `sciame_7`.
+  'raffaele-con-mieli-pronti-da-spedire-bio-e-golosita.png': {
+    base: 'raffaele_con_mieli_pronti_da_spedire',
+    widths: [1000, 900, 600, 400],
+  },
+  'raffaele-con-mieli-pronti-da-spedire-bio-e-golosita2.png': {
+    base: 'raffaele_con_mieli_pronti_da_spedire_2',
+    widths: [1000, 900, 600, 400],
+  },
   // Arnie piene di api (card dei nuclei, testo di /miele/, gallery di /api-regine/).
   // `arnia-piena-di-api2.jpg` non è più usata: sul blocco prodotto di
   // /nuclei-api/ c'è `sciame_4`. Per riaverla basta rimettere la sua riga.

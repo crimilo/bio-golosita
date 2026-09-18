@@ -8,9 +8,10 @@ const hashOf = (buf) => createHash('sha1').update(buf).digest('hex').slice(0, 8)
 // Sorgenti jpg nella root (fuori da public/: non vanno servite), come le
 // altre foto. L'output è solo AVIF.
 const posters = [
-  'api-che-producono-poster.jpg',
+  // `api-che-producono-poster.jpg` e `due-api-regina-poster.jpg` sono stati
+  // ritirati insieme ai loro video (fuori dalla galleria della home): per
+  // riportarli, rimettere qui le due righe e il jpg del fotogramma in root.
   'smielatura-poster.jpg',
-  'due-api-regina-poster.jpg',
   'ape-regina-con-api-poster.jpg',
   // Miele in favo: fotogramma a 32 s del video (478×850, come il video).
   // Per cambiarlo: sostituisci il jpg e rilancia `npm run assets`, oppure
@@ -33,6 +34,12 @@ const posters = [
   // rilancia `npm run assets`, oppure
   // `ffmpeg -ss <secondi> -i public/video/regina-f1-su-covate.mp4 -frames:v 1 -q:v 2 regina-f1-su-covate-poster.jpg`
   'regina-f1-su-covate-poster.jpg',
+  // Mieli pronti da spedire (/consegna-miele/): fotogramma a 27 s, scelto
+  // misurando la nitidezza (varianza del laplaciano) di un fotogramma al
+  // secondo su tutto il girato: i primi 24 s sono mossi, da lì in poi il
+  // filmato è fermo e definito, e 27 s è il più nitido di quel tratto.
+  // Per cambiarlo: `ffmpeg -ss <secondi> -i public/video/mieli-pronti-da-spedire.mp4 -frames:v 1 -q:v 2 mieli-pronti-da-spedire-poster.jpg`
+  'mieli-pronti-da-spedire-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }

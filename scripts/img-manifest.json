@@ -120,25 +120,6 @@
       }
     }
   },
-  "raffaele": {
-    "width": 915,
-    "height": 803,
-    "hash": "4cde22ce",
-    "variants": {
-      "300": {
-        "width": 300,
-        "height": 263
-      },
-      "480": {
-        "width": 480,
-        "height": 421
-      },
-      "800": {
-        "width": 800,
-        "height": 702
-      }
-    }
-  },
   "sciame_1": {
     "width": 1600,
     "height": 1200,
@@ -834,6 +815,52 @@
       "1200": {
         "width": 1200,
         "height": 900
+      }
+    }
+  },
+  "raffaele_con_mieli_pronti_da_spedire": {
+    "width": 1094,
+    "height": 1479,
+    "hash": "b4090f2a",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 541
+      },
+      "600": {
+        "width": 600,
+        "height": 811
+      },
+      "900": {
+        "width": 900,
+        "height": 1217
+      },
+      "1000": {
+        "width": 1000,
+        "height": 1352
+      }
+    }
+  },
+  "raffaele_con_mieli_pronti_da_spedire_2": {
+    "width": 1152,
+    "height": 1501,
+    "hash": "46b170ce",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 521
+      },
+      "600": {
+        "width": 600,
+        "height": 782
+      },
+      "900": {
+        "width": 900,
+        "height": 1173
+      },
+      "1000": {
+        "width": 1000,
+        "height": 1303
       }
     }
   }
