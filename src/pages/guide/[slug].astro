@@ -31,6 +31,11 @@ const otherGuides = guides
   .map((g) => guideCard(g.slug, g.h1, g.excerpt));
 
 const heroImg = guide.hero.base;
+
+// Guida con il comparatore: il `.prose` rinuncia al limite di 46rem per far
+// stare la tabella a tutta larghezza, i blocchi di testo se lo riprendono
+// (`.prose--wide-table` in global.css).
+const hasTable = guide.blocks.some((b) => 'table' in b);
 ---
 
 <Base
@@ -58,7 +63,7 @@ const heroImg = guide.hero.base;
         Tempo di lettura: {guide.readingTime} · Aggiornata a {dateLabel} ·{" "}
         <a href="/chi-siamo/">Scritta da Raffaele Antoci, apicoltore</a>
       </p>
-      <div class="prose">
+      <div class={`prose${hasTable ? ' prose--wide-table' : ''}`}>
         <ProseBlocks blocks={guide.blocks} />
       </div>
     </div>

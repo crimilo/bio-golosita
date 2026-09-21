@@ -172,13 +172,13 @@ const base: Omit<Guide, 'datePublished'>[] = [
 
   {
     slug: 'miele-acacia-millefiori-castagno-differenze',
-    title: 'Acacia, Millefiori o Castagno: le Differenze | Bio & Golosità',
+    title: 'Acacia, millefiori o castagno: quale scegliere? | Bio & Golosità',
     description:
-      'Colore, gusto e abbinamenti di acacia, millefiori e castagno: come scegliere il miele giusto per la colazione, la cucina o per un regalo.',
+      'Acacia, millefiori o castagno? Confronta gusto, colore, cristallizzazione e usi per scegliere il miele più adatto a te.',
     h1: 'Miele di acacia, millefiori o castagno: le differenze',
     excerpt:
-      'Uno è chiaro e delicato, uno profuma di tiglio, uno è scuro e deciso. Come scegliere il miele giusto partendo da come lo userai.',
-    readingTime: '6 min',
+      'Acacia se cerchi un miele delicato, millefiori se lo vuoi più versatile, castagno se preferisci un gusto intenso: le differenze per scegliere in pochi secondi.',
+    readingTime: '4 min',
     hero: {
       base: 'hero_bg',
       alt: "Tre barattoli di miele di acacia, millefiori e castagno di Bio & Golosità a Cassano d'Adda",
@@ -188,84 +188,160 @@ const base: Omit<Guide, 'datePublished'>[] = [
       label: 'Vedi tutti i mieli con prezzi e formati',
       note: 'Acacia, i due millefiori estivi, castagno: nella pagina dei mieli trovi le schede complete con raccolto, prezzi e formati.',
     },
+    /**
+     * Guida-comparatore: il corpo resta corto apposta e ogni sezione chiude con
+     * il rimando alla scheda del prodotto. Il centro della pagina è la tabella
+     * (`table`) — a piena larghezza da desktop, a schede sotto i 640px — con una
+     * foto del barattolo per ogni miele e quella di Raffaele in apiario.
+     */
     blocks: [
+      { h2: 'Quale miele scegliere? La risposta veloce' },
       {
-        p: 'Il modo più semplice per scegliere un miele è partire dall\'uso che ne farai. Un miele delicato e un miele scuro non sono intercambiabili: cambiano il sapore di una tisana, di uno yogurt o di un formaggio. Qui trovi le differenze tra i mieli che produciamo, in modo da capire subito quale fa per te.',
-      },
-      { h2: 'Miele di acacia: chiaro, delicato, sempre liquido' },
-      {
-        p: 'Il miele di acacia è il più conosciuto e il più "facile" dei mieli: colore giallo paglierino quasi trasparente, gusto dolce e delicato con note floreali, e una caratteristica che lo rende unico: grazie all\'alto contenuto di fruttosio non cristallizza praticamente mai, quindi resta fluido anche dopo mesi in cantina.',
+        p: "<strong>Scegli l'acacia</strong> se vuoi un miele dolce, delicato e che rimane liquido molto a lungo.",
       },
       {
-        ul: [
-          '<strong>Quando si raccoglie:</strong> la robinia fiorisce tra la fine di aprile e i primi giorni di maggio.',
-          '<strong>Come si usa:</strong> tisane, latte, caffè, yogurt e frutta: non copre gli altri sapori.',
-          '<strong>A chi piace:</strong> a chi di solito non ama i mieli troppo intensi, e a chi vuole un miele sempre pronto all\'uso.',
-        ],
+        p: "<strong>Scegli il millefiori</strong> se cerchi un miele versatile, legato alle fioriture e con un gusto che può cambiare da un raccolto all'altro.",
+      },
+      {
+        p: '<strong>Scegli il castagno</strong> se ami sapori intensi, poco dolci e leggermente amarognoli, soprattutto con formaggi e piatti saporiti.',
+      },
+      {
+        p: 'Nessuno è migliore in assoluto: dipende soprattutto dal gusto e da come vuoi usarlo.',
+      },
+
+      { h2: 'Acacia, millefiori e castagno a confronto' },
+      {
+        table: {
+          head: ['Acacia', 'Millefiori', 'Castagno'],
+          rows: [
+            {
+              label: 'Gusto',
+              cells: [
+                'Dolce, delicato, floreale',
+                'Variabile, da dolce e aromatico a più corposo',
+                'Intenso, legnoso, leggermente amarognolo',
+              ],
+            },
+            {
+              label: 'Colore',
+              cells: [
+                'Molto chiaro, giallo paglierino',
+                'Varia secondo le fioriture',
+                'Ambra scuro, quasi bruno',
+              ],
+            },
+            {
+              label: 'Cristallizzazione',
+              cells: ['Molto lenta', 'Variabile secondo il raccolto', 'Molto lenta'],
+            },
+            {
+              label: 'Ideale per',
+              cells: [
+                'Tisane, latte, yogurt, frutta',
+                'Colazione, pane, yogurt, uso quotidiano',
+                'Formaggi, carni, polenta, cucina',
+              ],
+            },
+            {
+              label: 'Scegilo se',
+              cells: ['Vuoi un miele delicato', 'Vuoi un miele versatile', 'Vuoi un miele deciso'],
+            },
+          ],
+        },
+      },
+
+      { h2: 'Miele di acacia: delicato e molto fluido' },
+      {
+        p: 'Il <strong>miele di acacia</strong> è il più delicato dei tre: chiaro, dolce, floreale e liquido molto a lungo.',
+      },
+      {
+        p: 'È particolarmente adatto quando vuoi dolcificare senza coprire gli altri sapori:',
+      },
+      {
+        ul: ['tisane e tè;', 'latte e caffè;', 'yogurt;', 'frutta;', 'pane e fette biscottate.'],
       },
       {
         img: {
-          base: 'fiori_robinia',
-          alt: 'Fiori bianchi di robinia (acacia) su un ramo, con foglie verdi',
-          caption: 'La robinia, l\'albero che in Italia si chiama comunemente acacia',
+          base: 'miele-di-acacia',
+          alt: "Barattolo di miele di acacia di Bio & Golosità, dal colore chiaro",
+          caption: 'Acacia: chiaro, delicato, liquido a lungo',
         },
       },
       {
-        p: 'Scheda completa: <a href="/miele/miele-di-acacia/">miele di acacia a Cassano d\'Adda</a>.',
+        p: '→ <a href="/miele/miele-di-acacia/">Scopri il nostro miele di acacia, con prezzo e formati</a>',
       },
-      { h2: 'Miele millefiori: il sapore della stagione' },
+
+      { h2: 'Miele millefiori: il più legato alla stagione' },
       {
-        p: 'Il millefiori non viene da una sola fioritura, ma dall\'insieme dei nettari disponibili in un periodo. È il miele più "territoriale" che esista: cambia di anno in anno, e due millefiori diversi possono avere profumi molto distanti tra loro. Nella nostra produzione ne distinguiamo due, entrambi raccolti a giugno.',
-      },
-      {
-        ul: [
-          '<strong>Millefiori estivo al tiglio e more:</strong> più scuro e corposo, con note di tiglio e di more selvatiche, raccolto a giugno. Ottimo anche con i formaggi stagionati.',
-          '<strong>Millefiori estivo al tiglio e ailanto:</strong> dolce e aromatico, con il caratteristico retrogusto di pesca che danno i fiori di ailanto. Disponibile in quantità limitate.',
-        ],
+        p: "Il <strong>miele millefiori</strong> non nasce da una singola pianta: le api raccolgono il nettare delle fioriture disponibili nello stesso periodo, quindi colore, profumo e gusto cambiano da un raccolto all'altro. È questa variabilità a distinguerlo da mieli monoflora come acacia e castagno: nella nostra produzione ne distinguiamo due, entrambi raccolti a giugno.",
       },
       {
         img: {
-          base: 'prato_fiorito',
-          alt: 'Prato di campagna con fiori spontanei di vari colori',
-          caption: 'Il millefiori racconta le fioriture del momento: per questo cambia ogni anno',
+          base: 'miele-millefiori-estivo-al-tiglio-e-more',
+          alt: 'Barattolo di millefiori estivo al tiglio e more di Bio & Golosità',
+          caption: 'Millefiori estivo al tiglio e more, il più scuro dei due',
         },
       },
       {
-        p: 'Schede complete: <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">tiglio e more</a>, <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">tiglio e ailanto</a>, e la panoramica sul <a href="/miele/miele-millefiori/">miele millefiori</a>.',
+        p: '→ <a href="/miele/miele-millefiori/">Tutti i millefiori</a>: <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">tiglio e more</a>, <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">tiglio e ailanto</a>.',
       },
-      { h2: 'Miele di castagno: scuro, intenso, da formaggi' },
+
+      { h2: 'Miele di castagno: scuro e intenso' },
       {
-        p: 'Il miele di castagno è il più caratteristico e il più divisivo: ambra scuro quasi bruno, gusto intenso e legnoso con un retrogusto leggermente amarognolo. È tra i mieli più ricchi di sali minerali, in particolare ferro e potassio, e cristallizza molto lentamente.',
+        p: 'Il <strong>miele di castagno</strong> è quello con il carattere più deciso tra i tre: colore scuro, profumo intenso e un gusto legnoso con un retrogusto leggermente amarognolo.',
       },
+      { p: 'Si abbina particolarmente bene a:' },
       {
         ul: [
-          '<strong>Quando si raccoglie:</strong> giugno e luglio, dai castagni dei boschi della Gera d\'Adda e delle colline tra Bergamo e Cremona.',
-          '<strong>Come si usa:</strong> formaggi stagionati ed erborinati, carni rosse, polenta, dolci speziati e panpepato.',
-          '<strong>A chi piace:</strong> a chi cerca un miele deciso, non dolcissimo, con carattere.',
+          'formaggi stagionati ed erborinati;',
+          'carni e arrosti;',
+          'polenta;',
+          'noci;',
+          'dolci speziati.',
         ],
       },
       {
         img: {
           base: 'miele-di-castagno',
-          alt: "Barattolo di miele di castagno di Bio & Golosità",
-          caption: 'Il miele di castagno: scuro, corposo, con retrogusto amarognolo',
+          alt: 'Barattolo di miele di castagno di Bio & Golosità, dal colore scuro',
+          caption: 'Castagno: ambra scuro, quasi bruno',
         },
       },
       {
-        p: 'Scheda completa: <a href="/miele/miele-di-castagno/">miele di castagno a Cassano d\'Adda</a>.',
+        p: '→ <a href="/miele/miele-di-castagno/">Scopri il nostro miele di castagno, con prezzo e formati</a>',
       },
-      { h2: 'In sintesi: quale scegliere' },
+
+      { h2: 'Meglio miele di acacia o millefiori?' },
       {
-        ul: [
-          'Per <strong>tisane, latte e colazione</strong> ogni giorno: miele di acacia.',
-          'Per <strong>pane, fette biscottate e yogurt</strong>: millefiori estivo al tiglio e ailanto, più dolce e aromatico.',
-          'Per <strong>cucina, carni e formaggi stagionati</strong>: millefiori estivo o castagno.',
-          'Per un <strong>regalo</strong>: acacia per chi ama i sapori delicati, castagno per chi ama quelli decisi.',
-          'Per <strong>provare qualcosa di raro</strong>: il millefiori estivo al tiglio e ailanto, con il retrogusto di pesca.',
-        ],
+        p: "<strong>Acacia:</strong> più delicato, chiaro e fluido, dolcifica senza coprire gli altri sapori. <strong>Millefiori:</strong> più variabile e legato alle fioriture, con più carattere. Per un gusto molto delicato scegli l'acacia, per un miele più deciso e mutevole scegli il millefiori.",
+      },
+
+      { h2: 'Meglio miele millefiori o castagno?' },
+      {
+        p: 'Il <strong>millefiori</strong> è più facile da usare tutti i giorni. Il <strong>castagno</strong> è molto più intenso e leggermente amarognolo: dà il meglio con formaggi e piatti decisi. Se non conosci ancora i tuoi gusti parti dal millefiori; se ami i mieli forti, prova il castagno.',
+      },
+
+      { h2: 'I nostri mieli vengono dai nostri apiari' },
+      {
+        p: 'I mieli Bio & Golosità sono prodotti dalle nostre api in Lombardia e lavorati direttamente da noi. Li smieliamo a freddo e non li pastorizziamo.',
       },
       {
-        note: 'Nessun miele è "migliore" in assoluto: cambia il profilo aromatico e l\'uso. Il modo più semplice per capirlo è assaggiarli. Se vuoi un consiglio, chiamaci: ti diciamo quale miele sta uscendo meglio quest\'anno.',
+        p: 'Acacia, millefiori e castagno non differiscono quindi per il modo in cui li lavoriamo, ma soprattutto per <strong>fioritura, territorio, periodo di raccolta e profilo aromatico</strong>.',
+      },
+      {
+        img: {
+          base: 'raffaele_sorridente_con_le_sue_api',
+          alt: "Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api a Cassano d'Adda",
+          caption: "Raffaele in apiario, a Cassano d'Adda",
+        },
+      },
+
+      { h2: 'Ancora indeciso?' },
+      {
+        p: "In sintesi: parti dall'acacia se vuoi un miele delicato, da un millefiori se lo vuoi versatile e legato alla stagione, dal castagno se preferisci un gusto scuro e intenso.",
+      },
+      {
+        p: 'Nella pagina dei mieli trovi tutti i raccolti disponibili, con prezzi e formati.',
       },
       { cta: { href: '/miele/', label: 'Vedi tutti i mieli con prezzi e formati' } },
     ],

@@ -39,6 +39,37 @@ const { blocks } = Astro.props;
         />
       );
     }
+    if ('table' in b) {
+      // Confronto a colonne: `data-label` (il nome della colonna) è ciò che la
+      // cella mostra come etichetta quando sotto i 640px il tr diventa una
+      // scheda, perché lì l'<thead> è nascosto.
+      return (
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <span class="sr-only">Caratteristica</span>
+                </th>
+                {b.table.head.map((col) => (
+                  <th scope="col">{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {b.table.rows.map((row) => (
+                <tr>
+                  <th scope="row">{row.label}</th>
+                  {row.cells.map((cell, i) => (
+                    <td data-label={b.table.head[i]} set:html={cell} />
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
     if ('video' in b) {
       // Video dentro il testo. Con il default verticale, la colonna stretta di
       // `.prose-video` gli fa mantenere l'aspetto 9/16 (`.video-item--tall`),

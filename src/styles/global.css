@@ -1563,16 +1563,44 @@ strong {
   max-width: none;
 }
 
+/* Guida con una tabella di confronto (`.prose--wide-table`): il testo resta
+   nella colonna di lettura, la tabella si prende anche la seconda colonna.
+   Due tracce invece di un margine negativo: così la colonna del testo resta
+   larga esattamente 46rem come in tutte le altre guide — anche su schermi
+   stretti, dove la seconda traccia si azzera e la tabella torna a riempire
+   semplicemente il container. */
+.prose--wide-table {
+  max-width: none;
+  grid-template-columns: minmax(0, 46rem) minmax(0, 1fr);
+}
+
+.prose--wide-table > * {
+  grid-column: 1;
+}
+
+.prose--wide-table > .table-wrap {
+  grid-column: 1 / -1;
+}
+
+/* Liste del testo (le guide e la sezione "come lavoriamo" di /miele/). La voce
+   NON può essere `flex`: i marcatori non vengono disegnati sui flex item, ed è
+   per questo che le liste del sito restavano senza bullet. Con `list-item` il
+   segno sta fuori dal riquadro della voce, quindi il padding sul <ul> serve a
+   tenerlo dentro la griglia invece di lasciarlo fuori dal testo. */
 .prose ul {
-  list-style: none;
+  list-style: disc;
+  padding-inline-start: 1.1rem;
   display: grid;
   gap: 0.7rem;
 }
 
 .prose li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
+  display: list-item;
+}
+
+/* Il segno prende il colore del miele, come i titoli di sezione. */
+.prose li::marker {
+  color: var(--amber-strong);
 }
 
 .prose li svg {
@@ -1760,7 +1788,9 @@ a.card--media:hover .card-media img {
   transform: scale(1.05);
 }
 
-/* Tabella prezzi (hub /miele/) */
+/* Tabelle di dati (oggi: il confronto tra acacia, millefiori e castagno della
+   guida omonima). Fuori dal `.prose` la tabella può usare tutta la larghezza
+   del container: vedi `.prose--wide-table`. */
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -1768,22 +1798,21 @@ a.card--media:hover .card-media img {
   background: var(--surface);
 }
 
-
-.price-table {
+.data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.95rem;
   min-width: 560px;
 }
 
-.price-table th,
-.price-table td {
+.data-table th,
+.data-table td {
   padding: 0.85rem 1rem;
   text-align: left;
   border-bottom: 1px solid var(--line);
 }
 
-.price-table thead th {
+.data-table thead th {
   background: var(--bg-soft);
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -1791,14 +1820,24 @@ a.card--media:hover .card-media img {
   color: var(--ink-soft);
 }
 
-.price-table tbody tr:last-child th,
-.price-table tbody tr:last-child td {
+.data-table tbody tr:last-child th,
+.data-table tbody tr:last-child td {
   border-bottom: 0;
 }
 
-/* Sotto i 640px la tabella si impila in schede: niente scroll orizzontale
-   (era l'unica area del sito che ne aveva bisogno). I `data-label` delle celle
-   diventano l'etichetta di ogni riga. */
+/* La prima colonna è l'etichetta della riga (Gusto, Colore, …): `width: 1%` e
+   `nowrap` la tengono larga quanto il suo testo, così i valori hanno lo spazio
+   che avanza invece di dividersi il totale in quattro colonne uguali. */
+.data-table tbody th {
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  width: 1%;
+}
+
+/* Sotto i 640px la tabella si impila in schede: niente scroll orizzontale.
+   I `data-label` delle celle diventano l'etichetta di ogni valore, l'etichetta
+   della riga (th[scope='row']) è il titolo della scheda. */
 @media (max-width: 640px) {
   .table-wrap {
     overflow-x: visible;
@@ -1806,25 +1845,25 @@ a.card--media:hover .card-media img {
     background: none;
   }
 
-  .price-table {
+  .data-table {
     min-width: 0;
     font-size: 0.95rem;
   }
 
-  .price-table thead {
+  .data-table thead {
     display: none;
   }
 
-  .price-table,
-  .price-table tbody,
-  .price-table tr,
-  .price-table th,
-  .price-table td {
+  .data-table,
+  .data-table tbody,
+  .data-table tr,
+  .data-table th,
+  .data-table td {
     display: block;
     width: auto;
   }
 
-  .price-table tr {
+  .data-table tr {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -1832,32 +1871,27 @@ a.card--media:hover .card-media img {
     margin-bottom: var(--space-2);
   }
 
-  .price-table th[scope='row'] {
+  .data-table th[scope='row'] {
     padding: 0.6rem 0 0.4rem;
     border-bottom: 1px solid var(--line);
     font-size: 1.05rem;
+    /* Le due regole da tabella (`width: 1%` + `nowrap`) sono più specifiche di
+       `.data-table th` qui sopra e con `display: block` ridurrebbero il titolo
+       della scheda a pochi pixel: vanno rimesse a posto qui. */
+    width: auto;
+    white-space: normal;
   }
 
-  .price-table td {
+  .data-table td {
     border-bottom: 0;
     padding: 0.2rem 0;
   }
 
-  .price-table td::before {
+  .data-table td::before {
     content: attr(data-label) ': ';
     font-weight: 600;
     color: var(--ink-soft);
   }
-}
-
-.price-table tbody th {
-  font-weight: 600;
-}
-
-.price-table td:first-of-type {
-  white-space: nowrap;
-  font-weight: 700;
-  color: var(--amber-deep);
 }
 
 /* Figure e didascalie nel testo delle guide */

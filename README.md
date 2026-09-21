@@ -141,6 +141,14 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   menu hanno le loro regole. Contrasto misurato: il caso più stretto è 4,51:1
   (ambra su `--bg-soft`, nel testo di `/nuclei-api/`), tutti gli altri ≥4,93:1 —
   sopra la soglia di 4,5:1 verificata da `qa-contrast.mjs`.
+- **Elenchi del testo** (`.prose ul`): la voce **non** è `display: flex` — i
+  marcatori non vengono disegnati sui flex item, ed è per questo che le liste
+  delle guide sono rimaste a lungo senza bullet. Le voci sono `list-item` con
+  `list-style: disc` e il segno in ambra (`::marker`); è il
+  `padding-inline-start` sul `<ul>` a tenere il segno — che sta *fuori* dal
+  riquadro della voce — dentro la griglia, invece di lasciarlo fuori dal testo.
+  Restano fuori le schede tecniche (`ul.specs`, `flex` e senza segno) e i chip
+  delle caratteristiche (`ul.chips`, mai dentro un `.prose`, quindi non toccati).
 - **Header**: i 6 link di navigazione si nascondono sotto i 900px (menu
   hamburger). La CTA telefonica cambia **etichetta** con la larghezza: da desktop
   (≥900px) mostra il **numero** (`site.phoneLocal`, "351 537 6719") a destra del
@@ -260,9 +268,14 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   del footer e con i rimandi dentro i testi: le card "Gli altri mieli" per i
   mieli, "Nuclei, guide e mieli" / "Regine e guide per iniziare" per i prodotti
   dell'apicoltura.
-- **Tabella prezzi** (`/miele/#mieli`): sotto i **640px** non scorre più in
-  orizzontale, si impila in schede usando i `data-label` delle celle come
-  etichette. Era l'unica area del sito con scroll orizzontale: il QA browser
+- **Tabelle di dati** (`.table-wrap` + `.data-table`): sotto i **640px** non
+  scorrono in orizzontale, si impilano in schede usando i `data-label` delle
+  celle come etichette e il `th[scope='row']` come titolo della scheda (le due
+  regole da tabella — `width: 1%` e `nowrap` sull'etichetta di riga — vanno
+  rimesse a posto dentro il media query, o con `display: block` il titolo della
+  scheda si riduce a pochi pixel). Oggi le usa una sola pagina: il comparatore
+  della guida su acacia, millefiori e castagno, reso dal blocco `table` di
+  `ProseBlocks` (`{ table: { head, rows } }` in `lib/types.ts`). Il QA browser
   verifica che nessun bottone abbia testo fuori dal riquadro e che la pagina non
   sbordi a 360, 375 e 1280px.
 - **Sezione "come lavoriamo" a piena larghezza** (`/miele/`): è l'unica `.prose`
@@ -274,6 +287,14 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   le righe si impilano e l'alternanza non ha effetto. Misurato a 1280px: sezione
   1056px, colonne 508px (≈60 caratteri per riga), nessun overflow; le altre
   pagine restano a 736px.
+- **Comparatore a tutta larghezza** (guida su acacia, millefiori e castagno): la
+  guida che contiene un blocco `table` prende `prose--wide-table`, che al posto
+  del limite di 46rem mette **due tracce** — il testo nella prima, la tabella su
+  entrambe (`grid-column: 1 / -1`) — invece di un margine negativo (che avrebbe
+  dovuto indovinare la larghezza del container e poteva sbordare di 15px con la
+  barra di scorrimento). Misurato: a 1280px paragrafo 736px come tutte le guide e
+  tabella 1054px; a 820px tabella 754px, colonne 156/164/217/217; a 641px tabella
+  588px in un container da 590px, senza scroll interno né overflow di pagina.
 
 ## TODO prima del lancio (dati segnaposto)
 

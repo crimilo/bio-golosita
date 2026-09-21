@@ -8,6 +8,13 @@ export type Block =
   | { p: string }
   | { ul: string[] }
   | { img: { base: string; alt: string; caption?: string } }
+  /** Tabella di confronto: `head` sono le intestazioni delle colonne (una cella
+   *  per voce di `cells`, nello stesso ordine), `label` è l'etichetta della riga.
+   *  Sotto i 640px diventa una pila di schede — `data-label` è l'etichetta che
+   *  ogni valore si porta dietro — perché l'alternativa era lo scroll
+   *  orizzontale. La tabella può usare tutta la larghezza del container:
+   *  vedi `.prose--wide-table` in global.css. */
+  | { table: { head: string[]; rows: { label: string; cells: string[] }[] } }
   /** Testo e foto sulla stessa riga: da desktop la foto sta a fianco, da mobile
    *  va sotto (vedi `.prose-row` in global.css). */
   | { row: { text: Block[]; img: { base: string; alt: string; caption?: string } } }
