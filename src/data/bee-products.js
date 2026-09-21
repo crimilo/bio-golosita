@@ -33,9 +33,14 @@ export const repartoImages = {
   },
   apiRegine: { img: 'ape_regina_di_raffaele', alt: 'Ape regina nel nostro apiario' },
   nuclei: { img: 'arnia_piena_di_api', alt: 'Arnia piena di api sui telai' },
+  // La stessa foto della hero di /consegna-miele/ e della galleria della home:
+  // Raffaele con i barattoli pronti da spedire. La sorgente è verticale
+  // (1094×1479); nella card 4:3 `object-fit: cover` ne ritaglia la fascia
+  // centrale, alta il 55% (y 22-78%): si vedono Raffaele e i barattoli, mentre
+  // restano fuori la vegetazione più in alto e il fondo scuro.
   consegna: {
-    img: 'miele_versare',
-    alt: 'Miele versato da un cucchiaio di legno dentro un barattolo',
+    img: 'raffaele_con_mieli_pronti_da_spedire',
+    alt: 'Raffaele Antoci con i barattoli di miele pronti da spedire',
   },
 };
 
