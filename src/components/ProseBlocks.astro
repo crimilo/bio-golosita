@@ -12,6 +12,7 @@ const { blocks } = Astro.props;
 
 {
   blocks.map((b) => {
+    if ('eyebrow' in b) return <span class="eyebrow">{b.eyebrow}</span>;
     if ('h2' in b) return <h2 id={b.id}>{b.h2}</h2>;
     if ('h3' in b) return <h3>{b.h3}</h3>;
     if ('p' in b) return <p set:html={b.p} />;

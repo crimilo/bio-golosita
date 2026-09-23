@@ -1940,6 +1940,23 @@ a.card--media:hover .card-media img {
   .prose--wide .prose-row:nth-of-type(even) .prose-row-text {
     order: 2;
   }
+
+  /* E la foto verticale, in questa sezione, sta un po' più stretta: accanto a
+     un testo corto i 30rem di `.prose-figure--portrait` facevano una colonna
+     alta ~760px. Vale solo qui: nelle guide la foto resta a 30rem. */
+  .prose--wide .prose-figure--portrait {
+    max-width: 23rem;
+  }
+}
+
+/* L'occhiello in cima a una riga testo+foto (per ora solo "come lavoriamo" di
+   /miele/) etichetta il suo titolo: la riga ha lo stesso gap della griglia del
+   `.prose` (24px), che lo staccherebbe più di quanto faccia il resto del sito,
+   dove fra occhiello e titolo ci sono 6px (`.section-head`). Il selettore è
+   stretto apposta: gli occhielli che aprono un `.prose` (le schede prodotto, le
+   guide) sono kicker su un paragrafo e tengono il ritmo della griglia. */
+.prose-row-text > .eyebrow {
+  margin-bottom: calc(6px - var(--space-3));
 }
 
 /* Stesso ritmo verticale del `.prose` (griglia + gap): i blocchi di testo non

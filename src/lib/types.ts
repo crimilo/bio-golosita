@@ -2,6 +2,8 @@
 
 /** Blocchi di testo usati dalle guide e dai componenti che le rendono. */
 export type Block =
+  /** Occhiello sopra un blocco (in una riga, etichetta la riga stessa). */
+  | { eyebrow: string }
   | { h2: string; id?: string }
   | { h3: string }
   /** I campi testuali accettano HTML inline (serve per i link interni). */

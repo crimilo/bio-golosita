@@ -289,9 +289,18 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   tolta, perché quel testo sta già in "chi siamo" e nella home — quindi la foto
   sta a destra, e la regola dell'alternanza resta lì per una eventuale seconda
   riga. Sotto i 900px
-  le righe si impilano e l'alternanza non ha effetto. Misurato a 1280px: sezione
-  1056px, colonne 508px (≈60 caratteri per riga), nessun overflow; le altre
-  pagine restano a 736px.
+  le righe si impilano e l'alternanza non ha effetto. L'occhiello di questa
+  sezione è il **primo blocco della riga** (blocco `{ eyebrow }` di `ProseBlocks`,
+  aggiunto qui), non un elemento a sé del `.prose`: la riga centra il testo sulla
+  foto (`.prose-row`), e un occhiello fuori dalla riga resterebbe in cima alla
+  sezione a ~200px dal suo titolo. Dentro la riga tiene il ritmo stretto del resto
+  del sito: 6px dal titolo (`.prose .eyebrow`, contro i 24px del gap della
+  griglia), come `.section-head`. La foto verticale qui è limitata a 23rem (i
+  `30rem` di `.prose-figure--portrait` facevano una colonna alta 760px accanto a
+  un testo di 370). Misurato a 1280px: sezione 1056px, colonne 508px (≈60
+  caratteri per riga), foto 368×708, testo centrato sulla foto (scarto fra i
+  centri 0px), occhiello→titolo 6px, nessun overflow; le altre pagine restano a
+  736px.
 - **Comparatore a tutta larghezza** (guida su acacia, millefiori e castagno): la
   guida che contiene un blocco `table` prende `prose--wide-table`, che al posto
   del limite di 46rem mette **due tracce** — il testo nella prima, la tabella su

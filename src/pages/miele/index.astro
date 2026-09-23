@@ -55,9 +55,14 @@ const faq = [
  * smielatura a freddo, con la foto `arnia_piena_di_api`) e il suo <h2> "Miele
  * artigianale: cosa vuol dire nel nostro caso": tolti su richiesta, perché
  * quelle informazioni stanno già nella pagina "chi siamo" e nella home. La
- * sezione resta, con l'occhiello "come lavoriamo", questa riga (l'elenco che
- * spiega i tre aggettivi) e la nota finale: è per questo che `aria-labelledby`
- * punta a `non-pastorizzato` e non più a un titolo della pagina.
+ * sezione resta, con questa riga (l'elenco che spiega i tre aggettivi) e la
+ * nota finale: è per questo che `aria-labelledby` punta a `non-pastorizzato` e
+ * non più a un titolo della pagina.
+ *
+ * L'occhiello "come lavoriamo" è il **primo blocco della riga**, non un elemento
+ * a sé della sezione: così sta attaccato al suo titolo e viaggia con lui — la
+ * riga centra il testo sulla foto (`.prose-row`), e un occhiello fuori dalla
+ * riga resterebbe in cima alla sezione, a ~200px dal titolo.
  */
 const blocks = [
   {
@@ -65,6 +70,7 @@ const blocks = [
     // sotto): sotto i 900px il blocco si impila, foto dopo il testo.
     row: {
       text: [
+        { eyebrow: 'come lavoriamo' },
         {
           h2: 'Non pastorizzato, 100% italiano, artigianale: cosa significa davvero',
           id: 'non-pastorizzato',
@@ -212,7 +218,6 @@ const guideCards = [
   <section class="section" aria-labelledby="non-pastorizzato">
     <div class="container">
       <div class="prose prose--wide">
-        <span class="eyebrow">come lavoriamo</span>
         <ProseBlocks blocks={blocks} />
       </div>
     </div>
