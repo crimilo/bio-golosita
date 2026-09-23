@@ -177,17 +177,17 @@ const priceOthers = otherFormats(honey.priceFormats);
             </li>
           ))}
         </ul>
-        {honey.video && (
-          // Video verticale: la colonna stretta gli fa mantenere l'aspetto
-          // 9/16 (`.video-item--tall`), senza ritagli.
-          <div class="prose-video">
-            <VideoFigure
-              src={honey.video.src}
-              poster={honey.video.poster}
-              label={honey.video.label}
-              cls={honey.video.cls}
-            />
-          </div>
+        {honey.videos && (
+          // I video sono verticali (478×850): la colonna stretta di
+          // `.prose-video` gli fa mantenere l'aspetto 9/16 (`.video-item--tall`),
+          // senza ritagli. Quando sono più di uno (per ora il solo tiglio e
+          // more: la smielatura più i barattoli) si impilano qui, nell'ordine
+          // dei dati.
+          honey.videos.map((v) => (
+            <div class="prose-video">
+              <VideoFigure src={v.src} poster={v.poster} label={v.label} cls={v.cls} />
+            </div>
+          ))
         )}
       </div>
     </div>

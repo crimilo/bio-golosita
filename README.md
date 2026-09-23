@@ -14,8 +14,8 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 | `/miele/` | **Hub mieli**: i 4 mieli + il miele in favo nella stessa griglia, cosa significa artigianale/non pastorizzato, tabella prezzi e formati, FAQ |
 | `/miele/miele-di-acacia/` | Landing SEO Miele di Acacia, **con il video della smielatura** |
 | `/miele/miele-millefiori/` | **Hub millefiori**: cos'è il millefiori e le due produzioni |
-| `/miele/miele-millefiori-estivo-al-tiglio-e-more/` | Landing SEO Miele Millefiori Estivo al Tiglio e More, **con il video della smielatura** |
-| `/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/` | Landing SEO Miele Millefiori Estivo al Tiglio e Ailanto |
+| `/miele/miele-millefiori-estivo-al-tiglio-e-more/` | Landing SEO Miele Millefiori Estivo al Tiglio e More, **con i video della smielatura e dei barattoli riempiti** |
+| `/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/` | Landing SEO Miele Millefiori Estivo al Tiglio e Ailanto, **con il video della smielatura del millefiori** |
 | `/miele/miele-di-castagno/` | Landing SEO Miele di Castagno |
 | `/miele/miele-in-favo/` | **Miele in favo**: il miele lasciato nella sua cera, con video |
 | `/polline-d-api/` | **Polline d'api**: prodotto, origine, conservazione, FAQ, **video dell'impollinazione** |
@@ -677,9 +677,12 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   cosa mostrano): pubblicati in `public/video/` con un nome parlante e ricodificati
   in H.264/AAC (compatibile su tutti i browser) con il comando qui sopra, più il
   poster da un fotogramma. In totale i video pubblicati in `public/video/` sono
-  **59,4 MB** (i sorgenti in root ne pesano 129,4):
+  **59,7 MB** (i sorgenti in root ne pesano 139,7):
   - `smielatura_miele_acacia_2026.mp4` → `smielatura-acacia.mp4` (720×1280,
-    19 s, 2,9 MB) — scheda del miele di acacia;
+    19 s, 2,9 MB) — **ritirato**: la scheda dell'acacia è passata al video del
+    raccolto 2026 qui sotto, e il file e il suo poster non sono più in
+    `public/video/`. La sorgente in root resta, quindi si può ricodificare con il
+    comando qui sopra se serve tornare indietro;
   - `video-che-mostra-la-smielatura-millefiori-more-e-tiglio-2026.mp4` →
     `smielatura-millefiori-tiglio-more.mp4` (576×1024, 24 s, 3,0 MB) — scheda del
     millefiori estivo al tiglio e more;
@@ -707,6 +710,26 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
     nitido di tutto il girato (varianza del laplaciano su un fotogramma al
     secondo: i primi 24 s sono mossi, da lì in poi il filmato è fermo), vedi
     `scripts/posters.mjs`.
+  - **Raccolto 2026, quattro clip verticali** (478×850, ricodificate con il
+    comando qui sopra — SSIM 0,93-0,98 — con il poster scelto misurando la
+    nitidezza di un fotogramma ogni 0,5 s: vedi `scripts/posters.mjs`). Stanno
+    nelle schede dei mieli:
+    - `smielatura-2026-miele-di-acacia.mp4` → `smielatura-acacia-2026.mp4`
+      (19 s, 1,5 MB) — scheda del miele di acacia. `filtraggio-miele-di-acacia.mp4` →
+      `filtraggio-miele-di-acacia.mp4` (14 s, 0,8 MB) è pubblicato ma **non è in
+      pagina**: era il secondo video della stessa scheda e la voce `videos` di
+      `site.js` è stata tolta, quindi oggi nessuna pagina lo usa (file e poster
+      restano in `public/video/` per rimetterlo quando serve);
+    - `smielatura-2026-millefiori-primaverile.mp4` →
+      `smielatura-millefiori-2026.mp4` (8 s, 0,3 MB) — scheda del millefiori
+      al tiglio e ailanto, che prima non aveva video. Il girato è del raccolto
+      primaverile, ma la didascalia **non nomina la stagione**: entrambe le
+      schede millefiori dicono che il miele si raccoglie a giugno, quindi il
+      video racconta come si smiela il millefiori, non l'annata di quel
+      barattolo;
+    - `riempendo-un-barattolo-di-millefiori.mp4` →
+      `riempendo-un-barattolo-di-millefiori.mp4` (9 s, 0,5 MB) — scheda del
+      millefiori al tiglio e more, dopo il suo video della smielatura.
   I video sono `preload="none"` con poster: quei MB si scaricano solo se il
   visitatore li fa partire, non all'apertura della pagina.
 - **I metadati si tolgono prima di pubblicare**, foto e video. Le foto, senza

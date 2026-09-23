@@ -218,12 +218,25 @@ export const site = {
         { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
         { label: 'Abbinamenti', value: 'tisane, latte, yogurt, frutta fresca' },
       ],
-      video: {
-        src: '/video/smielatura-acacia.mp4',
-        poster: '/video/smielatura-acacia-poster-5bd8734b.avif',
-        label: 'La smielatura del miele di acacia (raccolto 2026)',
-        cls: 'video-item--tall',
-      },
+      /**
+       * Il video della scheda: la smielatura del raccolto 2026, che ha preso il
+       * posto di `smielatura-acacia.mp4` (ritirato insieme al suo poster). È
+       * verticale (478×850), quindi sta nella colonna stretta di `.prose-video`
+       * e non viene ritagliato.
+       *
+       * Il filtraggio che segue la smielatura è pubblicato
+       * (`/video/filtraggio-miele-di-acacia.mp4`) ma **non è in pagina**: per
+       * rimetterlo basta rimettere la sua voce qui sotto, dopo questa — i video
+       * si impilano nella colonna del testo, nell'ordine dei dati.
+       */
+      videos: [
+        {
+          src: '/video/smielatura-acacia-2026.mp4',
+          poster: '/video/smielatura-acacia-2026-poster-99f4bc5c.avif',
+          label: 'La smielatura del miele di acacia (raccolto 2026)',
+          cls: 'video-item--tall',
+        },
+      ],
       faq: [
         {
           q: 'Il miele di acacia cristallizza?',
@@ -281,12 +294,21 @@ export const site = {
         { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
         { label: 'Abbinamenti', value: 'colazione, glassature di carne, formaggi stagionati' },
       ],
-      video: {
-        src: '/video/smielatura-millefiori-tiglio-more.mp4',
-        poster: '/video/smielatura-millefiori-tiglio-more-poster-918a2227.avif',
-        label: 'La smielatura del millefiori tiglio e more (raccolto 2026)',
-        cls: 'video-item--tall',
-      },
+      /** Smielatura del raccolto 2026 e i barattoli riempiti subito dopo. */
+      videos: [
+        {
+          src: '/video/smielatura-millefiori-tiglio-more.mp4',
+          poster: '/video/smielatura-millefiori-tiglio-more-poster-918a2227.avif',
+          label: 'La smielatura del millefiori tiglio e more (raccolto 2026)',
+          cls: 'video-item--tall',
+        },
+        {
+          src: '/video/riempendo-un-barattolo-di-millefiori.mp4',
+          poster: '/video/riempendo-un-barattolo-di-millefiori-poster-26aa0927.avif',
+          label: 'I barattoli di millefiori riempiti dopo la smielatura (raccolto 2026)',
+          cls: 'video-item--tall',
+        },
+      ],
       faq: [
         {
           q: 'Perché il millefiori estivo al tiglio e more è più scuro?',
@@ -343,6 +365,22 @@ export const site = {
         { label: 'Raccolto', value: 'giugno' },
         { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
         { label: 'Abbinamenti', value: 'colazione, tisane, formaggi freschi, frutta' },
+      ],
+      /**
+       * La scheda non aveva video: qui c'è la smielatura del nostro millefiori.
+       * Il girato è del raccolto primaverile (sorgente in root:
+       * `smielatura-2026-millefiori-primaverile.mp4`), ma la didascalia non
+       * nomina la stagione: questa scheda, come quella del tiglio e more, dice
+       * che il miele è raccolto a giugno, e il video racconta **come** lavoriamo
+       * il millefiori, non l'annata di questo barattolo.
+       */
+      videos: [
+        {
+          src: '/video/smielatura-millefiori-2026.mp4',
+          poster: '/video/smielatura-millefiori-2026-poster-d8961bf6.avif',
+          label: 'La smielatura del nostro millefiori (raccolto 2026)',
+          cls: 'video-item--tall',
+        },
       ],
       faq: [
         {
@@ -479,12 +517,14 @@ export const site = {
       },
       { label: 'Abbinamenti', value: 'pane, formaggi, ricotta, frutta, colazione' },
     ],
-    video: {
-      src: '/video/miele-in-favo.mp4',
-      poster: '/video/miele-in-favo-poster-4d2db9b1.avif',
-      label: 'Raffaele mostra il miele in favo e lo assaggia',
-      cls: 'video-item--tall',
-    },
+    videos: [
+      {
+        src: '/video/miele-in-favo.mp4',
+        poster: '/video/miele-in-favo-poster-4d2db9b1.avif',
+        label: 'Raffaele mostra il miele in favo e lo assaggia',
+        cls: 'video-item--tall',
+      },
+    ],
     /**
      * La sequenza di foto ricavate dal video, **in ordine d'uso**: dalla prima,
      * il favo ancora attaccato al telaio, fino all'assaggio di Raffaele. Le basi

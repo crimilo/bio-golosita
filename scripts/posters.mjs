@@ -21,7 +21,10 @@ const posters = [
   // dettaglio, con preferenza per i fotogrammi in cui si vede Raffaele), dal
   // centro del video. Per rifarlo:
   // `ffmpeg -ss <secondi> -i public/video/<nome>.mp4 -frames:v 1 -q:v 2 <nome>-poster.jpg`
-  'smielatura-acacia-poster.jpg',
+  // `smielatura-acacia-poster.jpg` è stato **ritirato**: la scheda dell'acacia
+  // usa il video nuovo (`smielatura-acacia-2026.mp4`), e la sorgente in root
+  // (`smielatura_miele_acacia_2026.mp4`) resta ricodificabile se serve tornare
+  // indietro. Per riportarlo: rimettere qui la riga e il jpg del fotogramma.
   'smielatura-millefiori-tiglio-more-poster.jpg',
   'nascita-di-una-regina-poster.jpg',
   'marcatura-della-regina-poster.jpg',
@@ -40,6 +43,18 @@ const posters = [
   // filmato è fermo e definito, e 27 s è il più nitido di quel tratto.
   // Per cambiarlo: `ffmpeg -ss <secondi> -i public/video/mieli-pronti-da-spedire.mp4 -frames:v 1 -q:v 2 mieli-pronti-da-spedire-poster.jpg`
   'mieli-pronti-da-spedire-poster.jpg',
+  // Video del raccolto 2026 (sorgenti in root: `smielatura-2026-miele-di-acacia.mp4`,
+  // `filtraggio-miele-di-acacia.mp4`, `smielatura-2026-millefiori-primaverile.mp4`,
+  // `riempendo-un-barattolo-di-millefiori.mp4`). Fotogramma scelto misurando la
+  // nitidezza (varianza del laplaciano) di un fotogramma ogni 0,5 s su tutto il
+  // girato e prendendo il più definito fra quelli non scuri: 7,5 s per la
+  // smielatura dell'acacia, 1,5 s per il filtraggio, 6 s per la smielatura del
+  // millefiori, 4 s per i barattoli. Per rifarli:
+  // `ffmpeg -ss <secondi> -i public/video/<nome>.mp4 -frames:v 1 -q:v 2 <nome>-poster.jpg`
+  'smielatura-acacia-2026-poster.jpg',
+  'filtraggio-miele-di-acacia-poster.jpg',
+  'smielatura-millefiori-2026-poster.jpg',
+  'riempendo-un-barattolo-di-millefiori-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }
