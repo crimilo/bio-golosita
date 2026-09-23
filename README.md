@@ -778,3 +778,20 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   generata usata come sfondo decorativo del prato — non racconta l'apiario, e
   infatti non è una foto del titolare (vedi la voce nei crediti).
 - Altre foto di barattoli e apiario: materiale originale del titolare.
+- **Due file di root non pubblicati dal sito**: `miele-di-acacia-latest.jpg`
+  (1600×1200, il barattolo di acacia in uno scatto nuovo, senza EXIF come la
+  sorgente pubblicata) e i banner per i post Facebook
+  `banner-facebook-mieli-acacia-e-millefiori.jpg` e
+  `…-minimale.jpg` (1080×1350, 4:5). Servono al **banner social**, non alle
+  pagine: `miele-di-acacia-latest.jpg` non sostituisce `miele-di-acacia.jpg`,
+  che resta la foto della scheda, delle card e dell'immagine OG. I banner si
+  generano fuori dal repo (HTML+CSS → screenshot Chromium, come `scripts/og/`,
+  con il barattolo rimisurato sulla foto usata), quindi qui c'è solo il JPG
+  finito, da riprendere a mano se serve rifarlo. Nel badge del banner grande la
+  valutazione è quella della home (`src/pages/index.astro`: `5,0 su Google · 30+
+  recensioni`) **anche nel disegno**: le stelle sono il path di `Icons.astro` in
+  ambra e il testo in inchiostro tenue, come `.trust` della home. Serve perché il
+  glifo ★ non è nei font del sito: cadrebbe su un font di sistema, monocromatico
+  e dello stesso inchiostro del testo (il badge sembrava "di una riga sola"). Se
+  cambia il numero là, va cambiato anche qui — ed è esattamente così che era
+  rimasto indietro a "20+".
