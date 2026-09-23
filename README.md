@@ -283,7 +283,12 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   occupa tutto il container come le altre sezioni della pagina. Dentro, le righe
   testo+foto dei blocchi `row` si prendono metà e metà dello spazio e la **foto
   cambia lato**: prima riga a destra, seconda a sinistra (`.prose--wide
-  .prose-row:nth-of-type(even)`, che inverte l'`order` del testo). Sotto i 900px
+  .prose-row:nth-of-type(even)`, che inverte l'`order` del testo). Oggi la
+  sezione ha **una riga sola** — l'elenco che spiega i tre aggettivi, con la
+  foto dell'apiario: la riga d'apertura con la foto `arnia_piena_di_api` è stata
+  tolta, perché quel testo sta già in "chi siamo" e nella home — quindi la foto
+  sta a destra, e la regola dell'alternanza resta lì per una eventuale seconda
+  riga. Sotto i 900px
   le righe si impilano e l'alternanza non ha effetto. Misurato a 1280px: sezione
   1056px, colonne 508px (≈60 caratteri per riga), nessun overflow; le altre
   pagine restano a 736px.

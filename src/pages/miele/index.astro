@@ -48,27 +48,21 @@ const faq = [
   },
 ];
 
+/**
+ * Blocchi della sezione "come lavoriamo".
+ *
+ * Qui c'erano anche la riga d'apertura (i due paragrafi sugli apiari e sulla
+ * smielatura a freddo, con la foto `arnia_piena_di_api`) e il suo <h2> "Miele
+ * artigianale: cosa vuol dire nel nostro caso": tolti su richiesta, perché
+ * quelle informazioni stanno già nella pagina "chi siamo" e nella home. La
+ * sezione resta, con l'occhiello "come lavoriamo", questa riga (l'elenco che
+ * spiega i tre aggettivi) e la nota finale: è per questo che `aria-labelledby`
+ * punta a `non-pastorizzato` e non più a un titolo della pagina.
+ */
 const blocks = [
   {
     // Foto e testo sulla stessa riga da desktop (la foto sta a fianco, non
     // sotto): sotto i 900px il blocco si impila, foto dopo il testo.
-    row: {
-      text: [
-        {
-          p: "Il miele che vendiamo nasce da api nostre e da apiari che seguiamo in prima persona, tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord (area protetta) e la Val Brembana. Non compriamo miele da altri per rivenderlo: la filiera è corta, e possiamo dirti da dove arriva ogni barattolo.",
-        },
-        {
-          p: 'Lo smieliamo a freddo e <strong>non lo pastorizziamo</strong>: il miele esce dai telai, decanta e viene invasettato a piccoli lotti. È un lavoro più lento che scaldare tutto e standardizzarlo, ma è quello che lascia a un millefiori il profumo delle sue fioriture.',
-        },
-      ],
-      img: {
-        base: 'arnia_piena_di_api',
-        alt: 'Arnia piena di api sui telai',
-        caption: "Un'arnia piena di api sui telai: il miele, prima della smielatura",
-      },
-    },
-  },
-  {
     row: {
       text: [
         {
@@ -215,11 +209,10 @@ const guideCards = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="artigianale">
+  <section class="section" aria-labelledby="non-pastorizzato">
     <div class="container">
       <div class="prose prose--wide">
         <span class="eyebrow">come lavoriamo</span>
-        <h2 id="artigianale">Miele artigianale: cosa vuol dire nel nostro caso</h2>
         <ProseBlocks blocks={blocks} />
       </div>
     </div>
