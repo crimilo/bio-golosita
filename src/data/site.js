@@ -201,9 +201,9 @@ export const site = {
         { size: '500 g', price: '€ 6,00' },
         { size: '1 kg', price: '€ 11,00' },
       ],
-      title: 'Miele di Acacia Italiano | Cassano d\'Adda (MI) | Bio & Golosità',
+      title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
-        "Miele di acacia 100% italiano, raccolto e confezionato direttamente dall'apicoltore a Cassano d'Adda: delicato e floreale, resta liquido a lungo.",
+        'Miele di acacia 100% italiano di api proprie a Cassano d\'Adda (MI). Delicato, floreale e naturalmente liquido. 500 g €6; consegna in zona.',
       /**
        * Sottotitolo della hero: due righe, nessun elenco di keyword. Le schede
        * miele sono pensate per essere lette in pochi secondi (vedi README), quindi
@@ -315,9 +315,9 @@ export const site = {
         { size: '500 g', price: '€ 5,00' },
         { size: '1 kg', price: '€ 9,00' },
       ],
-      title: 'Miele al Tiglio e More a Cassano d\'Adda | Bio & Golosità',
+      title: 'Miele Millefiori Estivo al Tiglio e More | Bio & Golosità',
       description:
-        'Miele millefiori estivo al tiglio e more di api proprie a Cassano d\'Adda (MI): intenso, note di tiglio e more selvatiche. Ordinalo oggi: consegna in zona.',
+        'Miele millefiori estivo al tiglio e more, 100% italiano e di api proprie. Corposo, con note di tiglio e more selvatiche. 500 g €5; consegna in zona.',
       heroIntro:
         "Miele 100% italiano, scuro e corposo, con note di tiglio e more selvatiche. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
       harvest: 'Raccolto a giugno',
@@ -398,9 +398,9 @@ export const site = {
         { size: '500 g', price: '€ 5,00' },
         { size: '1 kg', price: '€ 9,00' },
       ],
-      title: 'Miele al Tiglio e Ailanto a Cassano d\'Adda | Bio & Golosità',
+      title: 'Miele Millefiori Estivo al Tiglio e Ailanto | Bio & Golosità',
       description:
-        'Miele millefiori estivo con alta percentuale di tiglio e ailanto, la pianta del paradiso: retrogusto di pesca, di api proprie a Cassano d\'Adda (MI).',
+        'Miele millefiori estivo al tiglio e ailanto, 100% italiano e di api proprie. Dolce e floreale, con retrogusto di pesca. 500 g €5; consegna in zona.',
       heroIntro:
         "Miele 100% italiano, dolce e floreale, con il retrogusto di pesca dell'ailanto. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
       harvest: 'Raccolto a giugno',
@@ -483,7 +483,7 @@ export const site = {
       ],
       title: 'Miele di Castagno a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
-        'Miele di castagno di api proprie a Cassano d\'Adda (MI): scuro, intenso, leggermente amaro. Perfetto con formaggi stagionati. Ordina al telefono.',
+        'Miele di castagno 100% italiano di api proprie a Cassano d\'Adda (MI). Scuro, intenso e leggermente amarognolo. 500 g €6,50; consegna in zona.',
       heroIntro:
         "Miele 100% italiano, scuro e intenso, con retrogusto amarognolo. Prodotto dalle nostre api negli apiari lombardi, tra la Gera d'Adda e la Val Brembana.",
       harvest: 'Raccolto tra giugno e luglio',
@@ -564,9 +564,9 @@ export const site = {
      * mettere `InStock` a priori.
      */
     schemaAvailability: null,
-    title: 'Miele in Favo Italiano Artigianale | Bio & Golosità',
+    title: 'Miele in Favo a Cassano d\'Adda (MI) | Bio & Golosità',
     description:
-      "Miele in favo delle nostre api a Cassano d'Adda: favo intero con la sua cera, non pastorizzato né scaldato. Vendita diretta e consegna in zona.",
+      "Miele in favo delle nostre api a Cassano d'Adda (MI), con la sua cera e senza trattamento termico. Disponibilità limitata, solo su prenotazione.",
     heroIntro:
       "Miele in favo delle nostre api: il favo opercolato, tagliato dal telaio e invasettato con la sua cera, senza smielatura e senza trattamento termico. Arriva dagli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
     /** Frase di "Da dove arriva" (la foto dell'apiario sta accanto). */
