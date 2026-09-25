@@ -22,6 +22,9 @@ interface Props {
   /** Percorso di navigazione DOPO la home: Base aggiunge da sé "Home" e
    *  genera il BreadcrumbList JSON-LD. */
   crumbs?: { name: string; path: string }[];
+  /** Link WhatsApp con il messaggio della pagina: lo usano il bottone flottante
+   *  e il footer. Senza, resta `site.whatsapp` (messaggio generico sul miele). */
+  whatsappHref?: string;
 }
 
 const {
@@ -34,6 +37,7 @@ const {
   preloadImage,
   robots = 'index, follow',
   crumbs,
+  whatsappHref,
 } = Astro.props;
 
 // `.filter(Boolean)`: `product()` torna `null` quando non c'è un'offerta da
@@ -104,8 +108,8 @@ const ogUrl = `${site.domain}${pathname}`;
     <main>
       <slot />
     </main>
-    <Footer />
-    <WhatsApp />
+    <Footer whatsappHref={whatsappHref} />
+    <WhatsApp whatsappHref={whatsappHref} />
     <Lightbox />
   </body>
 </html>

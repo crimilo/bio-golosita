@@ -3,6 +3,13 @@ import Logo from './Logo.astro';
 import Icons from './Icons.astro';
 import { site } from '../data/site';
 
+interface Props {
+  /** Link con il messaggio della pagina (default: `site.whatsapp`) */
+  whatsappHref?: string;
+}
+
+const { whatsappHref = site.whatsapp } = Astro.props;
+
 /** Solo le voci principali: le varianti di millefiori restano raggiungibili
  *  dalla pagina /miele/miele-millefiori/ (vedi spec footer). */
 const honeyLinks = [
@@ -73,7 +80,7 @@ const infoLinks = [
             <a href={site.phoneHref}>{site.phoneDisplay}</a>
           </li>
           <li>
-            <a href={site.whatsapp} rel="noopener" target="_blank">WhatsApp</a>
+            <a href={whatsappHref} rel="noopener" target="_blank">WhatsApp</a>
           </li>
           {infoLinks.map((l) => (
             <li><a href={l.href}>{l.label}</a></li>

@@ -1,9 +1,16 @@
 ---
 import { site } from '../data/site';
+
+interface Props {
+  /** Link con il messaggio della pagina (default: `site.whatsapp`) */
+  whatsappHref?: string;
+}
+
+const { whatsappHref = site.whatsapp } = Astro.props;
 ---
 <a
   class="wa-float"
-  href={site.whatsapp}
+  href={whatsappHref}
   target="_blank"
   rel="noopener"
   aria-label="Scrivici su WhatsApp"

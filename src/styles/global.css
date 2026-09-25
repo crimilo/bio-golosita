@@ -784,6 +784,24 @@ strong {
   }
 }
 
+/* "Da dove arriva": i video della lavorazione, con la loro didascalia sotto.
+   Stanno in fila centrata e vanno a capo da soli: con un video solo (le altre
+   schede) resta al centro come prima, mentre i due del tiglio e more su desktop
+   si affiancano in orizzontale invece di impilarsi. La colonna è stretta
+   (16rem) perché i video sono verticali (9/16) e non vanno ritagliati. */
+.origin-videos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+.origin-video {
+  flex: 1 1 16rem;
+  max-width: 16rem;
+}
+
 .story-quote {
   margin: var(--space-3) 0 0;
   padding: var(--space-2) var(--space-3);
@@ -1136,6 +1154,39 @@ strong {
   margin-top: 0.2rem;
 }
 
+/* Riga di servizio in piccolo (formati grandi del miele, note del blocco
+   prodotto): non è un avviso, quindi niente riquadro — solo testo più chiaro,
+   per non appesantire la card. */
+.small-note {
+  margin-top: var(--space-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* Riepilogo del voto: stelle + punteggio + numero di recensioni sulla stessa
+   riga (che va a capo da sé su schermi stretti). Nel blocco prodotto del miele
+   sta sotto il prezzo, con il link alle recensioni in coda, sulla stessa riga. */
+.rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.6rem;
+  margin-top: var(--space-2);
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+.rating strong {
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+.rating a {
+  font-weight: 600;
+  color: var(--amber-strong);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .map-card {
   margin-top: var(--space-3);
   border: 1px solid var(--line);
@@ -1466,8 +1517,11 @@ strong {
 }
 
 /* Da mobile la hero dei prodotti resta all'osso: titolo, poi subito la foto e il
-   prezzo. Il paragrafo introduttivo è di 38-65 parole (6-11 righe) e mostrarlo
-   spinge il prezzo sotto la piega a 360/375px; da desktop resta invariato.
+   prezzo. Il paragrafo introduttivo del template è di 38-65 parole (6-11 righe) e
+   mostrarlo spinge il prezzo sotto la piega a 360/375px; da desktop resta
+   invariato. La regola vale per chi usa `variant="product"`: la scheda
+   dell'acacia, che ha un sottotitolo di due righe e un voto da mostrare, non la
+   usa e tiene il paragrafo anche da mobile (vedi README).
    Nota: il testo NON viene tolto dal DOM (nascosto col CSS, uguale per tutti),
    quindi resta nel documento servito e indicizzabile: non è cloaking. */
 @media (max-width: 899px) {
@@ -1615,28 +1669,6 @@ strong {
   color: var(--ink-soft);
   border-left: 3px solid var(--amber);
   padding-left: 0.9rem;
-}
-
-.prose .specs {
-  list-style: none;
-  display: grid;
-  gap: 0.55rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: var(--space-3);
-}
-
-.prose .specs li {
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-}
-
-.prose .specs strong {
-  color: var(--ink);
-  min-width: 140px;
-  flex: none;
 }
 
 .mt-2 {

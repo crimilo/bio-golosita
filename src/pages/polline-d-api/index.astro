@@ -1,100 +1,262 @@
 ---
-import ProductPage from '../../components/ProductPage.astro';
-import ProseBlocks from '../../components/ProseBlocks.astro';
-import { polline, availabilityFallback, prezzoSuRichiesta, prezzoNota } from '../../data/bee-products';
+/**
+ * /polline-d-api/ — scheda prodotto con la **stessa struttura delle altre schede
+ * prodotto** (mieli, api regine, nuclei): hero corta, blocco prodotto (foto,
+ * prezzo, voto, caratteristiche, CTA), "Da dove arriva il nostro polline"
+ * (paragrafo + quattro dati), galleria, recensione del prodotto, FAQ, altri
+ * prodotti, chiusura compatta.
+ *
+ * Quello che prima stava in tre posti — scheda tecnica, paragrafi e punti di
+ * forza — adesso vive in un posto solo: l'origine, il blocco prodotto e le FAQ.
+ * I testi arrivano da `polline` (`origine.notes`, `origine.items`, `chips`,
+ * `note`, `heroIntro`). La recensione è **una sola**: il polline è un prodotto di
+ * nicchia e non ne inventiamo di più (vedi README, "Recensioni dei prodotti").
+ *
+ * Le foto del polline sono **immagini illustrative** (stock, non scattate nel
+ * nostro apiario): le didascalie e l'intro della galleria lo dicono, perché qui
+ * si parla di provenienza e non vogliamo far passare per nostre foto che non lo
+ * sono.
+ */
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Picture from '../../components/Picture.astro';
+import Price from '../../components/Price.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+import ProductCards from '../../components/ProductCards.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Stars from '../../components/Stars.astro';
+import Icons from '../../components/Icons.astro';
+import PhoneCta from '../../components/PhoneCta.astro';
+import { site } from '../../data/site';
+import { polline, apiRegine, nuclei, repartoImages } from '../../data/bee-products';
 import { ogImageFor } from '../../data/og';
-import { product, faqPage } from '../../lib/schema';
+import { priceFrom } from '../../lib/price';
+import { whatsappLink } from '../../lib/whatsapp';
+import { product, faqPage, localBusiness } from '../../lib/schema';
 
 const pathname = polline.path;
 const crumbs = [{ name: polline.name, path: pathname }];
 
-/** Le voci senza valore non vengono pubblicate: meglio poche righe vere. */
-const specs = polline.specs
-  .filter((s) => s.value)
-  .map((s) => ({ label: s.label, value: s.value as string }));
-specs.push({ label: 'Prezzo', value: polline.prezzo ?? prezzoSuRichiesta });
+/** Voto e recensioni del prodotto: una sola, la stessa che finisce nel JSON-LD. */
+const reviews = (polline.productReviews ?? []).slice(0, 3);
+const hasReviews = reviews.length > 0;
+const rating = polline.rating;
+const ratingLabel = rating ? rating.value.toFixed(1).replace('.', ',') : null;
 
-const blocks = [
+/**
+ * Foto della galleria: solo quelle non già usate in pagina (`polline_granuli` è
+ * la foto del blocco prodotto, `prato_fiorito` sta nell'origine).
+ */
+const gallery = polline.gallery.filter(
+  (g) => g.base !== 'polline_granuli' && g.base !== 'prato_fiorito'
+);
+
+const galleryVideo = {
+  src: '/video/api-che-impollinano.mp4',
+  poster: '/video/api-che-impollinano-poster-57854801.avif',
+  label: 'Le api che impollinano un fiore',
+  cls: 'video-item--tall',
+};
+
+/** "Gli altri prodotti": la stessa idea delle card "Gli altri mieli". */
+const otherProducts = [
   {
-    p: "Il polline d'api è quello dei fiori, che le api impastano in piccole palline e riportano all'alveare. Ha una stagionalità stretta e una vita più breve del miele: per questo conta moltissimo come viene raccolto, essiccato e conservato.",
+    href: '/miele/',
+    ...repartoImages.miele,
+    title: 'I nostri mieli',
+    text: 'Acacia, millefiori e castagno: mieli non pastorizzati e smielati a freddo. In stagione prepariamo anche il miele in favo.',
+    price: priceFrom(site.honeys.flatMap((h) => h.priceFormats)),
   },
   {
-    h2: 'Da dove arriva il nostro polline',
+    href: '/api-regine/',
+    ...repartoImages.apiRegine,
+    title: 'Api regine',
+    text: 'Regine feconde della nostra linea Buckfast, per rinnovare un alveare o avviarne uno nuovo.',
+    price: apiRegine.prezzo ?? null,
   },
   {
-    p: "Viene dagli apiari che seguiamo tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana: le api sono nostre e il polline non viene acquistato da terzi per essere rivenduto. È la stessa filiera del nostro miele.",
-  },
-  {
-    img: {
-      base: 'ape_polline',
-      alt: "Macro di un'ape coperta di polline su un rametto",
-      caption: 'Il polline lo portano le api, fiore dopo fiore',
-    },
-  },
-  {
-    h2: 'Perché la conservazione conta più di tutto',
-  },
-  {
-    p: 'Il polline appena raccolto contiene molta umidità: in un ambiente caldo e umido deperisce in fretta. La differenza tra un polline buono e uno che ha perso profumo si gioca tutta dopo la raccolta. Quando lo ordini ti spieghiamo come conservarlo a casa tua.',
-  },
-  {
-    ul: [
-      "<strong>Fresco:</strong> profumo più intenso, va tenuto in frigorifero e, per la scorta lunga, in freezer.",
-      "<strong>Essiccato:</strong> più stabile, si conserva a temperatura ambiente al riparo da luce e umidità.",
-      "In entrambi i casi: luce, calore e umidità sono i tre nemici da tenere lontani.",
-    ],
-  },
-  {
-    h2: "Come si usa il polline d'api",
-  },
-  {
-    p: "Al naturale, un cucchiaino alla volta, oppure su yogurt, macedonia, frullati, cereali e miele. Il sapore è delicato, con note di fiori e di erba: è un ingrediente, non un dolcificante. Ne parliamo nella guida <a href=\"/guide/polline-fresco-o-essiccato-conservazione/\">polline fresco o essiccato: differenze e come conservarlo</a>.",
+    href: '/nuclei-api/',
+    ...repartoImages.nuclei,
+    title: "Nuclei d'api",
+    text: 'Famiglie già avviate su telai, con una regina feconda che sta deponendo.',
+    price: nuclei.prezzo ?? null,
   },
 ];
 ---
 
-<ProductPage
-  {pathname}
-  ogImage={ogImageFor(pathname)}
+<Base
   title={polline.title}
   description={polline.description}
+  {pathname}
+  ogImage={ogImageFor(pathname)}
+  type="product"
   {crumbs}
-  h1={polline.h1}
-  eyebrow="prodotto dell'alveare · api proprie"
-  intro={polline.intro}
-  hero={{
-    base: 'polline_granuli',
-    alt: "Polline d'api in granuli con un cucchiaio di legno",
-  }}
-  {/* Niente hero in bg: come nelle pagine dei singoli mieli, la hero è solo
-      testo su fondo chiaro e la foto del polline nel blocco prodotto fa da
-      riferimento visivo. */}
-  availability={polline.disponibilita}
-  {availabilityFallback}
-  price={polline.prezzo}
-  priceFallback={prezzoSuRichiesta}
-  priceNote={prezzoNota}
-  highlights={polline.highlights}
-  {specs}
-  faq={polline.faq}
-  gallery={polline.gallery}
-  videos={[
-    {
-      src: '/video/api-che-impollinano.mp4',
-      poster: '/video/api-che-impollinano-poster-57854801.avif',
-      label: 'Le api che impollinano un fiore',
-      cls: 'video-item--tall',
-    },
+  whatsappHref={whatsappLink(polline.whatsappText)}
+  jsonLd={[
+    localBusiness(),
+    product(
+      { ...polline, image: 'polline_granuli', gallery: [], productReviews: reviews },
+      pathname,
+      { category: "Polline d'api" }
+    ),
+    faqPage(polline.faq),
   ]}
-  galleryTitle="Il polline d'api e le fioriture da cui nasce"
-  galleryIntro="Le foto raccontano il prodotto e il lavoro delle api: sono immagini illustrative del polline e delle fioriture della nostra zona."
-  jsonLd={[product({ ...polline, intro: polline.intro, image: 'polline_granuli' }, pathname, { category: "Polline d'api" }), faqPage(polline.faq)]}
 >
-  <section class="section">
-    <div class="container">
-      <div class="prose">
-        <ProseBlocks {blocks} />
+  <PageHero h1={polline.h1} intro={polline.heroIntro} crumbs={crumbs} />
+
+  {/* Blocco prodotto: foto, prezzo, voto, caratteristiche e CTA. */}
+  <section class="section" style="padding-top: var(--space-3);">
+    <div class="container product-grid">
+      <div class="product-media">
+        <Picture
+          base="polline_granuli"
+          alt="Polline d'api in granuli con un cucchiaio di legno"
+          sizes="(min-width: 900px) 520px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div>
+        <p class="product-price"><Price value={polline.prezzo} /></p>
+
+        {
+          rating && hasReviews && (
+            <div class="rating">
+              <Stars value={rating.value} size={20} />
+              <strong>{ratingLabel}/5</strong>
+              <span>· {rating.count} recensione</span>
+              <a href="#recensioni">Leggi la recensione</a>
+            </div>
+          )
+        }
+
+        <ul class="chips">
+          {polline.chips.map((c) => <li>{c}</li>)}
+        </ul>
+
+        <div class="contact-cta mt-3">
+          <PhoneCta />
+          <a
+            class="btn btn-ghost btn-lg"
+            href={whatsappLink(polline.whatsappText)}
+            target="_blank"
+            rel="noopener"
+          >
+            <Icons name="whatsapp" size={20} />
+            Ordina su WhatsApp
+          </a>
+        </div>
+
+        <p class="small-note">
+          Ritiro a Cassano d'Adda o consegna a domicilio nelle{' '}
+          <a href="/consegna-miele/">zone servite</a>.
+        </p>
+        <p class="small-note">{polline.note}</p>
       </div>
     </div>
   </section>
-</ProductPage>
+
+  {/* "Da dove arriva il nostro polline": filiera, disponibilità, conservazione. */}
+  <section class="section" aria-labelledby="origine">
+    <div class="container">
+      <div class="split split--photos">
+        <div class="split-text">
+          <span class="eyebrow">{polline.origine.eyebrow}</span>
+          <h2 id="origine">{polline.origine.title}</h2>
+          {polline.origine.notes.map((n) => <p set:html={n} />)}
+        </div>
+        <figure class="split-media">
+          <Picture
+            base={polline.origine.photo.base}
+            alt={polline.origine.photo.alt}
+            sizes="(min-width: 900px) 45vw, 100vw"
+            loading="lazy"
+          />
+          <figcaption>{polline.origine.photo.caption} (foto illustrativa)</figcaption>
+        </figure>
+      </div>
+
+      <div class="features mt-4">
+        {
+          polline.origine.items.map((o) => (
+            <div class="feature">
+              <div class="feature-icon"><Icons name={o.icon} size={26} /></div>
+              <h3>{o.label}</h3>
+              <p>{o.value}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <PhotoGallery
+    id="foto"
+    photos={gallery}
+    videos={[galleryVideo]}
+    eyebrow="foto e video"
+    title="Le api e il polline"
+    intro="Immagini illustrative del lavoro delle api, dalla raccolta fiore dopo fiore alle api che impollinano: non sono scattate nel nostro apiario."
+  />
+
+  {
+    hasReviews && (
+      <section class="section section--soft" id="recensioni" aria-labelledby="recensioni-title">
+        <div class="container">
+          <div class="section-head center" style="margin-inline:auto;">
+            <span class="eyebrow">la parola ai clienti</span>
+            <h2 id="recensioni-title">Chi ha comprato il nostro polline</h2>
+          </div>
+
+          <div class="reviews-grid">
+            {reviews.map((r) => (
+              <figure class="review">
+                <Stars value={r.stars} />
+                <blockquote>
+                  <p>“{r.text}”</p>
+                </blockquote>
+                <figcaption>
+                  <span class="review-author">{r.name}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Faq
+    id="faq-title"
+    items={polline.faq}
+    eyebrow="domande sul polline"
+    title="Domande frequenti"
+  />
+
+  <section class="section section--soft" aria-labelledby="other-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">scopri anche</span>
+        <h2 id="other-title">Gli altri prodotti di Bio &amp; Golosità</h2>
+        <p>
+          Dai un'occhiata agli <a href="/miele/">altri prodotti di nostra produzione</a>, oppure
+          leggi la guida{' '}
+          <a href="/guide/polline-fresco-o-essiccato-conservazione/">
+            polline fresco o essiccato: differenze e come conservarlo
+          </a>.
+        </p>
+      </div>
+      <ProductCards cards={otherProducts} />
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="ordina direttamente dall'apicoltore"
+    title="Vuoi ordinare il polline d'api?"
+    text="Scrivici per disponibilità, ritiro o consegna."
+    whatsappLabel="Scrivi su WhatsApp"
+    whatsappHref={whatsappLink(polline.whatsappText)}
+  />
+</Base>

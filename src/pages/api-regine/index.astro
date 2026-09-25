@@ -1,21 +1,66 @@
 ---
-import ProductPage from '../../components/ProductPage.astro';
-import ProseBlocks from '../../components/ProseBlocks.astro';
+/**
+ * /api-regine/ — scheda prodotto con la **stessa struttura delle schede miele**
+ * (`miele/[slug].astro`): hero corta, blocco prodotto (foto, prezzo, voto,
+ * caratteristiche, CTA), "Come alleviamo le nostre regine" (paragrafi + quattro
+ * dati), i video, recensioni del prodotto, FAQ, "scopri anche" e chiusura
+ * compatta.
+ *
+ * Quello che prima stava in tre posti diversi — scheda tecnica, paragrafi e
+ * punti di forza — adesso vive in un posto solo: l'origine, il blocco prodotto e
+ * le FAQ. I testi delle sezioni arrivano da `apiRegine` (`origine.notes`,
+ * `origine.items`, `chips`, `note`).
+ */
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Picture from '../../components/Picture.astro';
+import Price from '../../components/Price.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
 import LinkCards from '../../components/LinkCards.astro';
+import Stars from '../../components/Stars.astro';
 import Icons from '../../components/Icons.astro';
-import type { IconName } from '../../components/Icons.astro';
-import { apiRegine, availabilityFallback, prezzoSuRichiesta, prezzoNota, repartoImages } from '../../data/bee-products';
+import PhoneCta from '../../components/PhoneCta.astro';
+import { apiRegine, repartoImages } from '../../data/bee-products';
 import { ogImageFor } from '../../data/og';
 import { guideCard } from '../../data/guides';
-import { product, faqPage } from '../../lib/schema';
+import { product, faqPage, localBusiness } from '../../lib/schema';
+import { whatsappLink } from '../../lib/whatsapp';
 
 const pathname = apiRegine.path;
 const crumbs = [{ name: apiRegine.name, path: pathname }];
 
-const specs = apiRegine.specs
-  .filter((s) => s.value)
-  .map((s) => ({ label: s.label, value: s.value as string }));
-specs.push({ label: 'Prezzo', value: apiRegine.prezzo ?? prezzoSuRichiesta });
+/**
+ * Voto e recensioni del prodotto: in pagina ne compaiono al massimo tre e sono
+ * le stesse che finiscono nel JSON-LD (vedi README, "Scheda del miele").
+ */
+const reviews = (apiRegine.productReviews ?? []).slice(0, 3);
+const hasReviews = reviews.length > 0;
+const rating = apiRegine.rating;
+const ratingLabel = rating ? rating.value.toFixed(1).replace('.', ',') : null;
+
+/** Tre filmati dal nostro apiario: la linea raccontata per immagini. */
+const videos = [
+  {
+    src: '/video/regina-f1-su-covate.mp4',
+    poster: '/video/regina-f1-su-covate-poster-b231f1f2.avif',
+    label: 'La regina F1 della nostra linea Buckfast sulle covate',
+    cls: 'video-item--tall',
+  },
+  {
+    src: '/video/nascita-di-una-regina.mp4',
+    poster: '/video/nascita-di-una-regina-poster-f063b65c.avif',
+    label: "La nascita di un'ape regina, in apiario",
+    cls: 'video-item--tall',
+  },
+  {
+    src: '/video/marcatura-della-regina.mp4',
+    poster: '/video/marcatura-della-regina-poster-4e596bfb.avif',
+    label: "Raffaele mostra come e perché si marca un'ape regina",
+    cls: 'video-item--tall',
+  },
+];
 
 const relatedCards = [
   {
@@ -36,140 +81,106 @@ const relatedCards = [
     text: 'Cinque mieli 100% italiani di api proprie, non pastorizzati: acacia, millefiori, castagno e, in stagione, il miele in favo.',
   },
 ];
-
-const blocks = [
-  { h2: 'La nostra linea: regine Buckfast, figlie di una madre F0' },
-  {
-    p: `Alleviamo una sola linea, la <strong>${apiRegine.linea.razza}</strong>: la nostra regina madre è una <strong>F0 selezionata</strong>, fecondata con <strong>inseminazione strumentale</strong>, e le regine che vendiamo sono le sue figlie, cioè le <strong>F1</strong>. Genetica conosciuta e carattere uniforme tra una regina e l'altra: altre razze o linee non le trattiamo.`,
-  },
-  {
-    // Il video sta sotto la sezione F0 → F1: si vede la regina con le sue api
-    // attorno, cioè la linea raccontata qui sopra. Orizzontale (848×478),
-    // quindi `video-item--wide` e, dentro il testo, `.prose-video--wide`: la
-    // colonna stretta di `.prose-video` è pensata per i video verticali.
-    video: {
-      src: '/video/ape-regina-con-api.mp4',
-      poster: '/video/ape-regina-con-api-poster-919ab2ed.avif',
-      label: "Ape regina con le sue api attorno, in apiario a Cassano d'Adda",
-      cls: 'video-item--wide',
-    },
-  },
-  { h2: 'Regine feconde, già in deposizione' },
-  {
-    // Testo e foto sulla stessa riga da desktop (`.prose-row`: la foto sta a
-    // fianco del testo, sotto i 900px va sotto). Prima erano due blocchi
-    // separati — `p` + `img` — e il secondo finiva sempre sotto il testo.
-    row: {
-      text: [
-        {
-          p: "Le nostre api regine sono <strong>tutte feconde</strong>: hanno già compiuto il volo di fecondazione e depongono le uova, quindi si introducono in un alveare orfano o in un nucleo e la famiglia riparte senza attese. Sono regine allevate nei nostri apiari lombardi, nelle condizioni climatiche e nelle fioriture tipiche del territorio. Ne parliamo nella guida <a href=\"/guide/come-introdurre-una-nuova-ape-regina/\">come introdurre una nuova ape regina</a>.",
-        },
-      ],
-      img: {
-        // Foto secondaria della pagina: quella del blocco prodotto è la regina
-        // (`ape_regina_di_raffaele`), qui ci sono le api invece che la stessa foto.
-        base: 'api',
-        alt: "Le nostre api in apiario, a Cassano d'Adda",
-        caption: "Le nostre api, in apiario a Cassano d'Adda",
-      },
-    },
-  },
-  { h2: 'Come funziona la prenotazione' },
-  {
-    p: "Le regine si preparano nei mesi utili all'allevamento e la disponibilità è settimanale: la prenotazione è sempre una chiacchierata, non un carrello. Dicci quante regine ti servono, in che periodo e dove ti trovi.",
-  },
-  {
-    ul: [
-      '<strong>Telefono:</strong> la via più rapida, soprattutto in stagione.',
-      '<strong>WhatsApp:</strong> comodo per lasciare scritto numero, periodo e zona.',
-      '<strong>Ritiro in sede:</strong> a Cassano d\'Adda, su appuntamento, quando le regine sono pronte.',
-      '<strong>Consegna:</strong> concordata nella zona tra Milano, Bergamo, Cremona e Lodi.',
-    ],
-  },
-  { h2: 'Il momento giusto per cambiare regina' },
-  {
-    p: "Le regine si sostituiscono di norma tra la primavera e l'inizio dell'estate, quando le famiglie si sviluppano e c'è nettare in campo: è il periodo in cui l'accettazione riesce meglio. Se hai un dubbio sul tuo caso, scrivici prima di ordinare: preferiamo dirti se è il momento sbagliato.",
-  },
-];
 ---
 
-<ProductPage
-  {pathname}
-  ogImage={ogImageFor(pathname)}
+<Base
   title={apiRegine.title}
   description={apiRegine.description}
+  {pathname}
+  ogImage={ogImageFor(pathname)}
+  type="product"
   {crumbs}
-  h1={apiRegine.h1}
-  eyebrow="allevamento proprio · Lombardia"
-  intro={apiRegine.intro}
-  hero={{
-    base: 'ape_regina_di_raffaele',
-    alt: "L'ape regina dell'apiario di Raffaele Antoci, apicoltore di Bio & Golosità a Cassano d'Adda",
-  }}
-  {/* Niente hero in bg: come nelle pagine dei singoli mieli, la hero è solo
-      testo su fondo chiaro e la foto del prodotto nel blocco sotto fa da
-      riferimento visivo. */}
-  videos={[
-    {
-      src: '/video/regina-f1-su-covate.mp4',
-      poster: '/video/regina-f1-su-covate-poster-b231f1f2.avif',
-      label: 'La regina F1 della nostra linea Buckfast sulle covate',
-      cls: 'video-item--tall',
-    },
-    {
-      src: '/video/nascita-di-una-regina.mp4',
-      poster: '/video/nascita-di-una-regina-poster-f063b65c.avif',
-      label: "La nascita di un'ape regina, in apiario",
-      cls: 'video-item--tall',
-    },
-    {
-      src: '/video/marcatura-della-regina.mp4',
-      poster: '/video/marcatura-della-regina-poster-4e596bfb.avif',
-      label: "Raffaele mostra come e perché si marca un'ape regina",
-      cls: 'video-item--tall',
-    },
+  whatsappHref={whatsappLink(apiRegine.whatsappText)}
+  jsonLd={[
+    localBusiness(),
+    // Le recensioni passate allo schema sono le stesse mostrate in pagina.
+    product({ ...apiRegine, image: 'ape_regina_di_raffaele', gallery: [], productReviews: reviews }, pathname, {
+      category: apiRegine.name,
+    }),
+    faqPage(apiRegine.faq),
   ]}
-  availability={apiRegine.disponibilita}
-  {availabilityFallback}
-  price={apiRegine.prezzo}
-  priceFallback={prezzoSuRichiesta}
-  priceNote={prezzoNota}
-  {specs}
-  faq={apiRegine.faq}
-  {/* La sezione in fondo è **solo video**: i tre filmati delle regine (regina
-      F1 sulle covate, nascita e marcatura). Le foto della galleria non si
-      mostrano più: restano in `apiRegine.gallery`, pronte all'uso. */}
-  galleryId="video"
-  galleryEyebrow="video"
-  galleryTitle="Le regine in video"
-  galleryIntro="Tre filmati dal nostro apiario: come nasce una regina, come si marca e la regina con le sue api attorno."
-  jsonLd={[product({ ...apiRegine, image: 'ape_regina_di_raffaele', gallery: [] }, pathname, { category: 'Api regine' }), faqPage(apiRegine.faq)]}
 >
-  <section class="section">
-    <div class="container">
-      <div class="prose">
-        <ProseBlocks {blocks} />
+  <PageHero h1={apiRegine.h1} intro={apiRegine.heroIntro} crumbs={crumbs} />
+
+  {/* Blocco prodotto: foto, prezzo, voto, caratteristiche e CTA. */}
+  <section class="section" style="padding-top: var(--space-3);">
+    <div class="container product-grid">
+      <div class="product-media">
+        <Picture
+          base="ape_regina_di_raffaele"
+          alt="L'ape regina dell'apiario di Raffaele Antoci, apicoltore di Bio & Golosità a Cassano d'Adda"
+          sizes="(min-width: 900px) 520px, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div>
+        <p class="product-price"><Price value={apiRegine.prezzo} /></p>
+
+        {
+          rating && hasReviews && (
+            <div class="rating">
+              <Stars value={rating.value} size={20} />
+              <strong>{ratingLabel}/5</strong>
+              <span>· {rating.count} recensioni</span>
+              <a href="#recensioni">Leggi le recensioni</a>
+            </div>
+          )
+        }
+
+        <ul class="chips">
+          {apiRegine.chips.map((c) => <li>{c}</li>)}
+        </ul>
+
+        <div class="contact-cta mt-3">
+          <PhoneCta />
+          <a class="btn btn-ghost btn-lg" href={whatsappLink(apiRegine.whatsappText)} target="_blank" rel="noopener">
+            <Icons name="whatsapp" size={20} />
+            Ordina su WhatsApp
+          </a>
+        </div>
+
+        <p class="small-note">
+          Ritiro a Cassano d'Adda o consegna a domicilio nelle{' '}
+          <a href="/consegna-miele/">zone servite</a>.
+        </p>
+        <p class="small-note">{apiRegine.note}</p>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="plus-title">
+  {/*
+    "Come alleviamo le nostre regine": la sezione che vale più di ogni
+    descrizione — da dove arrivano le madri, come nascono le regine e cosa
+    controlliamo prima di venderle.
+  */}
+  <section class="section" aria-labelledby="origine">
     <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">perché comprare da noi</span>
-        <h2 id="plus-title">Comprare regine da un apicoltore, non da un catalogo</h2>
+      <div class="split split--photos">
+        <div class="split-text">
+          <span class="eyebrow">{apiRegine.origine.eyebrow}</span>
+          <h2 id="origine">{apiRegine.origine.title}</h2>
+          {apiRegine.origine.notes.map((n) => <p set:html={n} />)}
+        </div>
+        <figure class="split-media">
+          <Picture
+            base={apiRegine.origine.photo.base}
+            alt={apiRegine.origine.photo.alt}
+            sizes="(min-width: 900px) 45vw, 100vw"
+            loading="lazy"
+          />
+          <figcaption>{apiRegine.origine.photo.caption}</figcaption>
+        </figure>
       </div>
-      {/* Stesse card con icona della sezione "Perché scegliere il nostro miele"
-          della home: `.features` + `.feature` + `.feature-icon`. */}
-      <div class="features">
+
+      <div class="features mt-4">
         {
-          apiRegine.cards.map((c) => (
+          apiRegine.origine.items.map((o) => (
             <div class="feature">
-              <div class="feature-icon">
-                <Icons name={c.icon as IconName} size={26} />
-              </div>
-              <h3>{c.title}</h3>
-              <p>{c.text}</p>
+              <div class="feature-icon"><Icons name={o.icon} size={26} /></div>
+              <h3>{o.label}</h3>
+              <p>{o.value}</p>
             </div>
           ))
         }
@@ -177,11 +188,63 @@ const blocks = [
     </div>
   </section>
 
+  <PhotoGallery
+    id="video"
+    photos={[]}
+    {videos}
+    columns={3}
+    eyebrow="video"
+    title="Le regine in video"
+    intro="Tre filmati dal nostro apiario: la regina F1 sulle covate, come nasce una regina e come si marca."
+  />
+
+  {
+    hasReviews && (
+      <section class="section section--soft" id="recensioni" aria-labelledby="recensioni-title">
+        <div class="container">
+          <div class="section-head center" style="margin-inline:auto;">
+            <span class="eyebrow">la parola ai clienti</span>
+            <h2 id="recensioni-title">Chi ha comprato le nostre regine</h2>
+          </div>
+
+          <div class="reviews-grid">
+            {reviews.map((r) => (
+              <figure class="review">
+                <Stars value={r.stars} />
+                <blockquote>
+                  <p>“{r.text}”</p>
+                </blockquote>
+                <figcaption>
+                  <span class="review-author">{r.name}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Faq
+    id="faq-title"
+    items={apiRegine.faq}
+    eyebrow="domande sulle api regine"
+    title="Domande frequenti"
+  />
+
   <LinkCards
     id="collegati"
     cards={relatedCards}
     soft
-    eyebrow="continua"
+    eyebrow="scopri anche"
     title="Nuclei, guide e mieli"
   />
-</ProductPage>
+
+  <CtaBand
+    eyebrow="ordina direttamente dall'apicoltore"
+    title="Vuoi ordinare le api regine?"
+    text="Scrivici per disponibilità, ritiro o consegna."
+    whatsappLabel="Scrivi su WhatsApp"
+    whatsappHref={whatsappLink(apiRegine.whatsappText)}
+  />
+</Base>

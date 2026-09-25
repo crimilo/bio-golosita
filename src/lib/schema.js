@@ -115,15 +115,28 @@ export function localBusiness() {
  * - **Un solo formato** (polline, api regine, nuclei) → `Product` con la sua
  *   `Offer`, `size` incluso quando c'è (`item.formato`).
  *
- * Se il prezzo non è pubblicato (`prezzo: null`) la funzione torna `null`: senza
- * prezzo non c'è `offers`, e un `Product` senza `offers`, `review` né
- * `aggregateRating` è un **item non valido** per Google
+ * Se il prezzo non è pubblicato (`prezzo: null` o `priceFormats: []`) non c'è
+ * `offers`: il nodo si emette lo stesso **solo se** almeno una recensione del
+ * prodotto lo tiene valido per Google (`review` o `aggregateRating`), come il
+ * miele in favo; altrimenti la funzione torna `null`. Un `Product` senza
+ * nessuno dei tre (`offers`, `review`, `aggregateRating`) è un **item non
+ * valido**
  * (developers.google.com/search/docs/appearance/structured-data/product-snippet),
- * che lo segnala in Search Console. Meglio omettere del tutto il nodo — e non
+ * che Google segnala in Search Console: meglio omettere il nodo — e non
  * inventare un prezzo — che pubblicarne uno invalido. Il numero si legge da
  * `priceFormats`/`prezzo` con `priceAmount`, che torna `null` se non trova
  * cifre. Lo `sku` delle varianti è derivato da slug + formato (`miele-di-acacia-500g`):
  * un identificatore stabile, non un codice di magazzino inventato sul prodotto.
+ *
+ * Voto e recensioni del prodotto arrivano da `item.rating` (media + totale,
+ * riferiti al **prodotto**, non alla scheda Google dell'azienda) e da
+ * `item.productReviews` (i testi mostrati in pagina). Si pubblicano solo se
+ * presenti: prima mancavano di proposito perché non c'erano numeri reali. I
+ * nodi `Review` si costruiscono dagli stessi testi che rende la pagina, quindi
+ * non possono divergere da quello che l'utente legge. Per il `ProductGroup` sia
+ * `aggregateRating` sia `review` sono proprietà supportate e riferite
+ * all'insieme delle varianti (developers.google.com/search/docs/appearance/
+ * structured-data/product-variants).
  *
  * I chiamanti devono scartare il `null` (lo fa già `Base.astro`).
  */
@@ -139,6 +152,44 @@ export function product(item, pathname, { category } = {}) {
   const description = item.description ?? item.intro?.slice(0, 200);
   const formats = item.priceFormats ?? [];
 
+  // Voto del prodotto: `ratingValue` è una stringa ("5.0"), come lo vuole
+  // Google; `reviewCount` è il totale delle recensioni, non quante ne mostra la
+  // pagina. Si pubblica **solo se il prodotto ha anche recensioni in pagina**:
+  // un `aggregateRating` senza nessun testo visibile dichiarerebbe a Google un
+  // voto che il lettore non può verificare (le linee guida chiedono che le
+  // recensioni siano visibili). Se `item.rating` manca non si emette niente
+  // (mai numeri inventati).
+  const hasReviews = (item.productReviews ?? []).length > 0;
+  const aggregateRating = item.rating && hasReviews
+    ? {
+        '@type': 'AggregateRating',
+        ratingValue: Number(item.rating.value).toFixed(1),
+        reviewCount: item.rating.count,
+        bestRating: 5,
+        worstRating: 1,
+      }
+    : null;
+  const review = (item.productReviews ?? []).map((r) => ({
+    '@type': 'Review',
+    reviewRating: { '@type': 'Rating', ratingValue: r.stars, bestRating: 5 },
+    author: { '@type': 'Person', name: r.name },
+    reviewBody: r.text,
+  }));
+  /** Voto e recensioni, solo quando ci sono: valgono per gruppo e singolo prodotto. */
+  const ratingNodes = {
+    ...(aggregateRating ? { aggregateRating } : {}),
+    ...(review.length ? { review } : {}),
+  };
+
+  /**
+   * Disponibilità dichiarata nello schema. Di norma `InStock`; un prodotto può
+   * sceglierne un'altra (es. `PreOrder`) o toglierla del tutto con
+   * `schemaAvailability: null` — è il caso del miele in favo, che è disponibile
+   * poco e solo su prenotazione e non va dichiarato "in stock".
+   */
+  const availability =
+    item.schemaAvailability === undefined ? 'https://schema.org/InStock' : item.schemaAvailability;
+
   /** Offerta uguale per tutte le varianti: cambia solo il prezzo. */
   const offer = (price) => ({
     '@type': 'Offer',
@@ -146,7 +197,7 @@ export function product(item, pathname, { category } = {}) {
     priceCurrency: 'EUR',
     price,
     ...(site.priceValidUntil ? { priceValidUntil: site.priceValidUntil } : {}),
-    availability: 'https://schema.org/InStock',
+    ...(availability ? { availability } : {}),
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@type': 'Organization', name: site.legalName },
   });
@@ -157,10 +208,15 @@ export function product(item, pathname, { category } = {}) {
       return {
         '@type': 'Product',
         name: `${item.name} ${f.size} — ${site.name}`,
+        // Le varianti vendono tutte su questa pagina: stesso `url` del gruppo e
+        // `offer.url` che punta qui. `brand` oltre a `manufacturer`, come sul
+        // gruppo (il produttore è l'azienda, il marchio è Bio & Golosità).
+        url,
         sku: `${item.slug}-${f.size.replace(/\s+/g, '')}`,
         size: f.size,
         image: images,
         description,
+        brand: { '@type': 'Brand', name: site.name },
         manufacturer: { '@type': 'Organization', name: site.legalName },
         ...(price != null ? { offers: offer(price) } : {}),
       };
@@ -177,10 +233,15 @@ export function product(item, pathname, { category } = {}) {
       name: `${item.name} — ${site.name}`,
       description,
       url,
+      // `image` sta anche qui, oltre che sulle varianti: un `ProductGroup` è un
+      // `Product`, e così il campo c'è a tutti i livelli (le varianti restano la
+      // fonte principale delle immagini).
+      image: images,
       brand: { '@type': 'Brand', name: site.name },
       productGroupID: item.slug,
       variesBy: ['https://schema.org/size'],
       hasVariant: priced,
+      ...ratingNodes,
     };
     if (category) group.category = category;
     return group;
@@ -190,19 +251,25 @@ export function product(item, pathname, { category } = {}) {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: `${item.name} — ${site.name}`,
+    url,
     image: images,
     description,
     brand: { '@type': 'Brand', name: site.name },
     manufacturer: { '@type': 'Organization', name: site.legalName },
+    ...ratingNodes,
   };
   const size = formats[0]?.size ?? item.formato;
   if (size) out.size = size;
   if (category) out.category = category;
   // `priceFormats` (mieli) oppure `prezzo`/`price` (prodotti dell'allevamento)
   const price = priceAmount(formats[0]?.price ?? item.prezzo ?? item.price);
-  // Niente prezzo → niente `offers` → `Product` non valido per Google: la
-  // pagina resta senza nodo Product (meglio che un item segnalato come invalido).
-  if (price == null) return null;
+  // Niente prezzo → niente `offers`. Un `Product` resta comunque un item
+  // valido per Google se ha almeno uno tra `offers`, `review` e
+  // `aggregateRating`: con le recensioni del prodotto lo emettiamo lo stesso (è
+  // il caso del miele in favo, che non ha un prezzo pubblicato), altrimenti la
+  // pagina resta senza nodo Product — meglio che un item segnalato come
+  // invalido.
+  if (price == null) return aggregateRating || review.length ? out : null;
   out.offers = offer(price);
   return out;
 }

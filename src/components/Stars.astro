@@ -1,0 +1,41 @@
+---
+import Icons from './Icons.astro';
+
+/**
+ * Le stelle di un voto (1-5), come le rende `Testimonials`: piene fino al
+ * valore, vuote (in colore `--line`) per il resto. Il valore si arrotonda alle
+ * stelle intere (`Math.round`): i mezzi voti si mostrano come stelle piene o
+ * vuote, mai a metà.
+ * È un'immagine per chi legge con uno screen reader — l'etichetta porta il voto
+ * in parole — quindi il voto va sempre scritto anche a testo accanto (`4,8/5`,
+ * `6 recensioni`): questo componente non è l'unico posto dove il numero compare.
+ */
+interface Props {
+  /** voto da 0 a 5; si arrotonda alle stelle intere */
+  value: number;
+  size?: number;
+  /** classi extra sul contenitore (es. `rating-stars` per gli allineamenti) */
+  class?: string;
+}
+
+const { value, size = 18, class: className = '' } = Astro.props;
+const filled = Math.round(value);
+---
+
+<span
+  class={`review-stars ${className}`.trim()}
+  role="img"
+  aria-label={`${String(value).replace('.', ',')} stelle su 5`}
+>
+  {
+    Array.from({ length: 5 }, (_, i) => i < filled).map((on) =>
+      on ? (
+        <Icons name="star" size={size} />
+      ) : (
+        <span class="review-star-empty">
+          <Icons name="star" size={size} />
+        </span>
+      )
+    )
+  }
+</span>

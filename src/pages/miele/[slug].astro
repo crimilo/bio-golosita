@@ -1,12 +1,30 @@
 ---
-import Emoji from '../../components/Emoji.astro';
+/**
+ * Schede del miele — le quattro varietà (`site.honeys`) e il miele in favo
+ * (`site.honeyComb`), tutte da questo template.
+ *
+ * La struttura è quella nata per il miele di acacia e poi estesa a tutte le
+ * schede: hero corta, blocco prodotto (foto, prezzo, voto, quattro
+ * caratteristiche, CTA), "Da dove arriva" (foto dell'apiario, quattro dati di
+ * origine, il video della lavorazione), recensioni del prodotto, FAQ, altri
+ * mieli e chiusura compatta. Niente scheda tecnica e niente sezione
+ * descrittiva: colore, gusto, usi e conservazione stanno nelle `characteristics`
+ * del blocco prodotto e nelle FAQ, una volta sola, invece di essere ripetuti in
+ * tre modi diversi.
+ *
+ * Tutto quello che cambia da scheda a scheda arriva dai dati (`site.js`), non da
+ * questo file: qui si sceglie solo l'ordine delle sezioni. Struttura e campi
+ * sono descritti nel README.
+ */
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import Picture from '../../components/Picture.astro';
 import HoneyCard from '../../components/HoneyCard.astro';
-import VideoFigure from '../../components/VideoFigure.astro';
 import PhotoGallery from '../../components/PhotoGallery.astro';
-import ContactSection from '../../components/ContactSection.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import VideoFigure from '../../components/VideoFigure.astro';
+import Stars from '../../components/Stars.astro';
 import Icons from '../../components/Icons.astro';
 import PhoneCta from '../../components/PhoneCta.astro';
 import { site, honeyProducts } from '../../data/site';
@@ -30,56 +48,58 @@ const crumbs = [
   { name: honey.name, path: pathname },
 ];
 
-const local = "Cassano d'Adda (MI)";
+// Prezzo ben visibile: il formato d'ingresso in grande, gli altri in una riga
+// più piccola sotto. Il miele in favo non ha un prezzo pubblicato: in quel caso
+// si mostra "Prezzo su richiesta" con la sua nota, senza numeri inventati.
+const priceEntry = entryFormat(honey.priceFormats);
+const priceOthers = otherFormats(honey.priceFormats);
 
-// Il miele in favo è miele con la sua cera: in pagina si parla di "questo favo",
-// non di un barattolo (vedi `subject` nei dati).
-const subject = honey.subject ?? 'barattolo';
+/**
+ * Voto e recensioni del prodotto — non della scheda Google dell'azienda, che
+ * resta in `site.reviews` e non alimenta il `Product`.
+ *
+ * In pagina ne compaiono **al massimo tre**, e sono esattamente le stesse che
+ * finiscono nel JSON-LD: il markup non può raccontare recensioni che non si
+ * vedono. `rating.count` invece è il totale vero delle recensioni del prodotto e
+ * può essere più alto: quelle che non hanno un testo non servono in pagina.
+ */
+const reviews = (honey.productReviews ?? []).slice(0, 3);
+const hasReviews = reviews.length > 0;
+const rating = honey.rating;
+const ratingLabel = rating ? rating.value.toFixed(1).replace('.', ',') : null;
 
-/** Tracciabilità: quello che solo un produttore può documentare. */
-const traceability = [
+/**
+ * "Da dove arriva": i quattro dati dell'origine. Raccolta e lavorazione arrivano
+ * dai dati della scheda, perché cambiano da miele a miele (il miele in favo, per
+ * esempio, non si smiela affatto); gli apiari sono tutti in Lombardia, e le zone
+ * precise stanno nella frase qui sopra, `originNote`.
+ */
+const harvestLabel = (() => {
+  // "Raccolto a giugno" → "A giugno": in pagina il prefisso è già nel titolo
+  // della voce ("Raccolta").
+  const v = honey.harvest.replace(/^Raccolto /, '');
+  return v.charAt(0).toUpperCase() + v.slice(1);
+})();
+
+const origin = [
+  { icon: 'pin', label: 'Origine', value: 'Lombardia, Italia' },
   {
-    label: 'Apiario di provenienza',
-    value:
-      "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord (area protetta) e la Val Brembana",
+    icon: 'clock',
+    label: 'Raccolta',
+    // L'annata è un dato facoltativo, da compilare a mano: se c'è si mostra
+    // sotto lo stesso dato, invece di sparire dalla pagina.
+    value: honey.annata ? `${harvestLabel} · ${honey.annata}` : harvestLabel,
   },
-  { label: 'Periodo di raccolta', value: honey.harvest.replace(/^Raccolto /, '') },
   {
-    label: 'Annata in vendita',
-    value: honey.annata ?? "Chiedici qual è il raccolto disponibile in questo periodo",
-  },
-  {
+    icon: 'leaf',
     label: 'Lavorazione',
     value:
       honey.workNote ?? 'Smielatura a freddo, decantazione, nessuna pastorizzazione',
   },
-  {
-    label: 'Conservazione consigliata',
-    value:
-      honey.storageNote ??
-      'Barattolo chiuso, al buio, sotto i 14 °C',
-  },
+  { icon: 'shield', label: 'Produzione', value: 'Api proprie' },
 ];
 
-const guideHref =
-  honey.guide?.href ??
-  (honey.slug === 'miele-di-acacia'
-    ? '/guide/miele-acacia-millefiori-castagno-differenze/'
-    : '/guide/perche-il-miele-cristallizza/');
-const guideLabel =
-  honey.guide?.label ??
-  (honey.slug === 'miele-di-acacia'
-    ? 'Acacia, millefiori o castagno: le differenze'
-    : 'Perché il miele cristallizza (e come riportarlo liquido)');
-
-const heroIntro =
-  honey.heroIntro ??
-  `${honey.name} 100% italiano e artigianale, di api proprie a ${local}, in provincia di Milano: non pastorizzato, smielato a freddo e raccolto negli apiari tra la Martesana, la Gera d'Adda e il Parco Adda Nord. ${honey.harvest}.`;
-
-// Prezzo ben visibile: il formato d'ingresso in grande, gli altri formati in
-// una riga più piccola sotto (stessa idea del "300,00 € (10,00 € al pezzo)").
-const priceEntry = entryFormat(honey.priceFormats);
-const priceOthers = otherFormats(honey.priceFormats);
+const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
 ---
 
 <Base
@@ -89,15 +109,30 @@ const priceOthers = otherFormats(honey.priceFormats);
   ogImage={ogImageFor(pathname)}
   type="product"
   crumbs={crumbs}
-  jsonLd={[localBusiness(), product(honey, pathname, { category: honey.category ?? 'Miele' }), faqPage(honey.faq)]}
+  jsonLd={[
+    localBusiness(),
+    // Le recensioni passate allo schema sono le stesse mostrate in pagina,
+    // già tagliate a tre: vedi `reviews` qui sopra.
+    product({ ...honey, productReviews: reviews }, pathname, {
+      category: honey.category ?? 'Miele',
+    }),
+    faqPage(honey.faq),
+  ]}
 >
-  <PageHero
-    h1={honey.name}
-    intro={heroIntro}
-    crumbs={crumbs}
-    variant="product"
-  />
+  {/*
+    Hero: solo H1 e sottotitolo corto. Niente `variant="product"`: il paragrafo
+    resta leggibile anche da mobile (è breve e dice subito cosa si sta
+    comprando), quindi non si usa la regola che lo nasconde sotto i 900px.
+    Il voto non sta qui: sta nel blocco prodotto, sotto il prezzo, dove serve a
+    chi sta decidendo se comprare.
+  */}
+  <PageHero h1={honey.name} intro={honey.heroIntro} crumbs={crumbs} />
 
+  {/*
+    Blocco prodotto: foto, prezzo, voto, le caratteristiche e le CTA. Deve
+    rispondere a "cosa compro, quanto costa, com'è, come lo ordino" e niente
+    altro: la tracciabilità sta nella sezione "Da dove arriva".
+  */}
   <section class="section" style="padding-top: var(--space-3);">
     <div class="container product-grid">
       <div class="product-media">
@@ -132,12 +167,19 @@ const priceOthers = otherFormats(honey.priceFormats);
         </p>
         {!priceEntry && <p class="price-note">{prezzoNota}</p>}
 
-        <p class="bulk-note">
-          <Icons name="info" size={18} />
-          {/* Il miele in favo ha una nota sua: la disponibilità è poca e solo
-              su prenotazione (vedi `note` nei dati). */}
-          {honey.note ?? site.bulkNote}
-        </p>
+        {/* Voto sotto il prezzo, con il link alle recensioni: nel punto in cui
+            si decide, non nella hero. */}
+        {
+          rating && hasReviews && (
+            <div class="rating">
+              <Stars value={rating.value} size={20} />
+              <strong>{ratingLabel}/5</strong>
+              <span>· {rating.count} recensioni</span>
+              <a href="#recensioni">Leggi le recensioni</a>
+            </div>
+          )
+        }
+
         <ul class="chips">
           {honey.characteristics.map((c) => <li>{c}</li>)}
         </ul>
@@ -150,159 +192,168 @@ const priceOthers = otherFormats(honey.priceFormats);
           </a>
         </div>
 
-        <p class="mt-3" style="font-size:0.9rem;">
-          Ritiro in sede su appuntamento: {site.address.street},{' '}
-          {site.address.city} ({site.address.province}). Consegniamo anche a
-          domicilio e, in molti casi, la consegna è gratuita. Contattaci per
-          verificare se la tua zona è servita.
+        <p class="small-note">
+          Ritiro a Cassano d'Adda o consegna a domicilio nelle{' '}
+          <a href="/consegna-miele/">zone servite</a>.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--soft" aria-labelledby="desc-title">
-    <div class="container">
-      <div class="prose">
-        <span class="eyebrow">il prodotto<Emoji name="honey-pot" /></span>
-        <h2 id="desc-title">Il {honey.name.toLowerCase()} di Bio & Golosità</h2>
-        <p>{honey.intro}</p>
-        <h3>A cosa serve e come usarlo</h3>
-        <p>{honey.uses}</p>
-        <h3>Scheda tecnica</h3>
-        <ul class="specs">
-          {honey.specs.map((s) => (
-            <li>
-              <strong>{s.label}:</strong>
-              <span>{s.value}</span>
-            </li>
-          ))}
-        </ul>
-        {honey.videos && (
-          // I video sono verticali (478×850): la colonna stretta di
-          // `.prose-video` gli fa mantenere l'aspetto 9/16 (`.video-item--tall`),
-          // senza ritagli. Quando sono più di uno (per ora il solo tiglio e
-          // more: la smielatura più i barattoli) si impilano qui, nell'ordine
-          // dei dati.
-          honey.videos.map((v) => (
-            <div class="prose-video">
-              <VideoFigure src={v.src} poster={v.poster} label={v.label} cls={v.cls} />
-            </div>
-          ))
-        )}
+        <p class="small-note">
+          {/* Il miele in favo ha una nota sua: la disponibilità è poca e solo
+              su prenotazione (vedi `note` nei dati). */}
+          {honey.note ?? site.bulkNote}
+        </p>
       </div>
     </div>
   </section>
 
   {/*
-    Galleria facoltativa: per ora la usa solo il miele in favo, con la sequenza
-    di foto ricavate dal video (in `gallery`, già in ordine d'uso). Foto
-    verticali, quindi `g-item--tall` come i telai dei nuclei.
+    "Da dove arriva": origine, periodo di raccolta, lavorazione e api proprie,
+    con la foto dell'apiario e il video della lavorazione del raccolto. È la
+    sezione che vale più di tutte le descrizioni.
   */}
-  {honey.gallery && (
-    <PhotoGallery
-      id="foto"
-      photos={honey.gallery}
-      columns={3}
-      eyebrow="in ordine"
-      title={honey.galleryTitle ?? 'Le foto'}
-      intro={honey.galleryIntro}
-    />
-  )}
-
-  <section class="section" aria-labelledby="trace-title">
-    <div class="container split split--photos">
-      <div class="split-text">
-        <span class="eyebrow">tracciabilità</span>
-        <h2 id="trace-title">Da dove arriva questo {subject}</h2>
-        <p>
-          Ogni {subject} nasce da un apiario preciso e da un periodo di
-          fioritura preciso. Sono le informazioni che un miele di produzione
-          propria può dare e che una miscela anonima non può replicare.
-        </p>
-        <ul class="specs">
-          {
-            traceability.map((t) => (
-              <li>
-                <strong>{t.label}:</strong>
-                <span>{t.value}</span>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="mt-3" style="font-size:0.92rem;">
-          Vuoi vedere come lavoriamo? Nella pagina <a href="/chi-siamo/">chi siamo</a>{' '}
-          c'è la storia dell'azienda, e nella guida{' '}
-          <a href="/guide/miele-non-pastorizzato-cosa-significa/">miele non pastorizzato: cosa significa davvero</a>{' '}
-          spieghiamo cosa cambia rispetto a un miele scaldato.
-        </p>
-      </div>
-      <figure class="split-media">
-        <Picture
-          base={honey.photo ?? 'sciame_5'}
-          alt={
-            honey.photo
-              ? `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`
-              : "Api di Bio & Golosità in apiario, a Cassano d'Adda"
-          }
-          sizes="(min-width: 900px) 45vw, 100vw"
-          loading="lazy"
-        />
-        <figcaption>
-          {honey.photo ? `Il nostro ${honey.name.toLowerCase()}` : "Gli apiari dove nasce il nostro miele"}
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section section--soft" aria-labelledby="faq-title">
+  <section class="section" aria-labelledby="origine">
     <div class="container">
-      <div class="section-head center" style="margin-inline:auto;">
-        <span class="eyebrow">domande su questo miele</span>
-        <h2 id="faq-title">Domande frequenti</h2>
+      <div class="split split--photos">
+        <div class="split-text">
+          <span class="eyebrow">dai nostri apiari</span>
+          <h2 id="origine">Da dove arriva</h2>
+          <p>{honey.originNote}</p>
+        </div>
+        <figure class="split-media">
+          <Picture
+            base={honey.photo ?? 'apiari_hd'}
+            alt={
+              honey.photo
+                ? `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`
+                : "Gli apiari di Bio & Golosità tra Cassano d'Adda e la Martesana"
+            }
+            sizes="(min-width: 900px) 45vw, 100vw"
+            loading="lazy"
+          />
+          <figcaption>
+            {honey.photo
+              ? `Il nostro ${honey.name.toLowerCase()}`
+              : 'Gli apiari dove nasce il nostro miele'}
+          </figcaption>
+        </figure>
       </div>
-      <div class="faq">
+
+      <div class="features mt-4">
         {
-          honey.faq.map((f) => (
-            <details>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
-            </details>
+          origin.map((o) => (
+            <div class="feature">
+              <div class="feature-icon"><Icons name={o.icon} size={26} /></div>
+              <h3>{o.label}</h3>
+              <p>{o.value}</p>
+            </div>
           ))
         }
       </div>
-    </div>
-  </section>
 
-  <section class="section" aria-labelledby="other-title">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">scopri anche</span>
-        <h2 id="other-title">Gli altri mieli di Bio & Golosità</h2>
-        <p>
-          Tutti i mieli, con prezzi e formati, sono nella pagina{' '}
-          <a href="/miele/">i nostri mieli</a>. Questa è invece la guida
-          consigliata: <a href={guideHref}>{guideLabel}</a>.
-        </p>
-      </div>
-      <div class="honey-grid">
-        {
-          site.honeys
-            .filter((h) => h.slug !== honey.slug)
-            .slice(0, 3)
-            .map((h) => <HoneyCard honey={h} />)
-        }
-      </div>
       {
-        honey.kind !== 'favo' && (
-          <p class="mt-3" style="font-size:0.92rem;">
-            In stagione prepariamo anche il{' '}
-            <a href="/miele/miele-in-favo/">miele in favo</a>: il miele lasciato
-            nella sua cera, tagliato dal telaio e mai scaldato.
-          </p>
-        )
+        honey.videos?.length ? (
+          <div class="origin-videos">
+            {honey.videos.map((v) => (
+              <figure class="origin-video">
+                <VideoFigure src={v.src} poster={v.poster} label={v.label} cls={v.cls} />
+                {v.caption && <figcaption class="small-note center">{v.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        ) : null
       }
     </div>
   </section>
 
-  <ContactSection />
+  {/*
+    Galleria facoltativa: per ora la usa solo il miele in favo, con la sequenza
+    di foto ricavate dal video (in `gallery`, già in ordine d'uso).
+  */}
+  {
+    honey.gallery && (
+      <PhotoGallery
+        id="foto"
+        photos={honey.gallery}
+        columns={3}
+        eyebrow="in ordine"
+        title={honey.galleryTitle ?? 'Le foto'}
+        intro={honey.galleryIntro}
+      />
+    )
+  }
+
+  {/*
+    Recensioni del prodotto: al massimo tre testi per intero e basta. Il voto
+    complessivo non si ripete qui — è già sotto il prezzo del blocco prodotto,
+    dove serve a chi decide (nei dati strutturati resta comunque
+    nell'`aggregateRating`). Gli stessi testi e le stesse stelle sono nel JSON-LD:
+    non si inventa e non si copia niente dalla scheda Google dell'azienda, che è
+    un'altra cosa.
+  */}
+  {
+    hasReviews && (
+      <section class="section section--soft" id="recensioni" aria-labelledby="recensioni-title">
+        <div class="container">
+          <div class="section-head center" style="margin-inline:auto;">
+            <span class="eyebrow">la parola ai clienti</span>
+            <h2 id="recensioni-title">Chi ha provato il nostro {honey.name.toLowerCase()}</h2>
+          </div>
+
+          <div class="reviews-grid">
+            {reviews.map((r) => (
+              <figure class="review">
+                <Stars value={r.stars} />
+                <blockquote>
+                  <p>“{r.text}”</p>
+                </blockquote>
+                <figcaption>
+                  <span class="review-author">{r.name}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <Faq
+    id="faq-title"
+    items={honey.faq}
+    eyebrow="domande su questo miele"
+    title="Domande frequenti"
+  />
+
+  {/*
+    Gli altri mieli: card con foto e prezzo, un rimando secco al catalogo completo
+    e al confronto tra acacia, millefiori e castagno, nessuna descrizione lunga.
+  */}
+  <section class="section section--soft" aria-labelledby="other-title">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">scopri anche</span>
+        <h2 id="other-title">Gli altri mieli di Bio &amp; Golosità</h2>
+        <p>
+          Scopri gli altri mieli di <a href="/miele/">nostra produzione</a> o
+          confronta{' '}
+          <a href="/guide/miele-acacia-millefiori-castagno-differenze/">
+            acacia, millefiori e castagno
+          </a>.
+        </p>
+      </div>
+      <div class="honey-grid">
+        {others.map((h) => <HoneyCard honey={h} />)}
+      </div>
+    </div>
+  </section>
+
+  {/*
+    Chiusura compatta: telefono e WhatsApp. Indirizzo, orari, social e mappa
+    restano nel footer, dove ci sono già e non vanno ripetuti.
+  */}
+  <CtaBand
+    eyebrow="ordina direttamente dall'apicoltore"
+    title={`Vuoi ordinare il ${honey.name.toLowerCase()}?`}
+    text="Scrivici per disponibilità, ritiro o consegna."
+    whatsappLabel="Scrivi su WhatsApp"
+  />
 </Base>

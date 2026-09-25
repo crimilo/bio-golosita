@@ -3,10 +3,12 @@
  * forme possibili:
  *
  *   { size: '500 g', price: '€ 6,00' }              → formato di vendita (mieli)
- *   "300,00 € (10,00 € al pezzo)"                   → prezzo unico con divisione
+ *   "€ 5,50 (200 g)"                                → prezzo unico con la confezione
+ *   "€ 20,00 / regina"                              → prezzo unico "al pezzo"
  *
  * `splitPrice` separa totale e divisione così che il totale resti in evidenza e
- * la parte tra parentesi (sempre in coda) sia resa più piccola. `priceAmount`
+ * la coda (tra parentesi o dopo la barra: la confezione, "al pezzo") sia resa
+ * più piccola. `priceAmount`
  * legge il numero da una stringa e `entryFormat` / `otherFormats` / `priceLine`
  * / `priceFrom` formattano la lista dei formati. **Nessun prezzo viene calcolato
  * o inventato**: si formatta solo quello che l'azienda ha inserito nei dati.
@@ -15,9 +17,14 @@
 export function splitPrice(value) {
   if (value == null) return { main: '', unit: null };
   const text = String(value).trim();
-  const match = text.match(/^(.+?)\s*\((.+)\)$/);
-  if (!match) return { main: text, unit: null };
-  return { main: match[1].trim(), unit: `(${match[2].trim()})` };
+  // "€ 5,50 (200 g)" → "€ 5,50" + "(200 g)": la confezione sta tra parentesi.
+  const paren = text.match(/^(.+?)\s*\((.+)\)$/);
+  if (paren) return { main: paren[1].trim(), unit: `(${paren[2].trim()})` };
+  // "€ 20,00 / regina", "€ 99,00 / nucleo" → la coda dopo la barra è il
+  // riferimento del pezzo, stessa resa piccola della confezione tra parentesi.
+  const per = text.match(/^(.+?)\s*\/\s*(.+)$/);
+  if (per) return { main: per[1].trim(), unit: `/ ${per[2].trim()}` };
+  return { main: text, unit: null };
 }
 
 /**

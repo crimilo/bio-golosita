@@ -6,8 +6,9 @@ const googleMapsUrl =
 const googleMapsEmbedUrl =
   'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1958.53!2d9.5244833!3d45.5355768!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47814b2f5343dc1d:0x479af6135571444d!2sApicoltura+e+Vendita+Miele+Bio+%26+Golosit%C3%A0+Cassano+d%E2%80%99Adda!5e0!3m2!1sit!2sit!4v1725012345678';
 
-// Risposta unica per la FAQ sulle consegne: era ripetuta identica nelle 5
-// pagine miele, così resta una sola fonte da aggiornare.
+// Risposta unica per la FAQ sulle consegne: era ripetuta identica nelle pagine
+// miele, così resta una sola fonte da aggiornare. La scheda dell'acacia ha la
+// sua versione breve scritta a mano (vedi `honeys[0].faq`).
 export const deliveryFaq = {
   q: 'Fate consegne nella mia zona?',
   a: "Sì: consegniamo a domicilio nella zona tra Milano, Bergamo, Cremona e Lodi, e in molti casi la consegna è gratuita (dipende dall'ordine e dalla zona). In alternativa c'è il ritiro in sede a Cassano d'Adda su appuntamento.",
@@ -66,8 +67,14 @@ export const site = {
   googleMapsUrl,
   googleMapsEmbedUrl,
 
+  /**
+   * Riga piccola del blocco prodotto, uguale per tutti i mieli (il favo ha la
+   * sua, `note`). Il dettaglio commerciale — secchi da 10 kg su preventivo, per
+   * negozi e ristoranti — sta dove si parla di ordini grossi: la FAQ di
+   * `/consegna-miele/` e quella di `/miele/miele-millefiori/`.
+   */
   bulkNote:
-    'Disponibili anche secchi da 5 kg e 10 kg, con prezzo dedicato per ordini superiori a 10 kg. Contattaci per un preventivo.',
+    'Disponibili anche formati da 5 e 10 kg su richiesta.',
 
   areaServed: [
     'Cassano d\'Adda',
@@ -171,6 +178,14 @@ export const site = {
    * il prezzo d'ingresso (quello che si vede per primo e sulle card), gli altri
    * restano visibili sotto. Da qui si ricavano la riga di prezzo, la tabella
    * /miele/, le FAQ e i dati strutturati (una variante Google per formato).
+   *
+   * Campi che usa la scheda (`miele/[slug].astro`, la stessa per le quattro
+   * varietà e per il miele in favo): `title`/`description` (SEO), `heroIntro`,
+   * `originNote`, `harvest` + `annata`, `workNote`, `characteristics`, `videos`
+   * (con la loro `caption`), `faq`, `rating` + `productReviews` e, se serve,
+   * `photo`. Non ci sono più `intro`, `uses`, `specs` e `benefits`: la scheda
+   * non li rende e le stesse cose stanno in `characteristics` e nelle FAQ (vedi
+   * README, "Scheda del miele").
    */
   honeys: [
     {
@@ -182,52 +197,55 @@ export const site = {
         { size: '500 g', price: '€ 6,00' },
         { size: '1 kg', price: '€ 11,00' },
       ],
-      title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio & Golosità',
+      title: 'Miele di Acacia Italiano | Cassano d\'Adda (MI) | Bio & Golosità',
       description:
-        'Miele di acacia di api proprie a Cassano d\'Adda (MI): chiaro, delicato, non cristallizza. Ideale per colazione e tisane. Ordina al 351 537 6719.',
-      intro:
-        'Il miele di acacia è tra i più amati in assoluto: chiaro, profumatissimo e dal sapore delicato, resta liquido a lungo grazie all\'elevato contenuto di fruttosio. Le nostre api lo producono nelle campagne di pianura tra la Martesana, la Gera d\'Adda e il Parco Adda Nord, dove la robinia fiorisce tra la fine di aprile e i primi giorni di maggio. Essendo molto ricco di fruttosio resta fluido anche dopo mesi, si scioglie in bocca e non copre mai gli altri sapori.',
+        "Miele di acacia 100% italiano, raccolto e confezionato direttamente dall'apicoltore a Cassano d'Adda: delicato e floreale, resta liquido a lungo.",
+      /**
+       * Sottotitolo della hero: due righe, nessun elenco di keyword. Le schede
+       * miele sono pensate per essere lette in pochi secondi (vedi README), quindi
+       * non hanno un `intro` da mostrare: quello che c'era da dire su gusto, usi e
+       * origine sta nelle `characteristics` del blocco prodotto e in "Da dove
+       * arriva", una volta sola.
+       */
+      heroIntro:
+        "Miele 100% italiano, delicato e naturalmente liquido. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
       // Acacia di pianura: la robinia qui fiorisce tra la fine di aprile e i
       // primi giorni di maggio (al massimo la prima settimana), e a metà maggio
-      // il miele è già smielato.
-      harvest: 'Raccolto tra la fine di aprile e i primi di maggio',
-      /** Annata del raccolto in vendita (es. 'Raccolto 2026'): da completare a mano. */
+      // il miele è già smielato. Qui la dicitura è già in forma da pagina: la
+      // mostrano la frase di "Da dove arriva" e il dato "Raccolta".
+      harvest: 'Fine aprile – inizio maggio',
+      /**
+       * Annata del raccolto in vendita (es. 'Raccolto 2026'): da completare a
+       * mano. Finché è `null` la pagina non ne parla; quando c'è, compare sotto il
+       * dato "Raccolta".
+       */
       annata: null,
+      /** Frase di "Da dove arriva" (la foto dell'apiario sta accanto). */
+      originNote:
+        "La raccolta dell'acacia avviene tra fine aprile e inizio maggio negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
+      /** Riga "Lavorazione" dei quattro dati di origine. */
+      workNote: 'Smielato a freddo, non pastorizzato',
+      // Le caratteristiche del blocco prodotto. La **seconda** è la
+      // microdescrizione che la card mostra in /miele/ (`characteristics[1]`).
       characteristics: [
-        'Colore: giallo paglierino, quasi trasparente',
-        'Gusto: dolce e delicato, note floreali',
-        'Non cristallizza praticamente mai',
-        'Perfetto per tisane, latte e yogurt',
-      ],
-      uses:
-        'Il miele di acacia è ideale per la colazione: non altera il sapore di tisane, latte e caffè e resta fluido anche in inverno. Ottimo anche per dolcificare yogurt e frutta fresca, oppure spalmato su pane e fette biscottate.',
-      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
-      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
-      benefits: [
-        'Fruttosio alto: è il motivo per cui resta liquido anche dopo mesi',
-        'Gusto delicato e floreale: non copre il sapore di tisane, latte e caffè',
-        'Colore chiaro, quasi trasparente: si riconosce al primo sguardo',
-        'Raccolta breve: la robinia fiorisce tra la fine di aprile e i primi giorni di maggio',
-        'Si abbina con tutto: formaggi freschi, yogurt, frutta, pane e colazione',
-      ],
-      specs: [
-        { label: 'Colore', value: 'giallo paglierino, quasi trasparente' },
-        { label: 'Profumo e sapore', value: 'delicato e floreale, dolce ma non stucchevole' },
-        { label: 'Cristallizzazione', value: 'praticamente mai, grazie al fruttosio' },
-        { label: 'Raccolto', value: 'fine aprile – primi di maggio' },
-        { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
-        { label: 'Abbinamenti', value: 'tisane, latte, yogurt, frutta fresca' },
+        'Giallo paglierino, quasi trasparente',
+        'Gusto dolce e delicato, con note floreali',
+        'Resta liquido molto a lungo',
+        'Ideale per tisane, latte, yogurt e colazione',
       ],
       /**
        * Il video della scheda: la smielatura del raccolto 2026, che ha preso il
        * posto di `smielatura-acacia.mp4` (ritirato insieme al suo poster). È
-       * verticale (478×850), quindi sta nella colonna stretta di `.prose-video`
-       * e non viene ritagliato.
+       * verticale (478×850), quindi sta nella colonna stretta di `.origin-video`
+       * e non viene ritagliato. `caption` è la didascalia che la pagina rende
+       * sotto il video, in un `<figcaption>` (la scheda dell'acacia non usa
+       * `VideoFigure` da solo, senza didascalia).
        *
        * Il filtraggio che segue la smielatura è pubblicato
        * (`/video/filtraggio-miele-di-acacia.mp4`) ma **non è in pagina**: per
        * rimetterlo basta rimettere la sua voce qui sotto, dopo questa — i video
-       * si impilano nella colonna del testo, nell'ordine dei dati.
+       * si impilano in "Da dove arriva", nell'ordine dei dati, ognuno con la
+       * sua didascalia.
        */
       videos: [
         {
@@ -235,22 +253,53 @@ export const site = {
           poster: '/video/smielatura-acacia-2026-poster-99f4bc5c.avif',
           label: 'La smielatura del miele di acacia (raccolto 2026)',
           cls: 'video-item--tall',
+          caption:
+            'La smielatura del raccolto 2026, direttamente nel nostro laboratorio.',
         },
       ],
       faq: [
         {
           q: 'Il miele di acacia cristallizza?',
-          a: 'No, è uno dei pochi mieli che resta liquido molto a lungo grazie al basso contenuto di glucosio. Tenuto al buio, sotto i 14 °C e con il barattolo ben chiuso mantiene la sua consistenza fluida per molti mesi.',
+          a: 'Cristallizza molto più lentamente rispetto a molti altri mieli e può restare liquido per lungo tempo.',
         },
         {
-          q: 'Quando viene raccolto il miele di acacia?',
-          a: 'Nella pianura di Cassano d\'Adda la robinia fiorisce tra la fine di aprile e i primi giorni di maggio (al massimo la prima settimana), e la raccolta si concentra in quella finestra: verso metà maggio il miele è già smielato e in barattolo. Il miele viene smielato a freddo e non pastorizzato, per conservare intatte tutte le proprietà.',
+          q: 'Come si conserva?',
+          a: 'Tienilo ben chiuso, lontano dalla luce e da fonti di calore.',
         },
         {
-          q: 'Come si conserva il miele di acacia?',
-          a: 'In un barattolo ben chiuso, al buio e sotto i 14 °C: una cantina o un locale fresco. Il frigorifero non serve.',
+          q: 'Fate consegne a domicilio?',
+          a: 'Sì, consegniamo nelle zone servite tra Milano, Bergamo, Cremona e Lodi. Puoi anche ritirarlo a Cassano d\'Adda su appuntamento.',
         },
-        { ...deliveryFaq },
+      ],
+      /**
+       * Voto e recensioni **reali** del prodotto miele di acacia (arrivano dal
+       * titolare) — non della scheda Google dell'azienda, che è un'altra cosa
+       * (quelle stanno in `site.reviews` e non alimentano il `Product`). `rating` è il dato che finisce nell'`aggregateRating`
+       * dei dati strutturati e nella riga di riepilogo in pagina: aggiornalo a
+       * mano quando arrivano nuove recensioni sul prodotto. In pagina si
+       * mostrano solo le tre recensioni con il testo (`productReviews`); le
+       * altre che compongono il totale non servono per intero.
+       *
+       * Il testo e le stelle di qui sono gli stessi che rende la pagina: il
+       * JSON-LD li rilegge da questa lista, quindi non possono divergere.
+       */
+      rating: { value: 5, count: 6 },
+      productReviews: [
+        {
+          name: "Luigi d'Amato",
+          stars: 5,
+          text: 'Miele di acacia buonissimo! Lo usiamo sul pane e nello yogurt. Si sente subito la differenza rispetto a quello del supermercato.',
+        },
+        {
+          name: 'Anna Sinigaglia',
+          stars: 5,
+          text: 'Acacia buonissima, molto trasparente e consistenza perfetta. Consegna precisa e Raffaele disponibilissimo.',
+        },
+        {
+          name: 'Paolo Torri',
+          stars: 5,
+          text: 'È già il terzo ordine. Il miele di acacia è il preferito mio e di mia moglie. Lo usiamo tutte le mattine per la colazione. Consigliato!',
+        },
       ],
     },
     {
@@ -265,34 +314,17 @@ export const site = {
       title: 'Miele al Tiglio e More a Cassano d\'Adda | Bio & Golosità',
       description:
         'Miele millefiori estivo al tiglio e more di api proprie a Cassano d\'Adda (MI): intenso, note di tiglio e more selvatiche. Ordinalo oggi: consegna in zona.',
-      intro:
-        'Il millefiori estivo al tiglio e more è il miele delle grandi fioriture di inizio estate: tiglio, more selvatiche, phacelia e i fiori spontanei delle golene del Parco Adda Nord. È il più scuro dei nostri due millefiori: più denso e più ricco di minerali, con un carattere deciso e un gusto corposo, che in autunno si fa ancora più carico.',
+      heroIntro:
+        "Miele 100% italiano, scuro e corposo, con note di tiglio e more selvatiche. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
       harvest: 'Raccolto a giugno',
       annata: null,
+      originNote:
+        "La raccolta avviene a giugno negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
       characteristics: [
         'Colore: ambra dorato, più carico in autunno',
         'Gusto: corposo, con note di tiglio e more selvatiche',
         'Consistenza: denso, cristallizzazione lenta e grossolana',
         'Ideale in cucina, anche per piatti salati',
-      ],
-      uses:
-        'Ottimo per la colazione ma anche in cucina: glassa carni e verdure, dolcifica le tisane della sera e si sposa benissimo con formaggi stagionati. È il miele preferito da chi ama i sapori decisi.',
-      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
-      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
-      benefits: [
-        'Più scuro e ricco di minerali rispetto ai mieli primaverili, per le fioriture estive',
-        'Note di tiglio e di more selvatiche: un profilo aromatico inconfondibile',
-        'Corposo: ne basta poco per dare carattere a un piatto',
-        'Cristallizzazione lenta e grossolana: resta fluido a lungo',
-        'Da formaggi stagionati, arrosti e dolci della tradizione',
-      ],
-      specs: [
-        { label: 'Colore', value: 'ambra dorato, più carico' },
-        { label: 'Profumo e sapore', value: 'corposo, con note di tiglio e more selvatiche' },
-        { label: 'Cristallizzazione', value: 'lenta e grossolana' },
-        { label: 'Raccolto', value: 'giugno' },
-        { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
-        { label: 'Abbinamenti', value: 'colazione, glassature di carne, formaggi stagionati' },
       ],
       /** Smielatura del raccolto 2026 e i barattoli riempiti subito dopo. */
       videos: [
@@ -301,12 +333,15 @@ export const site = {
           poster: '/video/smielatura-millefiori-tiglio-more-poster-918a2227.avif',
           label: 'La smielatura del millefiori tiglio e more (raccolto 2026)',
           cls: 'video-item--tall',
+          caption:
+            'La smielatura del raccolto 2026, direttamente nel nostro laboratorio.',
         },
         {
           src: '/video/riempendo-un-barattolo-di-millefiori.mp4',
           poster: '/video/riempendo-un-barattolo-di-millefiori-poster-26aa0927.avif',
           label: 'I barattoli di millefiori riempiti dopo la smielatura (raccolto 2026)',
           cls: 'video-item--tall',
+          caption: 'I barattoli riempiti subito dopo la smielatura, ancora nello stesso pomeriggio.',
         },
       ],
       faq: [
@@ -324,6 +359,31 @@ export const site = {
         },
         { ...deliveryFaq },
       ],
+      /**
+       * SEGNAPOSTO — da sostituire con recensioni reali del prodotto (vedi README,
+       * "Recensioni delle schede miele"): nomi e testi qui sotto sono inventati e
+       * finiscono anche nei dati strutturati (`Review` + `aggregateRating`).
+       * `rating.count` è il totale dichiarato: al massimo tre recensioni con il
+       * testo vanno in pagina.
+       */
+      rating: { value: 5, count: 4 },
+      productReviews: [
+        {
+          name: 'Rita Pozzi',
+          stars: 5,
+          text: 'Molto buono, si sente soprattutto il tiglio e ha un gusto particolare che non avevo mai trovato in altri millefiori. Sicuramente da riprendere.',
+        },
+        {
+          name: 'Giovanna Meroni',
+          stars: 5,
+          text: 'Il tiglio e more è il nostro preferito: corposo ma non stucchevole. Con i formaggi stagionati è un\'altra cosa.',
+        },
+        {
+          name: 'Stefano Cabrini',
+          stars: 5,
+          text: 'Consegna precisa e barattoli arrivati perfetti. Il sapore è deciso, si sente che è miele vero.',
+        },
+      ],
     },
     {
       slug: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
@@ -337,34 +397,17 @@ export const site = {
       title: 'Miele al Tiglio e Ailanto a Cassano d\'Adda | Bio & Golosità',
       description:
         'Miele millefiori estivo con alta percentuale di tiglio e ailanto, la pianta del paradiso: retrogusto di pesca, di api proprie a Cassano d\'Adda (MI).',
-      intro:
-        'Un millefiori estivo raro e particolare: oltre al tiglio, contiene una percentuale importante di nettare di ailanto — l\'albero detto anche "pianta del paradiso" (Ailanthus altissima). I suoi fiori regalano al miele un caratteristico retrogusto di pesca, che si unisce alle note fresche del tiglio: un gusto che non trovi in nessun altro miele. Le nostre api lo raccolgono nelle grandi fioriture estive degli apiari tra la Martesana, la Gera d\'Adda, il Parco Adda Nord e la Val Brembana.',
+      heroIntro:
+        "Miele 100% italiano, dolce e floreale, con il retrogusto di pesca dell'ailanto. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
       harvest: 'Raccolto a giugno',
       annata: null,
+      originNote:
+        "La raccolta avviene a giugno negli apiari che seguiamo tra la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana.",
       characteristics: [
         'Colore: ambra dorato, più chiaro e luminoso',
         'Gusto: dolce, con note di tiglio e retrogusto di pesca',
         'Profumo: intenso e floreale, tipico dell\'ailanto',
         'Consistenza: denso, cristallizzazione lenta',
-      ],
-      uses:
-        'Perfetto per la colazione e per dolcificare tisane e latte: le note di tiglio lo rendono ideale per la sera. Si sposa bene con formaggi freschi, yogurt e frutta, e in cucina con piatti delicati.',
-      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
-      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
-      benefits: [
-        'Il retrogusto di pesca dell\'ailanto lo rende un miele unico e riconoscibile',
-        'Dolce e aromatico: piace anche a chi preferisce sapori non troppo intensi',
-        'Colore più chiaro e luminoso rispetto agli altri millefiori estivi',
-        'Disponibile in quantità limitate, perché l\'ailanto fiorisce solo a giugno',
-        'Con formaggi freschi, yogurt e frutta, ma anche in cucina con piatti delicati',
-      ],
-      specs: [
-        { label: 'Colore', value: 'ambra dorato, più chiaro e luminoso' },
-        { label: 'Profumo e sapore', value: 'floreale, note di tiglio e retrogusto di pesca' },
-        { label: 'Cristallizzazione', value: 'lenta e fine' },
-        { label: 'Raccolto', value: 'giugno' },
-        { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
-        { label: 'Abbinamenti', value: 'colazione, tisane, formaggi freschi, frutta' },
       ],
       /**
        * La scheda non aveva video: qui c'è la smielatura del nostro millefiori.
@@ -380,6 +423,8 @@ export const site = {
           poster: '/video/smielatura-millefiori-2026-poster-d8961bf6.avif',
           label: 'La smielatura del nostro millefiori (raccolto 2026)',
           cls: 'video-item--tall',
+          caption:
+            'La smielatura del nostro millefiori: il miele esce dallo smielatore a freddo, senza pastorizzazione.',
         },
       ],
       faq: [
@@ -397,6 +442,31 @@ export const site = {
         },
         { ...deliveryFaq },
       ],
+      /**
+       * SEGNAPOSTO — da sostituire con recensioni reali del prodotto (vedi README,
+       * "Recensioni delle schede miele"): nomi e testi qui sotto sono inventati e
+       * finiscono anche nei dati strutturati (`Review` + `aggregateRating`).
+       * `rating.count` è il totale dichiarato: al massimo tre recensioni con il
+       * testo vanno in pagina.
+       */
+      rating: { value: 5, count: 3 },
+      productReviews: [
+        {
+          name: 'Claudia Ferri',
+          stars: 5,
+          text: 'Il retrogusto di pesca si sente davvero! È la prima volta che assaggio un miele così... Consigliatissimo!',
+        },
+        {
+          name: 'Marco Zanetti',
+          stars: 5,
+          text: 'Lo usiamo nelle tisane della sera e sul pane a colazione. Il miele di Raffaele è sempre una garanzia.',
+        },
+        {
+          name: 'Elena Riva',
+          stars: 5,
+          text: 'Regalato a mia madre e le è piaciuto tantissimo. Ha un gusto particolare, diverso dai soliti mieli. Ottima qualità.',
+        },
+      ],
     },
     {
       slug: 'miele-di-castagno',
@@ -410,34 +480,17 @@ export const site = {
       title: 'Miele di Castagno a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
         'Miele di castagno di api proprie a Cassano d\'Adda (MI): scuro, intenso, leggermente amaro. Perfetto con formaggi stagionati. Ordina al telefono.',
-      intro:
-        'Il miele di castagno è il più caratteristico dei nostri mieli: scuro, intenso e leggermente amarognolo, con un profumo forte e persistente. È tra i mieli più ricchi di sali minerali — in particolare ferro e potassio — ed è il compagno ideale dei formaggi stagionati e dei piatti robusti della nostra tradizione.',
+      heroIntro:
+        "Miele 100% italiano, scuro e intenso, con retrogusto amarognolo. Prodotto dalle nostre api negli apiari lombardi, tra la Gera d'Adda e la Val Brembana.",
       harvest: 'Raccolto tra giugno e luglio',
       annata: null,
+      originNote:
+        "La raccolta avviene tra giugno e luglio negli apiari che seguiamo tra Cassano d'Adda, la Gera d'Adda e la Val Brembana.",
       characteristics: [
         'Colore: ambra scuro, quasi bruno',
         'Gusto: intenso, legnoso, con retrogusto amarognolo',
-        'Ricco di sali minerali e ferro',
+        'Profumo intenso e persistente',
         'Cristallizza molto lentamente',
-      ],
-      uses:
-        'Il miele di castagno esalta formaggi stagionati e erborinati, accompagna arrosti e carni rosse, polenta e insalate con noci. In pasticceria è perfetto per panpepato, biscotti speziati e dolci autunnali.',
-      // Non più mostrato in pagina: le stesse informazioni sono nelle `characteristics`
-      // del buy-box e nella scheda tecnica (`specs`), subito sotto.
-      benefits: [
-        'Tra i mieli più ricchi di sali minerali, in particolare ferro e potassio',
-        'Retrogusto amarognolo: è il segno della sua autenticità e della sua forza',
-        'Sapore intenso e persistente: una piccola quantità dà carattere a molti piatti',
-        'Cristallizza molto lentamente e si conserva bene anche a lungo',
-        'Da formaggi stagionati, carni rosse, polenta e dolci speziati',
-      ],
-      specs: [
-        { label: 'Colore', value: 'ambra scuro, quasi bruno' },
-        { label: 'Profumo e sapore', value: 'intenso, legnoso, con retrogusto amarognolo' },
-        { label: 'Cristallizzazione', value: 'molto lenta' },
-        { label: 'Raccolto', value: 'giugno – luglio' },
-        { label: 'Conservazione', value: 'barattolo chiuso, al buio, sotto i 14 °C' },
-        { label: 'Abbinamenti', value: 'formaggi stagionati, carni rosse, polenta, dolci speziati' },
       ],
       faq: [
         {
@@ -449,10 +502,35 @@ export const site = {
           a: 'Assolutamente sì: è un miele da chef. Ottimo con formaggi stagionati, carni rosse, polenta e nella preparazione di dolci speziati. Resiste bene anche alla cottura.',
         },
         {
-          q: 'Dove trovo i castagni nella zona di Cassano d\'Adda?',
+          q: 'Da dove arriva il nostro miele di castagno?',
           a: 'Le mie api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda, nelle colline tra Bergamo e Cremona e nella Val Brembana, a poca distanza dai miei apiari.',
         },
         { ...deliveryFaq },
+      ],
+      /**
+       * SEGNAPOSTO — da sostituire con recensioni reali del prodotto (vedi README,
+       * "Recensioni delle schede miele"): nomi e testi qui sotto sono inventati e
+       * finiscono anche nei dati strutturati (`Review` + `aggregateRating`).
+       * `rating.count` è il totale dichiarato: al massimo tre recensioni con il
+       * testo vanno in pagina.
+       */
+      rating: { value: 5, count: 3 },
+      productReviews: [
+        {
+          name: 'Gianni Brambilla',
+          stars: 5,
+          text: 'Intenso e leggermente amaro, come piace a me. Con un formaggio stagionato è un\'altra cosa.',
+        },
+        {
+          name: 'Sara Vacchi',
+          stars: 5,
+          text: 'In autunno lo uso tantissimo, soprattutto sulla polenta. Sta benissimo anche nei dolci speziati. Davvero ottimo.',
+        },
+        {
+          name: 'Pietro Colombo',
+          stars: 5,
+          text: 'Miele forte e autentico, si sente subito che non è quello del supermercato. Consegna puntuale.',
+        },
       ],
     },
   ],
@@ -471,58 +549,51 @@ export const site = {
   honeyComb: {
     slug: 'miele-in-favo',
     name: 'Miele in favo',
-    kind: 'favo',
     image: 'miele-in-favo',
     color: '#f0c96b',
     priceFormats: [],
+    /**
+     * Nello schema il favo **non** si dichiara disponibile: la disponibilità è
+     * poca e solo su prenotazione, quindi `null` = nessun `availability`
+     * sull'offerta (vedi `scripts/schema.mjs`, che lo verifica). Vale anche se un
+     * giorno avesse un prezzo pubblicato: `offer()` legge questo campo invece di
+     * mettere `InStock` a priori.
+     */
+    schemaAvailability: null,
     title: 'Miele in Favo Italiano Artigianale | Bio & Golosità',
     description:
       "Miele in favo delle nostre api a Cassano d'Adda: favo intero con la sua cera, non pastorizzato né scaldato. Vendita diretta e consegna in zona.",
     heroIntro:
       "Miele in favo delle nostre api: il favo opercolato, tagliato dal telaio e invasettato con la sua cera, senza smielatura e senza trattamento termico. Arriva dagli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
-    intro:
-      "Il miele in favo è il miele come lo hanno fatto le api: ancora chiuso nelle cellette di cera, opercolato, esattamente come si presenta aprendo l'arnia. Per prepararlo non si smiela niente: il favo si taglia dal telaio e si mette nel vasetto intero, senza scaldarlo e senza filtrarlo. Resta quindi un miele più aromatico e dalla consistenza unica, con la cera che si sente sotto i denti.",
+    /** Frase di "Da dove arriva" (la foto dell'apiario sta accanto). */
+    originNote:
+      "Il favo si prepara in stagione, quando le api hanno opercolato le cellette, negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
     harvest: 'Raccolto in stagione, quando il favo è opercolato',
     /** Annata del raccolto in vendita: da completare a mano. */
     annata: null,
-    /** In pagina: "Da dove arriva questo favo". */
-    subject: 'favo',
     category: 'Miele in favo',
     characteristics: [
       'Il miele resta nel favo, con la sua cera',
       // `characteristics[1]` è il testo che la card usa nella griglia di /miele/:
       // qui deve restare in evidenza la disponibilità, non la lavorazione.
-      'Disponibilità poca: pochi favi, solo su prenotazione',
+      'Disponibilità limitata: pochi favi, solo su prenotazione',
       'Nessuna smielatura: il favo si taglia intero',
       'Non pastorizzato, mai scaldato',
       'Da gustare con pane, formaggi e frutta',
     ],
     /** Nota del blocco prodotto, al posto di `site.bulkNote`. */
-    note: 'Disponibilità poca e solo su prenotazione: prepariamo pochi favi a stagione, quindi conviene chiedere in anticipo.',
-    uses:
-      "Il miele in favo si gusta con la sua cera: si taglia un pezzetto e si mangia con pane, formaggio, ricotta o frutta, oppure direttamente con il cucchiaino. La cera è commestibile: si può mangiare insieme al miele o masticarla e scartarla, come si faceva una volta. Su una fetta di pane caldo il favo si ammorbidisce da solo e il miele esce dalle cellette.",
-    // Voci della tracciabilità diverse dai barattoli: qui non c'è smielatura.
+    note: 'Disponibilità limitata: prepariamo pochi favi a stagione, solo su prenotazione.',
+    /** Riga "Lavorazione" dei quattro dati di origine: qui non c'è smielatura. */
     workNote:
       'Nessuna smielatura: il favo si taglia dal telaio e si invasetta intero, senza trattamento termico',
-    storageNote: 'Vasetto chiuso, al buio, sotto i 14 °C',
-    specs: [
-      { label: "Cos'è", value: 'miele lasciato nel favo di cera, come lo hanno fatto le api' },
-      { label: 'Cera', value: 'commestibile: si mangia con il miele, oppure si mastica e si scarta' },
-      { label: 'Lavorazione', value: 'nessuna smielatura, nessun trattamento termico' },
-      { label: 'Cristallizzazione', value: 'possibile nel tempo: è naturale, nel favo non si scalda' },
-      { label: 'Conservazione', value: 'vasetto chiuso, al buio (sotto i 14 °C)' },
-      {
-        label: 'Disponibilità',
-        value: 'poca e solo su prenotazione: pochi favi a stagione',
-      },
-      { label: 'Abbinamenti', value: 'pane, formaggi, ricotta, frutta, colazione' },
-    ],
     videos: [
       {
         src: '/video/miele-in-favo.mp4',
         poster: '/video/miele-in-favo-poster-4d2db9b1.avif',
         label: 'Raffaele mostra il miele in favo e lo assaggia',
         cls: 'video-item--tall',
+        caption:
+          'Il favo si taglia intero dal telaio e si invasetta così com\'è, senza scaldarlo.',
       },
     ],
     /**
@@ -548,11 +619,6 @@ export const site = {
       { base: 'miele_in_favo_5', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 5', cls: 'g-item--portrait' },
       { base: 'miele_in_favo_6', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 6', cls: 'g-item--portrait' },
     ],
-    /** Guida consigliata in fondo alla scheda. */
-    guide: {
-      href: '/guide/perche-il-miele-cristallizza/',
-      label: 'Perché il miele cristallizza (e come riportarlo liquido)',
-    },
     faq: [
       {
         q: 'Si mangia anche la cera?',
@@ -571,6 +637,24 @@ export const site = {
         a: "Dipende dalla stagione: il favo si prepara quando le api hanno opercolato le cellette nella fioritura del momento, quindi può essere millefiori o di una fioritura singola. Quando lo ordini ti diciamo da quale raccolto arriva.",
       },
       { ...deliveryFaq },
+    ],
+    /**
+     * SEGNAPOSTO — da sostituire con recensioni reali del prodotto (vedi README,
+     * "Recensioni delle schede miele"): nomi e testi qui sotto sono inventati e
+     * finiscono anche nei dati strutturati. Due recensioni, tutte e due in pagina.
+     */
+    rating: { value: 5, count: 2 },
+    productReviews: [
+      {
+        name: 'Marta Bellini',
+        stars: 5,
+        text: 'Il favo è una goduria. Lo taglio e lo mangio sul pane caldo, proprio come una volta. Mi piace anche sentire la cera sotto i denti.',
+      },
+      {
+        name: 'Davide Sironi',
+        stars: 5,
+        text: 'Prodotto raro e genuino, arrivato imballato con cura. Da provare almeno una volta, a me è piaciuto davvero tanto.',
+      },
     ],
   },
 };

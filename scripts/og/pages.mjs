@@ -26,7 +26,7 @@ export const copy = {
     title: ['Miele artigianale 100% italiano', "direttamente dall'apicoltore"],
     sub: "Non pastorizzato e smielato a freddo, dagli apiari di Cassano d'Adda (MI).",
     chips: ['Acacia da € 6,00', 'Millefiori da € 5,00', 'Castagno da € 6,50'],
-    badge: '★ 4,9 su Google',
+    badge: '★ 5,0 su Google',
   },
   miele: {
     bg: 'hero_bg',
@@ -134,7 +134,7 @@ export const copy = {
     title: ['Apicoltura di Raffaele Antoci'],
     sub: 'Dai quindici alveari di mio padre al miele di Bio & Golosità: api proprie, dal 2020.',
     chips: ['Api proprie e apiari', 'Miele non pastorizzato', 'Apicoltore dal 2020'],
-    badge: '★ 4,9 su Google',
+    badge: '★ 5,0 su Google',
   },
   contatti: {
     bg: 'apiario',

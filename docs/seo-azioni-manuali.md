@@ -40,7 +40,7 @@ qualsiasi nuovo contenuto.
 
 ## 2. Recensioni: da 18 a 40-50 (poi 75, poi 100)
 
-I concorrenti dell'area hanno 39-110 recensioni: il voto (4,9) è già ottimo, il
+I concorrenti dell'area hanno 39-110 recensioni: il voto (5,0) è già ottimo, il
 problema è il **numero**. Regola: solo clienti reali, nessun acquisto, nessuno
 scambio, nessun incentivo.
 
@@ -140,7 +140,8 @@ In `src/data/bee-products.js` (le pagine funzionano già senza, mostrando
 - [ ] **Polline**: formato (es. 250 g), raccolto (mesi), lavorazione (fresco o
       essiccato), prezzo, disponibilità.
 - [x] **Api regine**: linea — una sola, Buckfast: madre F0 selezionata con
-      inseminazione strumentale, si vendono le figlie F1 (`apiRegine.linea`).
+      inseminazione strumentale, si vendono le figlie F1 (è il testo di
+      `apiRegine.origine.notes` in `src/data/bee-products.js`).
 - [ ] **Api regine**: prezzo, disponibilità della stagione, da quando si
       prenota, documenti sanitari.
 - [ ] **Nuclei**: composizione (numero e tipo di telai), prezzo,

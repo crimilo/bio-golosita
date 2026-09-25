@@ -9,7 +9,8 @@ const { value } = Astro.props;
 const { main, unit } = splitPrice(value);
 // Il prezzo in grande solo quando c'è davvero un prezzo: "Prezzo su richiesta"
 // resta della misura di prima (è un avviso, non un numero che deve saltare
-// all'occhio).
+// all'occhio). La coda — "(200 g)", "/ regina", "/ nucleo" — va sempre in
+// `.price-unit`: più piccola e in un colore più tenue del totale.
 const isPrice = priceAmount(main) != null;
 ---
 

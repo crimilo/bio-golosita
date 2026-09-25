@@ -8,17 +8,16 @@
  *     chiedere. Appena le hai, sostituisci il `null` e la pagina si aggiorna
  *     da sola (testo + eventuale prezzo).
  *
- *   polline.raccoltoDa / lavorazione
- *   apiRegine.prenotazioneDa / documenti
- *   nuclei.telai / prenotazioneDa
+ *   polline.raccolto / lavorazione (quando ci sono, vanno nel paragrafo di
+ *     `polline.origine.notes`)
+ *   nuclei.telai
  *
  *   Le disponibilità sono scritte: polline fresco aprile–maggio (essiccato anche
- *   dopo), api regine feconde da fine maggio, nuclei dai primi di aprile.
+ *   dopo), api regine da fine maggio e nuclei dai primi di aprile — nel dato
+ *   "Disponibilità" / "Preparazione" di `origine.items`, che è l'unico posto dove
+ *   la pagina le legge.
  * ────────────────────────────────────────────────────────────────────────────
  */
-
-export const availabilityFallback =
-  "Disponibilità stagionale: chiamaci o scrivici su WhatsApp e ti diciamo subito cosa c'è pronto in questo periodo.";
 
 /**
  * Foto delle card che rimandano ai quattro reparti (home e pagine interne).
@@ -58,47 +57,82 @@ export const polline = {
     "Polline d'api raccolto nei nostri apiari tra Cassano d'Adda, Martesana e Gera d'Adda. Origine, conservazione e freschezza. Chiama il 351 537 6719.",
   // ↓↓↓ da completare
   prezzo: '€ 5,50 (200 g)',
-  disponibilita: 'Polline fresco da aprile a maggio; quello essiccato anche dopo',
+
+  /** Messaggio precompilato del link WhatsApp: vedi `apiRegine.whatsappText`. */
+  whatsappText: "Ciao, vorrei informazioni sul vostro polline d'api",
   formato: '200 g',
-  raccolto: null, // es. 'da aprile a settembre'
-  lavorazione: null, // es. 'essiccato a bassa temperatura' / 'fresco, surgelato'
+  raccolto: null, // quando ci sarà: es. 'da aprile a settembre', va nel paragrafo di `origine.notes`
+  lavorazione: null, // quando ci sarà: es. 'essiccato a bassa temperatura', va in `origine.notes`
   // ↑↑↑ da completare
 
-  intro:
-    "Il polline d'api è il polline che le api raccolgono fiore dopo fiore e riportano all'alveare: un prodotto dell'alveare diverso dal miele, che si gusta al naturale o si aggiunge a yogurt e colazioni. Il nostro arriva dagli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda, ed è confezionato a piccoli lotti per non perdere profumo e consistenza.",
+  /** Sottotitolo della hero: due righe, come nelle schede miele. */
+  heroIntro:
+    "Polline d'api delle nostre api, raccolto fiore dopo fiore negli apiari tra Cassano d'Adda e la Gera d'Adda. È un prodotto di stagione: fresco o essiccato.",
 
-  highlights: [
-    'Api proprie e apiari seguiti da noi, tra Cassano d\'Adda e la Gera d\'Adda',
-    'Raccolto e confezionato a piccoli lotti, mai in grande stile industriale',
-    'Origine tracciabile: sai da quali fioriture arriva',
-    'Conservazione spiegata: come tenerlo fresco a casa tua',
+  /**
+   * Caratteristiche del blocco prodotto (le stesse chips dei mieli): aspetto,
+   * gusto, come nasce e come si usa — in quattro righe.
+   */
+  chips: [
+    'Granuli del colore delle fioriture di stagione',
+    'Sapore delicato, con note di fiori e di erba',
+    'Raccolto e confezionato a piccoli lotti',
+    'Al naturale o su yogurt, macedonia e cereali',
   ],
 
-  specs: [
-    {
-      label: 'Origine',
-      value:
-        "Apiari di Bio & Golosità tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord (area protetta) e la Val Brembana",
+  /**
+   * Riga piccola del blocco prodotto, sotto il ritiro/consegna (nei mieli è
+   * `site.bulkNote`): la scelta tra fresco ed essiccato è la domanda che arriva
+   * sempre, quindi la riga serve a quella.
+   */
+  note: "Fresco o essiccato: se non sai quale scegliere, chiedici cosa c'è di pronto in questo periodo.",
+
+  /**
+   * Sezione "Da dove arriva il nostro polline": stessa resa dei quattro dati dei
+   * mieli (occhiello + titolo + paragrafo + quattro card con icona + foto).
+   * I quattro dati sono la scheda tecnica di prima, senza le voci da completare.
+   */
+  origine: {
+    eyebrow: 'dai nostri apiari',
+    title: 'Da dove arriva il nostro polline',
+    notes: [
+      "Il polline arriva dagli apiari che seguiamo tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana: <strong>le api sono nostre</strong> e il polline non viene acquistato da terzi per essere rivenduto. È la stessa filiera del nostro miele.",
+    ],
+    items: [
+      { icon: 'pin', label: 'Origine', value: 'Lombardia, Italia' },
+      { icon: 'clock', label: 'Disponibilità', value: 'Fresco da aprile a maggio, essiccato anche dopo' },
+      { icon: 'package', label: 'Confezione', value: 'Barattolo da 200 g' },
+      {
+        icon: 'shield',
+        label: 'Conservazione',
+        value: 'Fresco in frigo o freezer, essiccato a temperatura ambiente',
+      },
+    ],
+    photo: {
+      base: 'prato_fiorito',
+      alt: 'Prato fiorito di campagna con fiori spontanei colorati',
+      caption: 'Dalle fioriture spontanee nasce il polline della stagione',
     },
+  },
+
+  /**
+   * SEGNAPOSTO — da sostituire con recensioni reali (vedi README, "Recensioni
+   * dei prodotti"): nome e testo qui sotto sono inventati e finiscono anche nei
+   * dati strutturati (`Review` + `aggregateRating`).
+   */
+  rating: { value: 5, count: 1 },
+  productReviews: [
     {
-      label: 'Come si conserva',
-      value:
-        'In barattolo ben chiuso, al buio. Il polline fresco va tenuto in frigorifero e, per la scorta lunga, in freezer; quello essiccato a temperatura ambiente.',
+      name: 'Silvia Nava',
+      stars: 5,
+      text: 'Polline fresco e profumato, per niente amaro. Raffaele ci ha anche spiegato come conservarlo e in frigo è rimasto perfetto per settimane.',
     },
-    { label: 'Formato', value: '200 g' }, // come `formato` qui sopra: barattolo da 200 g
-    { label: 'Raccolto', value: null }, // da completare: es. 'aprile – settembre'
-    {
-      label: 'Disponibilità',
-      value: 'fresco da aprile a maggio; essiccato anche dopo',
-    },
-    { label: 'Lavorazione', value: null }, // da completare
-    { label: 'Prezzo', value: null }, // reso sotto dal prezzo qui sopra, non duplicare
   ],
 
   faq: [
     {
-      q: "Da dove viene il vostro polline d'api?",
-      a: "Dai nostri apiari: le api sono nostre e gli alveari sono tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana. Lo raccogliamo e confezioniamo a piccoli lotti, come facciamo con il miele.",
+      q: "Che cos'è il polline d'api e quando si raccoglie?",
+      a: "È il polline dei fiori, che le api impastano in piccole palline e riportano all'alveare. Ha una stagionalità stretta e una vita più breve del miele: per questo conta moltissimo come viene raccolto, essiccato e conservato.",
     },
     {
       q: "Il polline d'api va tenuto in frigorifero?",
@@ -143,26 +177,86 @@ export const apiRegine = {
   title: 'Vendita Api Regine in Lombardia | Bio & Golosità',
   description:
     'Api regine da apicoltore in Lombardia: regine feconde già in deposizione, figlie F1 di una madre Buckfast F0. Prenotazione e ritiro a Cassano d\'Adda.',
-  /**
-   * La linea che alleviamo: una sola, Buckfast. La regina madre è una F0
-   * selezionata fecondata con inseminazione strumentale; le regine che
-   * vendiamo sono le sue figlie, quindi F1. Da qui prendono il nome sia la
-   * sezione «La nostra linea» della pagina sia la scheda tecnica.
-   */
-  linea: {
-    razza: 'Buckfast',
-    madre: 'F0 selezionata, fecondata con inseminazione strumentale',
-    vendute: 'F1, le figlie della madre F0',
-  },
-  // ↓↓↓ da completare
-  prezzo: null,
-  disponibilita: 'Api regine feconde disponibili da fine maggio in poi',
-  prenotazioneDa: null,
-  documenti: null, // es. 'Certificato sanitario di origine dell'allevamento'
-  // ↑↑↑ da completare
+  prezzo: '€ 20,00 / regina',
 
-  intro:
-    "Alleviamo le nostre api a Cassano d'Adda, al confine tra le province di Milano, Bergamo, Cremona e Lodi: dalla nostra linea Buckfast nascono le api regine che mettiamo a disposizione degli apicoltori della Lombardia. Vendiamo solo regine feconde, già in deposizione: per rinnovare un alveare, sostituire una regina vecchia o avviare nuovi nuclei. Qui trovi cosa forniamo, come funziona la prenotazione e come ritirare.",
+  /**
+   * Messaggio precompilato del link WhatsApp (e del bottone in fondo alla
+   * pagina): chi scrive dalle regine non deve aprire la chat con una domanda sul
+   * miele. Il numero resta quello di `site.whatsapp`.
+   */
+  whatsappText: 'Ciao, vorrei informazioni sulla disponibilità delle api regine',
+
+  /** Sottotitolo della hero: due righe, come nelle schede miele. */
+  heroIntro:
+    "Regine feconde della nostra linea Buckfast, allevate negli apiari tra Cassano d'Adda e la Martesana. Produzione limitata, circa 200–300 all'anno.",
+
+  /**
+   * Caratteristiche del blocco prodotto (le stesse chips dei mieli): cosa si
+   * compra e come funziona l'ordine, in quattro righe.
+   */
+  chips: [
+    'Regine feconde, già in deposizione',
+    'F1 da madri F0 selezionate',
+    'Produzione limitata: 200–300 all\'anno',
+    'Abituate al clima e alle fioriture di qui',
+  ],
+
+  /**
+   * Riga piccola del blocco prodotto, sotto il ritiro/consegna (nei mieli è
+   * `site.bulkNote`): qui è la scelta aziendale su come le regine escono —
+   * gabbietta solo dopo l'ordine, ritiro 48 ore dopo, spedizione il giorno
+   * dopo la conferma.
+   */
+  note: "Le regine le mettiamo in gabbietta solo dopo l'ordine: il ritiro in sede è 48 ore dopo, le spedizioni partono il giorno dopo la conferma.",
+
+  /**
+   * Sezione "Come alleviamo le nostre regine": stessa resa dei quattro dati di
+   * "Da dove arriva" nei mieli (occhiello + titolo + paragrafi + quattro card
+   * con icona + foto). `notes` sono i paragrafi, nell'ordine.
+   */
+  origine: {
+    eyebrow: 'dal nostro allevamento',
+    title: 'Come alleviamo le nostre regine',
+    notes: [
+      "Lavoriamo una sola linea, la <strong>Buckfast</strong>. Le madri sono <strong>F0 selezionate, inseminate artificialmente e con pedigree</strong>, di un allevamento che fa selezione da 120 anni e che le controlla con rigore prima di metterle in commercio: ci affidiamo a loro perché i risultati nelle nostre famiglie si vedono. Da quelle madri nascono le regine che vendiamo, cioè le <strong>F1</strong>.",
+      "Prendiamo le <strong>celle al 10°–11° giorno dal traslarvo</strong> e le mettiamo in apiari di fecondazione <strong>fatti da noi</strong>, molto più grandi dei classici mini-apiari da fecondazione 10×10. Una regina non entra in vendita prima di aver fatto <strong>almeno un giro di covata</strong> (meglio due) e di averci mostrato una <strong>deposizione idonea</strong>: è quello che ci permette di verificare che la regina deponga bene. Sugli altri caratteri preferiamo non fare promesse: in poche settimane non è possibile valutarli con certezza.",
+    ],
+    items: [
+      { icon: 'pin', label: 'Origine', value: 'Lombardia, Italia' },
+      { icon: 'sparkle', label: 'Selezione', value: 'F1 da madri F0 inseminate artificialmente' },
+      { icon: 'home', label: 'Allevamento', value: 'Celle prelevate al 10°–11° giorno dal traslarvo' },
+      { icon: 'clock', label: 'Disponibilità', value: 'Da fine maggio in poi' },
+    ],
+    photo: {
+      base: 'api',
+      alt: "Le api di Bio & Golosità in apiario, a Cassano d'Adda",
+      caption: "Le nostre api, in apiario a Cassano d'Adda",
+    },
+  },
+
+  /**
+   * SEGNAPOSTO — da sostituire con recensioni reali (vedi README, "Recensioni
+   * dei prodotti"): nomi e testi qui sotto sono inventati e finiscono anche nei
+   * dati strutturati (`Review` + `aggregateRating`).
+   */
+  rating: { value: 5, count: 3 },
+  productReviews: [
+    {
+      name: 'Enrico Bassi',
+      stars: 5,
+      text: 'Regine arrivate in ottime condizioni. Le ho inserite in due famiglie orfane e dopo circa una settimana erano già entrambe in deposizione. Per ora tutto molto bene.',
+    },
+    {
+      name: 'Lorenzo Ghidini',
+      stars: 5,
+      text: 'Si vede che sono allevate bene: regine belle, robuste e con una deposizione molto regolare. Era il mio secondo ordine e anche questa volta mi sono trovato molto bene.',
+    },
+    {
+      name: 'Chiara Vismara',
+      stars: 5,
+      text: 'Sono una neofita e Raffaele mi ha spiegato tutto al telefono prima di ordinare. Le regine sono arrivate nei tempi promessi. Esperienza molto positiva.',
+    },
+  ],
 
   // Tipologie di regina. In pagina non c'è più la sezione "tipologie": da quando
   // vendiamo solo regine feconde una sola card ripeteva quello che il testo e la
@@ -174,51 +268,6 @@ export const apiRegine = {
     },
   ],
 
-  // Punti di forza mostrati come card con icona nella sezione "Perché comprare
-  // da noi" di /api-regine/: stesse `.feature` della home. `icon` è uno dei nomi
-  // di src/components/Icons.astro.
-  cards: [
-    {
-      icon: 'home',
-      title: 'Allevate da noi, in Lombardia',
-      text: "Le regine nascono dalla nostra linea Buckfast, negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda: sono api abituate al clima e alle fioriture di questa zona.",
-    },
-    {
-      icon: 'clock',
-      title: 'Disponibilità reale, stagione dopo stagione',
-      text: 'Le regine si prenotano nei mesi utili all\'allevamento e sono disponibili in genere a partire da fine maggio: la disponibilità cambia di settimana in settimana, per questo conviene prenotare. Chiamaci e ti diciamo subito cosa c\'è.',
-    },
-    {
-      icon: 'package',
-      title: 'Ritiro e consegna in Lombardia',
-      text: "Puoi ritirare in sede a Cassano d'Adda su appuntamento, oppure concordare la consegna nella zona tra Milano, Bergamo, Cremona e Lodi. Per spedizioni o quantità importanti, chiedici un preventivo.",
-    },
-    {
-      icon: 'shield',
-      title: 'Informazioni sanitarie e documenti',
-      text: "Ogni partita di regine ha la sua storia sanitaria: chiedici quali documenti la accompagnano. Ti diamo tutte le informazioni che servono prima dell'acquisto.",
-    },
-  ],
-
-  specs: [
-    { label: 'Razza', value: 'Buckfast: regine F1 da una madre F0 selezionata con inseminazione strumentale' },
-    { label: 'Tipologie', value: 'Regine feconde, già fecondate e in deposizione' },
-    {
-      label: 'Provenienza',
-      value:
-        "Allevamento di Bio & Golosità — Cassano d'Adda (MI), apiari tra Martesana e Gera d'Adda",
-    },
-    { label: 'Disponibilità', value: 'da fine maggio in poi' },
-    { label: 'Prenotazione', value: null }, // da completare
-    { label: 'Prezzo', value: null }, // da completare
-    {
-      label: 'Ritiro e consegna',
-      value:
-        "Ritiro in sede a Cassano d'Adda (Via Salvo D'Acquisto 9) su appuntamento, oppure consegna concordata in Lombardia",
-    },
-    { label: 'Documenti', value: null }, // da completare
-  ],
-
   faq: [
     {
       q: 'Come prenoto le api regine?',
@@ -226,23 +275,26 @@ export const apiRegine = {
     },
     {
       q: 'Le regine che vendete sono già feconde?',
-      a: "Sì: forniamo solo regine feconde, già fecondate nel nostro apiario e in deposizione. Si introducono in un alveare orfano o in un nucleo e la famiglia riparte subito, senza attese: è la scelta giusta anche quando si cambia regina per la prima volta.",
-    },
-    {
-      q: 'Da dove vengono le vostre api regine?',
-      a: "Nascono negli apiari dell'azienda, a Cassano d'Adda e nella zona tra la Martesana e la Gera d'Adda: sono regine allevate in Lombardia, della nostra linea Buckfast, abituate al clima e alle fioriture di qui.",
+      a: "Sì: forniamo solo regine feconde, già fecondate nei nostri apiari e in deposizione. Si introducono in un alveare orfano o in un nucleo e la famiglia riparte subito, senza attese.",
     },
     {
       q: 'Come si introducono le nuove regine?',
       a: "Con calma, rispettando i tempi della famiglia e usando le gabbiette di introduzione. Dopo l'inserimento lascia l'alveare chiuso per almeno 5 giorni: aprirlo prima è il modo più semplice per far uccidere la regina, soprattutto se è la prima volta che ne introduci una. Quando ti consegniamo le regine ti spieghiamo il metodo che usiamo noi.",
     },
+    {
+      q: 'Quando è il momento giusto per cambiare regina?',
+      a: "Di norma tra la primavera e l'inizio dell'estate, quando le famiglie si sviluppano e c'è nettare in campo: è il periodo in cui l'accettazione riesce meglio. Se hai un dubbio sul tuo caso, scrivici prima di ordinare: preferiamo dirti se è il momento sbagliato.",
+    },
+    {
+      q: 'Quali documenti accompagnano le regine?',
+      a: "Ogni partita di regine ha la sua storia sanitaria: chiedici quali documenti la accompagnano. Ti diamo tutte le informazioni che servono prima dell'acquisto.",
+    },
   ],
 
-  // Foto della galleria della pagina. Da quando la sezione in fondo mostra solo
-  // i tre video delle regine (nascita, marcatura, regina con le api attorno)
-  // **non si vedono più in pagina** e non finiscono nei dati strutturati:
-  // restano qui pronte all'uso, basta ripassare `gallery={apiRegine.gallery}` a
-  // `ProductPage.astro`.
+  // Foto della galleria delle regine: **non si vedono in pagina** (la scheda
+  // mostra solo i tre video: regina F1 sulle covate, nascita e marcatura) e non
+  // finiscono nei dati strutturati. Restano qui pronte all'uso, basta
+  // renderizzarle con `PhotoGallery`.
   gallery: [
     {
       base: 'arnia_piena_di_api',
@@ -272,18 +324,82 @@ export const nuclei = {
   title: "Nuclei d'Api in Vendita in Lombardia | Bio & Golosità",
   description:
     "Nuclei d'api da apicoltore in Lombardia: cosa comprende un nucleo, sciame, nucleo e pacco d'api, disponibilità e prenotazione. Cassano d'Adda (MI).",
-  // ↓↓↓ da completare
-  telai: null, // es. '5 telai (3 di covata + 2 di scorte)'
+  telai: null, // da completare: es. '5 telai (3 di covata + 2 di scorte)'
   razza: 'Buckfast (F1 da madre F0)', // la regina del nucleo è una figlia della nostra madre F0
-  prezzo: null,
-  disponibilita: 'Nuclei disponibili dai primi di aprile in poi',
-  prenotazioneDa: null,
-  // ↑↑↑ da completare
+  prezzo: '€ 99,00 / nucleo',
 
-  intro:
-    "Vendiamo nuclei d'api della nostra produzione, allevati negli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda. Se stai cercando online sciami d'api in vendita, nella maggior parte dei casi il prodotto che serve per avviare una nuova famiglia è un nucleo: qui ti spieghiamo la differenza e come funziona la prenotazione.",
+  /** Messaggio precompilato del link WhatsApp: vedi `apiRegine.whatsappText`. */
+  whatsappText: "Ciao, vorrei informazioni sulla disponibilità dei nuclei d'api",
 
-  // Non più mostrato in pagina: la stessa distinzione è nei blocchi di testo di
+  /** Sottotitolo della hero: due righe, come nelle schede miele. */
+  heroIntro:
+    "Nuclei d'api della nostra produzione: famiglie già avviate su telai, con una regina feconda già in deposizione. Li prepariamo negli apiari tra Cassano d'Adda e la Martesana.",
+
+  /**
+   * Caratteristiche del blocco prodotto (le stesse chips dei mieli): cosa
+   * comprende il nucleo, dove cresce e cosa ci occupiamo noi.
+   */
+  chips: [
+    'Regina feconda, già in deposizione',
+    'Telai con covata in tutti gli stadi',
+    'Abituati al clima e alle fioriture di qui',
+    'Famiglia avviata: non si parte da zero',
+  ],
+
+  /**
+   * Riga piccola del blocco prodotto, sotto il ritiro/consegna (nei mieli è
+   * `site.bulkNote`): qui è la promessa di servizio — trasporto e inserimento
+   * sono il passaggio in cui un principiante si perde.
+   */
+  note: "Ti spieghiamo come trasportare il nucleo e come inserirlo nell'arnia: è il passaggio più delicato di tutta l'operazione.",
+
+  /**
+   * Sezione "Da dove arriva questo nucleo": stessa resa dei quattro dati dei
+   * mieli (occhiello + titolo + paragrafo + quattro card con icona + foto).
+   */
+  origine: {
+    eyebrow: 'dai nostri apiari',
+    title: 'Da dove arriva questo nucleo',
+    notes: [
+      "Ogni nucleo nasce da telai di una famiglia nostra: <strong>telai con covata in tutti gli stadi, telai con scorte</strong> e api di tutte le età, così la famiglia non resta senza riserve e ha subito le api che allevano la nuova covata. È una famiglia abituata al clima e alle fioriture di qui, quindi resta una famiglia della zona.",
+    ],
+    items: [
+      { icon: 'star', label: 'Regina', value: null }, // risolto in fondo al file con `razza`
+      { icon: 'package', label: 'Composizione', value: null }, // risolto con `telai`
+      {
+        icon: 'pin',
+        label: 'Provenienza',
+        value: "Apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda",
+      },
+      { icon: 'clock', label: 'Preparazione', value: 'Dai primi di aprile in poi, secondo la stagione' },
+    ],
+    photo: {
+      base: 'sciame_5',
+      alt: "Api di Bio & Golosità in apiario, a Cassano d'Adda",
+      caption: "Le nostre api in apiario, a Cassano d'Adda",
+    },
+  },
+
+  /**
+   * SEGNAPOSTO — da sostituire con recensioni reali (vedi README, "Recensioni
+   * dei prodotti"): nomi e testi qui sotto sono inventati e finiscono anche nei
+   * dati strutturati (`Review` + `aggregateRating`).
+   */
+  rating: { value: 5, count: 2 },
+  productReviews: [
+    {
+      name: 'Alberto Sormani',
+      stars: 5,
+      text: 'Nucleo arrivato bello popolato, con la regina già in deposizione. Dopo pochi giorni le api stavano già lavorando bene anche sui telai nuovi.',
+    },
+    {
+      name: 'Marta Cereda',
+      stars: 5,
+      text: 'Covata presente in diversi stadi e tutto come descritto. Molto utili anche le spiegazioni di Raffaele su trasporto e inserimento del nucleo nell\'arnia.',
+    },
+  ],
+
+  // Non più mostrato in pagina: la stessa distinzione è nella FAQ di
   // /nuclei-api/ e nella guida /guide/nucleo-sciame-pacco-dapi-differenze/.
   // Resta qui come contenuto pronto all'uso, se in futuro serve una sezione a schede.
   difference: [
@@ -298,51 +414,6 @@ export const nuclei = {
     {
       name: 'Pacco d\'api',
       text: 'Solo api, senza telai: si trasferiscono in un\'arnia e si avviano da zero, con una regina nuova. Richiede più esperienza di un nucleo.',
-    },
-  ],
-
-  // Titoli e testi dei punti di forza. In pagina i **titoli** sono le chips del
-  // blocco prodotto (come le `characteristics` dei mieli); i testi restano qui
-  // pronti all'uso, perché lo stesso contenuto è già spiegato nelle sezioni
-  // "Cosa comprende un nostro nucleo", "Disponibilità" e "Trasporto".
-  cards: [
-    {
-      title: 'Regina feconda inclusa',
-      text: 'I nostri nuclei partono con una regina feconda F1 della nostra linea Buckfast: la famiglia è già in grado di crescere da sola.',
-    },
-    {
-      title: 'Telai con covata novel',
-      text: 'Consegniamo telai con covata in tutti gli stadi e api di tutte le età, in modo che la famiglia abbia subito le api che allevano la nuova covata.',
-    },
-    {
-      title: 'Disponibilità stagionale',
-      text: 'I nuclei si preparano nei mesi utili all\'avvio degli alveari: in genere sono pronti dai primi di aprile in poi, secondo l\'andamento della stagione. Chiedici cosa è disponibile adesso.',
-    },
-    {
-      title: 'Ti diciamo come trasportarli',
-      text: "Ti spieghiamo come trasportare il nucleo in sicurezza e come inserirlo nell'arnia: è il passaggio più delicato di tutta l'operazione.",
-    },
-  ],
-
-  specs: [
-    { label: 'Composizione', value: null }, // da completare: es. '5 telai: 3 di covata + 2 di scorte'
-    { label: 'Regina', value: 'Feconda, F1 della nostra linea Buckfast' },
-    {
-      label: 'Razza',
-      value: 'Buckfast: la regina è una F1 da una madre F0 selezionata con inseminazione strumentale',
-    },
-    {
-      label: 'Provenienza',
-      value:
-        "Allevamento di Bio & Golosità — Cassano d'Adda (MI), apiari tra Martesana e Gera d'Adda",
-    },
-    { label: 'Disponibilità', value: 'dai primi di aprile in poi' },
-    { label: 'Prenotazione', value: null }, // da completare
-    { label: 'Prezzo', value: null }, // da completare
-    {
-      label: 'Ritiro',
-      value:
-        "In sede a Cassano d'Adda (Via Salvo D'Acquisto 9) su appuntamento; per la consegna parliamone: dipende dalla zona e dal periodo",
     },
   ],
 
@@ -415,3 +486,17 @@ export const nuclei = {
     },
   ],
 };
+
+/**
+ * I due dati della sezione origine che vengono da campi a sé: se `telai` è
+ * compilato vince quello (è più preciso), altrimenti resta la descrizione
+ * generica. Si risolvono per etichetta, non per posizione.
+ */
+const origineValue = (label, value) => {
+  nuclei.origine.items.find((i) => i.label === label).value = value;
+};
+origineValue('Regina', `Feconda, ${nuclei.razza}`);
+origineValue(
+  'Composizione',
+  nuclei.telai ?? 'Telai con covata in tutti gli stadi, telai con scorte e api di tutte le età'
+);

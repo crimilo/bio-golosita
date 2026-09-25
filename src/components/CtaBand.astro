@@ -8,9 +8,18 @@ interface Props {
   text: string;
   extraLink?: { href: string; label: string };
   whatsappLabel?: string;
+  /** Link WhatsApp con il messaggio della pagina (default: `site.whatsapp`) */
+  whatsappHref?: string;
 }
 
-const { eyebrow, title, text, extraLink, whatsappLabel = 'WhatsApp' } = Astro.props;
+const {
+  eyebrow,
+  title,
+  text,
+  extraLink,
+  whatsappLabel = 'WhatsApp',
+  whatsappHref = site.whatsapp,
+} = Astro.props;
 ---
 
 <section class="section">
@@ -27,7 +36,7 @@ const { eyebrow, title, text, extraLink, whatsappLabel = 'WhatsApp' } = Astro.pr
         <a
           class="btn btn-ghost btn-lg"
           style="border-color:#ffe9bf;color:#ffe9bf;"
-          href={site.whatsapp}
+          href={whatsappHref}
           target="_blank"
           rel="noopener"
         >
