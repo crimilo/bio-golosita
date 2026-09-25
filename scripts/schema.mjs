@@ -19,7 +19,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { site } from '../src/data/site.js';
-import { apiRegine, nuclei, polline } from '../src/data/bee-products.js';
+import { apiRegine, nuclei } from '../src/data/bee-products.js';
 
 const REQUIRED = ['name', 'url', 'image', 'description', 'brand'];
 const OFFER_REQUIRED = ['url', 'price', 'priceCurrency', 'availability', 'itemCondition'];
@@ -30,7 +30,7 @@ const OFFER_REQUIRED = ['url', 'price', 'priceCurrency', 'availability', 'itemCo
  * disponibile poco e solo su prenotazione. Per loro l'assenza di `availability`
  * è voluta, non un errore.
  */
-const noAvailability = [...site.honeys, site.honeyComb, polline, apiRegine, nuclei]
+const noAvailability = [...site.honeys, site.honeyComb, apiRegine, nuclei]
   .filter((item) => item.schemaAvailability === null)
   .map((item) => item.name);
 const mayOmitAvailability = (node) =>

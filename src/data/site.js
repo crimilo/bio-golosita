@@ -21,7 +21,7 @@ export const site = {
 
   vatId: '12606370968',
   rea: '2744949',
-  tagline: 'Miele genuino di api proprie a Cassano d\'Adda',
+  tagline: 'Miele genuino di api proprie, dagli apiari tra Parco Adda Nord e Alta Val Brembana',
   domain: 'https://bioegolosita.it',
 
   phoneDisplay: '+39 351 537 6719',
@@ -44,6 +44,30 @@ export const site = {
 
     geo: { lat: 45.5355768, lng: 9.5244833 },
   },
+
+  /**
+   * Sede legale e apiari sono due cose diverse, e il sito non le confonde:
+   *
+   * - la **sede legale** è a Cassano d'Adda: indirizzo, punto di ritiro,
+   *   contatti, localizzazione commerciale. Tutte le menzioni della città in
+   *   questo senso restano (ritiro in sede, zone servite, titoli SEO locali);
+   * - gli **apiari** sono nel **Parco Adda Nord** e in **Alta Val Brembana**:
+   *   è da lì che vengono il miele e gli altri prodotti dell'alveare. I testi generali
+   *   sull'azienda lo dicono così, senza presentare l'Alta Val Brembana come
+   *   un'eccezione: «I nostri apiari si trovano nel Parco Adda Nord e in Alta
+   *   Val Brembana».
+   *
+   * Le schede del miele dicono invece la zona del proprio apiario, una per
+   * miele (`apiaryZone`): il **castagno viene esclusivamente dagli apiari
+   * dell'Alta Val Brembana**, gli altri mieli dagli apiari del Parco Adda
+   * Nord.
+   *
+   * Dove questa distinzione si vede: nei testi di `/chi-siamo/` e nella
+   * descrizione del `LocalBusiness` di `src/lib/schema.js` (è la frase che
+   * legge Google). L'indirizzo di Cassano d'Adda resta invece dove serve (qui
+   * sotto, nel footer e nel blocco contatti), senza etichettarlo «sede
+   * legale» accanto a ogni indirizzo.
+   */
 
   hours: 'Tutti i giorni 08:00–21:00',
   hoursNote:
@@ -74,7 +98,7 @@ export const site = {
    * `/consegna-miele/` e quella di `/miele/miele-millefiori/`.
    */
   bulkNote:
-    'Disponibili anche formati da 5 e 10 kg su richiesta.',
+    'Disponibili anche formati da 5, 10 e 24 kg su richiesta.',
 
   areaServed: [
     'Cassano d\'Adda',
@@ -181,8 +205,11 @@ export const site = {
    *
    * Campi che usa la scheda (`miele/[slug].astro`, la stessa per le quattro
    * varietà e per il miele in favo): `title`/`description` (SEO), `heroIntro`,
-   * `originNote`, `harvest` + `annata`, `workNote`, `characteristics`, `videos`
-   * (con la loro `caption`), `faq`, `rating` + `productReviews` e, se serve,
+   * `originNote`, `apiaryZone` (la zona degli apiari di quella varietà: base
+   * del dato "Origine" e dell'`alt` della foto in "Da dove arriva"; assente =
+   * Parco Adda Nord), `harvest` + `annata`, `workNote`, `characteristics`,
+   * `videos` (con la loro `caption`), `faq`, `rating` + `productReviews` e, se
+   * serve,
    * `photo` (una foto di prodotto al posto di quella dell'apiario) o
    * `apiaryPhoto` (un'altra foto dell'apiario, base del manifest: `apiari_hd`,
    * `apiari_5` — vedi README). Di norma la sezione usa `apiari_hd`: il favo è
@@ -203,7 +230,7 @@ export const site = {
       ],
       title: 'Miele di Acacia a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
-        'Miele di acacia 100% italiano di api proprie a Cassano d\'Adda (MI). Delicato, floreale e naturalmente liquido. 500 g €6; consegna in zona.',
+        'Miele di acacia 100% italiano di api proprie, dagli apiari del Parco Adda Nord. Delicato, floreale e naturalmente liquido. 500 g €6; consegna in zona.',
       /**
        * Sottotitolo della hero: due righe, nessun elenco di keyword. Le schede
        * miele sono pensate per essere lette in pochi secondi (vedi README), quindi
@@ -212,7 +239,7 @@ export const site = {
        * arriva", una volta sola.
        */
       heroIntro:
-        "Miele 100% italiano, delicato e naturalmente liquido. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
+        "Miele 100% italiano, delicato e naturalmente liquido. Prodotto dalle nostre api negli apiari del Parco Adda Nord.",
       // Acacia di pianura: la robinia qui fiorisce tra la fine di aprile e i
       // primi giorni di maggio (al massimo la prima settimana), e a metà maggio
       // il miele è già smielato. Qui la dicitura è già in forma da pagina: la
@@ -226,7 +253,7 @@ export const site = {
       annata: null,
       /** Frase di "Da dove arriva" (la foto dell'apiario sta accanto). */
       originNote:
-        "La raccolta dell'acacia avviene tra fine aprile e inizio maggio negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
+        "La raccolta dell'acacia avviene tra fine aprile e inizio maggio negli apiari che seguiamo nel Parco Adda Nord.",
       /** Riga "Lavorazione" dei quattro dati di origine. */
       workNote: 'Smielato a freddo, non pastorizzato',
       // Le caratteristiche del blocco prodotto. La **seconda** è la
@@ -319,11 +346,11 @@ export const site = {
       description:
         'Miele millefiori estivo al tiglio e more, 100% italiano e di api proprie. Corposo, con note di tiglio e more selvatiche. 500 g €5; consegna in zona.',
       heroIntro:
-        "Miele 100% italiano, scuro e corposo, con note di tiglio e more selvatiche. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
+        "Miele 100% italiano, scuro e corposo, con note di tiglio e more selvatiche. Prodotto dalle nostre api negli apiari del Parco Adda Nord.",
       harvest: 'Raccolto a giugno',
       annata: null,
       originNote:
-        "La raccolta avviene a giugno negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
+        "La raccolta avviene a giugno negli apiari che seguiamo nel Parco Adda Nord.",
       characteristics: [
         'Colore: ambra dorato, più carico in autunno',
         'Gusto: corposo, con note di tiglio e more selvatiche',
@@ -402,11 +429,11 @@ export const site = {
       description:
         'Miele millefiori estivo al tiglio e ailanto, 100% italiano e di api proprie. Dolce e floreale, con retrogusto di pesca. 500 g €5; consegna in zona.',
       heroIntro:
-        "Miele 100% italiano, dolce e floreale, con il retrogusto di pesca dell'ailanto. Prodotto dalle nostre api tra Cassano d'Adda e la Martesana.",
+        "Miele 100% italiano, dolce e floreale, con il retrogusto di pesca dell'ailanto. Prodotto dalle nostre api negli apiari del Parco Adda Nord.",
       harvest: 'Raccolto a giugno',
       annata: null,
       originNote:
-        "La raccolta avviene a giugno negli apiari che seguiamo tra la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana.",
+        "La raccolta avviene a giugno negli apiari che seguiamo nel Parco Adda Nord.",
       characteristics: [
         'Colore: ambra dorato, più chiaro e luminoso',
         'Gusto: dolce, con note di tiglio e retrogusto di pesca',
@@ -483,13 +510,21 @@ export const site = {
       ],
       title: 'Miele di Castagno a Cassano d\'Adda (MI) | Bio & Golosità',
       description:
-        'Miele di castagno 100% italiano di api proprie a Cassano d\'Adda (MI). Scuro, intenso e leggermente amarognolo. 500 g €6,50; consegna in zona.',
+        'Miele di castagno 100% italiano di api proprie, dagli apiari dell\'Alta Val Brembana. Scuro, intenso, leggermente amarognolo. 500 g €6,50; consegna in zona.',
       heroIntro:
-        "Miele 100% italiano, scuro e intenso, con retrogusto amarognolo. Prodotto dalle nostre api negli apiari lombardi, tra la Gera d'Adda e la Val Brembana.",
+        "Miele 100% italiano, scuro e intenso, con retrogusto amarognolo. Prodotto dalle nostre api negli apiari dell'Alta Val Brembana.",
       harvest: 'Raccolto tra giugno e luglio',
       annata: null,
       originNote:
-        "La raccolta avviene tra giugno e luglio negli apiari che seguiamo tra Cassano d'Adda, la Gera d'Adda e la Val Brembana.",
+        "La raccolta avviene tra giugno e luglio negli apiari che seguiamo in Alta Val Brembana.",
+      /**
+       * Zona degli apiari di questa varietà: «il castagno viene esclusivamente
+       * dagli apiari dell'Alta Val Brembana» (vedi README, "Sede legale e
+       * apiari"). Alimenta il dato "Origine" della scheda e l'`alt` della foto
+       * in "Da dove arriva"; gli altri mieli non hanno il campo e valgono
+       * 'Parco Adda Nord'.
+       */
+      apiaryZone: 'Alta Val Brembana',
       characteristics: [
         'Colore: ambra scuro, quasi bruno',
         'Gusto: intenso, legnoso, con retrogusto amarognolo',
@@ -507,7 +542,7 @@ export const site = {
         },
         {
           q: 'Da dove arriva il nostro miele di castagno?',
-          a: 'Le mie api bottinano i castagni presenti nei boschi e nei filari della Gera d\'Adda, nelle colline tra Bergamo e Cremona e nella Val Brembana, a poca distanza dai miei apiari.',
+          a: 'Le mie api bottinano i castagni dei boschi intorno ai nostri apiari dell\'Alta Val Brembana: è la fioritura del bosco che dà a questo miele il suo colore scuro e il retrogusto amarognolo.',
         },
         { ...deliveryFaq },
       ],
@@ -566,12 +601,12 @@ export const site = {
     schemaAvailability: null,
     title: 'Miele in Favo a Cassano d\'Adda (MI) | Bio & Golosità',
     description:
-      "Miele in favo delle nostre api a Cassano d'Adda (MI), con la sua cera e senza trattamento termico. Disponibilità limitata, solo su prenotazione.",
+      "Miele in favo delle nostre api, dagli apiari del Parco Adda Nord. Con la sua cera e senza trattamento termico, solo su prenotazione.",
     heroIntro:
-      "Miele in favo delle nostre api: il favo opercolato, tagliato dal telaio e invasettato con la sua cera, senza smielatura e senza trattamento termico. Arriva dagli apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
+      "Miele in favo delle nostre api: il favo opercolato, tagliato dal telaio e invasettato con la sua cera, senza smielatura e senza trattamento termico. Arriva dagli apiari del Parco Adda Nord.",
     /** Frase di "Da dove arriva" (la foto dell'apiario sta accanto). */
     originNote:
-      "Il favo si prepara in stagione, quando le api hanno opercolato le cellette, negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
+      "Il favo si prepara in stagione, quando le api hanno opercolato le cellette, negli apiari che seguiamo nel Parco Adda Nord.",
     harvest: 'Raccolto in stagione, quando il favo è opercolato',
     apiaryPhoto: 'apiari_5',
     /** Annata del raccolto in vendita: da completare a mano. */
@@ -674,7 +709,6 @@ export const honeyProducts = [...site.honeys, site.honeyComb];
 
 export const nav = [
   { href: '/miele/', label: 'Mieli' },
-  { href: '/polline-d-api/', label: 'Polline' },
   { href: '/api-regine/', label: 'Api regine' },
   { href: '/nuclei-api/', label: 'Nuclei' },
   { href: '/chi-siamo/', label: 'Chi siamo' },

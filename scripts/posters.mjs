@@ -30,7 +30,10 @@ const posters = [
   'marcatura-della-regina-poster.jpg',
   'api-che-producono-il-miele-poster.jpg',
   'api-che-si-creano-spazio-poster.jpg',
-  'api-che-impollinano-poster.jpg',
+  // `api-che-impollinano-poster.jpg` era il poster del video di impollinazione,
+  // che stava nella galleria di `/polline-d-api/`: col polline fuori catalogo
+  // video e poster sono stati rimossi (e il video non si ricodifica più).
+  // Per riportarlo: rimettere qui la riga e il jpg del fotogramma.
   // Regina F1 sulle covate (/api-regine/): fotogramma a 5 s, scelto misurando
   // la nitidezza (varianza del laplaciano) di dieci fotogrammi distribuiti sul
   // video e prendendo il più definito. Per cambiarlo, sostituisci il jpg e

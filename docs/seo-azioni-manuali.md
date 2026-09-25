@@ -26,7 +26,7 @@ qualsiasi nuovo contenuto.
 - [ ] **Categoria principale**: "Azienda apistica / Honey farm" (una sola).
       Aggiungi il minor numero di categorie secondarie necessario.
 - [ ] **Prodotti**: aggiungi come *Prodotti* (non come servizi) miele di acacia,
-      millefiori, castagno, **miele in favo**, polline d'api, con link alle
+      millefiori, castagno, **miele in favo**, con link alle
       pagine del sito.
       Per **api regine e nuclei** usa piuttosto *Servizi*, post e link alle
       landing dedicate: non sono prodotti da carrello.
@@ -34,8 +34,10 @@ qualsiasi nuovo contenuto.
       consegne). Profili con foto aggiornate risultano più completi e competitivi.
 - [ ] **Post**: pubblica i post stagionali (nuovo raccolto, disponibilità
       nuclei/regine, Mielerie Aperte, mercati).
-- [ ] **Descrizione**: cita Cassano d'Adda, Martesana, Gera d'Adda, miele di api
-      proprie, non pastorizzato, polline, api regine e nuclei.
+- [ ] **Descrizione**: cita la **sede legale** a Cassano d'Adda e gli **apiari
+      nel Parco Adda Nord e in Alta Val Brembana** (non «api a Cassano d'Adda»:
+      vedi README, "Sede legale e apiari"), poi Martesana, Gera d'Adda, miele di
+      api proprie, non pastorizzato, api regine e nuclei.
 - [ ] **Rispondi a tutte le recensioni**, positive e negative.
 
 ## 2. Recensioni: da 18 a 40-50 (poi 75, poi 100)
@@ -137,8 +139,6 @@ Un link da un sito apistico lombardo autorevole vale più di 50 link comprati.
 In `src/data/bee-products.js` (le pagine funzionano già senza, mostrando
 "Prezzo su richiesta" / "chiedici la disponibilità"):
 
-- [ ] **Polline**: formato (es. 250 g), raccolto (mesi), lavorazione (fresco o
-      essiccato), prezzo, disponibilità.
 - [x] **Api regine**: linea — una sola, Buckfast: madre F0 selezionata con
       inseminazione strumentale, si vendono le figlie F1 (è il testo di
       `apiRegine.origine.notes` in `src/data/bee-products.js`).

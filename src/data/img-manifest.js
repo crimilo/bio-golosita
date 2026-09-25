@@ -327,29 +327,6 @@ export default {
       }
     }
   },
-  "polline_granuli": {
-    "width": 5760,
-    "height": 3840,
-    "hash": "33ac38a5",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 267
-      },
-      "600": {
-        "width": 600,
-        "height": 400
-      },
-      "900": {
-        "width": 900,
-        "height": 600
-      },
-      "1200": {
-        "width": 1200,
-        "height": 800
-      }
-    }
-  },
   "miele_cristallizzato": {
     "width": 4444,
     "height": 2963,
@@ -569,25 +546,6 @@ export default {
       "1200": {
         "width": 1200,
         "height": 1104
-      }
-    }
-  },
-  "polline_fresco": {
-    "width": 2368,
-    "height": 1776,
-    "hash": "fd5dbab2",
-    "variants": {
-      "600": {
-        "width": 600,
-        "height": 450
-      },
-      "900": {
-        "width": 900,
-        "height": 675
-      },
-      "1200": {
-        "width": 1200,
-        "height": 900
       }
     }
   },

@@ -1,16 +1,52 @@
 # Bio & Golosità — Sito web
 
 Sito dell'azienda apistica **Bio & Golosità di Antoci Raffaele** — miele di api
-proprie a Cassano d'Adda (MI), provincia di Milano.
+proprie. **Sede legale** a Cassano d'Adda (MI), in provincia di Milano; **apiari
+nel Parco Adda Nord e in Alta Val Brembana** (vedi "Sede legale e apiari").
 
 Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 (static assets) — `wrangler deploy` con `wrangler.jsonc`, non Pages.
+
+## Sede legale e apiari
+
+Due cose diverse, e il sito non le confonde mai:
+
+- **sede legale**: Cassano d'Adda (MI), Via Salvo D'Acquisto 9 — indirizzo,
+  punto di ritiro, contatti, localizzazione commerciale. Le menzioni di Cassano
+  d'Adda in questo senso restano (titoli SEO locali come «Miele di acacia a
+  Cassano d'Adda», ritiro in sede, `areaServed`, `/consegna-miele/`);
+- **apiari**: **Parco Adda Nord** e **Alta Val Brembana** — è da lì che vengono
+  il miele, le api regine e i nuclei. I testi generali sull'azienda
+  lo dicono così, senza presentare l'Alta Val Brembana come un'eccezione: «I
+  nostri apiari si trovano nel Parco Adda Nord e in Alta Val Brembana».
+
+Le schede del miele dicono invece la zona del **proprio** apiario, una per
+miele — il campo `apiaryZone` (assente = Parco Adda Nord):
+
+- **miele di castagno**: esclusivamente gli apiari dell'**Alta Val Brembana**
+  («Alta Val Brembana, Lombardia» come origine, «Prodotto dalle nostre api negli
+  apiari dell'Alta Val Brembana»);
+- **tutti gli altri mieli**: gli apiari del **Parco Adda Nord**.
+
+Quindi non si scrive mai «le nostre api a Cassano d'Adda», «apiari a Cassano
+d'Adda», né «prodotto dalle nostre api tra Cassano d'Adda e…»: l'origine si dice
+con la zona vera — «negli apiari del Parco Adda Nord» per gli altri mieli,
+«negli apiari dell'Alta Val Brembana» per il castagno. Le frasi su consegne,
+clientela e area servita (Martesana, Gera d'Adda, Milano Est, Bergamasca) **non
+si toccano**.
+
+La distinzione si dice nei testi di `/chi-siamo/` e nella descrizione del
+`LocalBusiness` in `src/lib/schema.js` — è la frase che legge Google.
+L'indirizzo di Cassano d'Adda resta dove serve (footer, blocco contatti,
+`/consegna-miele/`, mappa), senza l'etichetta «sede legale» accanto
+all'indirizzo. `node scripts/audit.mjs` fallisce se l'attribuzione sbagliata
+ricompare.
 
 ## Pagine
 
 | URL | Contenuto |
 | --- | --- |
-| `/` | Home **compatta**, 9 sezioni: hero corta, **i nostri prodotti** (miele, polline, api regine, nuclei: una card con foto per ciascuno), 4 motivi, Raffaele, foto apiari, dove consegniamo, recensioni Google, FAQ brevi, contatti |
+| `/` | Home **compatta**, 9 sezioni: hero corta, **i nostri prodotti** (miele, api regine, nuclei: una card con foto per ciascuno), 4 motivi, Raffaele, foto apiari, dove consegniamo, recensioni Google, FAQ brevi, contatti |
 | `/miele/` | **Hub mieli**: i 4 mieli + il miele in favo nella stessa griglia, cosa significa artigianale/non pastorizzato, tabella prezzi e formati, FAQ |
 | `/miele/miele-di-acacia/` | **Scheda del miele**: hero corta, blocco prodotto (prezzo, **voto sotto il prezzo**, 4 caratteristiche, CTA), «Da dove arriva» (foto apiario + 4 dati + video della smielatura), 3 recensioni del prodotto, FAQ, altri mieli, CTA compatta |
 | `/miele/miele-millefiori/` | **Hub millefiori**: cos'è il millefiori e le due produzioni |
@@ -18,12 +54,11 @@ Stack: **Astro 7** (statico) · CSS custom · deploy su **Cloudflare Workers**
 | `/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/` | **Scheda del miele** (stessa struttura), con il video della smielatura del millefiori |
 | `/miele/miele-di-castagno/` | **Scheda del miele** (stessa struttura) |
 | `/miele/miele-in-favo/` | **Scheda del miele** (stessa struttura, in più la galleria dal favo all'assaggio): il miele lasciato nella sua cera |
-| `/polline-d-api/` | **Scheda prodotto** (stessa struttura delle altre): hero corta, blocco prodotto (**€ 5,50 / 200 g**, voto, 4 caratteristiche, CTA), «Da dove arriva il nostro polline» (4 dati + foto), galleria con **video dell'impollinazione**, **1 recensione**, FAQ, altri prodotti, CTA compatta |
 | `/api-regine/` | **Scheda prodotto** (stessa struttura delle schede miele): hero corta, blocco prodotto (**€ 20,00 / regina**, voto, 4 caratteristiche, CTA), «Come alleviamo le nostre regine» (F0 → F1, celle al 10°–11° giorno, apiari di fecondazione fatti da noi, 4 dati), **i tre video delle regine**, 3 recensioni del prodotto, FAQ, altri prodotti, CTA compatta |
 | `/nuclei-api/` | **Scheda prodotto** (stessa struttura): hero corta, blocco prodotto (**€ 99,00 a nucleo**, voto, 4 caratteristiche, CTA), «Da dove arriva questo nucleo» (4 dati + foto), galleria foto **a 3 colonne** + **video delle api che si creano lo spazio**, 2 recensioni del prodotto, FAQ, altri prodotti, CTA compatta |
 | `/consegna-miele/` | **Consegna**: come funziona (con la **foto degli ordini preparati** e il **video della preparazione nel blocco dei tre passi**), zone servite, ritiro in sede, map — hero con la foto di Raffaele |
-| `/guide/` | **Hub guide**: 6 approfondimenti collegati alle pagine commerciali |
-| `/guide/<slug>/` | Le 6 guide: non pastorizzato, cristallizzazione, differenze tra mieli, nucleo/sciame/pacco, introduzione regina, polline |
+| `/guide/` | **Hub guide**: 5 approfondimenti collegati alle pagine commerciali |
+| `/guide/<slug>/` | Le 5 guide: non pastorizzato, cristallizzazione, differenze tra mieli, nucleo/sciame/pacco, introduzione regina |
 | `/chi-siamo/` | E-E-A-T: storia, metodo, apicoltore |
 | `/contatti/` | Contatti e come ordinare |
 
@@ -49,8 +84,8 @@ rilascio, quindi gli asset nuovi restano invisibili finché non passa.
 public/            # asset statici serviti così come sono (img/, video/, fonts/, og.jpg, og/, _headers, _redirects…)
 src/
   data/site.js     # ★ dati dell'azienda: telefono, prezzi, orari, mieli, miele in favo, zone di consegna, area servita
-  data/bee-products.js  # ★ polline, api regine, nuclei: prezzi, disponibilità, origine e recensioni (⚠️ voci da completare)
-  data/guides.ts   # ★ le 6 guide informative (titoli, meta, contenuto a blocchi)
+  data/bee-products.js  # ★ api regine, nuclei: prezzi, disponibilità, origine e recensioni (⚠️ voci da completare)
+  data/guides.ts   # ★ le 5 guide informative (titoli, meta, contenuto a blocchi)
   data/og.js       # ★ rotta → immagine OG (public/og/<slug>.jpg): unica fonte per sito e generatore
   layouts/Base.astro
   components/      # Header, Footer, Picture (AVIF), Icons, Emoji, Lightbox, Gallery, PageHero, Faq,
@@ -75,13 +110,13 @@ Tre eccezioni volute:
 - le **cinque schede del miele** (le quattro varietà e il favo): hero **solo
   testo**, con la foto del barattolo (o del favo) nel blocco prodotto subito sotto
   (resa originale, la più leggibile);
-- i **tre prodotti dell'alveare** (**`/polline-d-api/`**, **`/api-regine/`**,
-  **`/nuclei-api/`**): stessa hero **solo testo** dei singoli mieli, con la foto
-  del prodotto nel blocco sotto. **Tutti e tre** (`/polline-d-api/`,
-  `/api-regine/`, `/nuclei-api/`) hanno oggi la stessa scheda dei mieli — blocco
-  prodotto, sezione origine, recensioni, FAQ, altri prodotti, CTA compatta —
-  quindi nessuno passa più da `ProductPage.astro`, che è stato ritirato (vedi
-  "Scheda del miele"). La riga della disponibilità sotto il prezzo non esiste
+- i **due prodotti dell'alveare** (**`/api-regine/`**, **`/nuclei-api/`**):
+  stessa hero **solo testo** dei singoli mieli, con la foto del prodotto nel
+  blocco sotto. **Tutti e due** (`/api-regine/`, `/nuclei-api/`) hanno oggi la
+  stessa scheda dei mieli — blocco prodotto, sezione origine, recensioni, FAQ,
+  altri prodotti, CTA compatta — quindi nessuno passa più da `ProductPage.astro`,
+  che è stato ritirato (vedi "Scheda del miele"). La riga della disponibilità
+  sotto il prezzo non esiste
   più: disponibilità e periodo stanno nei dati dell'origine e nelle FAQ, come nei
   mieli;
 - **`/chi-siamo/`**: hero **senza sfondo**, con la foto di Raffaele *accanto* al
@@ -223,7 +258,7 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
 - **Card dei reparti**: `<ProductCards>` (griglia foto + prezzo + testo + link) è
   condivisa da home e `/miele/`; le card di rimando nelle pagine interne usano
   `<LinkCards>` con `img`/`alt`. **Nessuna card resta senza foto**: le immagini
-  vengono da `repartoImages` in `bee-products.js` (mieli, polline, regine,
+  vengono da `repartoImages` in `bee-products.js` (mieli, regine,
   nuclei, consegna) e da `guideCard()` in `guides.ts` per le guide, che riusa la
   foto della hero della guida. L'audit fallisce se una `.card` non contiene
   un'immagine.
@@ -316,17 +351,14 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
 
 ## TODO prima del lancio (dati segnaposto)
 
-`src/data/bee-products.js` (polline, api regine, nuclei) — finché restano `null`
-le pagine mostrano una frase neutra ("Prezzo su richiesta", "chiedici la
-disponibilità") e **non** inventano nulla. Fatto: polline (barattolo da 200 g a
-€ 5,50 → `prezzo` + `formato`, e la disponibilità: fresco aprile–maggio,
-essiccato anche dopo), api regine (**€ 20,00 / regina**), nuclei (**€ 99,00 a
-nucleo**). Restano da completare `polline.raccolto/lavorazione` e `nuclei.telai`:
-quest'ultimo è già collegato — se lo compili diventa il dato "Composizione"
-della sezione origine (`nuclei.origine.items[1]`), altrimenti resta la
-descrizione generica. La disponibilità di api regine e nuclei sta nel dato
-`Disponibilità` / `Preparazione` di `origine.items` e nelle FAQ; per il polline
-sta nel dato "Disponibilità" di `origine.items`.
+`src/data/bee-products.js` (api regine, nuclei) — finché restano `null` le
+pagine mostrano una frase neutra ("Prezzo su richiesta", "chiedici la
+disponibilità") e **non** inventano nulla. Fatto: api regine (**€ 20,00 /
+regina**) e nuclei (**€ 99,00 a nucleo**). Resta da completare `nuclei.telai`:
+è già collegato — se lo compili diventa il dato "Composizione" della sezione
+origine (`nuclei.origine.items[1]`), altrimenti resta la descrizione generica.
+La disponibilità di api regine e nuclei sta nel dato `Disponibilità` /
+`Preparazione` di `origine.items` e nelle FAQ.
 
 In `src/data/site.js`: `reviews` (le recensioni Google autentiche, vedi sotto),
 `hours` / `hoursNote`, e l'`annata` di ogni miele (`annata: null`).
@@ -339,8 +371,8 @@ In `src/data/site.js`: `reviews` (le recensioni Google autentiche, vedi sotto),
   colonne della tabella su `/miele/`, le risposte delle FAQ e le varianti dei
   dati strutturati (`src/lib/price.js`: `entryFormat`, `otherFormats`, `priceLine`,
   `priceFrom`);
-- **prezzo unico** (polline, api regine, nuclei): `prezzo: "€ 5,50 (200 g)"`
-  oppure `prezzo: "€ 20,00 / regina"`. La coda — la confezione tra parentesi o il
+- **prezzo unico** (api regine, nuclei): `prezzo: "€ 20,00 / regina"`
+  oppure `prezzo: "€ 99,00 a nucleo"`. La coda — la confezione tra parentesi o il
   riferimento del pezzo dopo la barra (`/ regina`, `/ nucleo`) — viene resa più
   piccola e in un colore più tenue da `src/components/Price.astro` /
   `splitPrice`, così resta leggibile senza rubare spazio al totale. Vale sia nel
@@ -383,7 +415,7 @@ nell'hub `/miele/` (card della griglia + nota prezzi), nel footer, nella
 resta **senza `price`** (nome, immagine e URL: nessun prezzo inventato).
 Il favo è anche l'unico prodotto con **`schemaAvailability: null`**: non dichiara
 mai una disponibilità, in nessun nodo e in nessuna pagina. Nella forma normale un
-`Offer` prende `availability: https://schema.org/InStock` (i mieli, il polline, le
+`Offer` prende `availability: https://schema.org/InStock` (i mieli, le
 regine, i nuclei); il favo no, perché è disponibile poco e solo su prenotazione, e
 dichiararlo "in stock" sarebbe falso. Vale anche se un giorno avesse un prezzo
 pubblicato: `offer()` legge il campo invece di mettere `InStock` a priori.
@@ -428,15 +460,13 @@ prodotto e nelle FAQ, una volta sola. I campi `specs`, `uses`, `benefits`,
 solo favo, che era l'unico ad averli (nessuno li legge più): il template non li
 rende.
 
-**La stessa scheda, per gli altri prodotti.** `/api-regine/`, `/nuclei-api/` e
-`/polline-d-api/` hanno oggi questa struttura — stesso `.product-grid`, stessa
-sezione origine con le quattro `.feature`, stessa griglia recensioni, stessa
-chiusura — con i testi che vengono dai loro dati in `src/data/bee-products.js`.
-Sono tre file distinti (`api-regine/index.astro`, `nuclei-api/index.astro`,
-`polline-d-api/index.astro`) che ripetono lo stesso markup: `ProductPage.astro`,
-il componente generico che usavano prima, è stato ritirato quando anche il
-polline è passato a questa forma. Campi, tutti facoltativi salvo `heroIntro`,
-`chips`, `origine`, `faq`:
+**La stessa scheda, per gli altri prodotti.** `/api-regine/` e `/nuclei-api/`
+hanno oggi questa struttura — stesso `.product-grid`, stessa sezione origine con
+le quattro `.feature`, stessa griglia recensioni, stessa chiusura — con i testi
+che vengono dai loro dati in `src/data/bee-products.js`. Sono due file distinti
+(`api-regine/index.astro`, `nuclei-api/index.astro`) che ripetono lo stesso
+markup: `ProductPage.astro`, il componente generico che usavano prima, è stato
+ritirato. Campi, tutti facoltativi salvo `heroIntro`, `chips`, `origine`, `faq`:
 
 - `heroIntro` — il sottotitolo corto della hero;
 - `chips` — le quattro caratteristiche del blocco prodotto;
@@ -451,24 +481,19 @@ polline è passato a questa forma. Campi, tutti facoltativi salvo `heroIntro`,
   colonne i fotogrammi `g-item--tall` sono larghi 516px e alti 688px da desktop,
   più del viewport; a 3 sono 336×448, la stessa misura della galleria della home,
   e sotto i 700px la griglia torna comunque a 2. Così le gallerie con media
-  verticali (favo, regine, nuclei) usano `gallery-grid--three`; quella del polline
-  (`polline_granuli` nel blocco prodotto, `prato_fiorito` nell'origine, quindi in
-  pagina restano solo la macro dell'ape e il video) resta a 2 colonne;
+  verticali (favo, regine, nuclei) usano `gallery-grid--three`;
 - `whatsappText` — il messaggio precompilato dei link WhatsApp: `lib/whatsapp.js`
   costruisce l'URL dal numero di `site.whatsapp` e dal testo della scheda, così
-  chi scrive dal polline non apre la chat con una domanda sul miele. Il link
+  chi scrive per le api regine non apre la chat con una domanda sul miele. Il link
   arriva al bottone del blocco prodotto, alla CTA finale, al bottone flottante e
   al footer (`whatsappHref` passa da `Base.astro`);
-- le **foto del polline sono stock** (`scripts/add-stock-image.mjs`): la
-  didascalia dell'origine dice "(foto illustrativa)" e la provenienza si dichiara
-  lì, dove la pagina ne parla davvero; l'intro della galleria resta descrittiva.
 
 Restano fuori da questa forma la scheda tecnica (`specs`), la sezione punti di
 forza (`cards`) e la tracciabilità dei nuclei: erano gli stessi fatti ripetuti in
 tre punti. Sono state tolte dai dati, e i fatti sono distribuiti tra i quattro
 dati dell'origine, le chips e le FAQ. **Il markup delle schede resta però scritto
-in quattro file** (`miele/[slug].astro`, `api-regine/index.astro`,
-`nuclei-api/index.astro`, `polline-d-api/index.astro`): la forma è la stessa, il
+in tre file** (`miele/[slug].astro`, `api-regine/index.astro`,
+`nuclei-api/index.astro`): la forma è la stessa, il
 codice no. Se un giorno servirà
 cambiarla, il passo è estrarre un componente condiviso (`ProductSheet.astro`).
 
@@ -479,8 +504,12 @@ Campi che una scheda può avere in `src/data/site.js`:
 - `heroIntro` — il sottotitolo della hero, due righe. Il template comune non lo
   calcola più da sé: ogni scheda ha il suo, corto;
 - `originNote` — la frase di "Da dove arriva": nome della raccolta + gli apiari
-  di quel miele. È lì che stanno le zone precise (Martesana, Gera d'Adda, Parco
-  Adda Nord, Val Brembana), perché i quattro dati sono volutamente secchi;
+  di quel miele. La zona è quella della varietà (`apiaryZone`: il castagno viene
+  dagli apiari dell'Alta Val Brembana, gli altri dal Parco Adda Nord — vedi
+  "Sede legale e apiari"), perché i quattro dati sono volutamente secchi;
+- `apiaryZone` — la zona degli apiari di quella varietà, quando non è il Parco
+  Adda Nord: alimenta il dato "Origine" della scheda ("Alta Val Brembana,
+  Lombardia") e l'`alt` della foto in "Da dove arriva";
 - `harvest`, `annata` — il periodo di raccolta (forma da pagina, es. "A giugno")
   e l'annata in vendita, da completare a mano: se c'è compare sotto il dato
   "Raccolta";
@@ -518,7 +547,7 @@ recensioni.
 
 - [x] **Numero di telefono**: aggiornato a +39 351 537 6719 (CTA "Chiama ora", WhatsApp e schema)
 - [x] **Prezzi mieli**: aggiornati — acacia 6,00 (500g) / 11,00 (kg), millefiori 5,00 / 9,00, castagno 6,50 / 12,00 (dati strutturati come `ProductGroup` con una variante per formato)
-- [x] **Prezzo polline**: barattolo da 200 g a € 5,50 (blocco prodotto, dato "Confezione" dell'origine e `Product` con `Offer`)
+- [x] **Prezzo api regine e nuclei**: € 20,00 / regina e € 99,00 a nucleo (blocco prodotto, dato "Confezione"/"Preparazione" dell'origine e `Product` con `Offer`)
 - [ ] **Orari**: pubblicati `Tutti i giorni 08:00–21:00` + nota "chiama prima di
       passare"; la scheda Google Business Profile deve riportare gli stessi orari
       (o correggi `hours` in `src/data/site.js`)
@@ -536,8 +565,7 @@ recensioni.
       sul `Product` (o sul `LocalBusiness` della home) sarebbe un voto attribuito
       alla cosa sbagliata.
       L'`aggregateRating` e i nodi `Review` esistono **solo sulle schede dei
-      prodotti** (le cinque del miele, `/api-regine/`, `/nuclei-api/` e
-      `/polline-d-api/`) e vengono
+      prodotti** (le cinque del miele, `/api-regine/` e `/nuclei-api/`) e vengono
       dalle recensioni *del prodotto* (`rating` / `productReviews` di ogni
       scheda, vedi "Scheda del miele"): i testi e le stelle pubblicati sono gli
       stessi che rende la pagina.
@@ -545,9 +573,8 @@ recensioni.
       sono reali e arrivano dal titolare. **Tutte le altre sono segnaposto
       scritti su richiesta** (nomi e testi inventati, tutti da 5 stelle):
       `rating.count` 4 per il tiglio e more, 3 per ailanto e castagno, 2 per il
-      favo, 3 per api regine, 2 per nuclei, **1 per il polline**. In pagina i
-      testi mostrati sono gli stessi: al massimo tre, tranne il favo (due) e il
-      polline (una). Vanno sostituite con
+      favo, 3 per api regine, 2 per nuclei. In pagina i
+      testi mostrati sono gli stessi: al massimo tre, tranne il favo (due). Vanno sostituite con
       recensioni vere prima del lancio. Sono pubblicate anche nei dati
       strutturati (`Review` + `aggregateRating`), quindi finché restano finte la
       pagina dichiara a Google recensioni che non esistono: oltre a essere
@@ -578,7 +605,7 @@ recensioni.
   in `docs/seo-azioni-manuali.md`.
 - **La home resta compatta**: ~900 parole e 9 sezioni, niente catalogo né
 enciclopedia. Il contenuto SEO vive nelle pagine di destinazione
-(`/miele/`, `/miele/miele-millefiori/`, `/polline-d-api/`, `/api-regine/`,
+(`/miele/`, `/miele/miele-millefiori/`, `/api-regine/`,
 `/nuclei-api/`, `/consegna-miele/`, `/guide/`), raggiungibili da menu — le
 guide, che non sono nel menu, dal footer e dalle card in pagina.
 Le regole interne: pagine commerciali ≤ ~1200 parole, FAQ 4-5 voci brevi,
@@ -609,8 +636,8 @@ sezione "Dove consegniamo" o se `areaServedFeatured` contiene una località non
 servita.
 - Architettura a hub: la home presidia il locale (`miele Cassano d'Adda`), `/miele/`
 il generico-nazionale (`miele italiano`, `non pastorizzato`, `artigianale`),
-`/polline-d-api/`, `/api-regine/`, `/nuclei-api/` i prodotti dell'allevamento
-- Cluster di contenuti: 6 guide che linkano le pagine commerciali (e viceversa);
+`/api-regine/`, `/nuclei-api/` i prodotti dell'allevamento
+- Cluster di contenuti: 5 guide che linkano le pagine commerciali (e viceversa);
 le guide sono l'unico posto con testo lungo (900-1000 parole)
 - JSON-LD validi: `LocalBusiness` (NAP + geo + areaServed + founder/Person),
 `ProductGroup` + `hasVariant` per i mieli (una `Product`/`Offer` per formato, con
@@ -654,6 +681,8 @@ node scripts/audit.mjs        # TUTTE le pagine di dist/: title/desc, canonical,
                               # non duplicate, nessuna CTA attaccata al blocco contatti)
                               # e campi di conversione mai vuoti (.product-price, .bulk-note,
                               # .price-note: se un fallback non renderizza, l'audit lo dice)
+                              # e apiari/produzione mai attribuiti a Cassano d'Adda (la
+                              # sede legale sì: vedi "Sede legale e apiari")
 node scripts/qa-browser.mjs   # sweep di tutte le pagine (mobile 375 + desktop 1280):
                               # overflow, h1, img rotte, errori console + interazioni home
                               # (hero con sfondo, preload, lightbox, video)
@@ -905,7 +934,10 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   - `raffaele-che-mostra-lo-spirito-di-adattamento-delle-api-che-si-sono-create-spazio-da-sole.mp4`
     → `api-che-si-creano-spazio.mp4` (576×1024, 57 s, 8,2 MB) — `/nuclei-api/`;
   - `video-emozionante-girato-da-raffele-che-mostra-le-sue-api-che-impollinano-un-fiore.mp4`
-    → `api-che-impollinano.mp4` (480×856, 9 s, 0,5 MB) — `/polline-d-api/`;
+    → **non più pubblicato**: era nella galleria di `/polline-d-api/`, tolta dal
+    catalogo insieme al polline (`public/video/api-che-impollinano.mp4` e il suo
+    poster sono stati rimossi, e `scripts/posters.mjs` non li ricodifica più).
+    La sorgente resta in root, per il giorno in cui servisse;
   - `regina-f1-su-covate.mp4` → `regina-f1-su-covate.mp4` (478×850, 19 s,
     5,1 MB, audio mono 64k come gli altri) — `/api-regine/`, **primo filmato
     della galleria** «Le regine in video» (gli altri due sono la nascita e la
@@ -962,7 +994,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   barattoli) arrivano da **Pexels** e sono pubblicate con
   `scripts/add-stock-image.mjs`: `prato_fiorito`, `fiori_robinia`, `honey_favo`,
   `honey_favo_aperto`, `ape_polline`,
-  `polline_granuli`, `miele_cristallizzato`, `miele_colazione`, `miele_versare`.
+  `miele_cristallizzato`, `miele_colazione`, `miele_versare`.
   Vanno usate solo come immagini di contesto/illustrative, con
   didascalie che descrivono quello che la foto mostra davvero. `miele_colazione`
   (il miele servito a tavola) non è più usata da nessuna pagina — in

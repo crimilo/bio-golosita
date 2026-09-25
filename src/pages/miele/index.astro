@@ -6,7 +6,7 @@ import HoneyCard from '../../components/HoneyCard.astro';
 import Faq from '../../components/Faq.astro';
 import LinkCards from '../../components/LinkCards.astro';
 import ProductCards from '../../components/ProductCards.astro';
-import { polline, apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../../data/bee-products';
+import { apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../../data/bee-products';
 import ContactSection from '../../components/ContactSection.astro';
 import ProseBlocks from '../../components/ProseBlocks.astro';
 import Icons from '../../components/Icons.astro';
@@ -27,14 +27,14 @@ const pathname = '/miele/';
 const heroImg = 'hero_bg';
 const title = 'Vendita Miele Artigianale 100% Italiano | Bio & Golosità';
 const description =
-  "Miele 100% italiano di api proprie a Cassano d'Adda: acacia, millefiori e castagno, non pastorizzati. Scopri prezzi, formati e consegna in zona.";
+  "Miele 100% italiano di api proprie dagli apiari tra Parco Adda Nord e Alta Val Brembana: acacia, millefiori e castagno. Ritiro a Cassano d'Adda.";
 
 const crumbs = [{ name: 'I nostri mieli', path: pathname }];
 
 const faq = [
   {
     q: 'Il vostro miele è italiano?',
-    a: "Sì: è 100% italiano, prodotto dalle nostre api negli apiari tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana. Non importiamo miele e non facciamo miscele con mieli esteri.",
+    a: "Sì: è 100% italiano, prodotto dalle nostre api negli apiari del Parco Adda Nord e dell'Alta Val Brembana. Non importiamo miele e non facciamo miscele con mieli esteri.",
   },
   // Nessuna FAQ sul biologico: il miele non è certificato bio e sul sito la
   // parola "bio" non viene mai usata come claim (è solo il nome dell'azienda).
@@ -96,13 +96,6 @@ const blocks = [
 ];
 
 const otherProducts = [
-  {
-    href: '/polline-d-api/',
-    ...repartoImages.polline,
-    price: polline.prezzo ?? prezzoSuRichiesta,
-    title: "Polline d'api",
-    text: "Il polline raccolto dalle nostre api, con origine tracciabile e le indicazioni giuste per conservarlo.",
-  },
   {
     href: '/api-regine/',
     ...repartoImages.apiRegine,
@@ -169,7 +162,7 @@ const guideCards = [
   <PageHero
     h1="Miele italiano artigianale: acacia, millefiori e castagno"
     eyebrow="api proprie · non pastorizzato · 100% italiano"
-    intro="Mieli di produzione propria, smielati a freddo nei nostri apiari a Cassano d'Adda. Vendita diretta e consegna in zona."
+    intro="Mieli di produzione propria dai nostri apiari nel Parco Adda Nord e in Alta Val Brembana, smielati a freddo. Vendita diretta e consegna in zona."
     crumbs={crumbs}
     bg={{ base: heroImg, height: 'tall', position: '52% 100%', positionMobile: '52% 100%' }}
   >
@@ -227,10 +220,10 @@ const guideCards = [
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">dalla stessa azienda</span>
-        <h2 id="prodotti-title">Polline, api regine e nuclei d'api</h2>
+        <h2 id="prodotti-title">Api regine e nuclei d'api</h2>
         <p>
           Oltre al miele vendiamo gli altri prodotti del nostro allevamento:
-          polline d'api, api regine e nuclei.
+          api regine e nuclei.
         </p>
       </div>
       <ProductCards cards={otherProducts} />

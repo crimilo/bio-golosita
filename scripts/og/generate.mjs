@@ -127,7 +127,7 @@ function bodyHtml(page) {
           <img src="${LOGO}" alt="">
           <div>
             <div class="brand-name">Bio &amp; Golosit&agrave;</div>
-            <div class="brand-sub">miele di api proprie &middot; Cassano d'Adda</div>
+            <div class="brand-sub">miele di api proprie &middot; Parco Adda Nord e Alta Val Brembana</div>
           </div>
         </div>
         <div class="badge">${esc(page.badge)}</div>

@@ -1728,7 +1728,7 @@ strong {
   border: 0;
 }
 
-/* Card informative (polline, regine, nuclei, zone di consegna, guide) */
+/* Card informative (regine, nuclei, zone di consegna, guide) */
 .cards {
   display: grid;
   gap: var(--space-3);

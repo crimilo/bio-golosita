@@ -11,14 +11,14 @@ import PriceBadge from '../components/PriceBadge.astro';
 import ProductCards from '../components/ProductCards.astro';
 import { site } from '../data/site';
 import { ogImageFor } from '../data/og';
-import { polline, apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../data/bee-products';
+import { apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../data/bee-products';
 import { priceFrom } from '../lib/price';
 import { localBusiness, faqPage } from '../lib/schema';
 
 /**
  * Home = bacheca dei prodotti. I 5 mieli hanno le loro schede complete su
  * /miele/ (griglia, prezzi, formati) e qui non si ripetono: da qui si sceglie
- * il *reparto* (miele, polline, regine, nuclei) e si entra nella pagina dedicata.
+ * il *reparto* (miele, regine, nuclei) e si entra nella pagina dedicata.
  */
 const homeProducts = [
   {
@@ -27,13 +27,6 @@ const homeProducts = [
     title: 'I nostri mieli',
     text: 'Acacia, millefiori e castagno: mieli non pastorizzati e smielati a freddo. In stagione prepariamo anche il miele in favo.',
     price: priceFrom(site.honeys.flatMap((h) => h.priceFormats)),
-  },
-  {
-    href: '/polline-d-api/',
-    ...repartoImages.polline,
-    title: "Polline d'api",
-    text: "Raccolto dalle nostre api tra la Martesana e la Gera d'Adda: fresco o essiccato, con le indicazioni per conservarlo.",
-    price: polline.prezzo ?? prezzoSuRichiesta,
   },
   {
     href: '/api-regine/',
@@ -53,7 +46,7 @@ const homeProducts = [
 
 const title = "Miele 100% Italiano a Cassano d'Adda | Bio & Golosità";
 const description =
-  "Miele artigianale 100% italiano di api proprie a Cassano d'Adda (MI), non pastorizzato e smielato a freddo. Vendita diretta e consegna in zona.";
+  "Miele artigianale 100% italiano di api proprie, dagli apiari tra Parco Adda Nord e Alta Val Brembana. Non pastorizzato, ritiro a Cassano d'Adda.";
 
 const homeFaq = [
   {
@@ -141,7 +134,7 @@ const homeFaq = [
         <span class="eyebrow">non solo miele</span>
         <h2 id="prodotti-title">I nostri prodotti</h2>
         <p>
-          Miele, polline, api regine e nuclei: tutto di produzione propria, venduto
+          Miele, api regine e nuclei: tutto di produzione propria, venduto
           direttamente.
         </p>
       </div>
@@ -168,12 +161,12 @@ const homeFaq = [
         <div class="feature">
           <div class="feature-icon"><Icons name="leaf" size={26} /></div>
           <h3>Miele 100% italiano</h3>
-          <p>Miele artigianale di produzione propria, raccolto dalle nostre api negli apiari della Lombardia.</p>
+          <p>Miele artigianale di produzione propria, raccolto dalle nostre api negli apiari del Parco Adda Nord e dell'Alta Val Brembana.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="shield" size={26} /></div>
           <h3>Apicoltore dal {site.apicoltoreDal}</h3>
-          <p>Dal {site.apicoltoreDal} mi prendo cura personalmente delle mie api, tra la Martesana e la Gera d'Adda.</p>
+          <p>Dal {site.apicoltoreDal} mi prendo cura personalmente delle mie api, negli apiari del Parco Adda Nord e dell'Alta Val Brembana.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><Icons name="sparkle" size={26} /></div>
@@ -189,7 +182,7 @@ const homeFaq = [
       <div class="split-media">
         <Picture
           base="raffaele_sorridente_con_le_sue_api"
-          alt="Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api a Cassano d'Adda"
+          alt="Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api in apiario, nel Parco Adda Nord e in Alta Val Brembana"
           sizes="(min-width: 900px) 45vw, 100vw"
           loading="lazy"
         />
@@ -198,9 +191,8 @@ const homeFaq = [
         <span class="eyebrow">il tuo apicoltore<Emoji name="honeybee" /></span>
         <h2 id="about-title">Mi chiamo Raffaele e le api sono la mia passione</h2>
         <p>
-          Ho gli apiari a Cassano d'Adda e nelle campagne tra la Gera d'Adda e
-          la Martesana. Ogni barattolo di
-          Bio & Golosità è il risultato del mio lavoro paziente, fatto di
+          Ho gli apiari nel Parco Adda Nord e in Alta Val Brembana. Ogni barattolo
+          di Bio & Golosità è il risultato del mio lavoro paziente, fatto di
           controlli in apiario, fioriture seguite settimana per settimana e
           smielatura a freddo.
         </p>

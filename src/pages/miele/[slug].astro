@@ -71,8 +71,9 @@ const ratingLabel = rating ? rating.value.toFixed(1).replace('.', ',') : null;
 /**
  * "Da dove arriva": i quattro dati dell'origine. Raccolta e lavorazione arrivano
  * dai dati della scheda, perché cambiano da miele a miele (il miele in favo, per
- * esempio, non si smiela affatto); gli apiari sono tutti in Lombardia, e le zone
- * precise stanno nella frase qui sopra, `originNote`.
+ * esempio, non si smiela affatto); la zona degli apiari è quella della varietà
+ * (`apiaryZone`: il castagno viene dagli apiari dell'Alta Val Brembana, gli
+ * altri dal Parco Adda Nord — vedi README, "Sede legale e apiari").
  */
 const harvestLabel = (() => {
   // "Raccolto a giugno" → "A giugno": in pagina il prefisso è già nel titolo
@@ -81,8 +82,13 @@ const harvestLabel = (() => {
   return v.charAt(0).toUpperCase() + v.slice(1);
 })();
 
+/** La zona degli apiari di questa varietà (senza il campo: il Parco Adda Nord). */
+const apiaryZone = honey.apiaryZone ?? 'Parco Adda Nord';
+/** «nel Parco Adda Nord» / «in Alta Val Brembana»: cambia solo l'articolo. */
+const apiaryZonePhrase = apiaryZone === 'Parco Adda Nord' ? `nel ${apiaryZone}` : `in ${apiaryZone}`;
+
 const origin = [
-  { icon: 'pin', label: 'Origine', value: 'Lombardia, Italia' },
+  { icon: 'pin', label: 'Origine', value: `${apiaryZone}, Lombardia` },
   {
     icon: 'clock',
     label: 'Raccolta',
@@ -229,7 +235,7 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
             alt={
               honey.photo
                 ? `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`
-                : "Gli apiari di Bio & Golosità tra Cassano d'Adda e la Martesana"
+                : `Gli apiari di Bio & Golosità ${apiaryZonePhrase}`
             }
             sizes="(min-width: 900px) 45vw, 100vw"
             loading="lazy"

@@ -19,7 +19,6 @@ export const ogByPath = {
   '/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/': 'miele-millefiori-estivo-al-tiglio-e-ailanto',
   '/miele/miele-di-castagno/': 'miele-di-castagno',
   '/miele/miele-in-favo/': 'miele-in-favo',
-  '/polline-d-api/': 'polline-d-api',
   '/api-regine/': 'api-regine',
   '/nuclei-api/': 'nuclei-api',
   '/consegna-miele/': 'consegna-miele',

@@ -88,7 +88,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Perché noi non pastorizziamo' },
       {
-        p: 'Perché il nostro miele è di api nostre, raccolto nei nostri apiari tra Cassano d\'Adda, la Martesana e la Gera d\'Adda, e venduto direttamente: non deve attraversare mesi di magazzino e non deve restare identico per anni. Lo smieliamo a freddo e lo invasettiamo a piccoli lotti, così ogni barattolo conserva il profumo della sua fioritura. Se vuoi sapere cosa vuol dire concretamente, nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo come lavoriamo.',
+        p: 'Perché il nostro miele è di api nostre, raccolto nei nostri apiari nel Parco Adda Nord e in Alta Val Brembana, e venduto direttamente: non deve attraversare mesi di magazzino e non deve restare identico per anni. Lo smieliamo a freddo e lo invasettiamo a piccoli lotti, così ogni barattolo conserva il profumo della sua fioritura. Se vuoi sapere cosa vuol dire concretamente, nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo come lavoriamo.',
       },
       {
         cta: { href: '/miele/', label: 'Vedi i nostri mieli non pastorizzati' },
@@ -331,8 +331,8 @@ const base: Omit<Guide, 'datePublished'>[] = [
       {
         img: {
           base: 'raffaele_sorridente_con_le_sue_api',
-          alt: "Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api a Cassano d'Adda",
-          caption: "Raffaele in apiario, a Cassano d'Adda",
+          alt: "Raffaele Antoci, apicoltore di Bio & Golosità, sorridente con le sue api in apiario, nel Parco Adda Nord e in Alta Val Brembana",
+          caption: "Raffaele in apiario, nel Parco Adda Nord e in Alta Val Brembana",
         },
       },
 
@@ -416,7 +416,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Cosa facciamo noi' },
       {
-        p: 'Prepariamo nuclei con regina feconda della nostra linea Buckfast, negli apiari tra Cassano d\'Adda, la Martesana e la Gera d\'Adda. La disponibilità dipende dalla stagione: se ti serve un nucleo, scrivici e ti diciamo a che punto siamo, quando possiamo consegnare e come organizzare il ritiro.',
+        p: 'Prepariamo nuclei con regina feconda della nostra linea Buckfast, nei nostri apiari nel Parco Adda Nord e in Alta Val Brembana. La disponibilità dipende dalla stagione: se ti serve un nucleo, scrivici e ti diciamo a che punto siamo, quando possiamo consegnare e come organizzare il ritiro.',
       },
       { cta: { href: '/nuclei-api/', label: "Guarda i nuclei d'api in vendita" } },
     ],
@@ -433,12 +433,12 @@ const base: Omit<Guide, 'datePublished'>[] = [
     readingTime: '6 min',
     hero: {
       base: 'ape_regina_di_raffaele',
-      alt: "L'ape regina dell'apiario di Raffaele Antoci, apicoltore di Bio & Golosità a Cassano d'Adda",
+      alt: "L'ape regina dell'apiario di Raffaele Antoci, apicoltore di Bio & Golosità, nel Parco Adda Nord e in Alta Val Brembana",
     },
     push: {
       href: '/api-regine/',
       label: 'Vedi le api regine disponibili',
-      note: 'Alleviamo regine feconde della nostra linea Buckfast, a Cassano d\'Adda: nella pagina dedicata trovi disponibilità, come prenotare e come ritirare.',
+      note: 'Alleviamo regine feconde della nostra linea Buckfast, negli apiari del Parco Adda Nord e dell\'Alta Val Brembana: nella pagina dedicata trovi disponibilità, come prenotare e come ritirare.',
     },
     blocks: [
       {
@@ -460,8 +460,8 @@ const base: Omit<Guide, 'datePublished'>[] = [
       {
         img: {
           base: 'sciame_5',
-          alt: "Api di Bio & Golosità in apiario, a Cassano d'Adda",
-          caption: "Le nostre api in apiario, a Cassano d'Adda",
+          alt: "Api di Bio & Golosità in apiario, nel Parco Adda Nord e in Alta Val Brembana",
+          caption: "Le nostre api",
         },
       },
       { h2: 'Prima di introdurre: tre controlli' },
@@ -502,99 +502,9 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Le nostre regine' },
       {
-        p: 'Alleviamo regine feconde a Cassano d\'Adda, negli apiari tra la Martesana e la Gera d\'Adda: sono regine di provincia, abituate al clima e alle fioriture della Lombardia. La nostra linea è una sola, <strong>Buckfast</strong>: la regina madre è una F0 selezionata con inseminazione strumentale e quelle che vendiamo sono le sue figlie, le F1. Si vendono già in deposizione: se ti serve una regina per un alveare che vuoi rinnovare, scrivici e ti diciamo subito cosa è disponibile in questo periodo.',
+        p: 'Alleviamo regine feconde negli apiari del Parco Adda Nord e in Alta Val Brembana: sono regine di provincia, abituate al clima e alle fioriture della Lombardia. La nostra linea è una sola, <strong>Buckfast</strong>: la regina madre è una F0 selezionata con inseminazione strumentale e quelle che vendiamo sono le sue figlie, le F1. Si vendono già in deposizione: se ti serve una regina per un alveare che vuoi rinnovare, scrivici e ti diciamo subito cosa è disponibile in questo periodo.',
       },
       { cta: { href: '/api-regine/', label: 'Vedi le api regine disponibili' } },
-    ],
-  },
-
-  {
-    slug: 'polline-fresco-o-essiccato-conservazione',
-    title: 'Polline Fresco o Essiccato: Differenze | Bio & Golosità',
-    description:
-      "Polline d'api fresco o essiccato: come nasce, cosa cambia tra i due, come si conserva a casa, come si usa e come riconoscere un polline di qualità.",
-    h1: 'Polline fresco o essiccato: differenze e come conservarlo',
-    excerpt:
-      'Il polline è un alimento deperibile: il modo in cui viene conservato dopo la raccolta decide profumo, consistenza e durata.',
-    readingTime: '5 min',
-    hero: {
-      base: 'polline_granuli',
-      alt: "Polline d'api in granuli con un cucchiaio di legno",
-    },
-    push: {
-      href: '/polline-d-api/',
-      label: "Scopri il polline d'api di Bio & Golosità",
-      note: "Il nostro polline viene dagli apiari tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana. Nella pagina dedicata trovi origine, conservazione e come ordinarlo.",
-    },
-    blocks: [
-      {
-        p: 'Il polline d\'api è il polline dei fiori che le api raccolgono fiore dopo fiore, impastano con un po\' di nettare e riportano all\'alveare. È un prodotto dell\'alveare molto diverso dal miele: ha una stagionalità stretta, un alto contenuto di umidità quando è fresco e una conservazione che va gestita con attenzione. Ecco cosa cambia tra fresco ed essiccato.',
-      },
-      { h2: 'Come nasce il polline d\'api' },
-      {
-        p: 'Le api raccolgono il polline sui fiori e lo trasportano nelle caratteristiche "palline" attaccate alle zampe posteriori. All\'alveare viene depositato nelle celle, dove si trasforma in quello che le api usano come nutrimento proteico. Per il consumo umano si raccoglie all\'ingresso dell\'arnia, con le apposite cassette raccoglipolline, che fanno cadere parte dei granuli in un cassetto. È un lavoro senza sosta, e la quantità dipende dalle fioriture: nei periodi poveri di fiori, il polline semplicemente non c\'è.',
-      },
-      {
-        img: {
-          base: 'ape_polline',
-          alt: 'Macro di un\'ape coperta di polline su un rametto',
-          caption: 'Sono le api a raccogliere il polline, fiore dopo fiore',
-        },
-      },
-      { h2: 'Polline fresco: profumo intenso, vita breve' },
-      {
-        p: 'Il polline appena raccolto contiene molta umidità (intorno al 20–30%) e va tenuto sotto controllo: in un ambiente caldo e umido deperisce in fretta, perché è un ambiente ideale per muffe e fermentazioni. Per questo il polline fresco si <strong>conserva in frigorifero e, per periodi lunghi, in freezer</strong>. In cambio offre un profumo e una consistenza che nessun trattamento restituisce: granuli morbidi, aroma intenso di fiori ed erba.',
-      },
-      { h2: 'Polline essiccato: comodo, stabile, più neutro' },
-      {
-        p: 'Il polline essiccato viene privato dell\'acqua in eccesso, con aria tiepida e in tempi controllati (mai con calore forte, che rovinerebbe il prodotto). Perde parte della fragranza e tende a diventare più asciutto e granuloso, ma acquista <strong>stabilità</strong>: si conserva in un barattolo ben chiuso, al riparo da luce e umidità, a temperatura ambiente, e si porta con sé facilmente.',
-      },
-      {
-        ul: [
-          '<strong>Polline fresco</strong>: profumo più ricco, granuli morbidi, va tenuto in frigorifero e, per la scorta lunga, in freezer; si consuma entro pochi mesi.',
-          '<strong>Polline essiccato</strong>: più asciutto e stabile, si conserva a temperatura ambiente, ma con aroma meno intenso.',
-          '<strong>In entrambi i casi</strong> conta la catena del freddo e la rapidità del confezionamento dopo la raccolta.',
-        ],
-      },
-      { h2: 'Come si conserva (e cosa non fare)' },
-      {
-        ul: [
-          'Tieni il polline in un barattolo ben chiuso: l\'umidità dell\'aria è il primo nemico.',
-          'Tienilo al riparo dalla luce: le finestre soleggiate della cucina non sono il posto giusto.',
-          'Fresco: frigorifero per il consumo quotidiano, freezer per la scorta lunga.',
-          'Essiccato: un luogo asciutto e a temperatura stabile, lontano dal fornello.',
-          'Preleva con un cucchiaio asciutto e chiudi subito il barattolo: evita di manipolarlo con le mani umide.',
-        ],
-      },
-      {
-        note: 'Il polline è un prodotto naturale e stagionale: colore, profumo e sapore cambiano in base alle fioriture. Se il polline di quest\'anno è diverso da quello dell\'anno scorso, è normale: sta raccontando fioriture diverse.',
-      },
-      { h2: 'Come si usa' },
-      {
-        p: 'Il polline si gusta al naturale, un cucchiaino alla volta, oppure si aggiunge a yogurt, macedonia, frullati, cereali e miele. Il sapore è delicato, leggermente dolce, con note di fiori e di erba. Va tenuto presente che è un ingrediente, non un dolcificante: non sostituisce il miele in una tisana. Se il polline è fresco e tenuto in freezer, tiralo fuori poco prima di consumarlo.',
-      },
-      { h2: 'Come riconoscere un polline di qualità' },
-      {
-        ul: [
-          'I granuli sono il più possibile <strong>interi</strong>: se il contenuto è in gran parte polvere, il prodotto è stato movimentato troppo.',
-          '<strong>Colore vario</strong>, tendente al giallo, all\'arancio e al marrone: è la firma delle diverse fioriture.',
-          '<strong>Origine dichiarata</strong>: sai da quale apiario arriva e chi lo raccoglie.',
-          '<strong>Odore netto</strong>, di fiori e di erba, non "chiuso" o di vecchio.',
-          '<strong>Nessuna promessa terapeutica sull\'etichetta</strong>: il polline è un alimento, non un rimedio.',
-        ],
-      },
-      {
-        img: {
-          base: 'prato_fiorito',
-          alt: 'Prato di campagna con fiori spontanei di vari colori',
-          caption: 'Un prato in fiore: i colori diversi dei granuli sono i colori diversi dei fiori',
-        },
-      },
-      { h2: 'Il nostro polline' },
-      {
-        p: 'Il polline che vendiamo arriva dagli apiari tra Cassano d\'Adda, la Martesana, la Gera d\'Adda e il Parco Adda Nord, dove sono le nostre api, ed è confezionato a piccoli lotti. Se vuoi sapere cosa c\'è disponibile in questo periodo, se è fresco o essiccato e come conservarlo al meglio, chiamaci o scrivici: te lo spieghiamo in due minuti.',
-      },
-      { cta: { href: '/polline-d-api/', label: "Scopri il polline d'api di Bio & Golosità" } },
     ],
   },
 ];

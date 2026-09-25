@@ -14,10 +14,18 @@ const areaServedType = (name) => {
   return 'City';
 };
 
+/**
+ * Descrizione dell'azienda nei dati strutturati: è la frase che Google legge,
+ * quindi qui la distinzione sede/apiari va detta per esteso — la **sede
+ * legale** è a Cassano d'Adda, gli **apiari** (e quindi il miele) sono nel
+ * **Parco Adda Nord** e in **Alta Val Brembana** — il castagno viene
+ * esclusivamente da quella (vedi `apiaryZone` nelle
+ * schede del miele).
+ */
 const businessDescription = () =>
-  `Apicoltore a Cassano d'Adda (Milano): miele 100% italiano e artigianale di api proprie — ${site.honeys
+  `Apicoltore con sede legale a Cassano d'Adda (Milano) e apiari nel Parco Adda Nord e in Alta Val Brembana: miele 100% italiano e artigianale di api proprie — ${site.honeys
     .map((h) => h.name.toLowerCase().replace(/^(miele\s+)?(di\s+)?/, ''))
-    .join(', ')} — non pastorizzato e smielato a freddo. Produciamo anche polline d'api, api regine e nuclei d'api.`;
+    .join(', ')} — non pastorizzato e smielato a freddo. Produciamo anche api regine e nuclei d'api.`;
 
 /** L'apicoltore, come entità Person (E-E-A-T). */
 export function person() {
@@ -30,7 +38,6 @@ export function person() {
     knowsAbout: [
       'Apicoltura',
       "Miele italiano di produzione propria",
-      "Polline d'api",
       'Allevamento di api regine',
       "Nuclei d'api",
     ],
@@ -112,7 +119,7 @@ export function localBusiness() {
  *   sua `Offer`, `size` e uno `sku` stabile. È la forma che Google chiede per un
  *   prodotto con varianti sulla stessa pagina
  *   (developers.google.com/search/docs/appearance/structured-data/product-variants).
- * - **Un solo formato** (polline, api regine, nuclei) → `Product` con la sua
+ * - **Un solo formato** (api regine, nuclei) → `Product` con la sua
  *   `Offer`, `size` incluso quando c'è (`item.formato`).
  *
  * Se il prezzo non è pubblicato (`prezzo: null` o `priceFormats: []`) non c'è

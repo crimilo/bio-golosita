@@ -171,6 +171,29 @@ for (const file of files) {
     if (m) fail(rel, `affermazione su chi consegna: "${m[0]}"`);
   }
 
+  // Sede legale e apiari sono due cose diverse: la sede è a Cassano d'Adda
+  // (indirizzo, ritiro, contatti, localizzazione commerciale), gli apiari sono
+  // nel Parco Adda Nord e in Alta Val Brembana — e da lì viene il miele.
+  // Quindi il sito non deve mai dire che le api, gli apiari o la produzione
+  // sono «a Cassano d'Adda»; le frasi su consegne, clientela e area servita
+  // restano invece come sono. Vedi README, "Sede legale e apiari".
+  const apiariACassano = [
+    /apiari?[^<]{0,40}Cassano d'Adda/i,
+    // Case-sensitive di proposito: un titolo SEO come «Api regine a Cassano
+    // d'Adda (MI)» è legittimo (il prodotto si vende/prenota a Cassano), «le
+    // nostre api a Cassano d'Adda» no.
+    /\bapi\s+(?:a|tra|di|nel|in|nei)\s+Cassano d'Adda/,
+  ];
+  // `unescape` come per le zone servite: nell'HTML gli apostrofi sono `&#39;`
+  // («Cassano d&#39;Adda»), e le frasi sull'origine arrivano da campi dei dati
+  // (`heroIntro`, `originNote`, `description`): senza questo passaggio un
+  // «apiari a Cassano d'Adda» scritto lì non verrebbe mai visto.
+  const testoOrigine = unescape(h);
+  for (const re of apiariACassano) {
+    const m = testoOrigine.match(re);
+    if (m) fail(rel, `apiari/produzione attribuiti a Cassano d'Adda: "${m[0]}"`);
+  }
+
   // Il menu deve far capire dove sei. Una sola voce accesa, e quella giusta
   // per la sezione: su /miele/miele-di-acacia/ è accesa "Mieli" (non la home).
   // Il controllo è sul blocco <nav>, non sulla pagina intera, così non prende

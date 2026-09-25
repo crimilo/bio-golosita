@@ -1,5 +1,5 @@
 /**
- * Dati di vendita dei prodotti dell'allevamento: polline, api regine, nuclei.
+ * Dati di vendita dei prodotti dell'allevamento: api regine, nuclei.
  *
  * ────────────────────────────────────────────────────────────────────────────
  * ⚠️  DA COMPLETARE A MANO (Raffaele): sono le uniche informazioni che il sito
@@ -8,14 +8,11 @@
  *     chiedere. Appena le hai, sostituisci il `null` e la pagina si aggiorna
  *     da sola (testo + eventuale prezzo).
  *
- *   polline.raccolto / lavorazione (quando ci sono, vanno nel paragrafo di
- *     `polline.origine.notes`)
  *   nuclei.telai
  *
- *   Le disponibilità sono scritte: polline fresco aprile–maggio (essiccato anche
- *   dopo), api regine da fine maggio e nuclei dai primi di aprile — nel dato
- *   "Disponibilità" / "Preparazione" di `origine.items`, che è l'unico posto dove
- *   la pagina le legge.
+ *   Le disponibilità sono scritte: api regine da fine maggio e nuclei dai primi
+ *   di aprile — nel dato "Disponibilità" / "Preparazione" di `origine.items`,
+ *   che è l'unico posto dove la pagina le legge.
  * ────────────────────────────────────────────────────────────────────────────
  */
 
@@ -26,10 +23,6 @@
  */
 export const repartoImages = {
   miele: { img: 'hero_bg', alt: 'Barattoli di miele di Bio & Golosità' },
-  polline: {
-    img: 'polline_granuli',
-    alt: "Polline d'api in granuli con un cucchiaio di legno",
-  },
   apiRegine: { img: 'ape_regina_di_raffaele', alt: 'Ape regina nel nostro apiario' },
   nuclei: { img: 'arnia_piena_di_api', alt: 'Arnia piena di api sui telai' },
   // La stessa foto della hero di /consegna-miele/ e della galleria della home:
@@ -47,128 +40,6 @@ export const prezzoSuRichiesta = 'Prezzo su richiesta';
 
 export const prezzoNota =
   'Il prezzo dipende dal formato e dal periodo: chiedilo al telefono o su WhatsApp e te lo diamo subito.';
-
-export const polline = {
-  path: '/polline-d-api/',
-  name: "Polline d'api",
-  h1: "Polline d'api italiano di produzione propria",
-  title: "Polline d'Api a Cassano d'Adda (MI) | Bio & Golosità",
-  description:
-    "Polline d'api raccolto nei nostri apiari tra Cassano d'Adda, Martesana e Gera d'Adda. Origine, conservazione e freschezza. Chiama il 351 537 6719.",
-  // ↓↓↓ da completare
-  prezzo: '€ 5,50 (200 g)',
-
-  /** Messaggio precompilato del link WhatsApp: vedi `apiRegine.whatsappText`. */
-  whatsappText: "Ciao, vorrei informazioni sul vostro polline d'api",
-  formato: '200 g',
-  raccolto: null, // quando ci sarà: es. 'da aprile a settembre', va nel paragrafo di `origine.notes`
-  lavorazione: null, // quando ci sarà: es. 'essiccato a bassa temperatura', va in `origine.notes`
-  // ↑↑↑ da completare
-
-  /** Sottotitolo della hero: due righe, come nelle schede miele. */
-  heroIntro:
-    "Polline d'api delle nostre api, raccolto fiore dopo fiore negli apiari tra Cassano d'Adda e la Gera d'Adda. È un prodotto di stagione: fresco o essiccato.",
-
-  /**
-   * Caratteristiche del blocco prodotto (le stesse chips dei mieli): aspetto,
-   * gusto, come nasce e come si usa — in quattro righe.
-   */
-  chips: [
-    'Granuli del colore delle fioriture di stagione',
-    'Sapore delicato, con note di fiori e di erba',
-    'Raccolto e confezionato a piccoli lotti',
-    'Al naturale o su yogurt, macedonia e cereali',
-  ],
-
-  /**
-   * Riga piccola del blocco prodotto, sotto il ritiro/consegna (nei mieli è
-   * `site.bulkNote`): la scelta tra fresco ed essiccato è la domanda che arriva
-   * sempre, quindi la riga serve a quella.
-   */
-  note: "Fresco o essiccato: se non sai quale scegliere, chiedici cosa c'è di pronto in questo periodo.",
-
-  /**
-   * Sezione "Da dove arriva il nostro polline": stessa resa dei quattro dati dei
-   * mieli (occhiello + titolo + paragrafo + quattro card con icona + foto).
-   * I quattro dati sono la scheda tecnica di prima, senza le voci da completare.
-   */
-  origine: {
-    eyebrow: 'dai nostri apiari',
-    title: 'Da dove arriva il nostro polline',
-    notes: [
-      "Il polline arriva dagli apiari che seguiamo tra Cassano d'Adda, la Martesana, la Gera d'Adda, il Parco Adda Nord e la Val Brembana: <strong>le api sono nostre</strong> e il polline non viene acquistato da terzi per essere rivenduto. È la stessa filiera del nostro miele.",
-    ],
-    items: [
-      { icon: 'pin', label: 'Origine', value: 'Lombardia, Italia' },
-      { icon: 'clock', label: 'Disponibilità', value: 'Fresco da aprile a maggio, essiccato anche dopo' },
-      { icon: 'package', label: 'Confezione', value: 'Barattolo da 200 g' },
-      {
-        icon: 'shield',
-        label: 'Conservazione',
-        value: 'Fresco in frigo o freezer, essiccato a temperatura ambiente',
-      },
-    ],
-    photo: {
-      base: 'prato_fiorito',
-      alt: 'Prato fiorito di campagna con fiori spontanei colorati',
-      caption: 'Dalle fioriture spontanee nasce il polline della stagione',
-    },
-  },
-
-  /**
-   * SEGNAPOSTO — da sostituire con recensioni reali (vedi README, "Recensioni
-   * dei prodotti"): nome e testo qui sotto sono inventati e finiscono anche nei
-   * dati strutturati (`Review` + `aggregateRating`).
-   */
-  rating: { value: 5, count: 1 },
-  productReviews: [
-    {
-      name: 'Silvia Nava',
-      stars: 5,
-      text: 'Polline fresco e profumato, per niente amaro. Raffaele ci ha anche spiegato come conservarlo e in frigo è rimasto perfetto per settimane.',
-    },
-  ],
-
-  faq: [
-    {
-      q: "Che cos'è il polline d'api e quando si raccoglie?",
-      a: "È il polline dei fiori, che le api impastano in piccole palline e riportano all'alveare. Ha una stagionalità stretta e una vita più breve del miele: per questo conta moltissimo come viene raccolto, essiccato e conservato.",
-    },
-    {
-      q: "Il polline d'api va tenuto in frigorifero?",
-      a: 'Il polline fresco va in frigorifero e, per la scorta lunga, in freezer; quello essiccato si conserva in un barattolo chiuso, al riparo dalla luce, a temperatura ambiente. Quando lo ordini ti spieghiamo come conservare quello che ti consegniamo.',
-    },
-    {
-      q: "Come si usa il polline d'api?",
-      a: 'Al naturale, un cucchiaino alla volta, oppure su yogurt, macedonia, frullati o cereali. Il sapore è delicato, con note di fiori ed erba: è un ingrediente, non un dolcificante.',
-    },
-    {
-      q: "Il polline d'api è un integratore o un medicinale?",
-      a: "No: è un prodotto dell'alveare, un alimento. Non diamo indicazioni terapeutiche e non lo presentiamo come cura o rimedio.",
-    },
-  ],
-
-  gallery: [
-    {
-      base: 'polline_granuli',
-      alt: "Polline d'api in granuli servito con un cucchiaio di legno",
-      cls: 'g-item--square',
-      caption: 'Polline d\'api: granuli dal colore e dal profumo delle fioriture di stagione',
-    },
-    {
-      base: 'ape_polline',
-      alt: "Ape coperta di polline su un rametto, in macro",
-      cls: 'g-item--square',
-      caption: 'Sono le api a raccogliere il polline, fiore dopo fiore',
-    },
-    {
-      base: 'prato_fiorito',
-      alt: 'Prato fiorito di campagna con fiori spontanei colorati',
-      cls: 'g-item--wide',
-      caption: 'Dalle fioriture spontanee nasce il polline della stagione',
-    },
-  ],
-};
 
 export const apiRegine = {
   path: '/api-regine/',
@@ -188,7 +59,7 @@ export const apiRegine = {
 
   /** Sottotitolo della hero: due righe, come nelle schede miele. */
   heroIntro:
-    "Regine feconde della nostra linea Buckfast, allevate negli apiari tra Cassano d'Adda e la Martesana. Produzione limitata, circa 200–300 all'anno.",
+    "Regine feconde della nostra linea Buckfast, allevate negli apiari del Parco Adda Nord e dell'Alta Val Brembana. Produzione limitata, circa 200–300 all'anno.",
 
   /**
    * Caratteristiche del blocco prodotto (le stesse chips dei mieli): cosa si
@@ -218,8 +89,9 @@ export const apiRegine = {
     eyebrow: 'dal nostro allevamento',
     title: 'Come alleviamo le nostre regine',
     notes: [
-      "Lavoriamo una sola linea, la <strong>Buckfast</strong>. Le madri sono <strong>F0 selezionate, inseminate artificialmente e con pedigree</strong>, di un allevamento che fa selezione da 120 anni e che le controlla con rigore prima di metterle in commercio: ci affidiamo a loro perché i risultati nelle nostre famiglie si vedono. Da quelle madri nascono le regine che vendiamo, cioè le <strong>F1</strong>.",
-      "Prendiamo le <strong>celle al 10°–11° giorno dal traslarvo</strong> e le mettiamo in apiari di fecondazione <strong>fatti da noi</strong>, molto più grandi dei classici mini-apiari da fecondazione 10×10. Una regina non entra in vendita prima di aver fatto <strong>almeno un giro di covata</strong> (meglio due) e di averci mostrato una <strong>deposizione idonea</strong>: è quello che ci permette di verificare che la regina deponga bene. Sugli altri caratteri preferiamo non fare promesse: in poche settimane non è possibile valutarli con certezza.",
+      "Lavoriamo una sola linea, la <strong>Buckfast</strong>. Le nostre madri sono <strong>F0 selezionate, inseminate artificialmente e con pedigree</strong>, provenienti da un allevamento che porta avanti la selezione da oltre 120 anni. Da loro nascono le <strong>F1</strong> che vendiamo.",
+      "Preleviamo le <strong>celle al 10°–11° giorno dal traslarvo</strong> e le inseriamo nei nostri apiari di fecondazione, dove utilizziamo <strong>apidee costruite da noi</strong> e più grandi dei classici modelli 10×10.",
+      "Prima della vendita aspettiamo che ogni regina abbia completato almeno un ciclo di covata, meglio due, e verificato che la deposizione sia regolare. Sugli altri caratteri preferiamo essere prudenti: poche settimane non bastano per valutarli con certezza.",
     ],
     items: [
       { icon: 'pin', label: 'Origine', value: 'Lombardia, Italia' },
@@ -229,8 +101,8 @@ export const apiRegine = {
     ],
     photo: {
       base: 'api',
-      alt: "Le api di Bio & Golosità in apiario, a Cassano d'Adda",
-      caption: "Le nostre api, in apiario a Cassano d'Adda",
+      alt: "Le api di Bio & Golosità in apiario, nel Parco Adda Nord e in Alta Val Brembana",
+      caption: "Le nostre api",
     },
   },
 
@@ -304,9 +176,9 @@ export const apiRegine = {
     },
     {
       base: 'sciame_5',
-      alt: "Api di Bio & Golosità in apiario, a Cassano d'Adda",
+      alt: "Api di Bio & Golosità in apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
-      caption: "Le nostre api in apiario, a Cassano d'Adda",
+      caption: "Le nostre api",
     },
     {
       base: 'apiario',
@@ -323,7 +195,7 @@ export const nuclei = {
   h1: "Nuclei d'api in vendita in Lombardia",
   title: "Nuclei d'Api in Vendita in Lombardia | Bio & Golosità",
   description:
-    "Nuclei d'api da apicoltore in Lombardia: cosa comprende un nucleo, sciame, nucleo e pacco d'api, disponibilità e prenotazione. Cassano d'Adda (MI).",
+    "Nuclei d'api da apicoltore in Lombardia: cosa comprende un nucleo, sciame, nucleo e pacco d'api, disponibilità e prenotazione, ritiro a Cassano d'Adda.",
   telai: null, // da completare: es. '5 telai (3 di covata + 2 di scorte)'
   razza: 'Buckfast (F1 da madre F0)', // la regina del nucleo è una figlia della nostra madre F0
   prezzo: '€ 99,00 / nucleo',
@@ -333,7 +205,7 @@ export const nuclei = {
 
   /** Sottotitolo della hero: due righe, come nelle schede miele. */
   heroIntro:
-    "Nuclei d'api della nostra produzione: famiglie già avviate su telai, con una regina feconda già in deposizione. Li prepariamo negli apiari tra Cassano d'Adda e la Martesana.",
+    "Nuclei d'api della nostra produzione: famiglie già avviate su telai, con una regina feconda già in deposizione. Li prepariamo nei nostri apiari nel Parco Adda Nord e in Alta Val Brembana.",
 
   /**
    * Caratteristiche del blocco prodotto (le stesse chips dei mieli): cosa
@@ -351,7 +223,7 @@ export const nuclei = {
    * `site.bulkNote`): qui è la promessa di servizio — trasporto e inserimento
    * sono il passaggio in cui un principiante si perde.
    */
-  note: "Ti spieghiamo come trasportare il nucleo e come inserirlo nell'arnia: è il passaggio più delicato di tutta l'operazione.",
+  note: "Ti spieghiamo come trasportare il nucleo e come inserirlo nell'arnia: è il passaggio più delicato di tutta l'operazione. Il nucleo viaggia nel nostro porta sciami, che chiediamo di restituire: se non torna indietro, il costo del nucleo diventa € 110.",
 
   /**
    * Sezione "Da dove arriva questo nucleo": stessa resa dei quattro dati dei
@@ -369,14 +241,14 @@ export const nuclei = {
       {
         icon: 'pin',
         label: 'Provenienza',
-        value: "Apiari tra Cassano d'Adda, la Martesana e la Gera d'Adda",
+        value: 'Apiari nel Parco Adda Nord e in Alta Val Brembana',
       },
       { icon: 'clock', label: 'Preparazione', value: 'Dai primi di aprile in poi, secondo la stagione' },
     ],
     photo: {
       base: 'sciame_5',
-      alt: "Api di Bio & Golosità in apiario, a Cassano d'Adda",
-      caption: "Le nostre api in apiario, a Cassano d'Adda",
+      alt: "Api di Bio & Golosità in apiario, nel Parco Adda Nord e in Alta Val Brembana",
+      caption: "Le nostre api",
     },
   },
 
@@ -434,6 +306,10 @@ export const nuclei = {
       q: 'Come trasporto un nucleo?',
       a: 'Viaggia chiuso, con la porticina bloccata, e va aperto solo nella posizione definitiva: tragitto breve, all\'ombra, senza sballottamenti. Quando lo ritiri ti spieghiamo come fare.',
     },
+    {
+      q: 'Il porta sciami è compreso nel prezzo?',
+      a: 'Sì: il nucleo viaggia nel nostro porta sciami, che ti chiediamo di restituire. Il prezzo di € 99,00 vale a contenitore restituito: se il porta sciami non torna indietro, il costo del nucleo diventa € 110.',
+    },
   ],
 
   gallery: [
@@ -445,37 +321,37 @@ export const nuclei = {
     },
     {
       base: 'sciame_1',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {
       base: 'sciame_2',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {
       base: 'sciame_3',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {
       base: 'sciame_4',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {
       base: 'sciame_5',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {
       base: 'sciame_6',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {
       base: 'sciame_7',
-      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, Cassano d'Adda",
+      alt: "Nucleo d'api di Bio & Golosità: foto dall'apiario, nel Parco Adda Nord e in Alta Val Brembana",
       cls: 'g-item--tall',
     },
     {

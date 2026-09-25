@@ -13,7 +13,7 @@ const pathname = '/guide/';
 const heroImg = 'sciame_7';
 const title = 'Guide su Miele e Api, Scritte da Chi Alleva | Bio & Golosità';
 const description =
-  "Guide sull'apicoltura spiegate da chi produce: miele non pastorizzato, cristallizzazione, differenze tra i mieli, nuclei, api regine e polline d'api.";
+  "Guide sull'apicoltura spiegate da chi produce: miele non pastorizzato, cristallizzazione, differenze tra i mieli, nuclei e api regine.";
 
 const crumbs = [{ name: 'Guide', path: pathname }];
 
@@ -23,12 +23,6 @@ const commercialCards = [
     ...repartoImages.miele,
     title: 'I nostri mieli',
     text: 'Acacia, millefiori e castagno e, in stagione, il miele in favo: cinque mieli 100% italiani non pastorizzati, con prezzi e formati.',
-  },
-  {
-    href: '/polline-d-api/',
-    ...repartoImages.polline,
-    title: "Polline d'api",
-    text: 'Il polline raccolto dalle nostre api: origine, conservazione e come si usa.',
   },
   {
     href: '/api-regine/',
@@ -64,7 +58,7 @@ const commercialCards = [
   <PageHero
     h1="Guide sul miele, sulle api e sull'alveare"
     eyebrow="approfondimenti"
-    intro="Le cose che ci chiedono più spesso, scritte per esteso: come si lavora il miele, perché cristallizza, cosa cambia tra un miele e l'altro, cosa serve per iniziare con un alveare. Niente promesse: solo quello che facciamo e vediamo in apiario."
+    intro="Le cose che ci chiedono più spesso, spiegate per esteso: come si lavora il miele, perché cristallizza, cosa cambia tra un miele e l'altro e cosa serve per iniziare con un alveare."
     crumbs={crumbs}
     bg={{ base: heroImg, position: '50% 40%', positionMobile: '55% 38%' }}
   />
@@ -73,7 +67,7 @@ const commercialCards = [
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">tutte le guide</span>
-        <h2 id="tutte">Sei guide, sei domande frequenti</h2>
+        <h2 id="tutte">Cinque guide, cinque domande frequenti</h2>
       </div>
       <div class="cards">
         {

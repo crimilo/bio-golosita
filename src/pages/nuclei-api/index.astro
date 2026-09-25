@@ -26,7 +26,7 @@ import Stars from '../../components/Stars.astro';
 import Icons from '../../components/Icons.astro';
 import PhoneCta from '../../components/PhoneCta.astro';
 import { site } from '../../data/site';
-import { nuclei, apiRegine, polline, repartoImages } from '../../data/bee-products';
+import { nuclei, apiRegine, repartoImages } from '../../data/bee-products';
 import { ogImageFor } from '../../data/og';
 import { priceFrom } from '../../lib/price';
 import { product, faqPage, localBusiness } from '../../lib/schema';
@@ -72,13 +72,6 @@ const otherProducts = [
     text: 'Regine feconde della nostra linea Buckfast, per rinnovare un alveare o avviarne uno nuovo.',
     price: apiRegine.prezzo ?? null,
   },
-  {
-    href: '/polline-d-api/',
-    ...repartoImages.polline,
-    title: "Polline d'api",
-    text: "Raccolto dalle nostre api tra la Martesana e la Gera d'Adda: fresco o essiccato, con le indicazioni per conservarlo.",
-    price: polline.prezzo ?? null,
-  },
 ];
 ---
 
@@ -106,7 +99,7 @@ const otherProducts = [
       <div class="product-media">
         <Picture
           base="sciame_4"
-          alt="Un telaio pieno di api, estratto da un'arnia e tenuto in mano in apiario a Cassano d'Adda"
+          alt="Un telaio pieno di api, estratto da un'arnia e tenuto in mano nel nostro apiario, nel Parco Adda Nord e in Alta Val Brembana"
           sizes="(min-width: 900px) 520px, 100vw"
           loading="eager"
           fetchpriority="high"
