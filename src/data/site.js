@@ -183,9 +183,13 @@ export const site = {
    * varietà e per il miele in favo): `title`/`description` (SEO), `heroIntro`,
    * `originNote`, `harvest` + `annata`, `workNote`, `characteristics`, `videos`
    * (con la loro `caption`), `faq`, `rating` + `productReviews` e, se serve,
-   * `photo`. Non ci sono più `intro`, `uses`, `specs` e `benefits`: la scheda
-   * non li rende e le stesse cose stanno in `characteristics` e nelle FAQ (vedi
-   * README, "Scheda del miele").
+   * `photo` (una foto di prodotto al posto di quella dell'apiario) o
+   * `apiaryPhoto` (un'altra foto dell'apiario, base del manifest: `apiari_hd`,
+   * `apiari_5` — vedi README). Di norma la sezione usa `apiari_hd`: il favo è
+   * l'unica scheda con un apiario diverso (`apiari_5`). Non ci sono più
+   * `intro`, `uses`, `specs` e `benefits`: la scheda non li rende e le stesse
+   * cose stanno in `characteristics` e nelle FAQ (vedi README, "Scheda del
+   * miele").
    */
   honeys: [
     {
@@ -569,6 +573,7 @@ export const site = {
     originNote:
       "Il favo si prepara in stagione, quando le api hanno opercolato le cellette, negli apiari che seguiamo tra Cassano d'Adda, la Martesana e la Gera d'Adda.",
     harvest: 'Raccolto in stagione, quando il favo è opercolato',
+    apiaryPhoto: 'apiari_5',
     /** Annata del raccolto in vendita: da completare a mano. */
     annata: null,
     category: 'Miele in favo',

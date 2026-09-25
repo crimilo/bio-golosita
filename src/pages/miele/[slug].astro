@@ -220,7 +220,12 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
         </div>
         <figure class="split-media">
           <Picture
-            base={honey.photo ?? 'apiari_hd'}
+            /* `photo` è una foto *di prodotto* da preferire a quella dell'apiario
+               (nessuna scheda la usa oggi); `apiaryPhoto` sceglie un'altra foto
+               dell'apiario, con la stessa didascalia: le schede se la alternano,
+               così non mostrano tutte la stessa. Senza né l'una né l'altra,
+               `apiari_hd`. */
+            base={honey.photo ?? honey.apiaryPhoto ?? 'apiari_hd'}
             alt={
               honey.photo
                 ? `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`

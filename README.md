@@ -408,7 +408,8 @@ tutte da questo template, nell'ordine:
    `note ?? site.bulkNote`. Deve rispondere a "cosa compro, quanto costa, com'è,
    come lo ordino" e niente altro;
 3. **"Da dove arriva"** — l'occhiello «dai nostri apiari», la frase `originNote`,
-   la foto dell'apiario (`photo`, altrimenti `apiari_hd`) e i quattro dati:
+   la foto dell'apiario (`photo`, altrimenti `apiaryPhoto`, altrimenti
+   `apiari_hd`) e i quattro dati:
    Origine / Raccolta / Lavorazione / Produzione. Raccolta è `harvest` (con
    l'`annata` accodata quando c'è), Lavorazione è `workNote` (per il favo dice
    che non c'è smielatura). Sotto, i `videos` con la loro didascalia;
@@ -459,8 +460,8 @@ polline è passato a questa forma. Campi, tutti facoltativi salvo `heroIntro`,
   arriva al bottone del blocco prodotto, alla CTA finale, al bottone flottante e
   al footer (`whatsappHref` passa da `Base.astro`);
 - le **foto del polline sono stock** (`scripts/add-stock-image.mjs`): la
-  didascalia dell'origine dice "(foto illustrativa)" e l'intro della galleria lo
-  ripete, perché lì si parla di provenienza.
+  didascalia dell'origine dice "(foto illustrativa)" e la provenienza si dichiara
+  lì, dove la pagina ne parla davvero; l'intro della galleria resta descrittiva.
 
 Restano fuori da questa forma la scheda tecnica (`specs`), la sezione punti di
 forza (`cards`) e la tracciabilità dei nuclei: erano gli stessi fatti ripetuti in
@@ -498,8 +499,13 @@ Campi che una scheda può avere in `src/data/site.js`:
   tre finiscono nel JSON-LD; il `count` invece è il totale vero delle recensioni
   del prodotto e può essere più alto — le altre concorrono al voto senza un testo
   in pagina. Aggiornare voto e testi è una riga sola;
-- `photo` — foto della sezione "Da dove arriva" (di norma l'apiario: `apiari_hd`,
-  identico per tutte le schede, perché gli apiari sono gli stessi);
+- `photo` — foto *di prodotto* della sezione "Da dove arriva", al posto di
+  quella dell'apiario (cambiano anche `alt` e didascalia: diventano quelle del
+  miele). Nessuna scheda la usa oggi;
+- `apiaryPhoto` — **quale** foto dell'apiario mostrare in "Da dove arriva"
+  (base del manifest: `apiari_hd` o `apiari_5`); `alt` e didascalia restano
+  quelle dell'apiario. Senza il campo vale `apiari_hd`, ed è la scelta di tutte
+  le varietà: l'unica scheda con un apiario diverso è il favo (`apiari_5`);
 - `gallery` — galleria facoltativa (solo il favo).
 
 La hero di queste pagine **non** usa `variant="product"`: il sottotitolo resta
@@ -760,10 +766,10 @@ titolare. La build non ne ha bisogno: usa gli AVIF già in `public/img/` e
 **Un'eccezione: le foto di prodotto dei mieli.** Le cinque sorgenti
 `miele-*.jpg` (acacia, castagno, i due millefiori estivi, miele in favo) sono di
 nuovo in root, insieme alle due foto di Raffaele con i mieli pronti da spedire
-(`raffaele-con-mieli-pronti-da-spedire-bio-e-golosita*.png`): sono le foto
-dell'ultimo aggiornamento del catalogo e le uniche che `process-images.mjs`
-rigenera oggi: il resto delle basi resta com'è finché non si ripescano gli altri
-sorgenti.
+(`raffaele-con-mieli-pronti-da-spedire-bio-e-golosita*.png`) e alla foto degli
+apiari `apiari-bio-e-golosita-5.png`: sono le foto dell'ultimo aggiornamento del
+catalogo e le uniche che `process-images.mjs` rigenera oggi: il resto delle basi
+resta com'è finché non si ripescano gli altri sorgenti.
 
 Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 *root* si intende il nome del file di partenza, non un file presente nel repo.
@@ -799,7 +805,19 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   OpenAI Media Service API, tipo `trainedAlgorithmicMedia`). È la **hero della
   home**: ottimizzata in `public/img/apiari_hd-*`. Usata consapevolmente come
   sfondo decorativo, non come foto dell'apiario: per le foto reali valgono le
-  regole qui sotto.
+  regole qui sotto. Resta anche in "Da dove arriva" delle quattro varietà (la
+  quinta scheda, il favo, usa la foto vera `apiari_5`): dove compare lì, `alt` e
+  didascalia la presentano come gli apiari — con una foto reale a disposizione, è
+  quella da mettere.
+- `apiari-bio-e-golosita-5.png` (root, 1600×1200, 4:3) — foto degli apiari,
+  ottimizzata in `public/img/apiari_5-*` (varianti 1600, 1200, 800, 640, 480,
+  come `apiari_hd`). È la foto della sezione "Da dove arriva" del **miele in
+  favo**; le altre quattro schede restano su `apiari_hd`.
+  Preparazione: `exiftool -all=` più
+  `magick <file>.png -strip -alpha off` (era RGBA con l'alfa **tutta opaca**:
+  il canale non si vede e nessun'altra immagine pubblicata ce l'ha, quindi si
+  toglie e restano solo IHDR/IDAT/IEND). Verifica `magick compare -metric AE` fra
+  originale e file lavorato = `0`: nessun pixel è cambiato.
 - `sciami1.jpg … sciami7.jpg` (root) — foto di sciami/nuclei del titolare, ottimizzate in
   `public/img/sciame_1-*` … `sciame_7-*` (pagina `/nuclei-api/`): `sciame_4` è la
   **foto principale** della pagina (blocco prodotto) e l'immagine del `Product`
@@ -952,18 +970,21 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   varianti restano in `public/img/`: la sorgente stock non è in repo, quindi una
   volta cancellate non si potrebbero rigenerare.
 - **Apiari e persone: solo foto originali.** Nessuna foto stock deve mostrare un
-  apiario o una persona in tuta da apicoltore. Per l'apiario le uniche foto
-  ammesse sono `apiario` e `arnie` — varianti storiche in `public/img/`, senza
-  sorgente in root (`arnie` non ha nemmeno più una voce in
+  apiario o una persona in tuta da apicoltore. La foto dell'apiario nelle schede
+  del miele è `apiari_5` — del titolare, sorgente in root — sul favo, e
+  `apiari_hd` sulle altre quattro; restano ammesse le varianti storiche `apiario`
+  e `arnie` in `public/img/`, senza sorgente in root
+  (`arnie` non ha nemmeno più una voce in
   `process-images.mjs`), quindi non rigenerabili; per il
   lavoro in apiario si usano le foto del titolare
   (`raffaele_sorridente_con_le_sue_api`,
   `arnia_piena_di_api`, `ape_regina_di_raffaele`, `sciame_1` … `sciame_7`). Per
   questo le stock `apiario_arnie`, `apicoltore_telaio`, `favo_covata`,
   `arnia_nucleo` e `sciame_ramo` sono state **eliminate**: non reintrodurle.
-  **Unica eccezione: la hero della home (`apiari_hd`)**, che è un'immagine
-  generata usata come sfondo decorativo del prato — non racconta l'apiario, e
-  infatti non è una foto del titolare (vedi la voce nei crediti).
+  **Unica eccezione: `apiari_hd`**, che è un'immagine generata: resta come sfondo
+  decorativo della hero della home e in una scheda del miele si alterna alle due
+  foto vere — dove l'`alt` la presenta come gli apiari, la foto del titolare è
+  quella da mettere.
 - Altre foto di barattoli e apiario: materiale originale del titolare.
 - **Due file di root non pubblicati dal sito**: `miele-di-acacia-latest.jpg`
   (1600×1200, il barattolo di acacia in uno scatto nuovo, senza EXIF come la

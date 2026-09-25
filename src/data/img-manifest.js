@@ -863,5 +863,32 @@ export default {
         "height": 1303
       }
     }
+  },
+  "apiari_5": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "80dbe932",
+    "variants": {
+      "480": {
+        "width": 480,
+        "height": 360
+      },
+      "640": {
+        "width": 640,
+        "height": 480
+      },
+      "800": {
+        "width": 800,
+        "height": 600
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      },
+      "1600": {
+        "width": 1600,
+        "height": 1200
+      }
+    }
   }
 };

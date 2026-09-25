@@ -15,6 +15,11 @@ const WIDTHS = {
   // PNG (1672×941) — il nome dice .jpg ma il contenuto è PNG, quindi il file è
   // stato rinominato. Le larghezze sono le stesse di `hero_bg`, che sostituisce.
   'apiari-hd.png': [{ base: 'apiari_hd', widths: [1600, 1200, 800, 640, 480] }],
+  // Foto reale degli apiari (1600×1200, 4:3): è la foto della sezione "Da dove
+  // arriva" del miele in favo, l'unica scheda che non usa `apiari_hd`. Stesse
+  // larghezze di `apiari_hd`: la foto sta in una colonna da ~600px, quindi 1200
+  // copre il DPR 2 e 1600 il DPR 2 su schermi larghi (`sizes` dichiara 45vw).
+  'apiari-bio-e-golosita-5.png': [{ base: 'apiari_5', widths: [1600, 1200, 800, 640, 480] }],
   // Foto di prodotto dei mieli. Il nome della sorgente è **lo slug della
   // pagina** (`/miele/<slug>/`), quindi anche il nome della base pubblicata è
   // lo slug: URL dell'immagine e URL della pagina dicono la stessa cosa.
