@@ -12,6 +12,7 @@
 		"astro": "astro",
 		"assets": "node scripts/fetch-fonts.mjs && node scripts/process-images.mjs && node scripts/posters.mjs && node scripts/favicons.mjs",
 		"og": "node scripts/og/generate.mjs",
+		"endcard": "node scripts/instagram-endcard.mjs",
 		"deploy": "astro build && wrangler deploy"
 	},
 	"dependencies": {

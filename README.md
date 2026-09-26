@@ -70,6 +70,7 @@ bun run dev          # sviluppo su localhost:4321
 bun run build        # build statica in dist/
 bun run assets       # rigenera font, immagini, poster, favicon — servono i sorgenti in root, che NON sono nel repo (vedi "Immagini")
 bun run og           # rigenera le immagini OG delle pagine (public/og/, vedi "Immagini OG")
+bun run endcard      # rigenera i banner di fine video per Instagram (root, vedi "Banner social")
 bun run deploy       # build + `wrangler deploy` del Worker `bio-golosita` (static assets da ./dist)
 ```
 
@@ -730,6 +731,72 @@ chromium --headless=new --no-sandbox --hide-scrollbars \
 # poi convertire in JPG (es. con sharp)
 ```
 
+### Banner social
+
+I banner non stanno in nessuna pagina: sono file di root per i post, e sono due
+famiglie.
+
+**Post Facebook (4:5).** `banner-facebook-mieli-acacia-e-millefiori.jpg` e
+`…-minimale.jpg`, 1080×1350: si generano **fuori dal repo** (HTML+CSS → screenshot
+Chromium, come `scripts/og/`, con il barattolo rimisurato sulla foto usata), quindi
+qui c'è solo il JPG finito, da riprendere a mano se serve rifarlo. Nel badge del
+banner grande la valutazione è quella della home (`src/pages/index.astro`: `5,0 su
+Google · 40+ recensioni`) **anche nel disegno**: le stelle sono il path di
+`Icons.astro` in ambra e il testo in inchiostro tenue, come `.trust` della home.
+Serve perché il glifo ★ non è nei font del sito: cadrebbe su un font di sistema,
+monocromatico e dello stesso inchiostro del testo (il badge sembrava "di una riga
+sola"). Se cambia il numero là, va cambiato anche qui.
+
+**Fine video Instagram (9:16).** Sei banner 1080×1920 in root:
+`banner-instagram-fine-video-foto.jpg`, `…-favo.jpg`, `…-acacia.jpg`,
+`…-acacia-scheda.jpg`, `…-ambra.jpg` e `…-crema.jpg`. Dicono **solo** la domanda
+— «Vuoi provarla anche tu?» oppure «Vuoi assaggiarla anche tu?» — e sotto
+`bioegolosita.it`, perché questo frame chiude il video: non accompagna un link,
+quindi non c'è nient'altro da leggere. Il disegno è lo stesso per tutte, cambia
+il fondo:
+
+- `foto`, `favo`, `acacia`, `acacia-scheda`: foto a tutta pagina con il velo
+  caldo delle hero del sito. `favo`, `acacia` e `acacia-scheda` sono le tre
+  **estetiche** (il velo è più leggero, la foto si vede di più) e usano il copy
+  con «assaggiarla»; `foto` è la prima, col velo più coperto. Le due di acacia
+  sono due scatti dello stesso barattolo, e la ragione per tenerle entrambe è
+  **misurata**: nello stesso ritaglio 9:16 `miele-di-acacia.jpg` (la foto della
+  scheda, quella che usa `acacia-scheda`) ha il 53% dei pixel ambrati e il 5% di
+  verdi, mentre `miele-di-acacia-latest.jpg` (quella dentro `acacia`) sta al 38%
+  di ambrati e al 34% di verdi — lì intorno al barattolo c'è molta vegetazione, e
+  come sfondo legge meno come miele;
+- `ambra`: la banda ambra di `.cta-band` (gradiente 135°) con la trama di esagoni;
+- `crema`: il fondo chiaro del sito (`--bg`) con la stessa trama.
+
+Il logo — marchio + nome, l'accoppiata dell'header — sta **sotto il dominio** in
+tutte: è la presentazione del marchio che il sito usa già, e più in basso (come
+sarebbe naturale per una firma) lo coprirebbe la didascalia di Instagram.
+
+```sh
+bun run endcard         # tutti e sei (o: node scripts/instagram-endcard.mjs favo acacia-scheda)
+```
+
+- Il layout sta in `scripts/instagram-endcard.mjs` e i JPG si scrivono nella root;
+  in testa al file ci sono `COPY` (la domanda e la dimensione del titolo, che
+  dipende da quanto è lunga la riga: «assaggiarla» è più lungo di «provarla») e
+  `LOOKS` (fondo, foto di fondo e velo di ogni variante).
+- Il blocco è **al centro**, quindi lontano dalla UI di Instagram: l'area sicura
+  considerata è di 250px in alto e 410px in basso (intestazione, didascalia,
+  audio, comandi) e 96px ai lati.
+- Come per le OG, il render viene **verificato** prima di scrivere i JPG:
+  overflow, testo dentro l'area sicura (anche le singole righe, non solo i
+  blocchi), blocco centrato nei due sensi, righe del titolo, font del sito
+  davvero caricati, contrasto WCAG del testo misurato sui pixel del fondo senza
+  testo, e quota di pixel del colore del testo **nell'immagine finale** (se il
+  testo non c'è, si vede). Se una variante non passa, non viene scritto nessuno
+  dei file.
+- Sulla foto di fondo il generatore stampa la **scala**: in un 9:16 la fetta
+  centrale di una foto 4:3 va ingrandita di 1,60× (le sorgenti in root sono
+  tutte 1600×1200, tranne il favo che è 2560×1920 e sta a 1,00×), quindi da
+  1,25× in su arriva un avviso e sopra 2× la generazione si ferma — la foto è la
+  sorgente in root, **non** una variante di `public/img/`, che per lo stesso
+  scatto si fermerebbe a 1200px, cioè 2,4×.
+
 ## Icone ed emoji
 
 - **Icone di interfaccia** (`Icons.astro`): set a tratto disegnato in casa (24×24,
@@ -1018,20 +1085,21 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   foto vere — dove l'`alt` la presenta come gli apiari, la foto del titolare è
   quella da mettere.
 - Altre foto di barattoli e apiario: materiale originale del titolare.
-- **Due file di root non pubblicati dal sito**: `miele-di-acacia-latest.jpg`
+- **File di root non pubblicati dal sito**: `miele-di-acacia-latest.jpg`
   (1600×1200, il barattolo di acacia in uno scatto nuovo, senza EXIF come la
-  sorgente pubblicata) e i banner per i post Facebook
-  `banner-facebook-mieli-acacia-e-millefiori.jpg` e
-  `…-minimale.jpg` (1080×1350, 4:5). Servono al **banner social**, non alle
-  pagine: `miele-di-acacia-latest.jpg` non sostituisce `miele-di-acacia.jpg`,
-  che resta la foto della scheda, delle card e dell'immagine OG. I banner si
-  generano fuori dal repo (HTML+CSS → screenshot Chromium, come `scripts/og/`,
-  con il barattolo rimisurato sulla foto usata), quindi qui c'è solo il JPG
-  finito, da riprendere a mano se serve rifarlo. Nel badge del banner grande la
-  valutazione è quella della home (`src/pages/index.astro`: `5,0 su Google · 30+
-  recensioni`) **anche nel disegno**: le stelle sono il path di `Icons.astro` in
-  ambra e il testo in inchiostro tenue, come `.trust` della home. Serve perché il
-  glifo ★ non è nei font del sito: cadrebbe su un font di sistema, monocromatico
+  sorgente pubblicata) e i banner social, `banner-facebook-*` (1080×1350, post
+  4:5) e `banner-instagram-fine-video-*` (1080×1920, fine video 9:16) — vedi
+  "Banner social". Servono ai post, non alle pagine: `miele-di-acacia-latest.jpg`
+  non sostituisce `miele-di-acacia.jpg`, che resta la foto della scheda, delle
+  card e dell'immagine OG. I banner Facebook si generano fuori dal repo
+  (HTML+CSS → screenshot Chromium, come `scripts/og/`, con il barattolo
+  rimisurato sulla foto usata), quindi qui c'è solo il JPG finito, da riprendere
+  a mano se serve rifarlo; quelli di Instagram hanno il generatore in repo. Nel
+  badge del banner grande la valutazione è quella della home — `5,0 su Google ·
+  40+ recensioni`, da `src/pages/index.astro` — **anche nel disegno**: le stelle
+  sono il path di `Icons.astro` in ambra e il testo in inchiostro tenue, come
+  `.trust` della home. Serve perché il glifo ★ non è nei font del sito: cadrebbe
+  su un font di sistema, monocromatico
   e dello stesso inchiostro del testo (il badge sembrava "di una riga sola"). Se
   cambia il numero là, va cambiato anche qui — ed è esattamente così che era
   rimasto indietro a "20+".
