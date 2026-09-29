@@ -103,7 +103,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       'La cristallizzazione del miele è naturale. Perché succede, quali mieli cristallizzano prima e come riportare il miele liquido senza rovinarlo.',
     h1: 'Perché il miele cristallizza (e come riportarlo liquido)',
     excerpt:
-      'Il miele che diventa solido o granuloso non è andato a male: è la prova che è miele vero. Come comportarsi, e cosa non fare mai.',
+      'La cristallizzazione è un processo naturale del miele e non indica che il prodotto sia andato a male. Come comportarsi, e cosa non fare mai.',
     readingTime: '4 min',
     hero: {
       base: 'miele_cristallizzato',
@@ -116,7 +116,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
     },
     blocks: [
       {
-        p: 'Apri il barattolo e il miele non scorre più: è diventato denso, granuloso, quasi solido. È il momento in cui molte persone pensano di aver comprato un miele scadente. Succede esattamente il contrario: la cristallizzazione è un processo naturale del miele puro, ed è una delle prove più semplici che hai in mano un miele vero.',
+        p: 'Apri il barattolo e il miele non scorre più: è diventato denso, granuloso, quasi solido. È il momento in cui molte persone pensano di aver comprato un miele scadente. In realtà la cristallizzazione è un processo naturale del miele e non indica che il prodotto sia andato a male.',
       },
       { h2: 'Che cos\'è la cristallizzazione' },
       {
