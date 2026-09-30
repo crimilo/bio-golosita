@@ -128,7 +128,12 @@ for (const file of files) {
     fail(rel, 'cta-band attaccata al blocco contatti (due CTA di fila)');
   }
   const hasClosing = count('cta') + count('contatti') > 0;
-  if (!hasClosing && !is404) fail(rel, 'nessun blocco di chiusura (CTA o contatti)');
+  // Le pagine di solo testo legale (l'informativa privacy) non hanno un blocco
+  // di conversione finale: sono testo, non una pagina commerciale.
+  const senzaChiusura = ['/privacy/'];
+  if (!hasClosing && !is404 && !senzaChiusura.includes(url)) {
+    fail(rel, 'nessun blocco di chiusura (CTA o contatti)');
+  }
 
   // campi di conversione mai vuoti: se un fallback non renderizza (prop sbagliata,
   // dato null) la pagina resta senza prezzo/disponibilità e sembra rotta

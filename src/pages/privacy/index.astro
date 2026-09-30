@@ -1,0 +1,112 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site } from '../../data/site';
+import { localBusiness } from '../../lib/schema';
+
+const title = 'Privacy e cookie | Bio & Golosità';
+const description =
+  'Informativa privacy e cookie di Bio & Golosità: nessun cookie proprio né tracciamento, il solo servizio di terze parti è la mappa di Google Maps.';
+
+const crumbs = [{ name: 'Privacy', path: '/privacy/' }];
+
+// Data di ultimo aggiornamento scritta a mano: la data di build non è la data di
+// modifica del testo, quindi va cambiata solo quando cambia davvero l'informativa.
+const updated = '30 settembre 2026';
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname="/privacy/"
+  crumbs={crumbs}
+  jsonLd={[localBusiness()]}
+>
+  <PageHero
+    h1="Informativa privacy e cookie"
+    eyebrow="trasparenza"
+    crumbs={crumbs}
+  />
+
+  <section class="section" id="informativa" style="padding-top: var(--space-2);">
+    <div class="container">
+      <div class="prose">
+        <p class="article-meta">Ultimo aggiornamento: {updated}</p>
+
+        <p>
+          Questo sito è statico e informativo: non ha moduli, newsletter, carrello
+          o pagamenti, non usa cookie propri, analytics né profilazione. L'unico
+          contenuto di terze parti è la <strong>mappa di Google</strong>.
+        </p>
+
+        <h2>Titolare del trattamento</h2>
+        <p>
+          <strong>{site.legalName}</strong> — {site.address.street},{' '}
+          {site.address.zip} {site.address.city} ({site.address.province}) — P. IVA{' '}
+          {site.vatId} · REA MI-{site.rea} — telefono e WhatsApp:{' '}
+          <a href={site.phoneHref}>{site.phoneDisplay}</a>. Per i tuoi diritti o
+          per domande su questa informativa puoi contattarci da qui.
+        </p>
+
+        <h2>Quali dati trattiamo</h2>
+        <ul>
+          <li>
+            <strong>Mappa di Google.</strong> Nelle pagine <a href="/contatti/">Contatti</a>{' '}
+            e <a href="/consegna-miele/">Consegna miele</a> è incorporata una mappa
+            di Google Maps. Aprendo la pagina, il browser contatta i server di
+            Google, che può raccogliere dati come l'indirizzo IP e installare cookie
+            propri. Google è titolare autonomo di quel trattamento e non vi abbiamo
+            accesso: trovi tutto nell'
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">informativa privacy di Google</a>, nella pagina sui{' '}
+            <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">cookie</a> e nei{' '}
+            <a href="https://www.google.com/help/terms_maps/" target="_blank" rel="noopener">termini di Google Maps</a>.
+          </li>
+          <li>
+            <strong>Navigazione.</strong> Il fornitore di hosting registra i dati
+            tecnici necessari a servire il sito in sicurezza (indirizzo IP, data e
+            ora, pagina richiesta, browser). Non li usiamo per identificarti.
+          </li>
+          <li>
+            <strong>Contatti.</strong> Se ci scrivi o chiami (telefono, WhatsApp,
+            social), trattiamo i tuoi dati solo per risponderti e gestire l'ordine.
+          </li>
+        </ul>
+
+        <h2>Cookie</h2>
+        <p>
+          Il sito non installa cookie propri, quindi non c'è alcun banner. Gli unici
+          cookie sono quelli della mappa di Google. Puoi gestirli o eliminarli dalle
+          impostazioni del browser; bloccandoli la mappa potrebbe non caricarsi, ma
+          puoi aprire la nostra posizione con il pulsante «Apri su Google Maps».
+        </p>
+
+        <h2>Base giuridica e conservazione</h2>
+        <p>
+          I dati tecnici e la mappa si basano sul nostro legittimo interesse (art.
+          6.1.f GDPR) a offrire un sito sicuro e a farci trovare; per i cookie di
+          Google la base è il tuo consenso, che revochi bloccandoli. Per richieste e
+          ordini la base è il contratto o le misure precontrattuali (art. 6.1.b).
+          Conserviamo i dati dei contatti e degli ordini per il tempo necessario e
+          per i termini di legge (fino a 10 anni per la documentazione contabile).
+        </p>
+
+        <h2>I tuoi diritti</h2>
+        <p>
+          Puoi esercitare in ogni momento i diritti degli articoli 15–22 del GDPR:
+          accesso, rettifica, cancellazione, limitazione, opposizione, portabilità e
+          revoca del consenso. Scrivici con i recapiti qui sopra; se ritieni che il
+          trattamento violi la normativa puoi rivolgerti al Garante per la
+          protezione dei dati personali (
+          <a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener">garanteprivacy.it</a>
+          ).
+        </p>
+
+        <h2>Modifiche</h2>
+        <p>
+          La versione in vigore è quella pubblicata qui, con la data di ultimo
+          aggiornamento indicata in cima.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

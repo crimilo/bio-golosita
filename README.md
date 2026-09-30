@@ -61,6 +61,7 @@ ricompare.
 | `/guide/<slug>/` | Le 5 guide: non pastorizzato, cristallizzazione, differenze tra mieli, nucleo/sciame/pacco, introduzione regina |
 | `/chi-siamo/` | E-E-A-T: storia, metodo, apicoltore |
 | `/contatti/` | Contatti e come ordinare |
+| `/privacy/` | **Informativa privacy e cookie**: nessun cookie proprio né tracciamento; l'unico contenuto di terze parti è la mappa di Google |
 
 ## Comandi
 
