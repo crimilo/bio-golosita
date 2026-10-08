@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site } from '../../data/site';
+import { localBusiness } from '../../lib/schema';
+import { whatsappLink } from '../../lib/whatsapp.js';
+
+const title = 'Resi e sostituzioni | Bio & Golosità';
+const description =
+  'Resi accettati solo per barattoli o confezioni rotte o difettose, entro 14 giorni dalla consegna: come segnalarlo e cosa facciamo.';
+
+const crumbs = [{ name: 'Resi', path: '/resi/' }];
+
+/** Chi apre la chat da qui non scrive per un ordine nuovo: il messaggio lo dice. */
+const whatsappHref = whatsappLink(
+  'Ciao, ho ricevuto un barattolo o una confezione rotta o difettosa'
+);
+---
+
+<Base
+  title={title}
+  description={description}
+  pathname="/resi/"
+  crumbs={crumbs}
+  whatsappHref={whatsappHref}
+  jsonLd={[localBusiness()]}
+>
+  <PageHero
+    h1="Resi e sostituzioni"
+    eyebrow="garanzie"
+    crumbs={crumbs}
+    intro="Accettiamo il reso solo per barattoli o confezioni rotte o difettose, entro 14 giorni dalla consegna."
+  />
+
+  <section class="section" id="resi" style="padding-top: var(--space-2);">
+    <div class="container">
+      <div class="prose">
+        <p>
+          La regola è semplice: <strong>accettiamo il reso solo per barattoli o
+          confezioni rotte o difettose</strong>, e solo se ce lo segnali{' '}
+          <strong>entro 14 giorni dalla consegna</strong>. Il miele è un
+          alimento: un barattolo già aperto non possiamo rimetterlo in vendita,
+          quindi non rientra nei resi.
+        </p>
+
+        <h2>Cosa accettiamo</h2>
+        <ul>
+          <li>barattolo rotto, crepato o con il tappo che non chiude bene;</li>
+          <li>confezione arrivata danneggiata, schiacciata o bagnata;</li>
+          <li>prodotto difettoso o diverso da quello che hai ordinato.</li>
+        </ul>
+
+        <h2>Cosa non accettiamo</h2>
+        <ul>
+          <li>barattoli già aperti o usati, per qualsiasi motivo;</li>
+          <li>segnalazioni fatte dopo 14 giorni dalla consegna;</li>
+          <li>
+            il miele cristallizzato: non è un difetto. È normale che il miele
+            cristallizzi, e si può sciogliere senza rovinarlo (lo spieghiamo
+            nella guida{' '}
+            <a href="/guide/perche-il-miele-cristallizza/">
+              perché il miele cristallizza
+            </a>
+            ).
+          </li>
+        </ul>
+
+        <h2>Come richiedere il reso</h2>
+        <p>
+          Chiamaci o scrivici su WhatsApp entro 14 giorni dalla consegna,
+          dicendoci cosa non va e mandandoci una foto del barattolo o della
+          confezione: <a href={site.phoneHref}>{site.phoneDisplay}</a> ·{' '}
+          <a href={whatsappHref} target="_blank" rel="noopener">WhatsApp</a>.
+          Basta così, nessun modulo da compilare.
+        </p>
+
+        <h2>Cosa facciamo</h2>
+        <p>
+          Ti sostituiamo il barattolo difettoso con lo stesso miele, in consegna
+          o per posta. Se quel miele non è più disponibile, ti rimborsiamo.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

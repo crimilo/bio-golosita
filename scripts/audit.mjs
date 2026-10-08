@@ -128,9 +128,10 @@ for (const file of files) {
     fail(rel, 'cta-band attaccata al blocco contatti (due CTA di fila)');
   }
   const hasClosing = count('cta') + count('contatti') > 0;
-  // Le pagine di solo testo legale (l'informativa privacy) non hanno un blocco
-  // di conversione finale: sono testo, non una pagina commerciale.
-  const senzaChiusura = ['/privacy/'];
+  // Le pagine di solo testo legale (informativa privacy, condizioni dei resi)
+  // non hanno un blocco di conversione finale: sono testo, non una pagina
+  // commerciale.
+  const senzaChiusura = ['/privacy/', '/resi/'];
   if (!hasClosing && !is404 && !senzaChiusura.includes(url)) {
     fail(rel, 'nessun blocco di chiusura (CTA o contatti)');
   }

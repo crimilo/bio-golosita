@@ -62,6 +62,7 @@ ricompare.
 | `/chi-siamo/` | E-E-A-T: storia, metodo, apicoltore |
 | `/contatti/` | Contatti e come ordinare |
 | `/privacy/` | **Informativa privacy e cookie**: nessun cookie proprio né tracciamento; l'unico contenuto di terze parti è la mappa di Google |
+| `/resi/` | **Resi e sostituzioni**: reso solo per barattoli o confezioni rotte o difettose, entro 14 giorni dalla consegna |
 
 ## Comandi
 
