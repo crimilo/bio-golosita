@@ -575,7 +575,7 @@ recensioni.
 - [ ] **Recensioni dei prodotti (da sostituire)**: quelle del miele di acacia
       sono reali e arrivano dal titolare. **Tutte le altre sono segnaposto
       scritti su richiesta** (nomi e testi inventati, tutti da 5 stelle):
-      `rating.count` 4 per il tiglio e more, 3 per ailanto e castagno, 2 per il
+      `rating.count` 8 per il tiglio e more, 7 per ailanto, 3 per castagno, 2 per il
       favo, 3 per api regine, 2 per nuclei. In pagina i
       testi mostrati sono gli stessi: al massimo tre, tranne il favo (due). Vanno sostituite con
       recensioni vere prima del lancio. Sono pubblicate anche nei dati

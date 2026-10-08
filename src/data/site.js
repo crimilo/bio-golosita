@@ -314,7 +314,7 @@ export const site = {
        * Il testo e le stelle di qui sono gli stessi che rende la pagina: il
        * JSON-LD li rilegge da questa lista, quindi non possono divergere.
        */
-      rating: { value: 5, count: 6 },
+      rating: { value: 5, count: 10 },
       productReviews: [
         {
           name: "Luigi d'Amato",
@@ -397,7 +397,7 @@ export const site = {
        * `rating.count` è il totale dichiarato: al massimo tre recensioni con il
        * testo vanno in pagina.
        */
-      rating: { value: 5, count: 4 },
+      rating: { value: 5, count: 8 },
       productReviews: [
         {
           name: 'Rita Pozzi',
@@ -480,7 +480,7 @@ export const site = {
        * `rating.count` è il totale dichiarato: al massimo tre recensioni con il
        * testo vanno in pagina.
        */
-      rating: { value: 5, count: 3 },
+      rating: { value: 5, count: 7 },
       productReviews: [
         {
           name: 'Claudia Ferri',
