@@ -485,6 +485,10 @@ ritirato. Campi, tutti facoltativi salvo `heroIntro`, `chips`, `origine`, `faq`:
   più del viewport; a 3 sono 336×448, la stessa misura della galleria della home,
   e sotto i 700px la griglia torna comunque a 2. Così le gallerie con media
   verticali (favo, regine, nuclei) usano `gallery-grid--three`;
+- **la galleria dei nuclei comincia con un video**: la migliore delle nostre
+  famiglie di api (`leadVideo` su `PhotoGallery`, che lo rende **prima** delle
+  foto — senza, i video stanno dopo le foto, come nelle altre gallerie). È la
+  stessa sequenza raccontata dalle foto, ma parte da dove i nuclei nascono;
 - `whatsappText` — il messaggio precompilato dei link WhatsApp: `lib/whatsapp.js`
   costruisce l'URL dal numero di `site.whatsapp` e dal testo della scheda, così
   chi scrive per le api regine non apre la chat con una domanda sul miele. Il link
@@ -979,7 +983,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   cosa mostrano): pubblicati in `public/video/` con un nome parlante e ricodificati
   in H.264/AAC (compatibile su tutti i browser) con il comando qui sopra, più il
   poster da un fotogramma. In totale i video pubblicati in `public/video/` sono
-  **59,7 MB** (i sorgenti in root ne pesano 139,7):
+  **67,6 MB** (i sorgenti in root ne pesano 152,7):
   - `smielatura_miele_acacia_2026.mp4` → `smielatura-acacia.mp4` (720×1280,
     19 s, 2,9 MB) — **ritirato**: la scheda dell'acacia è passata al video del
     raccolto 2026 qui sotto, e il file e il suo poster non sono più in
@@ -1041,6 +1045,15 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
     - `riempendo-un-barattolo-di-millefiori.mp4` →
       `riempendo-un-barattolo-di-millefiori.mp4` (9 s, 0,5 MB) — scheda del
       millefiori al tiglio e more, dopo il suo video della smielatura.
+  - `nuclei-d-api-migliore-famiglia.mp4` → `migliore-famiglia-di-api.mp4`
+    (478×850, 24 s, 8,4 MB, audio mono 64k come gli altri) — `/nuclei-api/`,
+    **primo filmato della galleria** «I nostri nuclei e gli apiari»
+    (`leadVideo` su `PhotoGallery`, vedi «Scheda del prodotto» qui sopra): è la
+    migliore delle nostre famiglie di api, il punto di partenza della sequenza.
+    Verticale, quindi `video-item--tall` come i fotogrammi accanto. Il poster è
+    il fotogramma a 5 s, scelto misurando la nitidezza di un fotogramma ogni
+    0,5 s (vedi `scripts/posters.mjs`): SSIM 0,93 sul girato originale, che è
+    molto dettagliato e quindi comprime poco.
   I video sono `preload="none"` con poster: quei MB si scaricano solo se il
   visitatore li fa partire, non all'apertura della pagina.
 - **I metadati si tolgono prima di pubblicare**, foto e video. Le foto, senza

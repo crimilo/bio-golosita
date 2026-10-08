@@ -49,6 +49,21 @@ const gallery = nuclei.gallery.filter(
   (p) => p.base !== 'sciame_4' && p.base !== 'sciame_5'
 );
 
+/**
+ * Il filmato che apre la galleria: la migliore delle nostre famiglie di api.
+ * Va **prima** delle foto (`leadVideo`), perché è il punto di partenza della
+ * sequenza — da quella famiglia nascono i nuclei — e non un video in più in
+ * fondo. Sorgente in root `nuclei-d-api-migliore-famiglia.mp4`, poster
+ * ricodificato da `scripts/posters.mjs`. Verticale (478×850), quindi
+ * `video-item--tall` come il video della galleria e i fotogrammi.
+ */
+const galleryLead = {
+  src: '/video/migliore-famiglia-di-api.mp4',
+  poster: '/video/migliore-famiglia-di-api-poster-7b67498a.avif',
+  label: 'La migliore delle nostre famiglie di api',
+  cls: 'video-item--tall',
+};
+
 const galleryVideo = {
   src: '/video/api-che-si-creano-spazio.mp4',
   poster: '/video/api-che-si-creano-spazio-poster-4d6062c5.avif',
@@ -180,6 +195,7 @@ const otherProducts = [
 
   <PhotoGallery
     id="foto"
+    leadVideo={galleryLead}
     photos={gallery}
     videos={[galleryVideo]}
     columns={3}

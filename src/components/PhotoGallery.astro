@@ -16,6 +16,12 @@ interface Props {
   photos: GalleryPhoto[];
   /** video mostrati nella stessa griglia, dopo le foto */
   videos?: VideoItem[];
+  /**
+   * Il video che **apre** la griglia: sta prima delle foto. Lo usa solo
+   * `/nuclei-api/`, dove la sequenza comincia dalla migliore delle nostre
+   * famiglie di api; per tutti gli altri, `videos` basta.
+   */
+  leadVideo?: VideoItem;
   /** colonne della griglia su schermo largo: 2 (default) o 3 */
   columns?: number;
   eyebrow?: string;
@@ -24,7 +30,17 @@ interface Props {
   soft?: boolean;
 }
 
-const { id, photos, videos = [], columns = 2, eyebrow, title, intro, soft = false } = Astro.props;
+const {
+  id,
+  photos,
+  videos = [],
+  leadVideo,
+  columns = 2,
+  eyebrow,
+  title,
+  intro,
+  soft = false,
+} = Astro.props;
 ---
 
 <section class={`section${soft ? ' section--soft' : ''}`} aria-labelledby={id}>
@@ -39,6 +55,18 @@ const { id, photos, videos = [], columns = 2, eyebrow, title, intro, soft = fals
       )
     }
     <div class={`gallery-grid${columns === 3 ? ' gallery-grid--three' : ''}`}>
+      {
+        leadVideo && (
+          <VideoFigure
+            src={leadVideo.src}
+            poster={leadVideo.poster}
+            label={leadVideo.label}
+            cls={leadVideo.cls}
+            link={leadVideo.link}
+          />
+        )
+      }
+
       {
         photos.map((p) => (
           <figure class={`g-item ${p.cls ?? 'g-item--square'}`} style="margin:0;">

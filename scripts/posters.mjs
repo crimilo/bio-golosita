@@ -58,6 +58,14 @@ const posters = [
   'filtraggio-miele-di-acacia-poster.jpg',
   'smielatura-millefiori-2026-poster.jpg',
   'riempendo-un-barattolo-di-millefiori-poster.jpg',
+  // La migliore delle nostre famiglie di api (/nuclei-api/). Sorgente in root
+  // `nuclei-d-api-migliore-famiglia.mp4` (478×850, 24 s). Fotogramma a 5 s:
+  // misurando la nitidezza (varianza del laplaciano) di un fotogramma ogni 0,5 s
+  // è il più definito dopo quello a 0 s, che però è il primo istante della
+  // registrazione. Per cambiarlo: sostituisci il jpg e rilancia `npm run assets`,
+  // oppure
+  // `ffmpeg -ss <secondi> -i nuclei-d-api-migliore-famiglia.mp4 -frames:v 1 -q:v 2 migliore-famiglia-di-api-poster.jpg`
+  'migliore-famiglia-di-api-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }
