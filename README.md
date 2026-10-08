@@ -252,6 +252,13 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   l'icona (lì la label non si nasconde mai). Da desktop l'etichetta è il numero,
   così la pagina dice subito a chi telefonare. La CTA in fondo alle pagine
   (`CtaBand`) resta invece "Chiama ora" a ogni larghezza.
+  **Eccezione: la hero di `/miele/`**, dove la CTA principale è «Ordina su
+  WhatsApp» (icona WhatsApp, `site.whatsapp`, `btn-primary`): da un hub di
+  prodotto si chiede disponibilità in chat, e l'ordine parte da lì. L'etichetta
+  è una sola a ogni larghezza — l'azione non cambia fra telefono e computer
+  (WhatsApp Web), quindi lo scambio numero/azione non serve. Il numero resta
+  nell'header (sempre visibile), nel blocco contatti e nella `CtaBand`; le hero
+  di tutte le altre pagine continuano a usare `<PhoneCta>`.
 - **Etichetta prezzo delle card**: `<PriceBadge>` (`.price-badge`) sta in alto a
   sinistra **sopra la foto**, non nel corpo della card, ed è lo stesso componente
   per tutte le card con prezzo (home, `/miele/`, prodotti): così le rese non

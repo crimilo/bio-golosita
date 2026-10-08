@@ -10,9 +10,8 @@ import { apiRegine, nuclei, prezzoSuRichiesta, repartoImages } from '../../data/
 import ContactSection from '../../components/ContactSection.astro';
 import ProseBlocks from '../../components/ProseBlocks.astro';
 import Icons from '../../components/Icons.astro';
-import PhoneCta from '../../components/PhoneCta.astro';
 import Emoji from '../../components/Emoji.astro';
-import { honeyProducts } from '../../data/site';
+import { honeyProducts, site } from '../../data/site';
 import { ogImageFor } from '../../data/og';
 import { guideCard } from '../../data/guides';
 import { localBusiness, collectionPage, faqPage } from '../../lib/schema';
@@ -161,13 +160,24 @@ const guideCards = [
 >
   <PageHero
     h1="Miele italiano artigianale: acacia, millefiori e castagno"
-    eyebrow="api proprie · non pastorizzato · 100% italiano"
+    eyebrow="non pastorizzato · 100% italiano"
     intro="Mieli di produzione propria dai nostri apiari nel Parco Adda Nord e in Alta Val Brembana, smielati a freddo. Vendita diretta e consegna in zona."
     crumbs={crumbs}
     bg={{ base: heroImg, height: 'tall', position: '52% 100%', positionMobile: '52% 100%' }}
   >
     <div class="contact-cta">
-      <PhoneCta />
+      {/*
+        CTA principale: qui l'ordine parte in chat, non con una telefonata —
+        da un hub di prodotto si sceglie e si chiede disponibilità, e WhatsApp
+        è il canale che usiamo. Il numero resta nell'header (dove è il suo
+        posto, sempre visibile), nel blocco contatti in fondo e nella CtaBand;
+        l'etichetta è una sola a ogni larghezza, perché l'azione non cambia fra
+        telefono e computer (WhatsApp Web).
+      */}
+      <a class="btn btn-primary btn-lg" href={site.whatsapp} target="_blank" rel="noopener">
+        <Icons name="whatsapp" size={20} />
+        Ordina su WhatsApp
+      </a>
       <a class="btn btn-ghost btn-lg" href="#mieli">
         <Icons name="arrow-down" size={20} />
         Scopri i nostri mieli
