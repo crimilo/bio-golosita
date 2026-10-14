@@ -1546,6 +1546,7 @@ strong {
 }
 
 .product-media {
+  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
@@ -1559,14 +1560,14 @@ strong {
   object-fit: cover;
 }
 
-/* Mini galleria del blocco prodotto (schede con più di una foto: l'acacia, che
-   ha due scatti del barattolo, e il millefiori primaverile, che ne ha tre). È un
-   nastro a scatti: una foto per schermata, si passa con il dito o il trackpad, e
-   le miniature sotto la foto sono la scorciatoia. Il riquadro resta 4:3 come
-   prima, quindi le foto che non sono 4:3 vengono ritagliate al centro da
-   `object-fit: cover` (per spostare il taglio si usa `position` sulle voci di
-   `productPhotos`). Il lightbox sfoglia le stesse foto a schermo intero: le
-   prende dalla sezione, quindi non serve niente di speciale qui. */
+/* Mini galleria del blocco prodotto (schede con più di una foto: l'acacia, il
+   millefiori primaverile e il favo). È un nastro a scatti: una foto per
+   schermata, si passa con il dito, col trackpad o con le frecce qui sotto, e le
+   miniature sotto la foto sono la scorciatoia diretta. Le foto che non sono 4:3
+   riempiono il riquadro con un taglio di pochi punti; quelle molto più verticali
+   si vedono **intere** (`photo-contain`, vedi sotto). Il lightbox sfoglia le
+   stesse foto a schermo intero: le prende dalla sezione, quindi non serve niente
+   di speciale qui. */
 .product-figure {
   display: flex;
   flex-direction: column;
@@ -1609,6 +1610,47 @@ strong {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+/* Le frecce per sfogliare il nastro un passo alla volta: compaiono **solo da
+   desktop** (sotto i 900px il nastro si scorre col dito e le miniature sono a
+   portata di pollice), stanno sopra la foto — fuori dal nastro, quindi non
+   scorrono via — e girano in tondo, come quelle del lightbox. Il fondo è
+   inchiostro al 75% e non un velo chiaro come quello del lightbox: lì sotto c'è
+   una tendina scura, qui una foto qualunque, e la freccia bianca deve restare
+   leggibile anche sul bianco del barattolo. */
+.slider-arrows {
+  display: none;
+}
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  background: rgba(51, 36, 15, 0.75);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.slider-arrow:hover,
+.slider-arrow:focus-visible {
+  background: rgba(51, 36, 15, 0.92);
+}
+.slider-arrow--prev {
+  left: 12px;
+}
+.slider-arrow--next {
+  right: 12px;
+}
+@media (min-width: 900px) {
+  .slider-arrows {
+    display: block;
+  }
 }
 .slider-thumb {
   display: block;

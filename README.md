@@ -590,7 +590,10 @@ Campi che una scheda può avere in `src/data/site.js`:
   niente da dichiarare nei dati, e vale anche per le miniature. `position` (uno
   `object-position`, come `imgPos`) serve solo dove la foto riempie il riquadro,
   a spostare il taglio. Con una sola foto il markup
-  è quello di prima, senza nastro e senza miniature;
+  è quello di prima, senza nastro e senza miniature; il nastro si passa con il
+  dito o col trackpad, le miniature portano sulla foto scelta e, **da desktop**
+  (≥900px), due frecce laterali sfogliano un passo alla volta girando in tondo
+  come quelle del lightbox — sotto i 900px non ci sono, lì si scorre col dito;
 - `gallery` — galleria facoltativa in fondo alla pagina (occhiello «in ordine»,
   `galleryTitle`, `galleryIntro`, tre colonne): **oggi non la usa nessuna
   scheda**, il gancio resta per il giorno in cui una sequenza di foto merita una
