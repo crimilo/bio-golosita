@@ -707,52 +707,6 @@
       }
     }
   },
-  "miele-millefiori-estivo-al-tiglio-e-more": {
-    "width": 1600,
-    "height": 1200,
-    "hash": "3b10c177",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 300
-      },
-      "600": {
-        "width": 600,
-        "height": 450
-      },
-      "900": {
-        "width": 900,
-        "height": 675
-      },
-      "1200": {
-        "width": 1200,
-        "height": 900
-      }
-    }
-  },
-  "miele-millefiori-estivo-al-tiglio-e-ailanto": {
-    "width": 1600,
-    "height": 1200,
-    "hash": "1c5ab875",
-    "variants": {
-      "400": {
-        "width": 400,
-        "height": 300
-      },
-      "600": {
-        "width": 600,
-        "height": 450
-      },
-      "900": {
-        "width": 900,
-        "height": 675
-      },
-      "1200": {
-        "width": 1200,
-        "height": 900
-      }
-    }
-  },
   "miele-in-favo": {
     "width": 2560,
     "height": 1920,
@@ -846,6 +800,140 @@
       "1600": {
         "width": 1600,
         "height": 1200
+      }
+    }
+  },
+  "miele-di-acacia-card": {
+    "width": 1334,
+    "height": 1131,
+    "hash": "597a8de2",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 339
+      },
+      "600": {
+        "width": 600,
+        "height": 509
+      },
+      "900": {
+        "width": 900,
+        "height": 763
+      },
+      "1200": {
+        "width": 1200,
+        "height": 1017
+      }
+    }
+  },
+  "miele-millefiori-al-tiglio-e-more": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "3b10c177",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "miele-millefiori-al-tiglio-e-ailanto": {
+    "width": 1600,
+    "height": 1200,
+    "hash": "1c5ab875",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 300
+      },
+      "600": {
+        "width": 600,
+        "height": 450
+      },
+      "900": {
+        "width": 900,
+        "height": 675
+      },
+      "1200": {
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "miele-millefiori-al-tarassaco-e-biancospino": {
+    "width": 1499,
+    "height": 1200,
+    "hash": "aa1043c8",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 320
+      },
+      "600": {
+        "width": 600,
+        "height": 480
+      },
+      "900": {
+        "width": 900,
+        "height": 720
+      },
+      "1200": {
+        "width": 1200,
+        "height": 961
+      }
+    }
+  },
+  "miele-millefiori-al-tarassaco-e-biancospino-2": {
+    "width": 1148,
+    "height": 1515,
+    "hash": "e173bcf3",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 528
+      },
+      "600": {
+        "width": 600,
+        "height": 792
+      },
+      "900": {
+        "width": 900,
+        "height": 1188
+      }
+    }
+  },
+  "miele-millefiori-al-tarassaco-e-biancospino-3": {
+    "width": 1400,
+    "height": 1200,
+    "hash": "5d5c84ce",
+    "variants": {
+      "400": {
+        "width": 400,
+        "height": 343
+      },
+      "600": {
+        "width": 600,
+        "height": 514
+      },
+      "900": {
+        "width": 900,
+        "height": 771
+      },
+      "1200": {
+        "width": 1200,
+        "height": 1029
       }
     }
   }

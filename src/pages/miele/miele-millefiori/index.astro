@@ -17,7 +17,7 @@ const pathname = '/miele/miele-millefiori/';
 const heroImg = 'prato_fiorito';
 const title = 'Miele Millefiori Italiano Artigianale | Bio & Golosità';
 const description =
-  "Miele millefiori 100% italiano di api proprie. Due raccolti estivi: tiglio e more, tiglio e ailanto. Da €5 per 500 g; consegna in zona.";
+  "Miele millefiori 100% italiano di api proprie. Tre raccolti: il primaverile al tarassaco e biancospino e i due estivi al tiglio. Da €5 per 500 g.";
 
 const crumbs = [
   { name: 'I nostri mieli', path: '/miele/' },
@@ -28,8 +28,8 @@ const millefiori = site.honeys.filter((h) => h.slug.startsWith('miele-millefiori
 
 const faq = [
   {
-    q: 'Che differenza c\'è tra i due millefiori estivi?',
-    a: 'Hanno lo stesso periodo di raccolta, giugno, ma composizione diversa: il tiglio e more è più scuro, denso e ricco di minerali, con le note di tiglio e di more selvatiche; il tiglio e ailanto è più chiaro e più dolce, con il retrogusto di pesca che danno i suoi fiori.',
+    q: 'Che differenza c\'è tra i vostri tre millefiori?',
+    a: 'Il primo è primaverile, al tarassaco e biancospino: si raccoglie tra metà marzo e metà aprile ed è quello che cristallizza prima. Gli altri due sono estivi, entrambi raccolti a giugno: il tiglio e more è più scuro, denso e ricco di minerali, con le note di tiglio e di more selvatiche; il tiglio e ailanto è più chiaro e più dolce, con il retrogusto di pesca che danno i suoi fiori.',
   },
   {
     q: 'Perché il millefiori cambia gusto da un anno all\'altro?',
@@ -37,7 +37,7 @@ const faq = [
   },
   {
     q: 'Il millefiori cristallizza?',
-    a: 'Sì, come quasi tutti i mieli: è un processo naturale, non un difetto. I millefiori estivi cristallizzano lentamente: quello al tiglio e more in modo grossolano, quello al tiglio e ailanto in modo più fine. Per riportarlo liquido, bagnomaria a bassa temperatura.',
+    a: 'Sì, come quasi tutti i mieli: è un processo naturale, non un difetto. Il millefiori al tarassaco e biancospino, ricco di glucosio, cristallizza in poche settimane; i due estivi cristallizzano lentamente: quello al tiglio e more in modo grossolano, quello al tiglio e ailanto in modo più fine. Per riportarlo liquido, bagnomaria a bassa temperatura.',
   },
   {
     q: 'Quanto costa il miele millefiori?',
@@ -70,8 +70,8 @@ const faq = [
 >
   <PageHero
     h1="Miele millefiori italiano"
-    eyebrow="estivo al tiglio e more · estivo al tiglio e ailanto"
-    intro="Il millefiori è il miele delle fioriture che si incontrano, non di una sola pianta: per questo cambia ogni anno e racconta il territorio meglio di ogni altro miele. Ne produciamo due, entrambi raccolti a giugno: stessa fioritura, due composizioni diverse."
+    eyebrow="primaverile al tarassaco e biancospino · estivi al tiglio"
+    intro="Il millefiori è il miele delle fioriture che si incontrano, non di una sola pianta: per questo cambia ogni anno e racconta il territorio meglio di ogni altro miele. Ne produciamo tre: il primaverile al tarassaco e biancospino, raccolto tra metà marzo e metà aprile, e i due estivi al tiglio, raccolti a giugno."
     crumbs={crumbs}
     bg={{ base: heroImg, height: 'tall', position: '50% 50%', positionMobile: '50% 45%' }}
   >
@@ -79,7 +79,7 @@ const faq = [
       <PhoneCta />
       <a class="btn btn-ghost btn-lg" href="#millefiori">
         <Icons name="arrow" size={20} />
-        Vedi i due millefiori
+        Vedi i tre millefiori
       </a>
     </div>
   </PageHero>
@@ -124,10 +124,11 @@ const faq = [
     <div class="container">
       <div class="section-head center" style="margin-inline:auto;">
         <span class="eyebrow">le nostre produzioni</span>
-        <h2 id="millefiori-title">I nostri due mieli millefiori</h2>
+        <h2 id="millefiori-title">I nostri tre mieli millefiori</h2>
         <p>
-          Due mieli diversi per colore, profumo e carattere: trovi la scheda
-          completa di ognuno con raccolto, caratteristiche e prezzo.
+          Tre mieli diversi per stagione di raccolta, composizione e carattere:
+          trovi la scheda completa di ognuno con raccolto, caratteristiche e
+          prezzo.
         </p>
       </div>
       <div class="honey-grid">
@@ -145,9 +146,19 @@ const faq = [
           <li>
             <Icons name="check" size={18} />
             <span>
+              <strong>Per un miele di primavera, da spalmare</strong>: il{' '}
+              <a href="/miele/miele-millefiori-al-tarassaco-e-biancospino/">
+                millefiori al tarassaco e biancospino
+              </a>
+              , il primo raccolto dell'anno, che cristallizza in poche settimane.
+            </span>
+          </li>
+          <li>
+            <Icons name="check" size={18} />
+            <span>
               <strong>Per la colazione e per un miele più dolce e profumato</strong>: il{' '}
-              <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">
-                millefiori estivo al tiglio e ailanto
+              <a href="/miele/miele-millefiori-al-tiglio-e-ailanto/">
+                millefiori al tiglio e ailanto
               </a>, più chiaro e luminoso, con il retrogusto di pesca che danno i
               fiori di ailanto.
             </span>
@@ -157,8 +168,8 @@ const faq = [
             <span>
               <strong>Per la cucina</strong>, i formaggi stagionati e i piatti
               di carattere: il{' '}
-              <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">
-                millefiori estivo al tiglio e more
+              <a href="/miele/miele-millefiori-al-tiglio-e-more/">
+                millefiori al tiglio e more
               </a>, più scuro e corposo.
             </span>
           </li>

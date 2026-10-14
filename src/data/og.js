@@ -7,7 +7,7 @@
  * divergere. Le pagine che non compaiono qui usano il fallback `/og.jpg`.
  *
  * Elenco volutamente limitato alle pagine commerciali: home, hub dei mieli e dei
- * millefiori, le cinque schede del miele, i tre prodotti dell'alveare, consegna,
+ * millefiori, le sei schede del miele, i tre prodotti dell'alveare, consegna,
  * chi siamo e contatti. Guide e 404 restano sul fallback generico.
  */
 export const ogByPath = {
@@ -15,8 +15,9 @@ export const ogByPath = {
   '/miele/': 'miele',
   '/miele/miele-millefiori/': 'miele-millefiori',
   '/miele/miele-di-acacia/': 'miele-di-acacia',
-  '/miele/miele-millefiori-estivo-al-tiglio-e-more/': 'miele-millefiori-estivo-al-tiglio-e-more',
-  '/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/': 'miele-millefiori-estivo-al-tiglio-e-ailanto',
+  '/miele/miele-millefiori-al-tarassaco-e-biancospino/': 'miele-millefiori-al-tarassaco-e-biancospino',
+  '/miele/miele-millefiori-al-tiglio-e-more/': 'miele-millefiori-al-tiglio-e-more',
+  '/miele/miele-millefiori-al-tiglio-e-ailanto/': 'miele-millefiori-al-tiglio-e-ailanto',
   '/miele/miele-di-castagno/': 'miele-di-castagno',
   '/miele/miele-in-favo/': 'miele-in-favo',
   '/api-regine/': 'api-regine',

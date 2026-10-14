@@ -27,15 +27,39 @@ const WIDTHS = {
   // ha una colonna da 520px (→ 1200 basta a DPR 2) e le card della griglia
   // stanno a ~380-400px (→ 900 copre i display DPR 2).
   'miele-di-acacia.jpg': { base: 'miele-di-acacia', widths: [1200, 900, 600, 400] },
+  // La foto del miele di acacia (root, 1334×1131): il secondo scatto del
+  // barattolo, quello con l'inquadratura da card, ed è quello che la scheda
+  // pubblica — scheda, card della griglia di `/miele/`, "Gli altri mieli" in
+  // fondo alle altre schede e liste dei dati strutturati. Il nome della base non
+  // è lo slug della pagina (eccezione alla regola qui sopra) perché il file di
+  // partenza si chiama così; la base `miele-di-acacia` resta pubblicata per la
+  // figura nel testo della guida "acacia, millefiori e castagno", e i banner
+  // social dei mieli leggono ancora il sorgente `miele-di-acacia.jpg`.
+  // La sorgente non è 4:3: nello slot 4:3 `object-fit: cover` ne ritaglia la
+  // fascia centrale (~6% per lato), che è la parte più piatta dello scatto.
+  // Stesse larghezze delle altre foto di prodotto (le card stanno a ~380-400px,
+  // il blocco prodotto a 520px).
+  'miele-di-acacia-card.jpg': { base: 'miele-di-acacia-card', widths: [1200, 900, 600, 400] },
   'miele-di-castagno.jpg': { base: 'miele-di-castagno', widths: [1200, 900, 600, 400] },
-  'miele-millefiori-estivo-al-tiglio-e-more.jpg': {
-    base: 'miele-millefiori-estivo-al-tiglio-e-more',
+  'miele-millefiori-al-tiglio-e-more.jpg': {
+    base: 'miele-millefiori-al-tiglio-e-more',
     widths: [1200, 900, 600, 400],
   },
-  'miele-millefiori-estivo-al-tiglio-e-ailanto.jpg': {
-    base: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
+  'miele-millefiori-al-tiglio-e-ailanto.jpg': {
+    base: 'miele-millefiori-al-tiglio-e-ailanto',
     widths: [1200, 900, 600, 400],
   },
+  // Il terzo millefiori, quello **primaverile** (pagina
+  // `/miele/miele-millefiori-al-tarassaco-e-biancospino/`): tre scatti dello
+  // stesso barattolo, di cui il primo (1499×1200) è la foto del blocco prodotto
+  // e delle card, gli altri due la galleria. Le basi seguono lo slug, quindi
+  // foto e pagina si chiamano allo stesso modo; i file in root erano numerati a
+  // mano (vedi README, "Crediti immagini"). I due scatti di galleria non sono
+  // 4:3: la griglia li ritaglia con la classe che li avvicina di più al loro
+  // aspetto (`g-item--tall` per il verticale, `g-item--wide` per l'altro).
+  'miele-millefiori-al-tarassaco-e-biancospino.jpg': { base: 'miele-millefiori-al-tarassaco-e-biancospino', widths: [1200, 900, 600, 400] },
+  'miele-millefiori-al-tarassaco-e-biancospino-2.jpg': { base: 'miele-millefiori-al-tarassaco-e-biancospino-2', widths: [900, 600, 400] },
+  'miele-millefiori-al-tarassaco-e-biancospino-3.jpg': { base: 'miele-millefiori-al-tarassaco-e-biancospino-3', widths: [1200, 900, 600, 400] },
   'raffaele-sorridente-con-le-sue-api.jpg': [{ base: 'raffaele_sorridente_con_le_sue_api', widths: [1000, 600, 400] }],
   'raffaele_con_suo_padre.jpg': [600, 400],
   // `raffaele.png` → base `raffaele` (il ritratto quadrato della galleria della

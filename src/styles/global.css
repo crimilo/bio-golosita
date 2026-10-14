@@ -1559,6 +1559,89 @@ strong {
   object-fit: cover;
 }
 
+/* Mini galleria del blocco prodotto (schede con più di una foto: l'acacia, che
+   ha due scatti del barattolo, e il millefiori primaverile, che ne ha tre). È un
+   nastro a scatti: una foto per schermata, si passa con il dito o il trackpad, e
+   le miniature sotto la foto sono la scorciatoia. Il riquadro resta 4:3 come
+   prima, quindi le foto che non sono 4:3 vengono ritagliate al centro da
+   `object-fit: cover` (per spostare il taglio si usa `position` sulle voci di
+   `productPhotos`). Il lightbox sfoglia le stesse foto a schermo intero: le
+   prende dalla sezione, quindi non serve niente di speciale qui. */
+.product-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.product-slider {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.product-slider::-webkit-scrollbar {
+  display: none;
+}
+/* Le slide sono le `<picture>`: a tutta larghezza del riquadro, e il riquadro
+   le ritaglia da sé (`overflow: hidden`). */
+.product-slider > picture {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+/* Una foto molto più verticale del riquadro (i fotogrammi 9:16 del favo, per
+   esempio) si mostra **intera**, con la fascia del colore del riquadro ai lati:
+   `cover` ne taglierebbe più di metà e in pagina sembrerebbe zoomata. La classe
+   la mette `miele/[slug].astro`, che misura il taglio leggendo le dimensioni dal
+   manifest (`imgDims`): sotto il 20% di taglio la foto riempie il riquadro come
+   prima, perché lì non si vede. */
+.product-media img.photo-contain,
+.slider-thumb img.photo-contain {
+  object-fit: contain;
+}
+.slider-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.slider-thumb {
+  display: block;
+  width: 4.5rem;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  cursor: pointer;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease;
+}
+.slider-thumb:hover,
+.slider-thumb:focus-visible {
+  opacity: 1;
+}
+/* La miniatura della foto che si sta guardando: bordo ambra e piena opacità
+   (l'`aria-current` lo tiene aggiornato lo script, e la stessa informazione la
+   legge chi usa un lettore di schermo). */
+.slider-thumb[aria-current='true'] {
+  border-color: var(--amber-deep);
+  opacity: 1;
+}
+.slider-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .product-price {
   font-family: var(--font-display);
   font-weight: 700;

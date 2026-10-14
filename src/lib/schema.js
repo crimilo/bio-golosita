@@ -149,12 +149,13 @@ export function localBusiness() {
  */
 export function product(item, pathname, { category } = {}) {
   const url = `${site.domain}${pathname}`;
-  // Immagini del prodotto: la principale e, se c'è, quelle della galleria (per
-  // il miele in favo è la sequenza di foto ricavate dal video). Google accetta
-  // più URL nello stesso campo `image`.
+  // Immagini del prodotto: la principale e, se ci sono, le altre foto del
+  // blocco prodotto (`productPhotos`: per il favo sono i fotogrammi ricavati dal
+  // video) più quelle della galleria in fondo alla pagina, quando c'è (oggi
+  // nessuna scheda la usa). Google accetta più URL nello stesso campo `image`.
   const images = [
     imgUrl(item.cardImage ?? item.image),
-    ...(item.gallery ?? []).map((g) => imgUrl(g.base)),
+    ...[...(item.productPhotos ?? []), ...(item.gallery ?? [])].map((p) => imgUrl(p.base)),
   ];
   const description = item.description ?? item.intro?.slice(0, 200);
   const formats = item.priceFormats ?? [];

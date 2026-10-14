@@ -164,7 +164,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Quali dei nostri mieli cristallizzano' },
       {
-        p: 'Il <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">millefiori estivo al tiglio e more</a> ha una cristallizzazione lenta e grossolana; il <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">millefiori estivo al tiglio e ailanto</a> l\'ha lenta ma più fine; il <a href="/miele/miele-di-acacia/">miele di acacia</a> e il <a href="/miele/miele-di-castagno/">miele di castagno</a> restano liquidi molto a lungo. Nella scheda di ogni miele trovi la voce dedicata. Il <a href="/miele/miele-in-favo/">miele in favo</a>, invece, non si scalda per riportarlo liquido: il calore scioglierebbe la cera, quindi si mangia com\'è (su pane caldo si ammorbidisce da solo).',
+        p: 'Il <a href="/miele/miele-millefiori-al-tarassaco-e-biancospino/">millefiori al tarassaco e biancospino</a>, raccolto tra marzo e aprile, è il nostro miele che cristallizza prima: diventa granuloso in poche settimane, perché il tarassaco è ricco di glucosio. Il <a href="/miele/miele-millefiori-al-tiglio-e-more/">millefiori al tiglio e more</a> ha una cristallizzazione lenta e grossolana; il <a href="/miele/miele-millefiori-al-tiglio-e-ailanto/">millefiori al tiglio e ailanto</a> l\'ha lenta ma più fine; il <a href="/miele/miele-di-acacia/">miele di acacia</a> e il <a href="/miele/miele-di-castagno/">miele di castagno</a> restano liquidi molto a lungo. Nella scheda di ogni miele trovi la voce dedicata. Il <a href="/miele/miele-in-favo/">miele in favo</a>, invece, non si scalda per riportarlo liquido: il calore scioglierebbe la cera, quindi si mangia com\'è (su pane caldo si ammorbidisce da solo).',
       },
       { cta: { href: '/miele/', label: 'Confronta i nostri mieli' } },
     ],
@@ -186,7 +186,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
     push: {
       href: '/miele/',
       label: 'Vedi tutti i mieli con prezzi e formati',
-      note: 'Acacia, i due millefiori estivi, castagno: nella pagina dei mieli trovi le schede complete con raccolto, prezzi e formati.',
+      note: 'Acacia, i tre millefiori, castagno: nella pagina dei mieli trovi le schede complete con raccolto, prezzi e formati.',
     },
     /**
      * Guida-comparatore: il corpo resta corto apposta e ogni sezione chiude con
@@ -273,17 +273,17 @@ const base: Omit<Guide, 'datePublished'>[] = [
 
       { h2: 'Miele millefiori: il più legato alla stagione' },
       {
-        p: "Il <strong>miele millefiori</strong> non nasce da una singola pianta: le api raccolgono il nettare delle fioriture disponibili nello stesso periodo, quindi colore, profumo e gusto cambiano da un raccolto all'altro. È questa variabilità a distinguerlo da mieli monoflora come acacia e castagno: nella nostra produzione ne distinguiamo due, entrambi raccolti a giugno.",
+        p: "Il <strong>miele millefiori</strong> non nasce da una singola pianta: le api raccolgono il nettare delle fioriture disponibili nello stesso periodo, quindi colore, profumo e gusto cambiano da un raccolto all'altro. È questa variabilità a distinguerlo da mieli monoflora come acacia e castagno: nella nostra produzione ne distinguiamo tre — uno primaverile, al tarassaco e biancospino, e due estivi, al tiglio.",
       },
       {
         img: {
-          base: 'miele-millefiori-estivo-al-tiglio-e-more',
-          alt: 'Barattolo di millefiori estivo al tiglio e more di Bio & Golosità',
-          caption: 'Millefiori estivo al tiglio e more, il più scuro dei due',
+          base: 'miele-millefiori-al-tiglio-e-more',
+          alt: 'Barattolo di millefiori al tiglio e more di Bio & Golosità',
+          caption: 'Millefiori al tiglio e more, il più scuro dei due estivi',
         },
       },
       {
-        p: '→ <a href="/miele/miele-millefiori/">Tutti i millefiori</a>: <a href="/miele/miele-millefiori-estivo-al-tiglio-e-more/">tiglio e more</a>, <a href="/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/">tiglio e ailanto</a>.',
+        p: '→ <a href="/miele/miele-millefiori/">Tutti i millefiori</a>: <a href="/miele/miele-millefiori-al-tarassaco-e-biancospino/">tarassaco e biancospino</a>, <a href="/miele/miele-millefiori-al-tiglio-e-more/">tiglio e more</a>, <a href="/miele/miele-millefiori-al-tiglio-e-ailanto/">tiglio e ailanto</a>.',
       },
 
       { h2: 'Miele di castagno: scuro e intenso' },

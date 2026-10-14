@@ -16,7 +16,18 @@
 #   /vecchio/ /nuovo/ 301
 
 # La scheda "Miele Millefiori Primaverile" è stata tolta dal catalogo (il miele
-# non si produce più): le due produzioni millefiori rimaste sono al tiglio e
-# more e al tiglio e ailanto. L'URL era indicizzato, quindi porta all'hub dei
-# millefiori con un 301 permanente invece di sparire con un 404.
+# non si produce più): le produzioni millefiori sono al tarassaco e biancospino
+# (primaverile) e al tiglio (due estivi). L'URL era indicizzato, quindi porta
+# all'hub dei millefiori con un 301 permanente invece di sparire con un 404.
 /miele/miele-millefiori-primaverile/ /miele/miele-millefiori/ 301
+
+# I due millefiori estivi hanno perso "Estivo" dal nome e dallo slug: nel nome la
+# stagione sembrava una scadenza ("disponibile solo d'estate"), mentre il miele
+# di un'annata resta in vendita finché ce n'è. Sono gli stessi mieli, quindi i
+# vecchi URL — indicizzati da mesi — fanno un 301 permanente sui nuovi: il
+# cambio di slug non deve costare l'indicizzazione delle due schede. Le immagini
+# pubblicate delle due schede sono state rinominate con lo slug nuovo
+# (`public/img/miele-millefiori-al-tiglio-e-*`): i vecchi URL `/img/...` non
+# esistono più e non vengono reindirizzati.
+/miele/miele-millefiori-estivo-al-tiglio-e-more/ /miele/miele-millefiori-al-tiglio-e-more/ 301
+/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/ /miele/miele-millefiori-al-tiglio-e-ailanto/ 301

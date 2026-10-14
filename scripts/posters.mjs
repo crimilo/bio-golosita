@@ -66,6 +66,12 @@ const posters = [
   // oppure
   // `ffmpeg -ss <secondi> -i nuclei-d-api-migliore-famiglia.mp4 -frames:v 1 -q:v 2 migliore-famiglia-di-api-poster.jpg`
   'migliore-famiglia-di-api-poster.jpg',
+  // Il video del millefiori primaverile (Raffaele che spiega il miele mentre i
+  // barattoli si riempiono): fotogramma a 8 s, il più definito fra quelli
+  // misurati ogni 0,5 s (varianza del laplaciano; il girato è uniforme, quindi
+  // la scelta è fra fotogrammi tutti sopra 73). Per rifarlo:
+  // `ffmpeg -ss <secondi> -i <video> -frames:v 1 -q:v 2 millefiori-tarassaco-biancospino-poster.jpg`
+  'millefiori-tarassaco-biancospino-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }

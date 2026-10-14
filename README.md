@@ -47,13 +47,14 @@ ricompare.
 | URL | Contenuto |
 | --- | --- |
 | `/` | Home **compatta**, 9 sezioni: hero corta, **i nostri prodotti** (miele, api regine, nuclei: una card con foto per ciascuno), 4 motivi, Raffaele, foto apiari, dove consegniamo, recensioni Google, FAQ brevi, contatti |
-| `/miele/` | **Hub mieli**: i 4 mieli + il miele in favo nella stessa griglia, cosa significa artigianale/non pastorizzato, tabella prezzi e formati, FAQ |
+| `/miele/` | **Hub mieli**: i 5 mieli + il miele in favo nella stessa griglia, cosa significa artigianale/non pastorizzato, tabella prezzi e formati, FAQ |
 | `/miele/miele-di-acacia/` | **Scheda del miele**: hero corta, blocco prodotto (prezzo, **voto sotto il prezzo**, 4 caratteristiche, CTA), «Da dove arriva» (foto apiario + 4 dati + video della smielatura), 3 recensioni del prodotto, FAQ, altri mieli, CTA compatta |
-| `/miele/miele-millefiori/` | **Hub millefiori**: cos'è il millefiori e le due produzioni |
-| `/miele/miele-millefiori-estivo-al-tiglio-e-more/` | **Scheda del miele** (stessa struttura dell'acacia), con **i video della smielatura e dei barattoli riempiti** |
-| `/miele/miele-millefiori-estivo-al-tiglio-e-ailanto/` | **Scheda del miele** (stessa struttura), con il video della smielatura del millefiori |
+| `/miele/miele-millefiori/` | **Hub millefiori**: cos'è il millefiori e le tre produzioni |
+| `/miele/miele-millefiori-al-tarassaco-e-biancospino/` | **Scheda del miele** (stessa struttura), il millefiori **primaverile**: video del miele che va nei barattoli e galleria con gli altri scatti del barattolo |
+| `/miele/miele-millefiori-al-tiglio-e-more/` | **Scheda del miele** (stessa struttura dell'acacia), con **i video della smielatura e dei barattoli riempiti** |
+| `/miele/miele-millefiori-al-tiglio-e-ailanto/` | **Scheda del miele** (stessa struttura), con il video della smielatura del millefiori |
 | `/miele/miele-di-castagno/` | **Scheda del miele** (stessa struttura) |
-| `/miele/miele-in-favo/` | **Scheda del miele** (stessa struttura, in più la galleria dal favo all'assaggio): il miele lasciato nella sua cera |
+| `/miele/miele-in-favo/` | **Scheda del miele** (stessa struttura, in più i cinque fotogrammi del video nel blocco prodotto): il miele lasciato nella sua cera |
 | `/api-regine/` | **Scheda prodotto** (stessa struttura delle schede miele): hero corta, blocco prodotto (**€ 20,00 / regina**, voto, 4 caratteristiche, CTA), «Come alleviamo le nostre regine» (F0 → F1, celle al 10°–11° giorno, apiari di fecondazione fatti da noi, 4 dati), **i tre video delle regine**, 3 recensioni del prodotto, FAQ, altri prodotti, CTA compatta |
 | `/nuclei-api/` | **Scheda prodotto** (stessa struttura): hero corta, blocco prodotto (**€ 99,00 a nucleo**, voto, 4 caratteristiche, CTA), «Da dove arriva questo nucleo» (4 dati + foto), galleria foto **a 3 colonne** + **video delle api che si creano lo spazio**, 2 recensioni del prodotto, FAQ, altri prodotti, CTA compatta |
 | `/consegna-miele/` | **Consegna**: come funziona (con la **foto degli ordini preparati** e il **video della preparazione nel blocco dei tre passi**), zone servite, ritiro in sede, map — hero con la foto di Raffaele |
@@ -110,7 +111,7 @@ scripts/           # tooling: font, immagini, poster, favicon, QA, Lighthouse, O
 Quasi tutte le pagine hanno la hero con la foto **dietro** al testo (full-bleed).
 Tre eccezioni volute:
 
-- le **cinque schede del miele** (le quattro varietà e il favo): hero **solo
+- le **sei schede del miele** (le cinque varietà e il favo): hero **solo
   testo**, con la foto del barattolo (o del favo) nel blocco prodotto subito sotto
   (resa originale, la più leggibile);
 - i **due prodotti dell'alveare** (**`/api-regine/`**, **`/nuclei-api/`**):
@@ -403,13 +404,17 @@ pastiglia non sparisce mai. Il testo che la card mostra sotto il nome
 Campi propri della scheda: `workNote` (il dato "Lavorazione": qui non c'è
 smielatura), `note` (la riga del blocco prodotto, dove i mieli usano
 `site.bulkNote`), `category` per i dati strutturati, `videos` (mp4 + poster AVIF
-+ didascalia) e `gallery` + `galleryTitle`/`galleryIntro` per la galleria
-facoltativa (nel template dei mieli non ce l'ha nessun altro). La `gallery` è
-**in ordine d'uso** — è anche l'ordine della galleria sfogliabile nel lightbox,
-che raggruppa le foto della stessa sezione: le sei foto del favo si sfogliano di
-conseguenza. Il campo `photo` non è impostato: la sezione "Da dove arriva" usa la
-foto dell'apiario, come i mieli, così la foto del blocco prodotto non compare due
-volte nella stessa pagina. Le immagini della galleria finiscono anche nell'array
++ didascalia) e `productPhotos`, i cinque fotogrammi del video nel blocco prodotto
+dopo la foto del favo. I fotogrammi sono **in ordine d'uso** — è anche l'ordine
+in cui li sfoglia il lightbox, che raggruppa le foto della stessa sezione — e
+sono verticali (9:16): nel riquadro 4:3 del blocco prodotto si vedono **interi**,
+con la fascia del colore del riquadro ai lati (vedi `productPhotos` qui sotto),
+e il lightbox li mostra uno per schermata, a schermo pieno. Prima erano la
+galleria `Dal favo all'assaggio` in
+fondo alla pagina: quella sezione non c'è più. Il campo `photo` non è impostato:
+la sezione "Da dove arriva" usa la foto dell'apiario, come i mieli, così la foto
+del blocco prodotto non compare due volte nella stessa pagina. Le foto del
+blocco prodotto finiscono anche nell'array
 `image` del JSON-LD del prodotto, dopo la principale.
 La **disponibilità è poca e solo su prenotazione**, e si dice in tre punti:
 `note` (la riga informativa del blocco prodotto), una voce in `characteristics`
@@ -440,12 +445,14 @@ omessa dai dati strutturati) se nella stringa non trova cifre. Finché un prezzo
 `null` le pagine mostrano "Prezzo su richiesta" (e l'audit fallisce se quella
 scritta non renderizza, vedi QA).
 
-**Scheda del miele (`miele/[slug].astro`).** Le cinque schede del miele — le
-quattro varietà (`site.honeys`) e il miele in favo (`site.honeyComb`) — escono
+**Scheda del miele (`miele/[slug].astro`).** Le **sei** schede del miele — le
+**cinque** varietà (`site.honeys`) e il miele in favo (`site.honeyComb`) — escono
 tutte da questo template, nell'ordine:
 
 1. **hero** — H1 e sottotitolo corto (`heroIntro`, due righe);
-2. **blocco prodotto** — foto, prezzo (o "Prezzo su richiesta" + nota), voto,
+2. **blocco prodotto** — foto (o mini galleria a scorrimento, con
+   `productPhotos`: vedi qui sotto), prezzo (o "Prezzo su richiesta" + nota),
+   voto,
    caratteristiche, CTA, e due righe piccole: il ritiro/consegna e
    `note ?? site.bulkNote`. Deve rispondere a "cosa compro, quanto costa, com'è,
    come lo ordino" e niente altro;
@@ -455,10 +462,15 @@ tutte da questo template, nell'ordine:
    Origine / Raccolta / Lavorazione / Produzione. Raccolta è `harvest` (con
    l'`annata` accodata quando c'è), Lavorazione è `workNote` (per il favo dice
    che non c'è smielatura). Sotto, i `videos` con la loro didascalia;
-4. **galleria** — solo per il favo (`gallery`);
+4. **galleria** — solo se la scheda ha `gallery` (una galleria in fondo alla
+   pagina, **oggi nessuna ce l'ha**: il favo, che era l'ultima, è passato alle
+   miniature del blocco prodotto);
 5. **recensioni del prodotto** — al massimo tre, in fondo alla pagina;
 6. **FAQ** — le domande della scheda (`faq`);
-7. **altri mieli** — tre card dal catalogo;
+7. **altri mieli** — tre card dal catalogo, sotto il bottone «Scopri tutti i
+   mieli» (→ `/miele/`) e la riga «Indeciso su quale miele scegliere?» col link
+   al confronto tra acacia, millefiori e castagno (niente sottotitolo nella
+   testa della sezione);
 8. **chiusura** — `CtaBand` (telefono + WhatsApp).
 
 Quello che **non** c'è più: la scheda tecnica (`specs`), la sezione descrittiva
@@ -545,11 +557,49 @@ Campi che una scheda può avere in `src/data/site.js`:
 - `photo` — foto *di prodotto* della sezione "Da dove arriva", al posto di
   quella dell'apiario (cambiano anche `alt` e didascalia: diventano quelle del
   miele). Nessuna scheda la usa oggi;
+- `cardImage` — foto alternativa a `image`, quando serve: se c'è la usano
+  `HoneyCard` (griglia di `/miele/`, "Gli altri mieli" in fondo alle altre
+  schede), il blocco prodotto della scheda e le liste dei dati strutturati
+  (`ItemList` della pagina e `Offer` del catalogo `hasOfferCatalog`). **Nessuna
+  scheda la usa oggi**: l'acacia, che ha due scatti del barattolo, ha messo il
+  secondo direttamente in `image` (vedi "Crediti immagini");
 - `apiaryPhoto` — **quale** foto dell'apiario mostrare in "Da dove arriva"
   (base del manifest: `apiari_hd` o `apiari_5`); `alt` e didascalia restano
   quelle dell'apiario. Senza il campo vale `apiari_hd`, ed è la scelta di tutte
   le varietà: l'unica scheda con un apiario diverso è il favo (`apiari_5`);
-- `gallery` — galleria facoltativa (solo il favo).
+- `productPhotos` — le **altre foto del blocco prodotto**, dopo `image` (che
+  resta la prima e la sola che va nelle card e nell'`ItemList`). Le usano
+  l'acacia (il primo scatto del barattolo), il millefiori primaverile (due
+  scatti in più) e il favo (i cinque fotogrammi del video).
+  Con più di una foto il blocchetto diventa una **mini galleria a scorrimento**:
+  un nastro a scatti (`.product-slider`) con una foto per schermata, le
+  **miniature cliccabili sotto la foto** come scorciatoia (`aria-current` sulla
+  miniatura attiva, script in fondo a `miele/[slug].astro`; senza JS il nastro si
+  scorre comunque) e il lightbox che
+  sfoglia le stesse foto a schermo intero — le prende dalla sezione, quindi non
+  serve configurarlo. Le foto del blocco prodotto vanno anche nell'array `image`
+  del JSON-LD del prodotto, dopo la principale (`src/lib/schema.js`).
+  Voci `{ base, alt, position? }`: il riquadro resta 4:3 e le foto vicine a
+  quell'aspetto lo riempiono, con un taglio di pochi punti (`object-fit: cover`).
+  Una foto **molto più verticale** del riquadro (i fotogrammi 9:16 del favo, per
+  esempio) verrebbe tagliata di oltre metà e in pagina sembrerebbe zoomata: in
+  quel caso si mostra **intera**, con la fascia del colore del riquadro ai lati
+  (`object-fit: contain`). Il conto lo fa il file della scheda
+  (`miele/[slug].astro`) leggendo le dimensioni dal manifest: se `cover`
+  taglierebbe più del 20% la foto va in `contain`, altrimenti riempie. Non c'è
+  niente da dichiarare nei dati, e vale anche per le miniature. `position` (uno
+  `object-position`, come `imgPos`) serve solo dove la foto riempie il riquadro,
+  a spostare il taglio. Con una sola foto il markup
+  è quello di prima, senza nastro e senza miniature;
+- `gallery` — galleria facoltativa in fondo alla pagina (occhiello «in ordine»,
+  `galleryTitle`, `galleryIntro`, tre colonne): **oggi non la usa nessuna
+  scheda**, il gancio resta per il giorno in cui una sequenza di foto merita una
+  sezione sua. Le foto sono voci
+  `{ base, alt, caption?, cls? }`, e `cls` sceglie il taglio della griglia
+  (`g-item--tall`, `--square`, `--wide`, `--portrait`). Le **altre** foto di una
+  scheda stanno nel blocco prodotto (`productPhotos`), non qui: una galleria in
+  fondo alla pagina è un'altra cosa dall'avere due scatti del barattolo accanto
+  al prezzo.
 
 La hero di queste pagine **non** usa `variant="product"`: il sottotitolo resta
 visibile anche da mobile (è corto, e senza di esso la hero non direbbe che il
@@ -579,7 +629,7 @@ recensioni.
       sul `Product` (o sul `LocalBusiness` della home) sarebbe un voto attribuito
       alla cosa sbagliata.
       L'`aggregateRating` e i nodi `Review` esistono **solo sulle schede dei
-      prodotti** (le cinque del miele, `/api-regine/` e `/nuclei-api/`) e vengono
+      prodotti** (le sei del miele, `/api-regine/` e `/nuclei-api/`) e vengono
       dalle recensioni *del prodotto* (`rating` / `productReviews` di ogni
       scheda, vedi "Scheda del miele"): i testi e le stelle pubblicati sono gli
       stessi che rende la pagina.
@@ -587,7 +637,7 @@ recensioni.
       sono reali e arrivano dal titolare. **Tutte le altre sono segnaposto
       scritti su richiesta** (nomi e testi inventati, tutti da 5 stelle):
       `rating.count` 8 per il tiglio e more, 7 per ailanto, 3 per castagno, 2 per il
-      favo, 3 per api regine, 2 per nuclei. In pagina i
+      favo, 2 per il millefiori al tarassaco e biancospino, 3 per api regine, 2 per nuclei. In pagina i
       testi mostrati sono gli stessi: al massimo tre, tranne il favo (due). Vanno sostituite con
       recensioni vere prima del lancio. Sono pubblicate anche nei dati
       strutturati (`Review` + `aggregateRating`), quindi finché restano finte la
@@ -596,8 +646,10 @@ recensioni.
       un'azione manuale sui dati strutturati). Sostituirle significa cambiare
       `productReviews` e `rating` nelle voci di `src/data/site.js` (i mieli) e di
       `src/data/bee-products.js` (api regine, nuclei), e nient'altro: la pagina
-      rende quello che c'è nei dati. In entrambi i file ogni blocco è marcato
-      `SEGNAPOSTO`.
+      rende quello che c'è nei dati. In entrambi i file i blocchi delle schede
+      più vecchie sono marcati `SEGNAPOSTO`; le due recensioni del millefiori
+      primaverile, aggiunte dopo su richiesta del titolare, non hanno la
+      marcatura — ma vanno sostituite come tutte le altre.
 - [x] **Partita IVA / REA**: pubblicati nel footer — `P.IVA 12606370968`,
       `REA MI-2744949` — e `vatID` nel JSON-LD `LocalBusiness`.
 - [x] **Dominio**: `bioegolosita.it` è il custom domain del Worker `bio-golosita`.
@@ -872,9 +924,11 @@ ripescano dalla storia (`git checkout a38161c -- <file>`) o dalle copie del
 titolare. La build non ne ha bisogno: usa gli AVIF già in `public/img/` e
 `src/data/img-manifest.js`.
 
-**Un'eccezione: le foto di prodotto dei mieli.** Le cinque sorgenti
-`miele-*.jpg` (acacia, castagno, i due millefiori estivi, miele in favo) sono di
-nuovo in root, insieme alle due foto di Raffaele con i mieli pronti da spedire
+**Un'eccezione: le foto di prodotto dei mieli.** Le nove sorgenti `miele-*.jpg`
+(acacia e il secondo scatto del suo barattolo, i tre scatti del millefiori
+primaverile, castagno, i due millefiori al tiglio, miele in favo) sono di nuovo
+in root, insieme alle due foto di Raffaele con i
+mieli pronti da spedire
 (`raffaele-con-mieli-pronti-da-spedire-bio-e-golosita*.png`) e alla foto degli
 apiari `apiari-bio-e-golosita-5.png`: sono le foto dell'ultimo aggiornamento del
 catalogo e le uniche che `process-images.mjs` rigenera oggi: il resto delle basi
@@ -884,16 +938,36 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 *root* si intende il nome del file di partenza, non un file presente nel repo.
 
 - **Le foto di prodotto dei mieli** (root) — originali del titolare, una per
-  scheda, **già in 4:3** come il riquadro del blocco prodotto (`.product-media`)
-  e delle card (`.honey-card-media`), quindi riempiono lo slot senza ritaglio.
+  scheda (l'acacia ne ha due e il millefiori primaverile tre: vedi le eccezioni
+  qui sotto), **già in 4:3** come
+  il riquadro del blocco prodotto (`.product-media`) e delle card
+  (`.honey-card-media`), quindi riempiono lo slot senza ritaglio.
   Il nome del file sorgente è **lo slug della pagina**, e lo è anche la base
   pubblicata: URL dell'immagine e URL della pagina dicono la stessa cosa.
-  - `miele-di-acacia.jpg` → `public/img/miele-di-acacia-*`;
+  - `miele-di-acacia.jpg` → `public/img/miele-di-acacia-*` — **non è più la foto
+    del miele**: l'acacia pubblica `miele-di-acacia-card.jpg` (vedi l'eccezione
+    qui sotto);
   - `miele-di-castagno.jpg` → `public/img/miele-di-castagno-*`;
-  - `miele-millefiori-estivo-al-tiglio-e-more.jpg` →
-    `public/img/miele-millefiori-estivo-al-tiglio-e-more-*`;
-  - `miele-millefiori-estivo-al-tiglio-e-ailanto.jpg` →
-    `public/img/miele-millefiori-estivo-al-tiglio-e-ailanto-*`.
+  - `miele-millefiori-al-tiglio-e-more.jpg` →
+    `public/img/miele-millefiori-al-tiglio-e-more-*`;
+  - `miele-millefiori-al-tiglio-e-ailanto.jpg` →
+    `public/img/miele-millefiori-al-tiglio-e-ailanto-*`.
+
+  **Eccezione: i due millefiori al tiglio.** Erano `miele-millefiori-estivo-*`:
+  sorgenti e basi sono state rinominate con lo slug nuovo quando i due mieli
+  hanno perso "Estivo" dal nome (`git mv` + `node scripts/process-images.mjs`,
+  che rimuove le varianti delle basi vecchie). I vecchi URL delle *pagine* fanno
+  un 301 (`public/_redirects`); i vecchi URL delle *immagini* no: contengono
+  l'hash del file, e le varianti con il nome vecchio non esistono più.
+
+  **Eccezione: l'acacia.** La sua foto è `miele-di-acacia-card.jpg`
+  (1334×1131, il secondo scatto del barattolo: vedi qui sotto), quindi la base
+  pubblicata della foto del miele è `miele-di-acacia-card` e **non** lo slug
+  della pagina; è anche l'unica delle vecchie sorgenti che non è 4:3 (lo slot
+  della scheda la ritaglia, vedi qui sotto). `miele-di-acacia` resta pubblicata
+  perché la usa la figura nel testo della guida "acacia, millefiori e castagno"
+  (`guides.ts`) e perché è la **seconda foto del blocco prodotto** dell'acacia
+  (`productPhotos`).
 
   Tutte con le varianti 1200, 900, 600, 400: il blocco prodotto delle schede ha
   una colonna da 520px (quindi 1200 basta anche a DPR 2) e le card della griglia
@@ -903,6 +977,36 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   `miele_millefiori_primaverile` e la base `miele_millefiori_card` — era il
   ritaglio 4:3 della foto del millefiori, che con sorgenti già 4:3 non serve più
   (per questo `CROPS` in `process-images.mjs` è vuoto).
+- `miele-di-acacia-card.jpg` (root, 1334×1131) — **la foto del miele di
+  acacia**: il secondo scatto dello stesso barattolo, quello con l'inquadratura
+  da card, che il titolare ha preparato per le card ed è finito per essere
+  **anche la foto della scheda** (campo `image` del miele in `site.js`).
+  Ottimizzata in `public/img/miele-di-acacia-card-*` (varianti 1200, 900, 600,
+  400), compare quindi nel blocco prodotto di `/miele/miele-di-acacia/`, nella
+  sua card della griglia di `/miele/`, in "Gli altri mieli" in fondo alle altre
+  schede e nelle liste dei dati strutturati (`ItemList`, `OfferCatalog`).
+  Preparazione: `exiftool -all=` (la sorgente portava solo l'intestazione JFIF,
+  con la risoluzione a 300 dpi: nessun EXIF; `magick compare -metric AE` fra
+  originale e file lavorato = `0`, nessun pixel cambiato) e
+  `node scripts/process-images.mjs`, che scrive solo AVIF e non copia metadati.
+  La sorgente non è 4:3: nello slot 4:3 `object-fit: cover` ne ritaglia la fascia
+  centrale (~6% per lato), che è la parte più piatta dello scatto.
+- `miele-millefiori-al-tarassaco-e-biancospino.jpg` (root, 1499×1200) — **la
+  foto del millefiori primaverile** (blocco prodotto e card), da cui vengono due
+  scatti in più del **blocco prodotto** (`productPhotos`, non una galleria in
+  fondo alla pagina): `-2.jpg` (1148×1515, verticale, varianti 900, 600, 400: la
+  sorgente è più stretta di 1200) e `-3.jpg` (1400×1200, varianti 1200, 900,
+  600, 400). Le basi sono lo slug e
+  `-<n>`, come per i fotogrammi del favo. I file in root si chiamavano
+  `millefiori-tarassaco-biancospino-pruno-selvatico-ciglieglio-<n>.jpg` ed erano
+  numerati a mano (`1` è il verticale, `2` il primo orizzontale, `3` l'altro):
+  rinominati con lo slug della pagina, così sorgente, base e URL della pagina
+  dicono la stessa cosa. Preparazione: `exiftool -all=` (portavano solo
+  l'intestazione JFIF a 300 dpi; `magick compare -metric AE` = `0`) e
+  `node scripts/process-images.mjs`. Nessuna delle tre è 4:3: due sono vicine a
+  quell'aspetto e riempiono il riquadro del blocco prodotto (taglio di pochi
+  punti, spostabile con `position` sulla voce di `productPhotos`; la principale
+  con `imgPos`), la verticale si mostra intera.
 - `miele-in-favo.png` (root, 1264×1188) — **sostituita** dalla foto nuova
   `miele-in-favo.jpg` (2560×1920, 4:3): ottimizzata in
   `public/img/miele-in-favo-*` (varianti 1200, 900, 600, 400) è la **foto del
@@ -914,14 +1018,14 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   OpenAI Media Service API, tipo `trainedAlgorithmicMedia`). È la **hero della
   home**: ottimizzata in `public/img/apiari_hd-*`. Usata consapevolmente come
   sfondo decorativo, non come foto dell'apiario: per le foto reali valgono le
-  regole qui sotto. Resta anche in "Da dove arriva" delle quattro varietà (la
+  regole qui sotto. Resta anche in "Da dove arriva" delle cinque varietà (la
   quinta scheda, il favo, usa la foto vera `apiari_5`): dove compare lì, `alt` e
   didascalia la presentano come gli apiari — con una foto reale a disposizione, è
   quella da mettere.
 - `apiari-bio-e-golosita-5.png` (root, 1600×1200, 4:3) — foto degli apiari,
   ottimizzata in `public/img/apiari_5-*` (varianti 1600, 1200, 800, 640, 480,
   come `apiari_hd`). È la foto della sezione "Da dove arriva" del **miele in
-  favo**; le altre quattro schede restano su `apiari_hd`.
+  favo**; le altre cinque schede restano su `apiari_hd`.
   Preparazione: `exiftool -all=` più
   `magick <file>.png -strip -alpha off` (era RGBA con l'alfa **tutta opaca**:
   il canale non si vede e nessun'altra immagine pubblicata ce l'ha, quindi si
@@ -963,13 +1067,21 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   sola (la riga `'raffaele.png': [800, 480, 300]` in `scripts/process-images.mjs`
   è commentata): per riaverla, rimettere la riga, il sorgente in root e
   rilanciare `npm run assets`.
-- `miele-in-favo-1.avif … miele-in-favo-6.avif` (root, 478×850, già AVIF) — sei
+- `miele-in-favo-1.avif … miele-in-favo-6.avif` (**senza sorgente in root**,
+  478×850, già AVIF) — sei
   fotogrammi ricavati dal video del favo, **numerati nell'ordine d'uso**: dal favo
   ancora attaccato al telaio (la 1) all'assaggio di Raffaele (la 6). Sono
   ottimizzati in `public/img/miele_in_favo_1-*` … `miele_in_favo_6-*` (variante
-  400) e finiscono, in quell'ordine, nella galleria `Dal favo all'assaggio` della
-  pagina: la classe è `g-item--portrait` (aspetto 9/16, come i fotogrammi) su una
-  griglia a 3 colonne, così le foto non vengono ritagliate da `object-fit: cover`.
+  400) e finiscono, in quell'ordine, nei `productPhotos` del **blocco prodotto**
+  di `/miele/miele-in-favo/`, dopo la foto del favo: erano la galleria `Dal favo
+  all'assaggio` in fondo alla pagina, tolta. **La 2 non è più in pagina**: è stata
+  ritirata dal blocco prodotto, e siccome il suo sorgente non è in root la sua
+  variante pubblicata resta in `public/img/` (lì è l'unica copia), quindi in
+  pagina i fotogrammi sono cinque e gli `alt` saltano il numero 2; per riaverla
+  basta rimettere la voce in `productPhotos` (`src/data/site.js`) al suo posto. I fotogrammi sono 9:16 e nel
+  riquadro 4:3 del blocco prodotto si vedono **interi** (la fascia ai lati è il
+  colore del riquadro); il lightbox li sfoglia uno per schermata, a schermo
+  pieno.
 - `video_che_mostra_ape_regina_con_tante_api_attorno.mp4` (root) → pubblicato come
   `public/video/ape-regina-con-api.mp4` e **non più in pagina**: il video stava
   nel testo sotto la sezione «La nostra linea: regine Buckfast, figlie di una
@@ -990,7 +1102,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   cosa mostrano): pubblicati in `public/video/` con un nome parlante e ricodificati
   in H.264/AAC (compatibile su tutti i browser) con il comando qui sopra, più il
   poster da un fotogramma. In totale i video pubblicati in `public/video/` sono
-  **67,6 MB** (i sorgenti in root ne pesano 152,7):
+  **70,0 MB** (i sorgenti in root ne pesano 157,5):
   - `smielatura_miele_acacia_2026.mp4` → `smielatura-acacia.mp4` (720×1280,
     19 s, 2,9 MB) — **ritirato**: la scheda dell'acacia è passata al video del
     raccolto 2026 qui sotto, e il file e il suo poster non sono più in
@@ -998,7 +1110,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
     comando qui sopra se serve tornare indietro;
   - `video-che-mostra-la-smielatura-millefiori-more-e-tiglio-2026.mp4` →
     `smielatura-millefiori-tiglio-more.mp4` (576×1024, 24 s, 3,0 MB) — scheda del
-    millefiori estivo al tiglio e more;
+    millefiori al tiglio e more;
   - `raffaele-che-mostra-la-nascita-di-una-regina.mp4` →
     `nascita-di-una-regina.mp4` (576×1024, 38 s, 2,8 MB) e
     `raffaele-che-spiega-e-mostra-perche-e-come-marce-una-regina-(con-il-pennarello).mp4`
@@ -1052,6 +1164,16 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
     - `riempendo-un-barattolo-di-millefiori.mp4` →
       `riempendo-un-barattolo-di-millefiori.mp4` (9 s, 0,5 MB) — scheda del
       millefiori al tiglio e more, dopo il suo video della smielatura.
+  - `raffaele-che-spiega-il-millefiori-mentre-i-barattoli-si-riempiono.mp4` →
+    `millefiori-tarassaco-biancospino.mp4` (576×1024, 40 s, 2,2 MB) — scheda del
+    **millefiori primaverile**: Raffaele racconta il miele mentre i barattoli si
+    riempiono. È la prima clip del raccolto a non essere 478×850 (è 576×1024,
+    come la smielatura del tiglio e more), ma sta nella stessa colonna stretta
+    (`video-item--tall`). La sorgente in root si chiamava
+    `miele-millefiori-tarassaco-biancospino-pruno-selvativo-e-ciglieglio.mp4`:
+    rinominata con un nome che dice cosa mostra, come le altre. Il poster è il
+    fotogramma a 8 s, il più nitido di quelli misurati ogni 0,5 s (vedi
+    `scripts/posters.mjs`); SSIM 0,98 sul girato originale.
   - `nuclei-d-api-migliore-famiglia.mp4` → `migliore-famiglia-di-api.mp4`
     (478×850, 24 s, 8,4 MB, audio mono 64k come gli altri) — `/nuclei-api/`,
     **primo filmato della galleria** «I nostri nuclei e gli apiari»
@@ -1093,7 +1215,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 - **Apiari e persone: solo foto originali.** Nessuna foto stock deve mostrare un
   apiario o una persona in tuta da apicoltore. La foto dell'apiario nelle schede
   del miele è `apiari_5` — del titolare, sorgente in root — sul favo, e
-  `apiari_hd` sulle altre quattro; restano ammesse le varianti storiche `apiario`
+  `apiari_hd` sulle altre cinque; restano ammesse le varianti storiche `apiario`
   e `arnie` in `public/img/`, senza sorgente in root
   (`arnie` non ha nemmeno più una voce in
   `process-images.mjs`), quindi non rigenerabili; per il
@@ -1110,18 +1232,9 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 - **File di root non pubblicati dal sito**: `miele-di-acacia-latest.jpg`
   (1600×1200, il barattolo di acacia in uno scatto nuovo, senza EXIF come la
   sorgente pubblicata) e i banner social, `banner-facebook-*` (1080×1350, post
-  4:5) e `banner-instagram-fine-video-*` (1080×1920, fine video 9:16) — vedi
+  4:5) e `banner-instagram-*` (1080×1920: i sei `…-fine-video-*` per la fine
+  video e `…-millefiori-tiglio-e-more` per il solo dominio) — vedi
   "Banner social". Servono ai post, non alle pagine: `miele-di-acacia-latest.jpg`
-  non sostituisce `miele-di-acacia.jpg`, che resta la foto della scheda, delle
-  card e dell'immagine OG. I banner Facebook si generano fuori dal repo
-  (HTML+CSS → screenshot Chromium, come `scripts/og/`, con il barattolo
-  rimisurato sulla foto usata), quindi qui c'è solo il JPG finito, da riprendere
-  a mano se serve rifarlo; quelli di Instagram hanno il generatore in repo. Nel
-  badge del banner grande la valutazione è quella della home — `5,0 su Google ·
-  40+ recensioni`, da `src/pages/index.astro` — **anche nel disegno**: le stelle
-  sono il path di `Icons.astro` in ambra e il testo in inchiostro tenue, come
-  `.trust` della home. Serve perché il glifo ★ non è nei font del sito: cadrebbe
-  su un font di sistema, monocromatico
-  e dello stesso inchiostro del testo (il badge sembrava "di una riga sola"). Se
-  cambia il numero là, va cambiato anche qui — ed è esattamente così che era
-  rimasto indietro a "20+".
+  non sostituisce `miele-di-acacia.jpg`, che resta il sorgente dei banner social
+  dei mieli e della figura nel testo della guida "acacia, millefiori e castagno"
+  (la foto del miele di acacia è `miele-di-acacia-card.jpg`, vedi sopra).

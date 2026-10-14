@@ -1,6 +1,6 @@
 ---
 /**
- * Schede del miele — le quattro varietà (`site.honeys`) e il miele in favo
+ * Schede del miele — le cinque varietà (`site.honeys`) e il miele in favo
  * (`site.honeyComb`), tutte da questo template.
  *
  * La struttura è quella nata per il miele di acacia e poi estesa a tutte le
@@ -29,12 +29,13 @@ import Icons from '../../components/Icons.astro';
 import PhoneCta from '../../components/PhoneCta.astro';
 import { site, honeyProducts } from '../../data/site';
 import { ogImageFor } from '../../data/og';
+import { imgDims } from '../../lib/images.js';
 import { prezzoNota, prezzoSuRichiesta } from '../../data/bee-products';
 import { entryFormat, otherFormats } from '../../lib/price';
 import { product, faqPage, localBusiness } from '../../lib/schema';
 
 export function getStaticPaths() {
-  // tutte le schede del miele: le quattro varietà e il miele in favo
+  // tutte le schede del miele: le cinque varietà e il miele in favo
   return honeyProducts.map((h) => ({
     params: { slug: h.slug },
     props: { honey: h },
@@ -106,6 +107,44 @@ const origin = [
 ];
 
 const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
+
+/**
+ * Le foto del blocco prodotto, in ordine: la principale (`image`, la stessa
+ * delle card, dell'`ItemList` e del `Product`) e quelle in più di
+ * `productPhotos`. Con più di una foto il blocchetto diventa una **mini
+ * galleria a scorrimento** — una foto per schermata, il dito o il trackpad per
+ * passare da una all'altra, i puntini come scorciatoia — e il lightbox sfoglia
+ * le stesse foto a schermo intero (le prende dalla sezione). Con una sola foto
+ * il markup è quello di prima, senza nastro e senza puntini.
+ */
+/**
+ * Il riquadro del blocco prodotto è 4:3 (`.product-media`), le foto no: i
+ * fotogrammi 9:16 del favo, per esempio, sono molto più verticali. Con
+ * `object-fit: cover` una foto così verrebbe tagliata di oltre metà e in pagina
+ * sembrerebbe "zoomata": qui si misura quanto taglierebbe, e sopra il 20% la
+ * foto si mostra **intera** (`contain`, con la fascia del colore del riquadro ai
+ * lati). Sotto quella soglia riempie il riquadro, perché lì il taglio è di pochi
+ * punti e non si vede. Le dimensioni vengono dal manifest (`imgDims`), quindi
+ * non c'è niente da dichiarare nei dati: vale anche per le miniature.
+ */
+const BOX_RATIO = 4 / 3;
+const MAX_CROP = 0.2;
+const croppedByCover = (base) => {
+  const { width, height } = imgDims(base);
+  const r = width / height;
+  return 1 - Math.min(r, BOX_RATIO) / Math.max(r, BOX_RATIO);
+};
+/** `photo-contain` = la foto si vede intera, senza riempire il riquadro. */
+const fitClass = (base) => (croppedByCover(base) > MAX_CROP ? 'photo-contain' : undefined);
+
+const productPhotos = [
+  {
+    base: honey.cardImage ?? honey.image,
+    alt: `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`,
+    position: honey.imgPos,
+  },
+  ...(honey.productPhotos ?? []),
+];
 ---
 
 <Base
@@ -141,15 +180,70 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
   */}
   <section class="section" style="padding-top: var(--space-3);">
     <div class="container product-grid">
-      <div class="product-media">
-        <Picture
-          base={honey.cardImage ?? honey.image}
-          alt={`${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`}
-          sizes="(min-width: 900px) 520px, 100vw"
-          loading="eager"
-          fetchpriority="high"
-          objectPosition={honey.imgPos}
-        />
+      <div class="product-figure">
+        <div class="product-media">
+          {
+            productPhotos.length > 1 ? (
+              <div
+                class="product-slider"
+                data-slider
+                tabindex="0"
+                role="group"
+                aria-label={`Foto del ${honey.name.toLowerCase()}`}
+              >
+                {productPhotos.map((p, i) => (
+                  <Picture
+                    base={p.base}
+                    alt={p.alt}
+                    sizes="(min-width: 900px) 520px, 100vw"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={i === 0 ? 'high' : 'auto'}
+                    objectPosition={p.position}
+                    class={fitClass(p.base)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <Picture
+                base={productPhotos[0].base}
+                alt={productPhotos[0].alt}
+                sizes="(min-width: 900px) 520px, 100vw"
+                loading="eager"
+                fetchpriority="high"
+                objectPosition={productPhotos[0].position}
+                class={fitClass(productPhotos[0].base)}
+              />
+            )
+          }
+        </div>
+        {
+          productPhotos.length > 1 && (
+            <ul class="slider-thumbs">
+              {productPhotos.map((p, i) => (
+                <li>
+                  <button
+                    class="slider-thumb"
+                    type="button"
+                    aria-label={`Foto ${i + 1} di ${productPhotos.length}`}
+                    aria-current={i === 0 ? 'true' : 'false'}
+                  >
+                    {/* La miniatura è decorativa: il nome lo dà il bottone, e
+                        non è un bersaglio del lightbox (`zoomable={false}`),
+                        altrimenti il lightbox conterebbe anche le miniature. */}
+                    <Picture
+                      base={p.base}
+                      alt=""
+                      sizes="4.5rem"
+                      loading="lazy"
+                      zoomable={false}
+                      class={fitClass(p.base)}
+                    />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
 
       <div>
@@ -277,7 +371,10 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
 
   {/*
     Galleria facoltativa: per ora la usa solo il miele in favo, con la sequenza
-    di foto ricavate dal video (in `gallery`, già in ordine d'uso).
+    di foto ricavate dal video (in `gallery`, già in ordine d'uso). Le altre
+    schede con più di una foto la mostrano nel blocco prodotto, come mini
+    galleria a scorrimento (`productPhotos`): non è la stessa cosa di una
+    galleria in fondo alla pagina, ed è lì che serve, accanto al prezzo.
   */}
   {
     honey.gallery && (
@@ -335,25 +432,32 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
   />
 
   {/*
-    Gli altri mieli: card con foto e prezzo, un rimando secco al catalogo completo
-    e al confronto tra acacia, millefiori e castagno, nessuna descrizione lunga.
+    Gli altri mieli: card con foto e prezzo, poi il rimando secco al catalogo
+    completo e, per chi non ha ancora scelto, al confronto tra acacia,
+    millefiori e castagno. Il sottotitolo della sezione non c'è più: diceva le
+    stesse due cose che ora dicono il bottone e la riga sotto.
   */}
   <section class="section section--soft" aria-labelledby="other-title">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">scopri anche</span>
         <h2 id="other-title">Gli altri mieli di Bio &amp; Golosità</h2>
-        <p>
-          Scopri gli altri mieli di <a href="/miele/">nostra produzione</a> o
-          confronta{' '}
-          <a href="/guide/miele-acacia-millefiori-castagno-differenze/">
-            acacia, millefiori e castagno
-          </a>.
-        </p>
       </div>
       <div class="honey-grid">
         {others.map((h) => <HoneyCard honey={h} />)}
       </div>
+      <div class="contact-cta mt-4" style="justify-content:center;">
+        <a class="btn btn-primary btn-lg" href="/miele/">
+          <Icons name="arrow" size={20} />
+          Scopri tutti i mieli
+        </a>
+      </div>
+      <p class="small-note center">
+        Indeciso su quale miele scegliere?{' '}
+        <a href="/guide/miele-acacia-millefiori-castagno-differenze/">
+          Confronta acacia, millefiori e castagno
+        </a>
+      </p>
     </div>
   </section>
 
@@ -368,3 +472,27 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
     whatsappLabel="Scrivi su WhatsApp"
   />
 </Base>
+
+<script>
+  /**
+   * Miniature della mini galleria del blocco prodotto (le schede con più di una
+   * foto: oggi l'acacia e il millefiori primaverile). Portano il nastro sulla
+   * foto scelta e si accendono da sole mentre si scorre a dito o trackpad.
+   * Senza JavaScript il nastro si scorre comunque e il lightbox sfoglia le
+   * stesse foto, quindi le miniature sono una scorciatoia, non l'unico modo di
+   * arrivare alla seconda foto.
+   */
+  for (const track of document.querySelectorAll('.product-slider[data-slider]')) {
+    const thumbs = [...(track.closest('.product-figure')?.querySelectorAll('.slider-thumb') ?? [])];
+    if (thumbs.length < 2) continue;
+    const goTo = (i) => track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => goTo(i)));
+    const sync = () => {
+      const i = Math.round(track.scrollLeft / track.clientWidth);
+      thumbs.forEach((thumb, j) => thumb.setAttribute('aria-current', String(i === j)));
+    };
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  }
+</script>

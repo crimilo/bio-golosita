@@ -197,19 +197,40 @@ export const site = {
   ],
 
   /**
-   * I quattro mieli. `priceFormats` sono i formati di vendita con il loro
+   * I cinque mieli. `priceFormats` sono i formati di vendita con il loro
    * prezzo, scritti a mano come tutto il resto dei prezzi del sito: il primo è
    * il prezzo d'ingresso (quello che si vede per primo e sulle card), gli altri
    * restano visibili sotto. Da qui si ricavano la riga di prezzo, la tabella
    * /miele/, le FAQ e i dati strutturati (una variante Google per formato).
    *
-   * Campi che usa la scheda (`miele/[slug].astro`, la stessa per le quattro
+   * **Millefiori: sono tre.** Due estivi (al tiglio e more, al tiglio e
+   * ailanto, entrambi raccolti a giugno) e uno primaverile (al tarassaco e
+   * biancospino, raccolto tra metà marzo e metà aprile): è il motivo per cui il
+   * nome dei due estivi **non** dice più "estivo" — il miele di un'annata
+   * resta in vendita finché ce n'è, e nel nome la stagione sembrava una
+   * scadenza. La stagione di raccolta resta scritta in `harvest`, nel dato
+   * "Raccolta" e nelle FAQ.
+   *
+   * **L'ordine di questo array è l'ordine delle card**: la griglia di `/miele/`,
+   * l'`ItemList` della pagina e il catalogo `hasOfferCatalog` seguono questa
+   * sequenza (oggi acacia, i tre millefiori, castagno, poi il favo), e non è
+   * l'ordine delle stagioni. La prima varietà resta l'acacia perché è la card
+   * che la griglia carica subito (`eager`).
+   *
+   * Campi che usa la scheda (`miele/[slug].astro`, la stessa per le cinque
    * varietà e per il miele in favo): `title`/`description` (SEO), `heroIntro`,
    * `originNote`, `apiaryZone` (la zona degli apiari di quella varietà: base
    * del dato "Origine" e dell'`alt` della foto in "Da dove arriva"; assente =
    * Parco Adda Nord), `harvest` + `annata`, `workNote`, `characteristics`,
    * `videos` (con la loro `caption`), `faq`, `rating` + `productReviews` e, se
    * serve,
+   * `note` (la nota del blocco prodotto, al posto di `site.bulkNote`),
+   * `productPhotos` (le altre foto del blocco prodotto: il primo scatto del
+   * barattolo per l'acacia, gli scatti in più per il millefiori primaverile, i
+   * fotogrammi del video per il favo), `gallery` +
+   * `galleryTitle`/`galleryIntro` (una galleria in fondo alla pagina, che oggi
+   * non usa più nessuna scheda: il favo è passato a `productPhotos`, vedi
+   * README, "Scheda del miele"),
    * `photo` (una foto di prodotto al posto di quella dell'apiario) o
    * `apiaryPhoto` (un'altra foto dell'apiario, base del manifest: `apiari_hd`,
    * `apiari_5` — vedi README). Di norma la sezione usa `apiari_hd`: il favo è
@@ -222,7 +243,25 @@ export const site = {
     {
       slug: 'miele-di-acacia',
       name: 'Miele di Acacia',
-      image: 'miele-di-acacia',
+      /**
+       * La foto del miele — scheda, card e dati strutturati — è
+       * `miele-di-acacia-card`: il secondo scatto del barattolo, quello con
+       * l'inquadratura da card (sorgente `miele-di-acacia-card.jpg` in root:
+       * vedi README, "Crediti immagini"). La base `miele-di-acacia` resta
+       * pubblicata ma non è più la foto del miele: la usa la figura nel testo
+       * della guida "acacia, millefiori e castagno" (`guides.ts`), e i banner
+       * social dei mieli si generano ancora dal sorgente `miele-di-acacia.jpg`
+       * (`instagram-endcard.mjs`, `facebook-banner.mjs`). È anche la **seconda
+       * foto del blocco prodotto** (`productPhotos`, qui sotto): il primo scatto
+       * del barattolo resta cliccabile accanto a quello nuovo.
+       */
+      image: 'miele-di-acacia-card',
+      productPhotos: [
+        {
+          base: 'miele-di-acacia',
+          alt: "Il primo scatto del barattolo di miele di acacia di Bio & Golosità",
+        },
+      ],
       color: '#f3e2a1',
       priceFormats: [
         { size: '500 g', price: '€ 6,00' },
@@ -334,17 +373,17 @@ export const site = {
       ],
     },
     {
-      slug: 'miele-millefiori-estivo-al-tiglio-e-more',
-      name: 'Miele Millefiori Estivo al Tiglio e More',
-      image: 'miele-millefiori-estivo-al-tiglio-e-more',
+      slug: 'miele-millefiori-al-tiglio-e-more',
+      name: 'Miele Millefiori al Tiglio e More',
+      image: 'miele-millefiori-al-tiglio-e-more',
       color: '#e8b45a',
       priceFormats: [
         { size: '500 g', price: '€ 5,00' },
         { size: '1 kg', price: '€ 9,00' },
       ],
-      title: 'Miele Millefiori Estivo al Tiglio e More | Bio & Golosità',
+      title: 'Miele Millefiori al Tiglio e More | Bio & Golosità',
       description:
-        'Miele millefiori estivo al tiglio e more, 100% italiano e di api proprie. Corposo, con note di tiglio e more selvatiche. 500 g €5; consegna in zona.',
+        'Miele millefiori al tiglio e more, 100% italiano e di api proprie. Raccolto a giugno: corposo, con note di tiglio e more. 500 g €5; consegna in zona.',
       heroIntro:
         "Miele 100% italiano, scuro e corposo, con note di tiglio e more selvatiche. Prodotto dalle nostre api negli apiari del Parco Adda Nord.",
       harvest: 'Raccolto a giugno',
@@ -377,11 +416,11 @@ export const site = {
       ],
       faq: [
         {
-          q: 'Perché il millefiori estivo al tiglio e more è più scuro?',
+          q: 'Perché il millefiori al tiglio e more è più scuro?',
           a: 'Perché raccoglie nettari di fioriture estive (tiglio, phacelia, fiori di campo) che producono mieli più colorati e ricchi di minerali rispetto alle fioriture primaverili.',
         },
         {
-          q: 'Che differenza c\'è con il millefiori estivo al tiglio e ailanto?',
+          q: 'Che differenza c\'è con il millefiori al tiglio e ailanto?',
           a: 'Hanno lo stesso periodo di raccolta, giugno, ma composizione diversa: il tiglio e more è più scuro, denso e ricco di minerali, con le note di tiglio e di more selvatiche; il tiglio e ailanto è più chiaro e più dolce, con il retrogusto di pesca dei fiori di ailanto. Chi cerca un miele più delicato sceglie il tiglio e ailanto, chi lo vuole deciso sceglie il tiglio e more.',
         },
         {
@@ -417,17 +456,132 @@ export const site = {
       ],
     },
     {
-      slug: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
-      name: 'Miele Millefiori Estivo al Tiglio e Ailanto',
-      image: 'miele-millefiori-estivo-al-tiglio-e-ailanto',
+      slug: 'miele-millefiori-al-tarassaco-e-biancospino',
+      name: 'Miele Millefiori al Tarassaco e Biancospino',
+      image: 'miele-millefiori-al-tarassaco-e-biancospino',
+      color: '#f2dda6',
+      priceFormats: [
+        { size: '500 g', price: '€ 5,00' },
+        { size: '1 kg', price: '€ 9,00' },
+      ],
+      title: 'Miele Millefiori al Tarassaco e Biancospino | Bio & Golosità',
+      description:
+        'Miele millefiori primaverile al tarassaco e biancospino, 100% italiano e di api proprie. Raccolto tra metà marzo e metà aprile. 500 g €5; consegna in zona.',
+      /**
+       * Il **primaverile** dei tre millefiori (gli altri due sono estivi, al
+       * tiglio) ed è il primo miele della nostra stagione. Nel nome ci stanno
+       * solo tarassaco e biancospino — le due fioriture che si sentono di più —
+       * perché con pruno selvatico e ciliegio il titolo non finiva più: in
+       * barattolo, però, il nettare di quelle fioriture c'è, e la scheda lo
+       * dice nella prima `characteristics` e in una FAQ apposta.
+       */
+      heroIntro:
+        'Miele 100% italiano delle prime fioriture. Cristallizza presto e si spalma benissimo. Prodotto dalle nostre api negli apiari del Parco Adda Nord.',
+      harvest: 'Raccolto tra metà marzo e metà aprile',
+      annata: null,
+      originNote:
+        "La raccolta avviene tra metà marzo e metà aprile, sulle prime fioriture dell'anno, negli apiari che seguiamo nel Parco Adda Nord.",
+      /**
+       * Le quattro voci del blocco prodotto, come negli altri mieli: colore,
+       * gusto, composizione e consistenza. Non ci sono né le date del raccolto né
+       * il non pastorizzato: sono già nel dato "Raccolta", nella riga
+       * "Lavorazione" e nella FAQ, e gli altri mieli nei chip non le
+       * ripetono. La composizione completa invece non sta nel nome, quindi la
+       * terza voce è l'unico posto in cui si legge in blocco.
+       */
+      characteristics: [
+        'Colore: ambrato',
+        // `characteristics[1]` è la microdescrizione della card in /miele/: qui
+        // è il gusto, come per gli altri mieli. La cristallizzazione veloce — il
+        // tratto che distingue questo millefiori dagli altri — resta nella
+        // quarta voce, nella nota del blocco e nella FAQ.
+        'Gusto: fruttato, con note floreali',
+        'Delle fioriture del periodo: tarassaco, biancospino, pruno selvatico e ciliegio',
+        'Cristallizza presto, per il glucosio del tarassaco',
+      ],
+      /**
+       * Il video del raccolto: Raffaele che spiega questo miele mentre i
+       * barattoli si riempiono. È verticale (576×1024), quindi sta nella colonna
+       * stretta di `.origin-video`. Il sorgente è in root (gitignorato, come
+       * tutti i video); in `public/video/` sta la ricodifica da 2,2 MB con il
+       * suo poster (vedi README, "Video").
+       */
+      videos: [
+        {
+          src: '/video/millefiori-tarassaco-biancospino.mp4',
+          poster: '/video/millefiori-tarassaco-biancospino-poster-ee49c420.avif',
+          label: 'Raffaele che spiega il millefiori al tarassaco e biancospino mentre i barattoli si riempiono',
+          cls: 'video-item--tall',
+          caption:
+            'Il miele che va nei barattoli, raccontato da Raffaele.',
+        },
+      ],
+      /**
+       * Le **altre** foto del blocco prodotto, dopo `image`: il blocchetto le
+       * mostra come mini galleria a scorrimento, una per schermata (il lightbox
+       * sfoglia le stesse foto a schermo intero, perché le prende dalla
+       * sezione). Le basi sono quelle dei file in root
+       * (`miele-millefiori-al-tarassaco-e-biancospino-2.jpg` → base `...-2`).
+       * Le due foto non sono 4:3, e il blocchetto è 4:3: `object-fit: cover` le
+       * ritaglia al centro. Se il taglio non va bene per una di loro, si sposta
+       * con `position` (es. `position: '50% 30%'`), come `imgPos` sulla foto
+       * principale.
+       */
+      productPhotos: [
+        {
+          base: 'miele-millefiori-al-tarassaco-e-biancospino-2',
+          alt: 'Il barattolo di millefiori al tarassaco e biancospino di Bio & Golosità, in uno scatto verticale',
+        },
+        {
+          base: 'miele-millefiori-al-tarassaco-e-biancospino-3',
+          alt: 'Il barattolo di millefiori al tarassaco e biancospino, in uno scatto orizzontale',
+        },
+      ],
+      faq: [
+        {
+          q: 'Perché questo millefiori cristallizza così presto?',
+          a: 'Perché contiene molto tarassaco, e il tarassaco è ricco di glucosio: tra gli zuccheri del miele è il glucosio a cristallizzare per primo, quindi questo barattolo diventa granuloso in poche settimane, molto prima degli altri nostri millefiori. Conta anche la lavorazione: noi smieliamo a freddo e non pastorizziamo, e la pastorizzazione — oltre a sciupare profumo e aromi — serve proprio a ritardare la cristallizzazione. Non è un difetto: è il miele che si comporta da miele.',
+        },
+        {
+          q: 'Nel nome ci sono solo tarassaco e biancospino: è tutto qui?',
+          a: 'No. In questo millefiori primaverile finisce anche il nettare di pruno selvatico e di ciliegio, che fioriscono negli stessi giorni: nel nome teniamo solo le due fioriture che si sentono di più, perché con tutte e quattro diventerebbe lungo da leggere. La composizione completa è nella prima voce del blocco prodotto.',
+        },
+        {
+          q: 'Quando viene raccolto, e in che ordine arrivano i vostri mieli?',
+          a: "Tra metà marzo e metà aprile, sulle prime fioriture dell'anno: è il primo miele della nostra stagione. Poi arriva l'acacia (fine aprile – inizio maggio), a giugno i due millefiori al tiglio e infine il castagno.",
+        },
+        {
+          q: 'Se è diventato duro, cosa faccio?',
+          a: 'Niente di speciale: il miele cristallizzato si spalma benissimo e in cucina si comporta come quello liquido. Se però lo preferisci liquido, metti il barattolo a bagnomaria in acqua tiepida per qualche minuto, senza fretta e senza farlo bollire.',
+        },
+        { ...deliveryFaq },
+      ],
+      rating: { value: 5, count: 2 },
+      productReviews: [
+        {
+          name: 'Chiara Borsani',
+          stars: 5,
+          text: 'Avevo letto che cristallizza in fretta e infatti dopo un paio di settimane era già granuloso. È davvero buono e si spalma molto meglio di quello liquido. Lo consiglio.',
+        },
+        {
+          name: 'Andrea Molteni',
+          stars: 5,
+          text: 'Preso per provare qualcosa di diverso dal solito acacia. Mi è piaciuto, penso che lo riprenderò. Pacco arrivato puntuale, tutto a posto.',
+        },
+      ],
+    },
+    {
+      slug: 'miele-millefiori-al-tiglio-e-ailanto',
+      name: 'Miele Millefiori al Tiglio e Ailanto',
+      image: 'miele-millefiori-al-tiglio-e-ailanto',
       color: '#d9a83f',
       priceFormats: [
         { size: '500 g', price: '€ 5,00' },
         { size: '1 kg', price: '€ 9,00' },
       ],
-      title: 'Miele Millefiori Estivo al Tiglio e Ailanto | Bio & Golosità',
+      title: 'Miele Millefiori al Tiglio e Ailanto | Bio & Golosità',
       description:
-        'Miele millefiori estivo al tiglio e ailanto, 100% italiano e di api proprie. Dolce e floreale, con retrogusto di pesca. 500 g €5; consegna in zona.',
+        'Miele millefiori al tiglio e ailanto, 100% italiano e di api proprie. Raccolto a giugno: dolce, con retrogusto di pesca. 500 g €5; consegna in zona.',
       heroIntro:
         "Miele 100% italiano, dolce e floreale, con il retrogusto di pesca dell'ailanto. Prodotto dalle nostre api negli apiari del Parco Adda Nord.",
       harvest: 'Raccolto a giugno',
@@ -464,12 +618,12 @@ export const site = {
           a: 'L\'ailanto (Ailanthus altissima) è un albero conosciuto anche come "pianta del paradiso" o "albero del paradiso". I suoi fiori producono un nettare abbondante e profumato, che al miele regala un caratteristico retrogusto di pesca.',
         },
         {
-          q: 'Che differenza c\'è con il millefiori estivo al tiglio e more?',
-          a: 'È sempre un millefiori estivo, ma con una percentuale più alta di tiglio e ailanto rispetto al tiglio e more: più dolce e aromatico, con il retrogusto di pesca che lo rende facilmente riconoscibile.',
+          q: 'Che differenza c\'è con il millefiori al tiglio e more?',
+          a: 'È lo stesso millefiori di giugno, ma con una percentuale più alta di tiglio e ailanto rispetto al tiglio e more: più dolce e aromatico, con il retrogusto di pesca che lo rende facilmente riconoscibile.',
         },
         {
           q: 'Quando viene raccolto?',
-          a: 'Come il millefiori estivo al tiglio e more, viene raccolto a giugno, quando tiglio e ailanto sono in piena fioritura. È smielato a freddo e non pastorizzato, come tutti i nostri mieli.',
+          a: 'Come il millefiori al tiglio e more, viene raccolto a giugno, quando tiglio e ailanto sono in piena fioritura. È smielato a freddo e non pastorizzato, come tutti i nostri mieli.',
         },
         { ...deliveryFaq },
       ],
@@ -603,7 +757,7 @@ export const site = {
     description:
       "Miele in favo delle nostre api, dagli apiari del Parco Adda Nord. Con la sua cera e senza trattamento termico, solo su prenotazione.",
     heroIntro:
-      "Miele in favo delle nostre api: il favo opercolato, tagliato dal telaio e invasettato con la sua cera, senza smielatura e senza trattamento termico. Arriva dagli apiari del Parco Adda Nord.",
+      'Favo opercolato, tagliato direttamente dal telaio e invasettato con la sua cera, senza smielatura né trattamenti termici. Proviene dai nostri apiari nel Parco Adda Nord.',
     /** Frase di "Da dove arriva" (la foto dell'apiario sta accanto). */
     originNote:
       "Il favo si prepara in stagione, quando le api hanno opercolato le cellette, negli apiari che seguiamo nel Parco Adda Nord.",
@@ -633,31 +787,34 @@ export const site = {
         label: 'Raffaele mostra il miele in favo e lo assaggia',
         cls: 'video-item--tall',
         caption:
-          'Il favo si taglia intero dal telaio e si invasetta così com\'è, senza scaldarlo.',
+          'Raffaele stacca un pezzo di favo dal telaio e lo assaggia: buonissimo, con il miele ancora nella sua cera.',
       },
     ],
     /**
-     * La sequenza di foto ricavate dal video, **in ordine d'uso**: dalla prima,
-     * il favo ancora attaccato al telaio, fino all'assaggio di Raffaele. Le basi
-     * sono numerate come i file in root (`miele-in-favo-1.avif` →
-     * `miele_in_favo_1`), quindi l'ordine dell'array è l'ordine in pagina e
-     * nella galleria a schermo intero.
+     * I fotogrammi ricavati dal video, **in ordine d'uso**: dalla prima, il favo
+     * ancora attaccato al telaio, fino all'assaggio di Raffaele. Le basi sono
+     * numerate come i file in root (`miele-in-favo-1.avif` → `miele_in_favo_1`),
+     * quindi l'ordine dell'array è l'ordine in pagina e quello del lightbox: per
+     * questo i numeri degli `alt` saltano il 2 (il fotogramma `miele_in_favo_2`
+     * è pubblicato in `public/img/` ma non è più in pagina — per rimetterlo basta
+     * rimettere la voce qui sotto, al suo posto). Sono le altre foto del **blocco
+     * prodotto** (`productPhotos`), dopo la foto del favo: prima erano una
+     * galleria in fondo alla pagina.
+     *
+     * I fotogrammi sono verticali (9:16): nel riquadro 4:3 del blocco prodotto si
+     * mostrano **interi**, con la fascia del colore del riquadro ai lati, perché
+     * `cover` ne taglierebbe più di metà (vedi `productPhotos` in `[slug].astro`).
+     * `position` non serve qui: non c'è taglio da spostare.
      */
-    galleryTitle: "Dal favo all'assaggio",
-    galleryIntro:
-      'Sei fotogrammi in ordine, presi dal video qui sopra: si parte dal favo ancora attaccato al telaio e si arriva all\'assaggio.',
-    gallery: [
+    productPhotos: [
       {
         base: 'miele_in_favo_1',
-        alt: 'Il favo ancora attaccato al telaio, con il miele dove le api l\'hanno fatto',
-        cls: 'g-item--portrait',
-        caption: 'Il favo ancora attaccato al telaio, dove le api hanno fatto il miele',
+        alt: "Il favo ancora attaccato al telaio, con il miele dove le api l'hanno fatto",
       },
-      { base: 'miele_in_favo_2', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 2', cls: 'g-item--portrait' },
-      { base: 'miele_in_favo_3', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 3', cls: 'g-item--portrait' },
-      { base: 'miele_in_favo_4', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 4', cls: 'g-item--portrait' },
-      { base: 'miele_in_favo_5', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 5', cls: 'g-item--portrait' },
-      { base: 'miele_in_favo_6', alt: 'Miele in favo: la sequenza dal telaio all\'assaggio, fotogramma 6', cls: 'g-item--portrait' },
+      { base: 'miele_in_favo_3', alt: "Miele in favo: dal telaio all'assaggio, fotogramma 3" },
+      { base: 'miele_in_favo_4', alt: "Miele in favo: dal telaio all'assaggio, fotogramma 4" },
+      { base: 'miele_in_favo_5', alt: "Miele in favo: dal telaio all'assaggio, fotogramma 5" },
+      { base: 'miele_in_favo_6', alt: "Miele in favo: dal telaio all'assaggio, fotogramma 6" },
     ],
     faq: [
       {
@@ -700,7 +857,7 @@ export const site = {
 };
 
 /**
- * Tutte le schede del miele: le quattro varietà più il miele in favo. Da usare
+ * Tutte le schede del miele: le cinque varietà più il miele in favo. Da usare
  * per le pagine (`/miele/<slug>/`), il footer, il catalogo dei dati strutturati
  * e i link incrociati; per griglia e tabella prezzi restano le sole varietà
  * (`site.honeys`).
