@@ -472,8 +472,8 @@ export const site = {
        * tiglio) ed è il primo miele della nostra stagione. Nel nome ci stanno
        * solo tarassaco e biancospino — le due fioriture che si sentono di più —
        * perché con pruno selvatico e ciliegio il titolo non finiva più: in
-       * barattolo, però, il nettare di quelle fioriture c'è, e la scheda lo
-       * dice nella prima `characteristics` e in una FAQ apposta.
+       * barattolo, però, il nettare di quelle fioriture c'è, e la composizione
+       * completa sta nella terza voce del blocco prodotto.
        */
       heroIntro:
         'Miele 100% italiano delle prime fioriture. Cristallizza presto e si spalma benissimo. Prodotto dalle nostre api negli apiari del Parco Adda Nord.',
@@ -540,11 +540,7 @@ export const site = {
       faq: [
         {
           q: 'Perché questo millefiori cristallizza così presto?',
-          a: 'Perché contiene molto tarassaco, e il tarassaco è ricco di glucosio: tra gli zuccheri del miele è il glucosio a cristallizzare per primo, quindi questo barattolo diventa granuloso in poche settimane, molto prima degli altri nostri millefiori. Conta anche la lavorazione: noi smieliamo a freddo e non pastorizziamo, e la pastorizzazione — oltre a sciupare profumo e aromi — serve proprio a ritardare la cristallizzazione. Non è un difetto: è il miele che si comporta da miele.',
-        },
-        {
-          q: 'Nel nome ci sono solo tarassaco e biancospino: è tutto qui?',
-          a: 'No. In questo millefiori primaverile finisce anche il nettare di pruno selvatico e di ciliegio, che fioriscono negli stessi giorni: nel nome teniamo solo le due fioriture che si sentono di più, perché con tutte e quattro diventerebbe lungo da leggere. La composizione completa è nella prima voce del blocco prodotto.',
+          a: 'Perché contiene molto tarassaco, ricco di glucosio, lo zucchero che cristallizza più facilmente. Per questo diventa granuloso in poche settimane. Noi smieliamo a freddo e non pastorizziamo: così preserviamo profumi e aromi, anche se il miele cristallizza prima. Non è un difetto, ma un segno della sua naturalezza.',
         },
         {
           q: 'Quando viene raccolto, e in che ordine arrivano i vostri mieli?',
