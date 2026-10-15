@@ -1164,6 +1164,13 @@ strong {
   color: var(--ink-soft);
 }
 
+/* La stessa nota può tornare a grandezza piena quando in coda alla sezione non
+   è un dettaglio da mettere in secondo piano ma una riga d'invito a sé (es. il
+   rimando al confronto tra i mieli): resta chiaro solo il colore. */
+.small-note--full {
+  font-size: 1rem;
+}
+
 /* Riepilogo del voto: stelle + punteggio + numero di recensioni sulla stessa
    riga (che va a capo da sé su schermi stretti). Nel blocco prodotto del miele
    sta sotto il prezzo, con il link alle recensioni in coda, sulla stessa riga. */
