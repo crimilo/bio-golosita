@@ -809,7 +809,7 @@ famiglie.
 Chromium, come `scripts/og/`, con il barattolo rimisurato sulla foto usata), quindi
 qui c'è solo il JPG finito, da riprendere a mano se serve rifarlo. Nel badge del
 banner grande la valutazione è quella della home (`src/pages/index.astro`: `5,0 su
-Google · 40+ recensioni`) **anche nel disegno**: le stelle sono il path di
+Google · 50+ recensioni`) **anche nel disegno**: le stelle sono il path di
 `Icons.astro` in ambra e il testo in inchiostro tenue, come `.trust` della home.
 Serve perché il glifo ★ non è nei font del sito: cadrebbe su un font di sistema,
 monocromatico e dello stesso inchiostro del testo (il badge sembrava "di una riga
