@@ -542,7 +542,7 @@ Campi che una scheda può avere in `src/data/site.js`:
 - `characteristics` — le voci del blocco prodotto (e la microdescrizione della
   card su `/miele/`, via `characteristics[1]`);
 - `workNote` — la riga "Lavorazione" (facoltativa: senza, il default è
-  "Smielatura a freddo, decantazione, nessuna pastorizzazione");
+  "Smielatura, decantazione, nessuna pastorizzazione");
 - `videos` — mp4 + poster AVIF + `caption`, che è la didascalia resa sotto il
   video in un `<figcaption>`;
 - `faq` — le domande della scheda (la pagina ne mostra quante ce ne sono);

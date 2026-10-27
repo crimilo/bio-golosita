@@ -294,7 +294,7 @@ export const site = {
       originNote:
         "La raccolta dell'acacia avviene tra fine aprile e inizio maggio negli apiari che seguiamo nel Parco Adda Nord.",
       /** Riga "Lavorazione" dei quattro dati di origine. */
-      workNote: 'Smielato a freddo, non pastorizzato',
+      workNote: 'Non pastorizzato',
       // Le caratteristiche del blocco prodotto. La **seconda** è la
       // microdescrizione che la card mostra in /miele/ (`characteristics[1]`).
       characteristics: [
@@ -540,7 +540,7 @@ export const site = {
       faq: [
         {
           q: 'Perché questo millefiori cristallizza così presto?',
-          a: 'Perché contiene molto tarassaco, ricco di glucosio, lo zucchero che cristallizza più facilmente. Per questo diventa granuloso in poche settimane. Noi smieliamo a freddo e non pastorizziamo: così preserviamo profumi e aromi, anche se il miele cristallizza prima. Non è un difetto, ma un segno della sua naturalezza.',
+          a: 'Perché contiene molto tarassaco, ricco di glucosio, lo zucchero che cristallizza più facilmente. Per questo diventa granuloso in poche settimane. Noi non pastorizziamo: così preserviamo profumi e aromi, anche se il miele cristallizza prima. Non è un difetto, ma un segno della sua naturalezza.',
         },
         {
           q: 'Quando viene raccolto, e in che ordine arrivano i vostri mieli?',
@@ -605,7 +605,7 @@ export const site = {
           label: 'La smielatura del nostro millefiori (raccolto 2026)',
           cls: 'video-item--tall',
           caption:
-            'La smielatura del nostro millefiori: il miele esce dallo smielatore a freddo, senza pastorizzazione.',
+            'La smielatura del nostro millefiori: il miele esce dallo smielatore, senza pastorizzazione.',
         },
       ],
       faq: [
@@ -619,7 +619,7 @@ export const site = {
         },
         {
           q: 'Quando viene raccolto?',
-          a: 'Come il millefiori al tiglio e more, viene raccolto a giugno, quando tiglio e ailanto sono in piena fioritura. È smielato a freddo e non pastorizzato, come tutti i nostri mieli.',
+          a: 'Come il millefiori al tiglio e more, viene raccolto a giugno, quando tiglio e ailanto sono in piena fioritura. Non è pastorizzato, come tutti i nostri mieli.',
         },
         { ...deliveryFaq },
       ],

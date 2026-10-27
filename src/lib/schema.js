@@ -25,7 +25,7 @@ const areaServedType = (name) => {
 const businessDescription = () =>
   `Apicoltore con sede legale a Cassano d'Adda (Milano) e apiari nel Parco Adda Nord e in Alta Val Brembana: miele 100% italiano e artigianale di api proprie — ${site.honeys
     .map((h) => h.name.toLowerCase().replace(/^(miele\s+)?(di\s+)?/, ''))
-    .join(', ')} — non pastorizzato e smielato a freddo. Produciamo anche api regine e nuclei d'api.`;
+    .join(', ')} — non pastorizzato. Produciamo anche api regine e nuclei d'api.`;
 
 /** L'apicoltore, come entità Person (E-E-A-T). */
 export function person() {

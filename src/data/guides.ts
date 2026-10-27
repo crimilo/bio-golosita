@@ -39,7 +39,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
     push: {
       href: '/miele/',
       label: 'Scopri i nostri mieli non pastorizzati',
-      note: 'Tutti i mieli Bio & Golosità sono smielati a freddo e non pastorizzati: li trovi nella pagina dei mieli, con prezzi e formati.',
+      note: 'Nessuno dei mieli Bio & Golosità è pastorizzato: li trovi nella pagina dei mieli, con prezzi e formati.',
     },
     blocks: [
       {
@@ -88,7 +88,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Perché noi non pastorizziamo' },
       {
-        p: 'Perché il nostro miele è di api nostre, raccolto nei nostri apiari nel Parco Adda Nord e in Alta Val Brembana, e venduto direttamente: non deve attraversare mesi di magazzino e non deve restare identico per anni. Lo smieliamo a freddo e lo invasettiamo a piccoli lotti, così ogni barattolo conserva il profumo della sua fioritura. Se vuoi sapere cosa vuol dire concretamente, nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo come lavoriamo.',
+        p: 'Perché il nostro miele è di api nostre, raccolto nei nostri apiari nel Parco Adda Nord e in Alta Val Brembana, e venduto direttamente: non deve attraversare mesi di magazzino e non deve restare identico per anni. Lo smieliamo e lo invasettiamo a piccoli lotti, così ogni barattolo conserva il profumo della sua fioritura. Se vuoi sapere cosa vuol dire concretamente, nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo come lavoriamo.',
       },
       {
         cta: { href: '/miele/', label: 'Vedi i nostri mieli non pastorizzati' },
@@ -323,7 +323,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
 
       { h2: 'I nostri mieli vengono dai nostri apiari' },
       {
-        p: 'I mieli Bio & Golosità sono prodotti dalle nostre api in Lombardia e lavorati direttamente da noi. Li smieliamo a freddo e non li pastorizziamo.',
+        p: 'I mieli Bio & Golosità sono prodotti dalle nostre api in Lombardia e lavorati direttamente da noi. Li smieliamo e non li pastorizziamo.',
       },
       {
         p: 'Acacia, millefiori e castagno non differiscono quindi per il modo in cui li lavoriamo, ma soprattutto per <strong>fioritura, territorio, periodo di raccolta e profilo aromatico</strong>.',
