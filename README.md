@@ -561,16 +561,17 @@ Campi che una scheda può avere in `src/data/site.js`:
   `HoneyCard` (griglia di `/miele/`, "Gli altri mieli" in fondo alle altre
   schede), il blocco prodotto della scheda e le liste dei dati strutturati
   (`ItemList` della pagina e `Offer` del catalogo `hasOfferCatalog`). **Nessuna
-  scheda la usa oggi**: l'acacia, che ha due scatti del barattolo, ha messo il
-  secondo direttamente in `image` (vedi "Crediti immagini");
+  scheda la usa oggi**: l'acacia ha messo lo scatto da card direttamente in
+  `image` (vedi "Crediti immagini");
 - `apiaryPhoto` — **quale** foto dell'apiario mostrare in "Da dove arriva"
   (base del manifest: `apiari_hd` o `apiari_5`); `alt` e didascalia restano
   quelle dell'apiario. Senza il campo vale `apiari_hd`, ed è la scelta di tutte
   le varietà: l'unica scheda con un apiario diverso è il favo (`apiari_5`);
 - `productPhotos` — le **altre foto del blocco prodotto**, dopo `image` (che
   resta la prima e la sola che va nelle card e nell'`ItemList`). Le usano
-  l'acacia (il primo scatto del barattolo), il millefiori primaverile (due
-  scatti in più) e il favo (i cinque fotogrammi del video).
+  il millefiori primaverile (due scatti in più) e il favo (i cinque fotogrammi
+  del video). L'acacia le aveva (il primo scatto del barattolo) e **non più**:
+  il suo blocco prodotto è tornato a foto singola.
   Con più di una foto il blocchetto diventa una **mini galleria a scorrimento**:
   un nastro a scatti (`.product-slider`) con una foto per schermata, le
   **miniature cliccabili sotto la foto** come scorciatoia (`aria-current` sulla
@@ -601,7 +602,7 @@ Campi che una scheda può avere in `src/data/site.js`:
   `{ base, alt, caption?, cls? }`, e `cls` sceglie il taglio della griglia
   (`g-item--tall`, `--square`, `--wide`, `--portrait`). Le **altre** foto di una
   scheda stanno nel blocco prodotto (`productPhotos`), non qui: una galleria in
-  fondo alla pagina è un'altra cosa dall'avere due scatti del barattolo accanto
+  fondo alla pagina è un'altra cosa dall'avere più scatti del barattolo accanto
   al prezzo.
 
 La hero di queste pagine **non** usa `variant="product"`: il sottotitolo resta
@@ -941,7 +942,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
 *root* si intende il nome del file di partenza, non un file presente nel repo.
 
 - **Le foto di prodotto dei mieli** (root) — originali del titolare, una per
-  scheda (l'acacia ne ha due e il millefiori primaverile tre: vedi le eccezioni
+  scheda (il millefiori primaverile ne ha tre: vedi le eccezioni
   qui sotto), **già in 4:3** come
   il riquadro del blocco prodotto (`.product-media`) e delle card
   (`.honey-card-media`), quindi riempiono lo slot senza ritaglio.
@@ -969,8 +970,9 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   della pagina; è anche l'unica delle vecchie sorgenti che non è 4:3 (lo slot
   della scheda la ritaglia, vedi qui sotto). `miele-di-acacia` resta pubblicata
   perché la usa la figura nel testo della guida "acacia, millefiori e castagno"
-  (`guides.ts`) e perché è la **seconda foto del blocco prodotto** dell'acacia
-  (`productPhotos`).
+  (`guides.ts`). **Non è più nel blocco prodotto**: il suo primo scatto non sta
+  più accanto a `miele-di-acacia-card`, quindi la scheda dell'acacia non ha mini
+  galleria né frecce (vedi `productPhotos`).
 
   Tutte con le varianti 1200, 900, 600, 400: il blocco prodotto delle schede ha
   una colonna da 520px (quindi 1200 basta anche a DPR 2) e le card della griglia

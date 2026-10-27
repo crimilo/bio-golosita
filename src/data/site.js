@@ -225,9 +225,8 @@ export const site = {
    * `videos` (con la loro `caption`), `faq`, `rating` + `productReviews` e, se
    * serve,
    * `note` (la nota del blocco prodotto, al posto di `site.bulkNote`),
-   * `productPhotos` (le altre foto del blocco prodotto: il primo scatto del
-   * barattolo per l'acacia, gli scatti in più per il millefiori primaverile, i
-   * fotogrammi del video per il favo), `gallery` +
+   * `productPhotos` (le altre foto del blocco prodotto: gli scatti in più per
+   * il millefiori primaverile, i fotogrammi del video per il favo), `gallery` +
    * `galleryTitle`/`galleryIntro` (una galleria in fondo alla pagina, che oggi
    * non usa più nessuna scheda: il favo è passato a `productPhotos`, vedi
    * README, "Scheda del miele"),
@@ -251,17 +250,13 @@ export const site = {
        * pubblicata ma non è più la foto del miele: la usa la figura nel testo
        * della guida "acacia, millefiori e castagno" (`guides.ts`), e i banner
        * social dei mieli si generano ancora dal sorgente `miele-di-acacia.jpg`
-       * (`instagram-endcard.mjs`, `facebook-banner.mjs`). È anche la **seconda
-       * foto del blocco prodotto** (`productPhotos`, qui sotto): il primo scatto
-       * del barattolo resta cliccabile accanto a quello nuovo.
+       * (`instagram-endcard.mjs`, `facebook-banner.mjs`).
+       *
+       * **Niente `productPhotos`**: il primo scatto del barattolo non sta più
+       * accanto a questo nel blocco prodotto, che quindi resta a foto singola
+       * (senza mini galleria, frecce e miniature).
        */
       image: 'miele-di-acacia-card',
-      productPhotos: [
-        {
-          base: 'miele-di-acacia',
-          alt: "Il primo scatto del barattolo di miele di acacia di Bio & Golosità",
-        },
-      ],
       color: '#f3e2a1',
       priceFormats: [
         { size: '500 g', price: '€ 6,00' },
