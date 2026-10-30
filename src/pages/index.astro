@@ -25,7 +25,12 @@ const homeProducts = [
     href: '/miele/',
     ...repartoImages.miele,
     title: 'I nostri mieli',
-    text: 'Acacia, millefiori e castagno: mieli non pastorizzati. In stagione prepariamo anche il miele in favo.',
+    // La dicitura «miele convenzionale» sta qui, dentro la frase della card e
+    // non come riga a sé: è l'unico posto in cui il sito dice che il miele non
+    // è certificato biologico (vedi README, «Niente claim bio»), e deve restare
+    // una parola in mezzo alle altre — non un claim in evidenza, non una nota
+    // sotto la griglia di /miele/, non una ripetizione nelle schede.
+    text: 'Acacia, millefiori e castagno: miele convenzionale, non pastorizzato. In stagione prepariamo anche il miele in favo.',
     price: priceFrom(site.honeys.flatMap((h) => h.priceFormats)),
   },
   {
