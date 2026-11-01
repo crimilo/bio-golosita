@@ -60,7 +60,6 @@ const base: Omit<Guide, 'datePublished'>[] = [
         img: {
           base: 'honey_favo',
           alt: 'Favo con celle esagonali piene di miele, in macro',
-          caption: 'Il miele nasce nelle celle del favo: da lì viene estratto a freddo',
         },
       },
       { h2: 'Non pastorizzato non significa grezzo o improvvisato' },
