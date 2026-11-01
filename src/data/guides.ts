@@ -47,7 +47,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Che cos\'è la pastorizzazione del miele' },
       {
-        p: 'La pastorizzazione è un trattamento termico: il miele viene scaldato a temperature elevate — normalmente tra i 70 e gli 80 °C, a volte di più — per alcuni minuti o più a lungo. Serve a due cose pratiche per chi vende su larga scala: <strong>ritardare la cristallizzazione</strong>, così il prodotto resta limpido e fluido sugli scaffali, e <strong>ridurre i lieviti</strong> che, in mieli con troppa umidità, possono far fermentare il prodotto. È una scelta industriale, non un errore: risolve problemi di logistica e di distribuzione.',
+        p: 'La pastorizzazione è un trattamento termico: il miele viene scaldato a temperature elevate — normalmente tra i 70 e gli 80 °C, a volte di più — per alcuni minuti o più a lungo. Serve a due cose pratiche per chi vende su larga scala: <strong>ritardare la cristallizzazione</strong>, così il prodotto resta limpido e fluido sugli scaffali, e <strong>ridurre i lieviti</strong> che, in mieli con troppa umidità, possono far fermentare il prodotto. È una scelta industriale che risolve problemi di logistica e di distribuzione.',
       },
       {
         p: 'Il prezzo di quel trattamento è però quello che si perde per strada. Il miele è un prodotto complesso: contiene enzimi (come l\'invertasi e la diastasi), tracce di polline, sostanze aromatiche volatili. Sono proprio le componenti più delicate a risentire del calore. Il risultato è un miele più stabile e più uniforme, ma con un profilo aromatico più piatto e la tendenza a rimanere liquido anche quando, in natura, non lo sarebbe.',
@@ -87,7 +87,7 @@ const base: Omit<Guide, 'datePublished'>[] = [
       },
       { h2: 'Perché noi non pastorizziamo' },
       {
-        p: 'Perché il nostro miele è di api nostre, raccolto nei nostri apiari nel Parco Adda Nord e in Alta Val Brembana, e venduto direttamente: non deve attraversare mesi di magazzino e non deve restare identico per anni. Lo smieliamo e lo invasettiamo a piccoli lotti, così ogni barattolo conserva il profumo della sua fioritura. Se vuoi sapere cosa vuol dire concretamente, nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo come lavoriamo.',
+        p: 'Perché il nostro miele non deve attraversare mesi di magazzino e non deve restare identico per anni. Lo smieliamo e lo invasettiamo a piccoli lotti, così ogni barattolo conserva il profumo della sua fioritura. Se vuoi sapere cosa vuol dire concretamente, nella pagina <a href="/chi-siamo/">chi siamo</a> raccontiamo come lavoriamo.',
       },
       {
         cta: { href: '/miele/', label: 'Vedi i nostri mieli non pastorizzati' },
