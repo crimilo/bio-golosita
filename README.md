@@ -287,16 +287,27 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   alle altre e i media erano comunque grandi. A piena larghezza con 2 colonne le
   colonne erano da 516px e i verticali da 688px — più alti del viewport — quindi
   sono **3, non 2**: è la misura che tiene i media piccoli (336×448 i verticali,
-  336×210 i video orizzontali) senza rientrare dal bordo. Oggi la griglia ha
+  336×210 i video orizzontali a una colonna, 696×435 quando ne occupano due)
+  senza rientrare dal bordo. Oggi la griglia ha
   **4 foto e 3 video** (7 media, dopo che i due video «api» sono usciti dalla
   galleria e ci è entrato il campo di fiori): è alta **1404px** e la sezione
-  **1727px** (con i 6 media di prima erano 932px e 1255px). **Le tile tengono
-  l'aspetto della sorgente** — quadrata la foto di
-  copertina, verticali `g-item--tall`, orizzontali `video-item--wide` — quindi in
-  una riga resta del vuoto sotto le tile più basse (fino a ~250px sotto i due
-  video orizzontali, che stanno nella riga centrale accanto al video verticale
-  delle api sui telai). È una scelta: pareggiare le tile
-  vorrebbe dire tagliare le foto, e il video 16:9 diventerebbe verticale;
+  **1727px** (con i 6 media di prima erano 932px e 1255px), in **tre righe da
+  448 / 460 / 448px**. **Le tile tengono l'aspetto della sorgente** — quadrata la
+  foto di copertina, verticali `g-item--tall`, orizzontali `video-item--wide` —
+  quindi in una riga resta del vuoto sotto la tile più bassa (25px sotto il
+  video del campo di fiori, che sta accanto al filmato verticale delle api).
+  **I due video orizzontali occupano due colonne** (`.gallery-grid--three
+  .video-item--wide` → `grid-column: span 2` sopra i 700px): a una colonna
+  erano due francobolli da 336×210 e con 7 media l'ultima riga si chiudeva con
+  il solo ritratto dei barattoli e due celle vuote accanto — la griglia
+  sembrava rotta. Spandosi a due colonne le celle sono **9 su 3 righe piene**:
+  le tre foto, poi il video delle api sui telai accanto al campo di fiori
+  (696×435), poi la smielatura (696×435) accanto al ritratto. Il video
+  verticale resta più stretto della cella (9/16 con `max-height: 460px` lo
+  fermano a 259px su una colonna da 336) ed è quindi **centrato**
+  (`justify-self: center`, a ogni larghezza), invece di lasciare un vuoto da un
+  lato solo. È una scelta: pareggiare le tile vorrebbe dire tagliare le foto, e
+  il video 16:9 diventerebbe verticale;
   l'alternativa senza tagli è incolonnare i media come un muro
   (`columns: 3` + `break-inside: avoid`), che però cambia l'ordine visivo (le
   colonne si leggono dall'alto in basso, non da sinistra a destra).

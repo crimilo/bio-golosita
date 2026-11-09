@@ -850,6 +850,28 @@ strong {
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* Nella griglia a 3 colonne un video orizzontale ne occupa **due**: da solo in
+   una cella da 336px restava un francobollo (336×210) accanto a tile alte 448,
+   e con un numero dispari di media l'ultima riga si chiudeva con un solo
+   elemento e due celle vuote. Occupando due colonne la galleria della home fa
+   9 celle su 3 righe piene — i due video larghi su righe diverse (uno accanto
+   al video verticale delle api, l'altro accanto al ritratto dei barattoli) — e
+   il video 16:9 si vede a 696×435. Sotto i 700px la griglia torna a 2 colonne e
+   i video restano di una colonna, larghi quanto la cella. */
+@media (min-width: 701px) {
+  .gallery-grid--three .video-item--wide {
+    grid-column: span 2;
+  }
+}
+
+/* Il video verticale è più stretto della cella (9/16 con `max-height: 460px`
+   lo fermano a 259px su una colonna da 336): centrato nella cella lascia lo
+   stesso margine dai due lati invece di un vuoto da un lato solo. Vale a ogni
+   larghezza, anche dove la griglia è a 2 colonne. */
+.gallery-grid--three .video-item--tall {
+  justify-self: center;
+}
+
 @media (max-width: 700px) {
   .gallery-grid--three {
     grid-template-columns: repeat(2, 1fr);
