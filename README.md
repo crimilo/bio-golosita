@@ -288,12 +288,14 @@ allarga la zona protetta *e* accorcia il testo: mai allargare solo il testo.
   colonne erano da 516px e i verticali da 688px — più alti del viewport — quindi
   sono **3, non 2**: è la misura che tiene i media piccoli (336×448 i verticali,
   336×210 i video orizzontali) senza rientrare dal bordo. Oggi la griglia ha
-  **4 foto e 2 video** (6 media, dopo che i due video «api» sono usciti dalla
-  galleria): è alta **932px** e la sezione **1255px** (con 8 media erano 1404px e
-  1727px). **Le tile tengono l'aspetto della sorgente** — quadrata la foto di
+  **4 foto e 3 video** (7 media, dopo che i due video «api» sono usciti dalla
+  galleria e ci è entrato il campo di fiori): è alta **1404px** e la sezione
+  **1727px** (con i 6 media di prima erano 932px e 1255px). **Le tile tengono
+  l'aspetto della sorgente** — quadrata la foto di
   copertina, verticali `g-item--tall`, orizzontali `video-item--wide` — quindi in
-  una riga resta del vuoto sotto le tile più basse (fino a ~250px sotto il video
-  della smielatura, che è l'unico orizzontale). È una scelta: pareggiare le tile
+  una riga resta del vuoto sotto le tile più basse (fino a ~250px sotto i due
+  video orizzontali, che stanno nella riga centrale accanto al video verticale
+  delle api sui telai). È una scelta: pareggiare le tile
   vorrebbe dire tagliare le foto, e il video 16:9 diventerebbe verticale;
   l'alternativa senza tagli è incolonnare i media come un muro
   (`columns: 3` + `break-inside: avoid`), che però cambia l'ordine visivo (le
@@ -1107,7 +1109,7 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
   cosa mostrano): pubblicati in `public/video/` con un nome parlante e ricodificati
   in H.264/AAC (compatibile su tutti i browser) con il comando qui sopra, più il
   poster da un fotogramma. In totale i video pubblicati in `public/video/` sono
-  **70,0 MB** (i sorgenti in root ne pesano 157,5):
+  **73,5 MB** (i sorgenti in root ne pesano 162,3):
   - `smielatura_miele_acacia_2026.mp4` → `smielatura-acacia.mp4` (720×1280,
     19 s, 2,9 MB) — **ritirato**: la scheda dell'acacia è passata al video del
     raccolto 2026 qui sotto, e il file e il suo poster non sono più in
@@ -1188,6 +1190,15 @@ Qui sotto resta la mappa **sorgente → varianti pubblicate**; dove è scritto
     il fotogramma a 5 s, scelto misurando la nitidezza di un fotogramma ogni
     0,5 s (vedi `scripts/posters.mjs`): SSIM 0,93 sul girato originale, che è
     molto dettagliato e quindi comprime poco.
+  - `raffaele-che-mostra-campo-di-fiori-vicino-all-apiario.mp4` →
+    `campo-di-fiori-vicino-all-apiario.mp4` (848×478, 25 s, 3,8 MB, audio mono
+    64k come gli altri) — galleria della home, dopo il video delle api sui
+    telai: è il campo di fiori da cui le api raccolgono, l'altro video
+    **orizzontale** della griglia (`video-item--wide` come la smielatura). È
+    un'unica inquadratura (`select='gt(scene,0.25)'` non trova stacchi); il
+    poster è il fotogramma a 3,5 s, il più nitido di quelli misurati ogni 0,5 s
+    a parte l'ultimo istante del girato (vedi `scripts/posters.mjs`). SSIM 0,94
+    sul girato originale.
   I video sono `preload="none"` con poster: quei MB si scaricano solo se il
   visitatore li fa partire, non all'apertura della pagina.
 - **I metadati si tolgono prima di pubblicare**, foto e video. Le foto, senza

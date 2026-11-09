@@ -72,6 +72,15 @@ const posters = [
   // la scelta è fra fotogrammi tutti sopra 73). Per rifarlo:
   // `ffmpeg -ss <secondi> -i <video> -frames:v 1 -q:v 2 millefiori-tarassaco-biancospino-poster.jpg`
   'millefiori-tarassaco-biancospino-poster.jpg',
+  // Il campo di fiori vicino all'apiario (galleria della home). Sorgente in root
+  // `raffaele-che-mostra-campo-di-fiori-vicino-all-apiario.mp4` (848×478, 25 s,
+  // un'unica inquadratura: `select='gt(scene,0.25)'` non trova stacchi).
+  // Fotogramma a 3,5 s: misurando la nitidezza (varianza del laplaciano) di un
+  // fotogramma ogni 0,5 s è il più definito dopo quello a 25 s, che è l'ultimo
+  // istante della registrazione (e i primi due secondi, con Raffaele che parla,
+  // sono meno definiti). Per rifarlo:
+  // `ffmpeg -ss 3.5 -i public/video/campo-di-fiori-vicino-all-apiario.mp4 -frames:v 1 -q:v 2 campo-di-fiori-vicino-all-apiario-poster.jpg`
+  'campo-di-fiori-vicino-all-apiario-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }
