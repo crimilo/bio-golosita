@@ -109,14 +109,27 @@ const origin = [
 const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
 
 /**
- * Le foto del blocco prodotto, in ordine: la principale (`image`, la stessa
- * delle card, dell'`ItemList` e del `Product`) e quelle in più di
- * `productPhotos`. Con più di una foto il blocchetto diventa una **mini
- * galleria a scorrimento** — una foto per schermata, il dito o il trackpad per
- * passare da una all'altra, i puntini come scorciatoia — e il lightbox sfoglia
- * le stesse foto a schermo intero (le prende dalla sezione). Con una sola foto
- * il markup è quello di prima, senza nastro e senza puntini.
+ * Le slide del blocco prodotto, in ordine: la foto principale (`image`, la
+ * stessa delle card, dell'`ItemList` e del `Product`), il video facoltativo di
+ * `productVideo` (oggi solo il millefiori al tiglio e ailanto: i barattoli che
+ * si riempiono) e le foto in più di `productPhotos`. Con più di una slide il
+ * blocchetto diventa una **mini galleria a scorrimento** — una slide per
+ * schermata, il dito o il trackpad per passare da una all'altra, le miniature
+ * come scorciatoia — e il lightbox sfoglia le stesse slide a schermo intero (le
+ * prende dalla sezione, e i video li sa già mostrare). Con una sola slide il
+ * markup è quello di prima, senza nastro e senza miniature.
  */
+const mainPhoto = {
+  base: honey.cardImage ?? honey.image,
+  alt: `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`,
+  position: honey.imgPos,
+};
+const productMedia = [
+  { photo: mainPhoto },
+  ...(honey.productVideo ? [{ video: honey.productVideo }] : []),
+  ...(honey.productPhotos ?? []).map((p) => ({ photo: p })),
+];
+
 /**
  * Il riquadro del blocco prodotto è 4:3 (`.product-media`), le foto no: i
  * fotogrammi 9:16 del favo, per esempio, sono molto più verticali. Con
@@ -137,14 +150,6 @@ const croppedByCover = (base) => {
 /** `photo-contain` = la foto si vede intera, senza riempire il riquadro. */
 const fitClass = (base) => (croppedByCover(base) > MAX_CROP ? 'photo-contain' : undefined);
 
-const productPhotos = [
-  {
-    base: honey.cardImage ?? honey.image,
-    alt: `${honey.name} — Bio & Golosità, Cassano d'Adda (MI)`,
-    position: honey.imgPos,
-  },
-  ...(honey.productPhotos ?? []),
-];
 ---
 
 <Base
@@ -183,35 +188,48 @@ const productPhotos = [
       <div class="product-figure">
         <div class="product-media">
           {
-            productPhotos.length > 1 ? (
+            productMedia.length > 1 ? (
               <div
                 class="product-slider"
                 data-slider
                 tabindex="0"
                 role="group"
-                aria-label={`Foto del ${honey.name.toLowerCase()}`}
+                aria-label={`Foto e video del ${honey.name.toLowerCase()}`}
               >
-                {productPhotos.map((p, i) => (
-                  <Picture
-                    base={p.base}
-                    alt={p.alt}
-                    sizes="(min-width: 900px) 520px, 100vw"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    fetchpriority={i === 0 ? 'high' : 'auto'}
-                    objectPosition={p.position}
-                    class={fitClass(p.base)}
-                  />
-                ))}
+                {productMedia.map((m, i) =>
+                  m.video ? (
+                    /* Il video è una slide come le foto: `VideoFigure` porta il
+                       poster pigro, il tasto play e il `data-video` che il
+                       lightbox riconosce. In pagina il video si vede **intero**
+                       (`object-fit: contain`, vedi global.css): il girato è
+                       verticale e il riquadro 4:3 lo taglierebbe di metà. */
+                    <VideoFigure
+                      src={m.video.src}
+                      poster={m.video.poster}
+                      label={m.video.label}
+                    />
+                  ) : (
+                    <Picture
+                      base={m.photo.base}
+                      alt={m.photo.alt}
+                      sizes="(min-width: 900px) 520px, 100vw"
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      fetchpriority={i === 0 ? 'high' : 'auto'}
+                      objectPosition={m.photo.position}
+                      class={fitClass(m.photo.base)}
+                    />
+                  )
+                )}
               </div>
             ) : (
               <Picture
-                base={productPhotos[0].base}
-                alt={productPhotos[0].alt}
+                base={mainPhoto.base}
+                alt={mainPhoto.alt}
                 sizes="(min-width: 900px) 520px, 100vw"
                 loading="eager"
                 fetchpriority="high"
-                objectPosition={productPhotos[0].position}
-                class={fitClass(productPhotos[0].base)}
+                objectPosition={mainPhoto.position}
+                class={fitClass(mainPhoto.base)}
               />
             )
           }
@@ -221,13 +239,13 @@ const productPhotos = [
                miniature sono a portata di pollice) e girano in tondo, come quelle
                del lightbox. Stanno **fuori** dal nastro, quindi non scorrono via
                con le foto. */
-            productPhotos.length > 1 && (
+            productMedia.length > 1 && (
               <div class="slider-arrows">
                 <button
                   class="slider-arrow slider-arrow--prev"
                   type="button"
                   data-slider-prev
-                  aria-label="Foto precedente"
+                  aria-label="Slide precedente"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -247,7 +265,7 @@ const productPhotos = [
                   class="slider-arrow slider-arrow--next"
                   type="button"
                   data-slider-next
-                  aria-label="Foto successiva"
+                  aria-label="Slide successiva"
                 >
                   <svg
                     viewBox="0 0 24 24"
@@ -268,27 +286,49 @@ const productPhotos = [
           }
         </div>
         {
-          productPhotos.length > 1 && (
+          productMedia.length > 1 && (
             <ul class="slider-thumbs">
-              {productPhotos.map((p, i) => (
+              {productMedia.map((m, i) => (
                 <li>
                   <button
-                    class="slider-thumb"
+                    class={`slider-thumb${m.video ? ' slider-thumb--video' : ''}`}
                     type="button"
-                    aria-label={`Foto ${i + 1} di ${productPhotos.length}`}
+                    aria-label={`${m.video ? 'Video' : 'Foto'} ${i + 1} di ${productMedia.length}`}
                     aria-current={i === 0 ? 'true' : 'false'}
                   >
                     {/* La miniatura è decorativa: il nome lo dà il bottone, e
                         non è un bersaglio del lightbox (`zoomable={false}`),
-                        altrimenti il lightbox conterebbe anche le miniature. */}
-                    <Picture
-                      base={p.base}
-                      alt=""
-                      sizes="4.5rem"
-                      loading="lazy"
-                      zoomable={false}
-                      class={fitClass(p.base)}
-                    />
+                        altrimenti il lightbox conterebbe anche le miniature. La
+                        miniatura del video è il suo poster, già AVIF: non passa
+                        dal manifest delle immagini. */}
+                    {m.video ? (
+                      <>
+                        <img
+                          src={m.video.poster}
+                          alt=""
+                          width="480"
+                          height="854"
+                          loading="lazy"
+                          decoding="async"
+                          class="photo-contain"
+                        />
+                        {/* Il velo col tasto play dice che questa slide è un
+                            video: è decorativo, il nome lo dà l'`aria-label`
+                            del bottone («Video 2 di 2»). */}
+                        <span class="slider-thumb-play" aria-hidden="true">
+                          <Icons name="play" size={14} />
+                        </span>
+                      </>
+                    ) : (
+                      <Picture
+                        base={m.photo.base}
+                        alt=""
+                        sizes="4.5rem"
+                        loading="lazy"
+                        zoomable={false}
+                        class={fitClass(m.photo.base)}
+                      />
+                    )}
                   </button>
                 </li>
               ))}
@@ -423,9 +463,10 @@ const productPhotos = [
   {/*
     Galleria facoltativa: per ora la usa solo il miele in favo, con la sequenza
     di foto ricavate dal video (in `gallery`, già in ordine d'uso). Le altre
-    schede con più di una foto la mostrano nel blocco prodotto, come mini
-    galleria a scorrimento (`productPhotos`): non è la stessa cosa di una
-    galleria in fondo alla pagina, ed è lì che serve, accanto al prezzo.
+    schede con più di una slide la mostrano nel blocco prodotto, come mini
+    galleria a scorrimento (`productPhotos`, più l'eventuale `productVideo`):
+    non è la stessa cosa di una galleria in fondo alla pagina, ed è lì che
+    serve, accanto al prezzo.
   */}
   {
     honey.gallery && (

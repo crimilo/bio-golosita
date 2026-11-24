@@ -1622,6 +1622,24 @@ strong {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
+/* Una slide di **video** nel nastro (oggi solo la scheda del millefiori al
+   tiglio e ailanto, `productVideo`): è un elemento come le foto — tutta la
+   larghezza del riquadro, uno scatto per schermata — e il video ci sta
+   **intero** (`contain`, con la fascia del colore del riquadro ai lati): il
+   girato è verticale (478×850) e il riquadro 4:3, quindi `cover` ne taglierebbe
+   più della metà. L'altezza la detta il riquadro, non l'aspetto di
+   `.video-item--wide` che `VideoFigure` mette di default. */
+.product-slider > .video-item {
+  flex: 0 0 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  max-height: none;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.product-slider > .video-item video {
+  object-fit: contain;
+}
 /* Una foto molto più verticale del riquadro (i fotogrammi 9:16 del favo, per
    esempio) si mostra **intera**, con la fascia del colore del riquadro ai lati:
    `cover` ne taglierebbe più di metà e in pagina sembrerebbe zoomata. La classe
@@ -1711,6 +1729,22 @@ strong {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* La miniatura del **video** (`slider-thumb--video`, oggi solo la scheda del
+   millefiori al tiglio e ailanto): il poster con un velo d'inchiostro e il tasto
+   play sopra, così si vede che quella slide è un video e non un'altra foto. Il
+   velo è quello dei tasti play della galleria, in piccolo. */
+.slider-thumb--video {
+  position: relative;
+}
+.slider-thumb-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--white);
+  background: rgba(51, 36, 15, 0.25);
+  pointer-events: none;
 }
 
 .product-price {

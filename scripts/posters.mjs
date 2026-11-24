@@ -81,6 +81,14 @@ const posters = [
   // sono meno definiti). Per rifarlo:
   // `ffmpeg -ss 3.5 -i public/video/campo-di-fiori-vicino-all-apiario.mp4 -frames:v 1 -q:v 2 campo-di-fiori-vicino-all-apiario-poster.jpg`
   'campo-di-fiori-vicino-all-apiario-poster.jpg',
+  // I barattoli di millefiori al tiglio e ailanto che si riempiono (blocco
+  // prodotto della scheda, come seconda slide dopo la foto). Sorgente in root
+  // `miele-millefiori-tiglio-e-ailanto.mp4` (478×850, 31 s). Fotogramma a 22 s:
+  // misurando la nitidezza (varianza del laplaciano) di un fotogramma ogni 0,5 s
+  // è il più definito del girato, che è uniforme (i valori stanno tutti fra 60 e
+  // 64). Per rifarlo:
+  // `ffmpeg -ss 22 -i public/video/millefiori-tiglio-ailanto.mp4 -frames:v 1 -q:v 2 millefiori-tiglio-ailanto-poster.jpg`
+  'millefiori-tiglio-ailanto-poster.jpg',
 ];
 for (const f of posters) {
   if (!existsSync(f)) { console.log('SKIP (jpg mancante)', f); continue; }

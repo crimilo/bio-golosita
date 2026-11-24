@@ -586,23 +586,20 @@ export const site = {
         'Consistenza: denso, cristallizzazione lenta',
       ],
       /**
-       * La scheda non aveva video: qui c'è la smielatura del nostro millefiori.
-       * Il girato è del raccolto primaverile (sorgente in root:
-       * `smielatura-2026-millefiori-primaverile.mp4`), ma la didascalia non
-       * nomina la stagione: questa scheda, come quella del tiglio e more, dice
-       * che il miele è raccolto a giugno, e il video racconta **come** lavoriamo
-       * il millefiori, non l'annata di questo barattolo.
+       * Il video del blocco prodotto, come **seconda slide** dopo la foto del
+       * barattolo: i barattoli di millefiori che si riempiono. Non sta nella
+       * sezione "Da dove arriva" come i video degli altri mieli, perché qui il
+       * girato è di questo miele (non della lavorazione in generale): sta
+       * accanto alla foto e al prezzo, dove si guarda il prodotto. Sorgente in
+       * root `miele-millefiori-tiglio-e-ailanto.mp4` (478×850, 31 s); in
+       * `public/video/` sta la ricodifica con il suo poster (vedi README,
+       * "Video").
        */
-      videos: [
-        {
-          src: '/video/smielatura-millefiori-2026.mp4',
-          poster: '/video/smielatura-millefiori-2026-poster-d8961bf6.avif',
-          label: 'La smielatura del nostro millefiori (raccolto 2026)',
-          cls: 'video-item--tall',
-          caption:
-            'La smielatura del nostro millefiori: il miele esce dallo smielatore, senza pastorizzazione.',
-        },
-      ],
+      productVideo: {
+        src: '/video/millefiori-tiglio-ailanto.mp4',
+        poster: '/video/millefiori-tiglio-ailanto-poster-cb55fd59.avif',
+        label: 'I barattoli di millefiori al tiglio e ailanto che si riempiono',
+      },
       faq: [
         {
           q: 'Cos\'è l\'ailanto e perché si chiama pianta del paradiso?',
