@@ -222,7 +222,8 @@ export const site = {
    * `originNote`, `apiaryZone` (la zona degli apiari di quella varietà: base
    * del dato "Origine" e dell'`alt` della foto in "Da dove arriva"; assente =
    * Parco Adda Nord), `harvest` + `annata`, `workNote`, `characteristics`,
-   * `videos` (con la loro `caption`), `faq`, `rating` + `productReviews` e, se
+   * `productVideos` (i video del blocco prodotto: le smielature dei raccolti e
+   * il favo), `faq`, `rating` + `productReviews` e, se
    * serve,
    * `note` (la nota del blocco prodotto, al posto di `site.bulkNote`),
    * `productPhotos` (le altre foto del blocco prodotto: gli scatti in più per
@@ -299,27 +300,23 @@ export const site = {
         'Ideale per tisane, latte, yogurt e colazione',
       ],
       /**
-       * Il video della scheda: la smielatura del raccolto 2026, che ha preso il
-       * posto di `smielatura-acacia.mp4` (ritirato insieme al suo poster). È
-       * verticale (478×850), quindi sta nella colonna stretta di `.origin-video`
-       * e non viene ritagliato. `caption` è la didascalia che la pagina rende
-       * sotto il video, in un `<figcaption>` (la scheda dell'acacia non usa
-       * `VideoFigure` da solo, senza didascalia).
+       * I video del blocco prodotto, come **seconde slide** dopo la foto del
+       * barattolo: la smielatura del raccolto 2026, che ha preso il posto di
+       * `smielatura-acacia.mp4` (ritirato insieme al suo poster). Sono verticali
+       * (478×850), quindi nel riquadro 4:3 del blocco prodotto si vedono
+       * **interi**, con la fascia del colore del riquadro ai lati (vedi
+       * `productVideos` in `[slug].astro`).
        *
        * Il filtraggio che segue la smielatura è pubblicato
        * (`/video/filtraggio-miele-di-acacia.mp4`) ma **non è in pagina**: per
-       * rimetterlo basta rimettere la sua voce qui sotto, dopo questa — i video
-       * si impilano in "Da dove arriva", nell'ordine dei dati, ognuno con la
-       * sua didascalia.
+       * rimetterlo basta aggiungere la sua voce qui sotto, dopo questa — le
+       * slide stanno nel nastro nell'ordine dei dati.
        */
-      videos: [
+      productVideos: [
         {
           src: '/video/smielatura-acacia-2026.mp4',
           poster: '/video/smielatura-acacia-2026-poster-99f4bc5c.avif',
           label: 'La smielatura del miele di acacia (raccolto 2026)',
-          cls: 'video-item--tall',
-          caption:
-            'La smielatura del raccolto 2026, direttamente nel nostro laboratorio.',
         },
       ],
       faq: [
@@ -391,22 +388,23 @@ export const site = {
         'Consistenza: denso, cristallizzazione lenta e grossolana',
         'Ideale in cucina, anche per piatti salati',
       ],
-      /** Smielatura del raccolto 2026 e i barattoli riempiti subito dopo. */
-      videos: [
+      /**
+       * I video del blocco prodotto, come **seconde slide** dopo la foto del
+       * barattolo: la smielatura del raccolto 2026 e i barattoli riempiti subito
+       * dopo. Sono verticali (576×1024 e 478×850), quindi nel riquadro 4:3 del
+       * blocco prodotto si vedono **interi**, con la fascia del colore del
+       * riquadro ai lati (vedi `productVideos` in `[slug].astro`).
+       */
+      productVideos: [
         {
           src: '/video/smielatura-millefiori-tiglio-more.mp4',
           poster: '/video/smielatura-millefiori-tiglio-more-poster-918a2227.avif',
           label: 'La smielatura del millefiori tiglio e more (raccolto 2026)',
-          cls: 'video-item--tall',
-          caption:
-            'La smielatura del raccolto 2026, direttamente nel nostro laboratorio.',
         },
         {
           src: '/video/riempendo-un-barattolo-di-millefiori.mp4',
           poster: '/video/riempendo-un-barattolo-di-millefiori-poster-26aa0927.avif',
           label: 'I barattoli di millefiori riempiti dopo la smielatura (raccolto 2026)',
-          cls: 'video-item--tall',
-          caption: 'I barattoli riempiti subito dopo la smielatura, ancora nello stesso pomeriggio.',
         },
       ],
       faq: [
@@ -495,20 +493,19 @@ export const site = {
         'Cristallizza presto, per il glucosio del tarassaco',
       ],
       /**
-       * Il video del raccolto: Raffaele che spiega questo miele mentre i
-       * barattoli si riempiono. È verticale (576×1024), quindi sta nella colonna
-       * stretta di `.origin-video`. Il sorgente è in root (gitignorato, come
-       * tutti i video); in `public/video/` sta la ricodifica da 2,2 MB con il
-       * suo poster (vedi README, "Video").
+       * Il video del blocco prodotto, come **seconda slide** dopo la foto del
+       * barattolo: Raffaele che spiega questo miele mentre i barattoli si
+       * riempiono. È verticale (576×1024), quindi nel riquadro 4:3 del blocco
+       * prodotto si vede **intero**, con la fascia del colore del riquadro ai
+       * lati (vedi `productVideos` in `[slug].astro`). Il sorgente è in root
+       * (gitignorato, come tutti i video); in `public/video/` sta la ricodifica
+       * da 2,2 MB con il suo poster (vedi README, "Video").
        */
-      videos: [
+      productVideos: [
         {
           src: '/video/millefiori-tarassaco-biancospino.mp4',
           poster: '/video/millefiori-tarassaco-biancospino-poster-ee49c420.avif',
           label: 'Raffaele che spiega il millefiori al tarassaco e biancospino mentre i barattoli si riempiono',
-          cls: 'video-item--tall',
-          caption:
-            'Il miele che va nei barattoli, raccontato da Raffaele.',
         },
       ],
       /**
@@ -587,19 +584,20 @@ export const site = {
       ],
       /**
        * Il video del blocco prodotto, come **seconda slide** dopo la foto del
-       * barattolo: i barattoli di millefiori che si riempiono. Non sta nella
-       * sezione "Da dove arriva" come i video degli altri mieli, perché qui il
-       * girato è di questo miele (non della lavorazione in generale): sta
-       * accanto alla foto e al prezzo, dove si guarda il prodotto. Sorgente in
-       * root `miele-millefiori-tiglio-e-ailanto.mp4` (478×850, 31 s); in
-       * `public/video/` sta la ricodifica con il suo poster (vedi README,
-       * "Video").
+       * barattolo: i barattoli di millefiori che si riempiono. Come gli altri
+       * mieli (vedi `productVideos`), non sta più nella sezione "Da dove
+       * arriva": si guarda accanto alla foto e al prezzo, dove si guarda il
+       * prodotto. Sorgente in root `miele-millefiori-tiglio-e-ailanto.mp4`
+       * (478×850, 31 s); in `public/video/` sta la ricodifica con il suo poster
+       * (vedi README, "Video").
        */
-      productVideo: {
-        src: '/video/millefiori-tiglio-ailanto.mp4',
-        poster: '/video/millefiori-tiglio-ailanto-poster-cb55fd59.avif',
-        label: 'I barattoli di millefiori al tiglio e ailanto che si riempiono',
-      },
+      productVideos: [
+        {
+          src: '/video/millefiori-tiglio-ailanto.mp4',
+          poster: '/video/millefiori-tiglio-ailanto-poster-cb55fd59.avif',
+          label: 'I barattoli di millefiori al tiglio e ailanto che si riempiono',
+        },
+      ],
       faq: [
         {
           q: 'Cos\'è l\'ailanto e perché si chiama pianta del paradiso?',
@@ -768,14 +766,18 @@ export const site = {
     /** Riga "Lavorazione" dei quattro dati di origine: qui non c'è smielatura. */
     workNote:
       'Nessuna smielatura: il favo si taglia dal telaio e si invasetta intero, senza trattamento termico',
-    videos: [
+    /**
+     * Il video del blocco prodotto, come **seconda slide** dopo la foto del
+     * favo: Raffaele che stacca un pezzo di favo dal telaio e lo assaggia. È
+     * verticale (478×850), quindi nel riquadro 4:3 del blocco prodotto si vede
+     * **intero**, con la fascia del colore del riquadro ai lati (vedi
+     * `productVideos` in `[slug].astro`), come i fotogrammi qui sotto.
+     */
+    productVideos: [
       {
         src: '/video/miele-in-favo.mp4',
         poster: '/video/miele-in-favo-poster-4d2db9b1.avif',
         label: 'Raffaele mostra il miele in favo e lo assaggia',
-        cls: 'video-item--tall',
-        caption:
-          'Raffaele stacca un pezzo di favo dal telaio e lo assaggia: buonissimo, con il miele ancora nella sua cera.',
       },
     ],
     /**

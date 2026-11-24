@@ -784,24 +784,6 @@ strong {
   }
 }
 
-/* "Da dove arriva": i video della lavorazione, con la loro didascalia sotto.
-   Stanno in fila centrata e vanno a capo da soli: con un video solo (le altre
-   schede) resta al centro come prima, mentre i due del tiglio e more su desktop
-   si affiancano in orizzontale invece di impilarsi. La colonna è stretta
-   (16rem) perché i video sono verticali (9/16) e non vanno ritagliati. */
-.origin-videos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  justify-content: center;
-  margin-top: var(--space-4);
-}
-
-.origin-video {
-  flex: 1 1 16rem;
-  max-width: 16rem;
-}
-
 .story-quote {
   margin: var(--space-3) 0 0;
   padding: var(--space-2) var(--space-3);

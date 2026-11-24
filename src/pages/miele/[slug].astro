@@ -6,11 +6,15 @@
  * La struttura è quella nata per il miele di acacia e poi estesa a tutte le
  * schede: hero corta, blocco prodotto (foto, prezzo, voto, quattro
  * caratteristiche, CTA), "Da dove arriva" (foto dell'apiario, quattro dati di
- * origine, il video della lavorazione), recensioni del prodotto, FAQ, altri
+ * origine), recensioni del prodotto, FAQ, altri
  * mieli e chiusura compatta. Niente scheda tecnica e niente sezione
  * descrittiva: colore, gusto, usi e conservazione stanno nelle `characteristics`
  * del blocco prodotto e nelle FAQ, una volta sola, invece di essere ripetuti in
  * tre modi diversi.
+ *
+ * I video delle schede stanno nel **blocco prodotto**, come slide del nastro
+ * delle foto (`productVideos`), non più in fondo a "Da dove arriva": accanto
+ * alla foto e al prezzo, dove si guarda il prodotto.
  *
  * Tutto quello che cambia da scheda a scheda arriva dai dati (`site.js`), non da
  * questo file: qui si sceglie solo l'ordine delle sezioni. Struttura e campi
@@ -110,14 +114,14 @@ const others = honeyProducts.filter((h) => h.slug !== honey.slug).slice(0, 3);
 
 /**
  * Le slide del blocco prodotto, in ordine: la foto principale (`image`, la
- * stessa delle card, dell'`ItemList` e del `Product`), il video facoltativo di
- * `productVideo` (oggi solo il millefiori al tiglio e ailanto: i barattoli che
- * si riempiono) e le foto in più di `productPhotos`. Con più di una slide il
- * blocchetto diventa una **mini galleria a scorrimento** — una slide per
- * schermata, il dito o il trackpad per passare da una all'altra, le miniature
- * come scorciatoia — e il lightbox sfoglia le stesse slide a schermo intero (le
- * prende dalla sezione, e i video li sa già mostrare). Con una sola slide il
- * markup è quello di prima, senza nastro e senza miniature.
+ * stessa delle card, dell'`ItemList` e del `Product`), i video di
+ * `productVideos` (le smielature dei raccolti, il favo) e le foto in più di
+ * `productPhotos`. Con più di una slide il blocchetto diventa una **mini
+ * galleria a scorrimento** — una slide per schermata, il dito o il trackpad per
+ * passare da una all'altra, le miniature come scorciatoia — e il lightbox
+ * sfoglia le stesse slide a schermo intero (le prende dalla sezione, e i video
+ * li sa già mostrare). Con una sola slide il markup è quello di prima, senza
+ * nastro e senza miniature.
  */
 const mainPhoto = {
   base: honey.cardImage ?? honey.image,
@@ -126,7 +130,7 @@ const mainPhoto = {
 };
 const productMedia = [
   { photo: mainPhoto },
-  ...(honey.productVideo ? [{ video: honey.productVideo }] : []),
+  ...(honey.productVideos ?? []).map((v) => ({ video: v })),
   ...(honey.productPhotos ?? []).map((p) => ({ photo: p })),
 ];
 
@@ -398,8 +402,9 @@ const fitClass = (base) => (croppedByCover(base) > MAX_CROP ? 'photo-contain' : 
 
   {/*
     "Da dove arriva": origine, periodo di raccolta, lavorazione e api proprie,
-    con la foto dell'apiario e il video della lavorazione del raccolto. È la
-    sezione che vale più di tutte le descrizioni.
+    con la foto dell'apiario. È la sezione che vale più di tutte le
+    descrizioni. I video non stanno qui: sono le prime slide del blocco
+    prodotto (`productVideos`), accanto al prezzo.
   */}
   <section class="section" aria-labelledby="origine">
     <div class="container">
@@ -444,29 +449,16 @@ const fitClass = (base) => (croppedByCover(base) > MAX_CROP ? 'photo-contain' : 
           ))
         }
       </div>
-
-      {
-        honey.videos?.length ? (
-          <div class="origin-videos">
-            {honey.videos.map((v) => (
-              <figure class="origin-video">
-                <VideoFigure src={v.src} poster={v.poster} label={v.label} cls={v.cls} />
-                {v.caption && <figcaption class="small-note center">{v.caption}</figcaption>}
-              </figure>
-            ))}
-          </div>
-        ) : null
-      }
     </div>
   </section>
 
   {/*
-    Galleria facoltativa: per ora la usa solo il miele in favo, con la sequenza
-    di foto ricavate dal video (in `gallery`, già in ordine d'uso). Le altre
-    schede con più di una slide la mostrano nel blocco prodotto, come mini
-    galleria a scorrimento (`productPhotos`, più l'eventuale `productVideo`):
-    non è la stessa cosa di una galleria in fondo alla pagina, ed è lì che
-    serve, accanto al prezzo.
+    Galleria facoltativa: **oggi non la usa nessuna scheda** (il favo, che era
+    l'ultima, è passato alle slide del blocco prodotto), ma il gancio resta per
+    il giorno in cui una sequenza di foto merita una sezione sua. Le schede con
+    più di una slide le mostrano nel blocco prodotto, come mini galleria a
+    scorrimento (`productPhotos`, più i `productVideos`): non è la stessa cosa
+    di una galleria in fondo alla pagina, ed è lì che serve, accanto al prezzo.
   */}
   {
     honey.gallery && (
